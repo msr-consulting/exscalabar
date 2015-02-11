@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<script type="text/javascript" src="../js/populate.js"></script>
+
+		<title>EXSCALABAR</title>
+		<meta name="description" content="">
+		<meta name="author" content="Matt">
+
+		<link rel="stylesheet" href="../assets/bootstrap-3.2.0-dist/css/bootstrap.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
+		<link rel="stylesheet" href="../assets/sticky-footer.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
+
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+
+		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="/favicon.ico">
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+		<style>
+			.ctl-label {
+				display: inline-block;
+				width: 75px;
+				/*margin-left: 15px;*/
+				margin: 2px;
+			}
+			.ctl-input {
+				width: 55px;
+				margin: 2px;
+			}
+
+			/* The following is from flot exmaple */
+			#content {
+				width: 420px;
+				height: 270px;
+				margin: 0 auto;
+				padding: 10px;
+			}
+			.footer {
+				padding-top: 15px;
+				padding-left: 5px;
+			}
+			.demo-container {
+				box-sizing: border-box;
+				width: 400px;
+				height: 250px;
+				padding: 20px 15px 15px 15px;
+				margin: 15px auto 30px auto;
+				border: 1px solid #ddd;
+				background: #fff;
+				background: linear-gradient(#f6f6f6 0, #fff 50px);
+				background: -o-linear-gradient(#f6f6f6 0, #fff 50px);
+				background: -ms-linear-gradient(#f6f6f6 0, #fff 50px);
+				background: -moz-linear-gradient(#f6f6f6 0, #fff 50px);
+				background: -webkit-linear-gradient(#f6f6f6 0, #fff 50px);
+				box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+				-o-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+				-ms-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+				-moz-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+				-webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+			}
+
+			.demo-placeholder {
+				width: 100%;
+				height: 100%;
+				font-size: 14px;
+				line-height: 1.2em;
+			}
+
+			.legend table {
+				border-spacing: 5px;
+			}
+			.msg-footer {
+				width: auto;
+			}
+		</style>
+	</head>
+	<body onload = "pop_nav();setInterval(getPASData(), 1000)">
+		<div id = "xnav"></div>
+
+		<div class="container-fluid">
+			<div class="page-header">
+				<h1>PAS Control Panel</h1>
+			</div>
+			<div class="row">
+				<div class="col-lg-3 col-md-3 col-xs-3" role="main">
+					<div class="row">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								Speaker Control
+							</div>
+							<div class="row">
+								<div class="col-md-5">
+									<div class="form-group" id="spk">
+										<label class = "ctl-label" for="svrange">V<sub>range</sub> (V)</label>
+										<input type="number" id="svrange" class="span3 ctl-input" placeholder="1" min ="0" max="10"/>
+										<br />
+										<label class = "ctl-label" for="svoffset">V<sub>offset</sub> (V)</label>
+										<input type="number" id="reddc" class="ctl-input" placeholder="0" min="0" max="5"/>
+										<br />
+										<label class = "ctl-label" for="fcenter">f<sub>center</sub> (Hz)</label>
+										<input type="number" id="fcenter" class="ctl-input" placeholder="1300" min="100" max="5000"/>
+										<br />
+										<label class = "ctl-label" for="df">&Delta;f (Hz)</label>
+										<input type="number" id="df" class="ctl-input" placeholder="100" min="1" max="1000" data-toggle="tooltip" data-placement="right" title="Speaker chirp bandwidth in Hz."/>
+									</div>
+								</div>
+								<div class="col-md-5">
+									<div class="form-group" id ="dccrd">
+										<button type="button" class="btn btn-primary" id ="spk_on" value="Speaker">
+											Speaker
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								Speaker Cycle
+							</div>
+							<div class="row">
+								<div class="col-md-5">
+									<div class="form-group" id="spk">
+										<label class = "ctl-label" for="period">Period (s)</label>
+										<input type="number" id="period" class="span3 ctl-input" placeholder="360" min ="10" max="5000"/>
+										<br />
+										<label class = "ctl-label" for="length">Length (s)</label>
+										<input type="number" id="length" class="ctl-input" placeholder="0" min="1" max="100"/>
+									</div>
+								</div>
+								<div class="col-md-5">
+									<div class="form-group" id ="dccrd">
+										<button type="button" class="btn btn-primary" id ="cycle_on" value="Auto">
+											Auto
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								Laser Control
+							</div>
+							<div class="row">
+								<div class="col-md-5">
+									<label class = "ctl-label" for="period">Period (s)</label>
+									<input type="number" id="period" class="span3 ctl-input" placeholder="360" min ="10" max="5000"/>
+								</div>
+								<div class="col-md-5">
+									<div class="form-group" id ="dccrd">
+										<button type="button" class="btn btn-primary" id ="cycle_on" value="Auto">
+											Auto
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div id="content">
+						<div class="container">
+							<div id="placeholder" class="demo-placeholder" style="width:380px;height:250px"></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2" role="complementary" id ="snav"></div>
+			</div>
+		</div>
+
+		<footer class="footer">
+			<form class="form-inline" style:"width:100%;">
+				<div class="form-group" class="msg-footer" style:"width:100%;">
+					<label for="msg-out">System Message</label>
+					<div class="input-group input-group-lg">
+						<input class="form-control" type="text" id="msg-out" placeholder="This is a system message." disabled />
+						<div class="input-group-btn">
+							<button class="btn">
+								Clear
+							</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</footer>
+		<script src="../assets/jquery-2.1.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../assets/bootstrap-3.2.0-dist/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../assets/flot/jquery.flot.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/pas.js" type="text/javascript" charset="UTF-8"></script>
+		<script type="text/javascript">
+			$(function() {
+
+				var d1 = [];
+				for (var i = 0; i < 14; i += 0.5) {
+					d1.push([i, Math.sin(i)]);
+				}
+
+				var d2 = [[0, 3], [4, 8], [8, 5], [9, 13]];
+
+				// A null signifies separate line segments
+
+				var d3 = [[0, 12], [7, 12], null, [7, 2.5], [12, 2.5]];
+
+				$.plot("#placeholder", [d1, d2, d3]);
+			});
+
+		</script>
+	</body>
+</html>
