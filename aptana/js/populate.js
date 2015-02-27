@@ -1,18 +1,32 @@
-function pop_nav(curr_level){ 
-	var access_ctl = "ctl/";
-	
-	if (curr_level == undefined){
-		curr_level = 0;
-	}
-	
-	switch (curr_level){
-		case 1: /*ctl*/
-			access_ctl = "";
+function pop_nav(loc){ 
+
+	var sub_drop = "ctl/"
+	var cals = "cals/";
+	var index = '';
+	switch (loc){
+		case "crds.html":
+		case "pas.html":
+		case "flow.html":
+			sub_drop = "";
+			index = "../";
+			cals = "../cals/";
 			break;
+		case "ozone.html":
+			sub_drop = "../ctl/";
+			index = "../";
+			cals = "";
 		default:
 			break;
-		
 	}
+	var d_sel = {crds: "CRDS", pas: "PAS", flow: "Flow Control"};
+	
+	var dropdown = "";
+	
+	for (var i in d_sel){
+		dropdown += "<li>\<a href='" + sub_drop + i + ".html'>" + d_sel[i] + "</a></li>";
+	}
+	var cal_path = "<li><a href='" + cals + "ozone.html'>Calibration<span class='sr-only'>(current)</span></a></li>";
+	
 	
 	document.getElementById("xnav").innerHTML ='<nav class="navbar navbar-default">\
 			<div class="container-fluid">\
@@ -24,7 +38,7 @@ function pop_nav(curr_level){
 						<span class="icon-bar"></span>\
 						<span class="icon-bar"></span>\
 					</button>\
-					<a class="navbar-brand" href="index.html">EXSCALABAR</a>\
+					<a class="navbar-brand" href="' + index + 'index.html">EXSCALABAR</a>\
 				</div>\
 					\
 				<!-- Collect the nav links, forms, and other content for toggling -->\
@@ -32,26 +46,9 @@ function pop_nav(curr_level){
 					<ul class="nav navbar-nav">\
 						<li class="dropdown">\
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">System Control<span class="caret"></span></a>\
-							<ul class="dropdown-menu" role="menu">\
-								<li>\
-									<a href="ctl/crds.html">CRDS</a>\
-								</li>\
-								<li>\
-									<a href="ctl/pas.html">PAS</a>\
-								</li>\
-								<li>\
-									<a href="ctl/flow.html">Flow Control</a>\
-								</li>\
-							</ul>\
-						</li>\
-						<li>\
-							<a href="#">Calibration <span class="sr-only">(current)</span></a>\
-						</li>\
-						<li>\
-							<a href="#">Housekeeping</a>\
-						</li>\
+							<ul class="dropdown-menu" role="menu">' + dropdown + '</ul></li>'+ cal_path + '<li><a href="#">Housekeeping</a></li>\
 					</ul>\
-\
+							\
 				</div><!-- /.navbar-collapse -->\
 			</div><!-- /.container-fluid -->\
 		</nav>';
@@ -67,8 +64,16 @@ function pop_nav(curr_level){
 								</button>\
 							</li>\
 							<li class>\
-\
+										<div class="form-group" id="address">	\
+										<label class = "ctl-label" for="ip">IP</label>	\
+										<input type="text" id="ip" data-toggle="tooltip" data-placement="right" title="Blue laser repetition rate (in Hz)."/>	<br>\
+										<label class = "ctl-label" for="port">Port</label>\
+										<input type="text" id="port" class="ctl-input" />\
+									</div>\
 							</li>\
+							<li class>\
+								<div id = "connection"></div>\
+								</li>\
 						</ul>\
 					</nav>';
 }

@@ -1,19 +1,5 @@
 var tab_rows = 0;
 
-function getURL(name) {
-	var ip = "";
-	var port = "";
-	if (!( ip = localStorage.getItem('server'))) {
-		ip = '192.168.24.73';
-	}
-	if (!( port = localStorage.getItem('port'))) {
-		port = '8001';
-	}
-
-	return 'http://' + ip + ':' + port + '/xService/' + name;
-
-}
-
 /***
  * When the button is pressed on the front panel, the table will be converted to an
  * XML file that will contain all of the steps.
@@ -24,8 +10,8 @@ $("#save_cal").click(function() {
 	var val = '';
 	var xml = '<?xml version="1.0" encoding="utf-8"?>\r\n<OZONE>\r\n';
 	$("#cal-table tr:gt(0)").each(function() {
-		step = $(this).find('th').html();
-		val = $(this).find('td').html();
+		step = $(this).find('td:eq(0)').html();
+		val = $(this).find('td:eq(1)').html();
 		xml += "\t<" + step + ">" + val + '<\\' + step + '>\r\n';
 	});
 	xml += "<\\OZONE>";
@@ -65,35 +51,47 @@ $('.tclickable').dblclick(function() {
 	default:
 	}
 	tab_rows++;
-	$('#cal-table tr:last').after('<tr><th>' + id + "</th><td contenteditable id = '" + id + ":" + tab_rows + "' class = 'ecell'>" + val + "</td></tr>");
+	$('#cal-table tbody').append("<tr><td class = 'ehead'>" + id + "</td><td id = '" + id + ":" + tab_rows + "' class = 'ecell' contenteditable >" + val + "</td></tr>");
 });
-
 /***
- * This function WILL be to validate the input.  Right now it does not seem to work.
+ * Handle all the things that need to be handled on startup.
  */
-$(".ecell").focusout(function() {
-	var id = $(event.target).attr('id');
-	$(event).stopPropagation();
-
-	switch(id) {
-	case 'Wait_':
-		break;
-	case 'Filter_':
-		break;
-	default:
-
-	}
-});
-
 $(document).ready(function() {
+
+	/***
+	 * This function WILL be to validate the input.  Right now it does not seem to work.
+	 */
+	$(".ecell").focusout(function() {
+		alert('change fired');
+		/*var id = $(event.target).attr('id');
+		 $(event).stopPropagation();
+
+		 switch(id) {
+		 case 'Wait_':
+		 break;
+		 case 'Filter_':
+		 break;
+		 default:
+
+		 }*/
+	});
+	/* Determine what files are available on the server */
 	var url = getURL('Calibration/getO3FolderContent');
 	$.get(url, function(data) {
-		$("#xml_out").val(data.replace(/,/gi,"\n"));
+		$("#xml_out").val(data.replace(/,/gi, "\n"));
+	}).fail(function() {
+		alert('unable to get cals');
 	});
-	url = getURL('Calibration/getDefaultO3Cal');
-	$.get(url,
-		function(data){
-			alert(data);
+	;
+
+	/* Get the current calibration file on start up
+	 * and populate the table as appropriate.
+	 */
+	$.get(getURL('Calibration/getDefaultO3Cal'), function(data) {
+		alert(data).fail(function() {
+			alert('unable to get cals');
 		});
+		;
+	});
 
 });
