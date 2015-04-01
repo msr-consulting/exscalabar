@@ -15,10 +15,10 @@
 		<link rel="stylesheet" href="../assets/bootstrap-3.2.0-dist/css/bootstrap.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
 		<link rel="stylesheet" href="../assets/sticky-footer.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
 
-        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-        <script src="../assets/nvd3/nv.d3.min.js"></script>
+		<script src="../assets/d3/d3.min.js"></script>
+		<script src="../assets/nvd3/nv.d3.min.js"></script>
 
-    <link href="../assets/nvd3/nv.d3.min.css" rel="stylesheet" type="text/css">
+		<link href="../assets/nvd3/nv.d3.min.css" rel="stylesheet" type="text/css">
 		<meta name="viewport" content="width=device-width; initial-scale=1.0">
 
 		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
@@ -41,10 +41,10 @@
 				width: auto;
 			}
 
-            #chart svg {
-                height: 350px;
-            }
-            
+			#chart svg {
+				height: 350px;
+			}
+
 		</style>
 	</head>
 
@@ -95,16 +95,15 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-5">
-                  <div id="chart" class='with-3d-shadow with-transitions'>
-                    <svg></svg>
-                  </div>
+				<div class="col-md-7">
+					<div id="chart" class='with-3d-shadow with-transitions'>
+						<svg></svg>
+					</div>
 				</div>
 				<div class="col-md-2" role="complementary" id ="snav"></div>
 			</div>
 		</div>
-		
-		
+
 		<footer class="footer">
 			<form class="form-inline" style:"width:100%;">
 				<div class="form-group" class="msg-footer" style:"width:100%;">
@@ -122,40 +121,69 @@
 		</footer>
 		<script src="../assets/jquery-2.1.1.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../assets/bootstrap-3.2.0-dist/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
-		<script type="text/javascript" src="../js/general.js"></script>		
-        <script type="text/javascript">
+		<script type="text/javascript" src="../js/general.js"></script>
+		<script type="text/javascript">
+			var chart;
+			nv.addGraph(function() {
+				chart = nv.models.lineWithFocusChart();
 
-    var chart;
-    nv.addGraph(function() {
-        chart = nv.models.lineWithFocusChart();
+				chart.xAxis.tickFormat(function(d) {
+					return d3.time.format('%X')(new Date(d))
+				});
+				chart.x2Axis.tickFormat(function(d) {
+					return d3.time.format('%X')(new Date(d))
+				});
+				chart.yAxis.tickFormat(d3.format(',.2f'));
+				chart.y2Axis.tickFormat(d3.format(',.2f'));
 
-        chart.xAxis.tickFormat(d3.format(',f'));
-        chart.x2Axis.tickFormat(d3.format(',f'));
-        chart.yAxis.tickFormat(d3.format(',.2f'));
-        chart.y2Axis.tickFormat(d3.format(',.2f'));
+				d3.select('#chart svg').datum(testData()).call(chart);
 
-        d3.select('#chart svg')
-            .datum(testData())
-            .call(chart);
+				nv.utils.windowResize(chart.update);
 
-        nv.utils.windowResize(chart.update);
+				return chart;
+			});
+			var d = new Date();
+			var data = [{x:d.getTime(),y:0}
+			/*{
+			 x : 0,
+			 y : 1
+			 }, {
+			 x : 10,
+			 y : -3
+			 }, {
+			 x : 20,
+			 y : 5
+			 }, {
+			 x : 30,
+			 y : 6
+			 }, {
+			 x : 40,
+			 y : 10
+			 }, {
+			 x : 50,
+			 y : 3
+			 }*/];
 
-        return chart;
-    });
+			function testData() {
+				return [{
+					values : data,
+					key : "Matt's Data"
+				}];
+			}
 
-    var data = [ {x: 0, y:1}, {x:10, y:-3}, {x:20, y:5}, {x:30, y:6}, {x:40, y:10}, {x:50, y:3} ];
+			setInterval(function() {
+				if (data.length >= 20) {
+					data.pop();
+				}
+				d = new Date();
 
-    function testData() {
-    return [ { values: data,
-             key: "Test Data"
-    }];
-    }
+				data.unshift({
+					x : d.getTime(),
+					y : data[data.length - 1].y + 4 * Math.random() - 2.0
+				});
+				chart.update();
+			}, 1000);
 
-   setInterval(function() {
-      data.push( {x : data[data.length - 1].x + 10, y: data[data.length - 1].y + 4*Math.random() - 2.0} );
-      chart.update();
-    }, 5000); 
-
-        </script>
+		</script>
 	</body>
 </html>
