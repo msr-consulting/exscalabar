@@ -15,6 +15,10 @@
 		<link rel="stylesheet" href="../assets/bootstrap-3.2.0-dist/css/bootstrap.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
 		<link rel="stylesheet" href="../assets/sticky-footer.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
 
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script src="../assets/nvd3/nv.d3.min.js"></script>
+
+    <link href="../assets/nvd3/nv.d3.min.css" rel="stylesheet" type="text/css">
 		<meta name="viewport" content="width=device-width; initial-scale=1.0">
 
 		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
@@ -33,50 +37,14 @@
 				margin: 2px;
 			}
 
-			/* The following is from flot exmaple */
-			#content {
-				width: 420px;
-				height: 270px;
-				margin: 0 auto;
-				padding: 10px;
-			}
-			.footer {
-				padding-top: 15px;
-				padding-left: 5px;
-			}
-			.demo-container {
-				box-sizing: border-box;
-				width: 400px;
-				height: 250px;
-				padding: 20px 15px 15px 15px;
-				margin: 15px auto 30px auto;
-				border: 1px solid #ddd;
-				background: #fff;
-				background: linear-gradient(#f6f6f6 0, #fff 50px);
-				background: -o-linear-gradient(#f6f6f6 0, #fff 50px);
-				background: -ms-linear-gradient(#f6f6f6 0, #fff 50px);
-				background: -moz-linear-gradient(#f6f6f6 0, #fff 50px);
-				background: -webkit-linear-gradient(#f6f6f6 0, #fff 50px);
-				box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-				-o-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-				-ms-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-				-moz-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-				-webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-			}
-
-			.demo-placeholder {
-				width: 100%;
-				height: 100%;
-				font-size: 14px;
-				line-height: 1.2em;
-			}
-
-			.legend table {
-				border-spacing: 5px;
-			}
 			.msg-footer {
 				width: auto;
 			}
+
+            #chart svg {
+                height: 350px;
+            }
+            
 		</style>
 	</head>
 
@@ -88,7 +56,7 @@
 				<h1>CRDS Control</h1>
 			</div>
 			<div class="row">
-				<div class="col-lg-3 col-md-3 col-xs-3" role="main">
+				<div class="col-md-3" role="main">
 					<div class="row">
 						<div class="panel panel-default">
 							<div class="panel-heading">
@@ -128,11 +96,9 @@
 					</div>
 				</div>
 				<div class="col-md-5">
-					<div id="content">
-						<div class="container">
-							<div id="placeholder" class="demo-placeholder" style="width:380px;height:250px"></div>
-						</div>
-					</div>
+                  <div id="chart" class='with-3d-shadow with-transitions'>
+                    <svg></svg>
+                  </div>
 				</div>
 				<div class="col-md-2" role="complementary" id ="snav"></div>
 			</div>
@@ -156,25 +122,40 @@
 		</footer>
 		<script src="../assets/jquery-2.1.1.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../assets/bootstrap-3.2.0-dist/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../assets/flot/jquery.flot.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="../js/general.js"></script>		
-		<script type="text/javascript">
-			$(function() {
+        <script type="text/javascript">
 
-				var d1 = [];
-				for (var i = 0; i < 14; i += 0.5) {
-					d1.push([i, Math.sin(i)]);
-				}
+    var chart;
+    nv.addGraph(function() {
+        chart = nv.models.lineWithFocusChart();
 
-				var d2 = [[0, 3], [4, 8], [8, 5], [9, 13]];
+        chart.xAxis.tickFormat(d3.format(',f'));
+        chart.x2Axis.tickFormat(d3.format(',f'));
+        chart.yAxis.tickFormat(d3.format(',.2f'));
+        chart.y2Axis.tickFormat(d3.format(',.2f'));
 
-				// A null signifies separate line segments
+        d3.select('#chart svg')
+            .datum(testData())
+            .call(chart);
 
-				var d3 = [[0, 12], [7, 12], null, [7, 2.5], [12, 2.5]];
+        nv.utils.windowResize(chart.update);
 
-				$.plot("#placeholder", [d1, d2, d3]);
-			});
+        return chart;
+    });
 
-		</script>
+    var data = [ {x: 0, y:1}, {x:10, y:-3}, {x:20, y:5}, {x:30, y:6}, {x:40, y:10}, {x:50, y:3} ];
+
+    function testData() {
+    return [ { values: data,
+             key: "Test Data"
+    }];
+    }
+
+   setInterval(function() {
+      data.push( {x : data[data.length - 1].x + 10, y: data[data.length - 1].y + 4*Math.random() - 2.0} );
+      chart.update();
+    }, 5000); 
+
+        </script>
 	</body>
 </html>
