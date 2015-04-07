@@ -181,8 +181,22 @@
 					x : d.getTime(),
 					y : data[data.length - 1].y + 4 * Math.random() - 2.0
 				});
-				chart.update();
-			}, 1000);
+
+                // Update the chart so that if the currently viewed window ends at
+                // the most recent data point, the window of viewed data 'slides' so
+                // the most recent data points are always shown.
+                currentExtent = chart.brushExtent();
+                dataEnd = data[0].x;
+                prevDataEnd = data[1].x;
+                if (currentExtent && (currentExtent[1] == prevDataEnd)) {
+                    delta = dataEnd - prevDataEnd;
+                    newStart = currentExtent[0] + delta;
+                    newEnd = dataEnd;
+                    chart.brushExtent([newStart, newEnd]).update();
+                } else {
+                    chart.update();
+                }
+            }, 1000);
 
 		</script>
 	</body>
