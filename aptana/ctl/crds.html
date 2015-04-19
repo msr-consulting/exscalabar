@@ -56,7 +56,7 @@
 				<h1>CRDS Control</h1>
 			</div>
 			<div class="row">
-				<div class="col-md-3" role="main">
+				<div class="col-lg-2 col-md-3 col-sm-3" role="main">
 					<div class="row">
 						<div class="panel panel-default">
 							<div class="panel-heading">
@@ -66,41 +66,94 @@
 								<div class="col-md-5">
 									<div class="form-group" id="fcrd">
 										<label class = "ctl-label" for="bluerate">f<sub>blue</sub> (Hz)</label>
-										<input type="number" id="bluerate" class="span3 ctl-input" placeholder="2000" data-toggle="tooltip" data-placement="right" title="Blue laser repetition rate (in Hz)."/>
+										<input type="number" id="bluerate" class="form-control" placeholder="2000" data-toggle="tooltip" data-placement="right" title="Blue laser repetition rate (in Hz)."/>
 										<br />
 										<label class = "ctl-label" for="redrate">f<sub>red</sub> (Hz)</label>
-										<input type="number" id="redrate" class="ctl-input" placeholder="1000"/>
+										<input type="number" id="redrate" class="form-control" placeholder="1000"/>
 									</div>
 								</div>
 								<div class="col-md-5">
 									<div class="form-group" id ="dccrd">
 										<label class = "ctl-label" for="bluedc">DC<sub>blue</sub> (Hz)</label>
-										<input type="number" id="bluedc" class="span3 ctl-input" placeholder="50"/>
+										<input type="number" id="bluedc" class="form-control" placeholder="50"/>
 										<br />
 										<label class = "ctl-label" for="reddc">DC<sub>red</sub> (Hz)</label>
-										<input type="number" id="reddc" class="ctl-input" placeholder="50"/>
+										<input type="number" id="reddc" class="form-control" placeholder="50"/>
+									</div>
+								</div>
+								<div class="col-md-5">
+									<div class="form-group">
+										<button type="button" class="btn btn-primary" id ="benable">
+											Blue Enabled
+										</button>
+									</div>
+								</div>
+								<div class="col-md-5">
+									<div class="form-group">
+										<button type="button" class="btn btn-primary" id ="renable">
+											Red Enabled
+										</button>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="row">
-						<div class="panel panel-default">
+						<div class="panel panel-default" data-toggle="tooltip" data-placement="right"  title="PMT gains in volts.">
 							<div class="panel-heading">
 								Laser Gain
 							</div>
-							<p>
-								Here is another panel below
-							</p>
+							<div class="row">
+								<div class="col-md-5">
+									<label class = "ctl-label" for="g1">Gain 1</label>
+									<input type="number" id="g1" class="form-control" placeholder="5" />
+									<br />
+									<label class = "ctl-label" for="g2">Gain 2</label>
+									<input type="number" id="g2" class="form-control" placeholder="5" />
+									<br />
+									<label class = "ctl-label" for="g3">Gain 3</label>
+									<input type="number" id="g3" class="form-control" placeholder="5" />
+									<br />
+									<label class = "ctl-label" for="g4">Gain 4</label>
+									<input type="number" id="g4" class="form-control" placeholder="5" />
+									<br />
+									<label class = "ctl-label" for="g5">Gain 5</label>
+									<input type="number" id="g5" class="form-control" placeholder="5" />
+									<br />
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-7">
+				<div class="col-lg-8 col-md-7 col-sm-6">
 					<div id="chart" class='with-3d-shadow with-transitions'>
 						<svg></svg>
 					</div>
+					<div class="dropdown">
+						<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+							Dropdown
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+							<li role="presentation">
+								<a role="menuitem" tabindex="-1" id="tau">Tau</a>
+							</li>
+							<li role="presentation">
+								<a role="menuitem" tabindex="-1" id="tau0">Tau0</a>
+							</li>
+							<li role="presentation">
+								<a role="menuitem" tabindex="-1" id="ext">Extinction</a>
+							</li>
+							<li role="presentation">
+								<a role="menuitem" tabindex="-1" id="max">Max</a>
+							</li>
+							<li role="presentation">
+								<a role="menuitem" tabindex="-1" href="#">Separated link</a>
+							</li>
+						</ul>
+					</div>
 				</div>
-				<div class="col-md-2" role="complementary" id ="snav"></div>
+				<div class="col-lg-2 col-md-2 col-sm-3" role="complementary" id ="snav"></div>
 			</div>
 		</div>
 
@@ -122,6 +175,7 @@
 		<script src="../assets/jquery-2.1.1.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../assets/bootstrap-3.2.0-dist/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="../js/general.js"></script>
+		<script src="../js/crd.js" type="text/javascript" charset="UTF-8"></script>
 		<script type="text/javascript">
 			var chart;
 			nv.addGraph(function() {
@@ -143,37 +197,53 @@
 				return chart;
 			});
 			var d = new Date();
-			var data = [{x:d.getTime(),y:0}
-			/*{
-			 x : 0,
-			 y : 1
-			 }, {
-			 x : 10,
-			 y : -3
-			 }, {
-			 x : 20,
-			 y : 5
-			 }, {
-			 x : 30,
-			 y : 6
-			 }, {
-			 x : 40,
-			 y : 10
-			 }, {
-			 x : 50,
-			 y : 3
-			 }*/];
+			var data = [{
+				x : d.getTime(),
+				y : 0
+			}];
+			var data2 = [{
+				x : d.getTime(),
+				y : 0
+			}];
+			var data3 = [{
+				x : d.getTime(),
+				y : 0
+			}];
+			var data4 = [{
+				x : d.getTime(),
+				y : 0
+			}];
+			var data5 = [{
+				x : d.getTime(),
+				y : 0
+			}];
 
 			function testData() {
 				return [{
 					values : data,
 					key : "Matt's Data"
+				}, {
+					values : data2,
+					key : "Dan's Data"
+				}, {
+					values : data3,
+					key : "Terzah's Data"
+				}, {
+					values : data4,
+					key : "Sasha's Data"
+				}, {
+					values : data5,
+					key : "Noah's Data"
 				}];
 			}
 
 			setInterval(function() {
 				if (data.length >= 20) {
 					data.pop();
+					data2.pop();
+					data3.pop();
+					data4.pop();
+					data5.pop();
 				}
 				d = new Date();
 
@@ -182,21 +252,38 @@
 					y : data[data.length - 1].y + 4 * Math.random() - 2.0
 				});
 
-                // Update the chart so that if the currently viewed window ends at
-                // the most recent data point, the window of viewed data 'slides' so
-                // the most recent data points are always shown.
-                currentExtent = chart.brushExtent();
-                dataEnd = data[0].x;
-                prevDataEnd = data[1].x;
-                if (currentExtent && (currentExtent[1] == prevDataEnd)) {
-                    delta = dataEnd - prevDataEnd;
-                    newStart = currentExtent[0] + delta;
-                    newEnd = dataEnd;
-                    chart.brushExtent([newStart, newEnd]).update();
-                } else {
-                    chart.update();
-                }
-            }, 1000);
+				data2.unshift({
+					x : d.getTime(),
+					y : data[data.length - 1].y + 4 * Math.random() - 2.0
+				});
+				data3.unshift({
+					x : d.getTime(),
+					y : data[data.length - 1].y + 4 * Math.random() - 2.0
+				});
+				data4.unshift({
+					x : d.getTime(),
+					y : data[data.length - 1].y + 4 * Math.random() - 2.0
+				});
+				data5.unshift({
+					x : d.getTime(),
+					y : data[data.length - 1].y + 4 * Math.random() - 2.0
+				});
+
+				// Update the chart so that if the currently viewed window ends at
+				// the most recent data point, the window of viewed data 'slides' so
+				// the most recent data points are always shown.
+				currentExtent = chart.brushExtent();
+				dataEnd = data[0].x;
+				prevDataEnd = data[1].x;
+				if (currentExtent && (currentExtent[1] == prevDataEnd)) {
+					delta = dataEnd - prevDataEnd;
+					newStart = currentExtent[0] + delta;
+					newEnd = dataEnd;
+					chart.brushExtent([newStart, newEnd]).update();
+				} else {
+					chart.update();
+				}
+			}, 1000);
 
 		</script>
 	</body>
