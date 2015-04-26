@@ -135,3 +135,5 @@ Still need to add auxilary data such as
 * MFC Data - Q, Q0, P, T, Qsp
 * PPT Data - P, T
 * RH Data - RH, T, Td
+* Meerstetter TEC data - Tsp, T, Power
+* TE Technologies TEC data - Tsp, T, Power
