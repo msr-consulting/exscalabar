@@ -9,4 +9,4 @@ Resources
 -----------------
 * [egghead.io](https://egghead.io/technologies/angularjs)
 * [thinkster](https://thinkster.io/)
-* [Codeschool](https://www.codeschool.com/paths/javascript#angular-js)
+* [Codeschool](https://www.codeschool.com/paths/javascript#angular-js) - provides a free, good introduction into the use of AngularJS.
