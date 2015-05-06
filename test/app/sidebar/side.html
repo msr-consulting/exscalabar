@@ -1,8 +1,8 @@
-<div ng-controller="sidebarCtrl">
+<div ng-controller="Sidebar">
 	<nav class="bs-docs-sidebar hidden-print affix-top" >
 		<ul class="nav bs-docs-sidenav">
 			<li class>
-				<button class="btn btn-default" type="button" ng-click = "saveData()">
+				<button class="btn btn-default" type="button" ng-click = "saveData()" ng-class="{'active': save}">
 					Save
 				</button>
 				<button class="btn btn-default">
