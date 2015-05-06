@@ -5,11 +5,15 @@
 		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 		<meta name="description" content="Test of the AngularJS framework.">
 		<meta name="author" content="Matt Richardson">
+		
 		<title>Testing for EXSCALABAR</title>
 
 		<!-- Bootstrap core CSS -->
 		<link href="assets/bootstrap-3.3.4-dist/css/bootstrap.min.css" rel="stylesheet">
+		
+		<!-- Plot styling from NVD3 -->
 		<link href="assets/nvd3/nv.d3.css" rel="stylesheet"/>
+		<link href="app/shared/form-styling.css" rel="stylesheet"/>
 	</head>
 
 	<body ng-app="main">
@@ -19,7 +23,7 @@
 				<div class="col-sm-9" role="main">
 					<ng-view></ng-view>
 				</div>
-				<div class="col-md-3" role="complementary" id ="snav">
+				<div class="col-md-3 col-lg-2" role="complementary">
 					<sidebar></sidebar>
 				</div>
 			</div>
@@ -36,6 +40,7 @@
 		<!-- Begin import of modules -->
 		<script src="app/shared/main.module.js"></script>
 		<script src="app/shared/main-config.js"></script>
+		<script src="app/sidebar/sidebar-controller.js"></script>
 		<script src="app/msg/msg-directive.js"></script>
 		<script src="app/sidebar/sidebar-directive.js"></script>
 		<script src="app/navigation/nav-directive.js"></script>
