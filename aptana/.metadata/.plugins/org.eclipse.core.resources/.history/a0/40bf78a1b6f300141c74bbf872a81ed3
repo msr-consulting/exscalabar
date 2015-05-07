@@ -1,0 +1,12 @@
+(function(){
+	angular.module('main')
+	.factory('tableService', function(){
+		var tabService = {
+			curTab: '',
+			setTab: function(tab){this.curTab;},
+			getTab: function(){return this.curTab;}
+		};
+		return tabService;
+	});
+	
+})();

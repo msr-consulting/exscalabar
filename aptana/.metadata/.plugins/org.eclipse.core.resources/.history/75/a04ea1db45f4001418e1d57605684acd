@@ -1,0 +1,27 @@
+(function() {
+	angular.module('main')
+	.factory('Data', ['$rootScope', '$http',function($rootScope, $http) {
+
+		var time;
+		
+		var pasObject = {
+			"f0": [],
+			"IA": [],
+			"Q":  [],
+			"p": [],
+			"abs":[]
+		};
+		var dataService = {
+			"time": null,
+			"pas": [],
+			
+				
+			}
+		};
+		$http.get('http://192.168.24.73:8001/xService/General/Data')
+		.success(function(data, status, headers, config) {
+			
+		});
+	}]);
+
+})();

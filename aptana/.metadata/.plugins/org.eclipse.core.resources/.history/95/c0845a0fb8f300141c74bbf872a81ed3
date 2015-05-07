@@ -1,0 +1,8 @@
+(function(){
+	angular.main('main')
+	.controller('InputTable', ['$scope', 'tableService', function($scope, tableService){
+		
+		$scope.$on('handleBroadcast', function(){});
+		
+	}]);
+})();

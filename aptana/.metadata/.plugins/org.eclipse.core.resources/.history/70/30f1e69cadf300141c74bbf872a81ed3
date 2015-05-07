@@ -1,0 +1,26 @@
+(function() {
+	angular.module('main')
+	.controller('Sidebar', ['$scope','$http', function($scope, $http) {
+
+		$scope.save = true;
+		$scope.filter = true;
+
+		$scope.saveData = function() {
+
+			if ($scope.save) {
+				$scope.save = false;
+			} else {
+				$scope.save = true;
+			}
+
+			$http.get('http://192.168.24.73:8080/xService/General/Save?save?='+$scope.save.toString());
+			//alert("The button has been set to " + $scope.save.toString());
+		};
+
+		$scope.setFilter = function(val) {
+			alert("The button has been set to " + val.toString());
+
+		};
+
+	}]);
+})();

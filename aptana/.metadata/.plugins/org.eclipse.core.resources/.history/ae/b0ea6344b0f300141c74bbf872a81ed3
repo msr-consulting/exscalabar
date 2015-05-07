@@ -1,0 +1,33 @@
+(function() {
+	angular.module('main').controller('O3Table', ['$scope',
+	function($scope) {
+		$scope.table_vals[ {
+			"step" : "Wait",
+			"descr" : "Set a wait time in the ozone cal in seconds"
+		}, 
+		{
+			"step" : "Filter",
+			"descr" : "Boolean that sets the filter state (<code>TRUE</code> or<code>FALSE</code>)"
+		}, 
+		{
+			"step" : "Speaker",
+			"descr" : "Boolean that sets the speaker state (<code>TRUE</code> or<code>FALSE</code>)"
+		}, 
+		{
+			"step" : "O2 Valve",
+			"descr" : "Boolean that sets the O2 valve position (<code>TRUE</code> or<code>FALSE</code>)"
+		}, 
+		{
+			"step" : "O3 Valve",
+			"descr" : "Boolean that sets the O3 valve state (<code>TRUE</code> or<code>FALSE</code>)"
+		}, 
+		{
+			"step" : "O3 Generator",
+			"descr" : "Boolean that sets the O3 generator state (<code>TRUE</code> or<code>FALSE</code>)"
+		}, 
+		{
+			"step" : "Filter",
+			"descr" : "Boolean that sets the filter state (<code>TRUE</code> or<code>FALSE</code>)"
+		}];
+	}]);
+})();

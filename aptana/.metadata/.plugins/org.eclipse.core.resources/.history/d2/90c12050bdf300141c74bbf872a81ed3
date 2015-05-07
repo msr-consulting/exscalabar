@@ -1,0 +1,48 @@
+<div class="table-responsive">
+	<table class="table table-bordered table-striped" id="xml-table" ng-controller="O3Table">
+		<thead>
+			<tr>
+				<th>Step</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="val in table_vals" ng-dblclick="clickRow(val)">
+				<th scope="row" id ="{{val.id}}">{{val.step}}</th><td>{{val.descr}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="table-responsive" ng-controller ="InputTable">
+	<table class="table table-bordered table-striped" id="cal-table">
+		<colgroup>
+			<col class="col-xs-1" />
+			<col class="col-xs-7" />
+		</colgroup>
+		<thead>
+			<tr>
+				<th>Step</th>
+				<th>Value</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="datum in data"><td>{{datum.id}}</td><td contenteditable>{{datum.val}}</td></tr>
+		</tbody>
+	</table>
+</div>
+<form class="form-inline" ng-controller="sidebarCtrl">
+	<div class="form-group">
+		<label class="sr-only" for="fileName">Password</label>
+		<input type="text" class="form-control" id="fileName" value="defaultCal">
+	</div>
+	<div ng-controller ="Save">
+	<button type="button" class="btn btn-default" ng-click="save()">
+		Save Cal
+	</button>
+	</div>
+
+	<button id ="set_def" type="button" class="btn btn-default">
+		Set Current as Default
+	</button>
+</form>
+<textarea id="xml_out" rows ="10" cols="30"></textarea>

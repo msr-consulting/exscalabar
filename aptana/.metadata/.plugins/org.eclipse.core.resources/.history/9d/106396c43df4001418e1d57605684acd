@@ -1,0 +1,6 @@
+(function(){
+	angular.module('main')
+	.controller('Main', ['$interval', '$http', function($interval, $http){
+		
+	}])
+})();

@@ -1,0 +1,110 @@
+<div class="table-responsive">
+	<table class="table table-bordered table-striped" id="xml-table" ng-controller="O3Table">
+		<!--<colgroup>
+			<col class="col-xs-1" />
+			<col class="col-xs-7" />
+		</colgroup>-->
+		<thead>
+			<tr>
+				<th>Step</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="val in table_vals"><th scope="row" id ="{val.id}">{{val.step}}</th><td>{{val.descr}}</td></tr>
+			<!--<tr>
+				<th id = "Wait" scope="row" class='tclickable'>Wait</th>
+				<td>Set a wait time in the ozone cal in seconds</td>
+			</tr>
+			<tr>
+				<th id = "Filter" scope="row" class="tclickable">Filter</th>
+				<td>Boolean that sets the filter state (
+				<code>
+					TRUE
+				</code> or
+				<code>
+					FALSE
+				</code>)</td>
+			</tr>
+			<tr>
+				<th id = "Speaker" scope="row" class="tclickable">Speaker</th>
+				<td>Boolean that sets the speaker state (
+				<code>
+					TRUE
+				</code> or
+				<code>
+					FALSE
+				</code>)</td>
+			</tr>
+			<tr>
+				<th id = "O2 Valve" scope="row" class="tclickable">O2 Valve</th>
+				<td>Boolean that sets the O2 valve position (
+				<code>
+					TRUE
+				</code> or
+				<code>
+					FALSE
+				</code>)</td>
+			</tr>
+			<tr>
+				<th id = "O3 Valve" scope="row" class="tclickable">O3 Valve</th>
+				<td>Boolean that sets O3 valve position(
+				<code>
+					TRUE
+				</code> or
+				<code>
+					FALSE
+				</code>)</td>
+			</tr>
+			<tr>
+				<th id = "O3 Generator" scope="row" class="tclickable">O3 Generator Power</th>
+				<td>Boolean that sets O3 generator state (
+				<code>
+					TRUE
+				</code> is on while
+				<code>
+					FALSE
+				</code> is off)</td>
+			</tr>
+			<tr>
+				<th id = "QO2" scope="row" class="tclickable">O2 Flow Rate</th>
+				<td>Boolean that sets the speaker state (
+				<code>
+					TRUE
+				</code> or
+				<code>
+					FALSE
+				</code>)</td>
+			</tr>-->
+		</tbody>
+	</table>
+</div>
+<div class="table-responsive">
+	<table class="table table-bordered table-striped" id="cal-table">
+		<colgroup>
+			<col class="col-xs-1" />
+			<col class="col-xs-7" />
+		</colgroup>
+		<thead>
+			<tr>
+				<th>Step</th>
+				<th>Value</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+</div>
+<form class="form-inline" ng-controller="sidebarCtrl">
+	<div class="form-group">
+		<label class="sr-only" for="fileName">Password</label>
+		<input type="text" class="form-control" id="fileName" value="defaultCal">
+	</div>
+	<button type="button" class="btn btn-default" id ="save_cal">
+		Save Cal
+	</button>
+
+	<button id ="set_def" type="button" class="btn btn-default">
+		Set Current as Default
+	</button>
+</form>
+<textarea id="xml_out" rows ="10" cols="30"></textarea>				
