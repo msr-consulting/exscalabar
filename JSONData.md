@@ -137,3 +137,7 @@ Still need to add auxilary data such as
 * RH Data - RH, T, Td
 * Meerstetter TEC data - Tsp, T, Power
 * TE Technologies TEC data - Tsp, T, Power
+
+## Validation
+
+Good resource for JSON validation is the [JSON Validator](http://codebeautify.org/jsonvalidate).
