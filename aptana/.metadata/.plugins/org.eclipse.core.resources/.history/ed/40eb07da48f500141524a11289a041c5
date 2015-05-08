@@ -25,10 +25,6 @@
 			$http.get('http://192.168.24.73:8001/xService/General/Save?save='+$scope.filter.toString());
 
 		};
-		
-		$scope.stop = function(){
-			$http.get('http://192.168.24.73:8001/xService/General/Stop');
-		};
 
 	}]);
 })();

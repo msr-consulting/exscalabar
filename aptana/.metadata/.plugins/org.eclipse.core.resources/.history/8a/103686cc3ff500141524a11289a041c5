@@ -16,7 +16,7 @@
 		<link href="app/shared/form-styling.css" rel="stylesheet"/>
 	</head>
 
-	<body ng-app="main" ng-controller = "MainCtlr">
+	<body ng-app="main">
 		<navi></navi>
 		<div class="container-fluid">
 			<div class="row">
@@ -40,8 +40,6 @@
 		<!-- Begin import of modules -->
 		<script src="app/shared/main.module.js"></script>
 		<script src="app/shared/main-config.js"></script>
-		<script src="app/shared/main-controller.js"></script>
-		<script src="app/shared/data-service.js"></script>
 		<script src="app/sidebar/sidebar-controller.js"></script>
 		<script src="views/cals/o3-table-ctl.js"></script>
 		<script src="views/cals/buildCal-service.js"></script>

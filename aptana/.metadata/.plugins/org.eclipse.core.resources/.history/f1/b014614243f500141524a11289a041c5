@@ -37,20 +37,13 @@
 		return {
 			data : {},
 			getData : function() {
-				promise = $http.get('http://192.168.24.73:8001/xService/General/Data?data=0').success(function(data, status, headers, config) {
-					$rootScope.$broadcast('dataAvailable');
-					
-					/*data.CRD.CellData.forEach{
-						value.extParam.Tau;
-						
-					}
-					
-					this.data */
+				promise = $http.get('http://192.168.24.73:8001/xService/General/Data').success(function(data, status, headers, config) {
+					//$rootScope.broadcast('dataAvailable');
 					$log.log(data);
-				});
+				})
 			}
 		};
 
-	}]);
+	}])
 
 })();

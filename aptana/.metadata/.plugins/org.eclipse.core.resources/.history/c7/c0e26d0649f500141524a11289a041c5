@@ -10,7 +10,7 @@
 				</button>
 			</li>
 			<li class>
-				<button class="btn btn-default" type="button" ng-click = "stop()">
+				<button class="btn btn-default" type="button" ng-click = "stop()" ng-class="{'active': save}">
 					Stop
 				</button>
 			</li>

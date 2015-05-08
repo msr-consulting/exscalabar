@@ -1,8 +1,8 @@
 (function(){
 	angular.module('main')
-	.controller('Main', ['$scope','$interval', '$http', function($scope, $interval, $http){
+	.controller('MainCtlr', ['Data', '$scope','$interval', function(Data, $scope, $interval){
 		
-		$interval
+		$interval(Data.getData, 1000);
 		
 	}]);
 })();

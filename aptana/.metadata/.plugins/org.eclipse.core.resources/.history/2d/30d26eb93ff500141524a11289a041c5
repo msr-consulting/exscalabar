@@ -1,0 +1,6 @@
+(function(){
+	angular.module('main')
+	.controller('Main', ['Data', '$scope','$interval', function(Data, $scope, $interval){
+		
+	}]);
+})();

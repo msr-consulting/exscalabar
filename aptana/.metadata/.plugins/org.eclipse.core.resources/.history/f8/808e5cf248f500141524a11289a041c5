@@ -10,11 +10,6 @@
 				</button>
 			</li>
 			<li class>
-				<button class="btn btn-default" type="button" ng-click = "stop()">
-					Stop
-				</button>
-			</li>
-			<li class>
 				<div class="form-group" id="address">
 					<label class = "ctl-label small" for="ip">IP</label>
 					<input type="text" class = "ctl-input wide" id="ip" data-toggle="tooltip" data-placement="right" title="Blue laser repetition rate (in Hz)."/>

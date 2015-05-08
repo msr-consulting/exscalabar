@@ -1,6 +1,6 @@
 (function() {
-	angular.module('main').factory('Data', ['$rootScope', '$http', '$log',
-	function($rootScope, $http, $log) {
+	angular.module('main').factory('Data', ['$rootScope', '$http',
+	function($rootScope, $http) {
 		var pasObject = {
 			"f0" : [],
 			"IA" : [],
@@ -37,20 +37,12 @@
 		return {
 			data : {},
 			getData : function() {
-				promise = $http.get('http://192.168.24.73:8001/xService/General/Data?data=0').success(function(data, status, headers, config) {
-					$rootScope.$broadcast('dataAvailable');
-					
-					/*data.CRD.CellData.forEach{
-						value.extParam.Tau;
-						
-					}
-					
-					this.data */
-					$log.log(data);
-				});
+				promise = $http.get('http://192.168.24.73:8001/xService/General/Data').success(function(data, status, headers, config) {
+					$rootScope.broadcast('dataAvailable');
+				})
 			}
 		};
 
-	}]);
+	}])
 
 })();
