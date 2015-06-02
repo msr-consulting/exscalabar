@@ -5,6 +5,7 @@
 
 		$scope.data = [];
 
+		/* Handle the broadcast from the buildCal-service */
 		$scope.$on('handleBroadcast', function() {
 
 			// The ID from the cal table

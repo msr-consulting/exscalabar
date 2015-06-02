@@ -1,3 +1,17 @@
+/** This controller is placed on the O3 cal page and defines what will happen 
+ * 	when a user double clicks on a table element.  
+ * 
+ * 	When the element containing this controller is first displayed, the values 
+ * 	in the attribute table_vals will be used to populate the canned table for 
+ * 	sequence building using the ng-repeat directive.
+ * 
+ * 	When the user double clicks on a row, the controller will call the tableService 
+ * 	setTab method.  This in turn updates the attributes of that service with the ID 
+ * 	of the row that was clicked.  That ID is then broadcast and picked up by the 
+ * 	tableInput-ctlr which populates the table for the sequence with a default value
+ * 	for the selected element.
+ */
+
 (function() {
 	angular.module('main')
 	.controller('O3Table', ['$scope', 'tableService', function($scope, tableService) {

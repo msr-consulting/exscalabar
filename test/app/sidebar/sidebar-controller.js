@@ -1,9 +1,17 @@
 (function() {
 	angular.module('main')
-	.controller('Sidebar', ['$scope','$http', function($scope, $http) {
+	.controller('Sidebar', ['$scope','$http', 'Data', function($scope, $http, Data) {
 
 		$scope.save = 1;
 		$scope.filter = 1;
+		
+		// Initially time is not available
+		$scope.time = "NA";
+		
+		
+		$scope.$on('dataAvailable', function(){
+			$scope.time = Data.getTime();
+		});
 
 		$scope.saveData = function() {
 
@@ -13,7 +21,7 @@
 				$scope.save = 1;
 			}
 
-			$http.get('http://192.168.24.73:8001/xService/General/Save?save='+$scope.save.toString());
+			$http.get('http://192.168.0.73:8001/xService/General/Save?save='+$scope.save.toString());
 		};
 
 		$scope.setFilter = function() {
@@ -22,12 +30,12 @@
 			} else {
 				$scope.filter = 1;
 			}
-			$http.get('http://192.168.24.73:8001/xService/General/Save?save='+$scope.filter.toString());
+			$http.get('http://192.168.0.73:8001/xService/General/Save?save='+$scope.filter.toString());
 
 		};
 		
 		$scope.stop = function(){
-			$http.get('http://192.168.24.73:8001/xService/General/Stop');
+			$http.get('http://192.168.0.73:8001/xService/General/Stop');
 		};
 
 	}]);

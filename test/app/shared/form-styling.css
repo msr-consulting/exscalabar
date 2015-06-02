@@ -33,3 +33,8 @@ label.small{
     margin-right:5px;
     margin-top:5px;
 }
+			
+.fixed-label {
+	width: 75px !important;
+}
+

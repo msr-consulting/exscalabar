@@ -1,6 +1,0 @@
-(function(){
-	angular.module('main')
-	.controller('Save', ['$scope', 'SaveData', function($scope, SaveData){
-		
-	}]);
-})();
