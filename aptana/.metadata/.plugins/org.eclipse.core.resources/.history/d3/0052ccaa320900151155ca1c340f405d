@@ -35,6 +35,6 @@ label.small{
 }
 			
 .fixed-label {
-	width: 8em !important;
+	width: 75px !important;
 }
 

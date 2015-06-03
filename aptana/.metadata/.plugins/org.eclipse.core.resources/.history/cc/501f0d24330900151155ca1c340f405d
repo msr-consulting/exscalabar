@@ -34,7 +34,7 @@ label.small{
     margin-top:5px;
 }
 			
-.fixed-label {
+label.fixed-label {
 	width: 8em !important;
 }
 

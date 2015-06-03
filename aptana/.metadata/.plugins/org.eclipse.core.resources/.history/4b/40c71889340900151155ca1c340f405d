@@ -6,7 +6,7 @@
 		$scope.filter = 1;
 		
 		// Initially time is not available
-		$scope.time = "Not Connected";
+		$scope.time = "NA";
 		
 		
 		$scope.$on('dataAvailable', function(){
