@@ -4,8 +4,8 @@
 
 (function() {
 	angular.module('main')
-	.factory('Data', ['$rootScope', '$http', '$log',
-	function($rootScope, $http, $log) {
+	.factory('Data', ['$rootScope', '$http', '$log', 'net',
+	function($rootScope, $http, $log, net) {
 		
 		/* Contains data specific to the PAS */
 		var pasObject = function (){
@@ -37,6 +37,9 @@
 		/* The full data object contains arrays of data as defined in the objects above */
 		var dataObj = {
 			"time" : null,
+			"filter": true,
+			"save": true,
+			"o3cal": false,
 			"pas" : [],
 			"crd" : [],
 			"rd" : [],
@@ -47,10 +50,11 @@
 		//dataObj.crd = [new crdObject()];
 
 		return {
-			getPASData: function(){return dataObj.PAS;},
+			getPASData: function(){return dataObj.pas;},
 			getTime: function(){return dataObj.time;},
+			getData: function(){return dataObj;},
 			getData : function() {
-				promise = $http.get('http://192.168.0.73:8001/xService/General/Data')
+				promise = $http.get('http://' + net.address() + '/xService/General/Data')
 				.success(function(data, status, headers, config) {
 					$rootScope.$broadcast('dataAvailable');
 					//updateTime(jsonobj.PAS.Time);

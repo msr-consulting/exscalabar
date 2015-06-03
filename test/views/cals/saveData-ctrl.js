@@ -1,6 +1,6 @@
 (function() {
-	angular.module('main').controller('Save', ['$scope', 'SaveData', '$http',
-	function($scope, SaveData, $http) {
+	angular.module('main').controller('Save', ['$scope', 'SaveData', '$http','net', 
+	function($scope, SaveData, $http, net) {
 
 		$scope.save = function() {
 			var xml = '<?xml version="1.0" encoding="utf-8"?>\r\n<OZONE>\r\n';
@@ -13,7 +13,7 @@
 			/* Send the calibration profile as XML data. */
 			$http({
 				method : 'POST',
-				url : 'http://192.168.24.73:8001/xService/Calibration/saveCalFile?file_name=test_ang',
+				url : 'http://' + net.address() + '/xService/Calibration/saveCalFile?file_name=test_ang',
 				data : xml,
 				headers : {
 					"Content-Type" : 'application/x-www-form-urlencoded'

@@ -8,7 +8,7 @@
 				<button class="btn btn-default" type="button" ng-click = "saveData()" ng-class="{'active': save}">
 					Save
 				</button>
-				<button class="btn btn-default">
+				<button class="btn btn-default" ng-class="{'active': filter}">
 					Filter
 				</button>
 			</li>
@@ -20,10 +20,10 @@
 			<li class>
 				<div class="form-group" id="address">
 					<label class = "ctl-label small" for="ip">IP</label>
-					<input type="text" class = "ctl-input wide" id="ip" data-toggle="tooltip" data-placement="right" title="Blue laser repetition rate (in Hz)."/>
+					<input ng-model="ip" ng-change="changeIP()" type="text" class = "ctl-input wide" id="ip" data-toggle="tooltip" data-placement="right" />
 					<br>
 					<label class = "ctl-label small" for="port">Port</label>
-					<input type="text" id="port" class="ctl-input wide" />
+					<input ng-model="port" ng-change="changePort()"type="text" id="port" class="ctl-input wide" />
 				</div>
 			</li>
 			<li class>
