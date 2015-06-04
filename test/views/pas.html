@@ -7,10 +7,10 @@
 			<div class="panel-body">
 				<div class="form-group" id="spk" >
 					<label class = "ctl-label wlabel" for="svrange">V<sub>range</sub> (V)</label>
-					<input ng-model="speaker.vrange" ng-blur= "updateSpkV()" type="number" id="svrange" class="ctl-input wlabel" data-placement="right" placeholder="1" min ="0" max="10"/>
+					<input ng-model="speaker.vrange" ng-blur= "updateSpkV()" type="number" id="svrange" class="ctl-input wlabel" data-placement="right" />
 					<br />
 					<label class = "ctl-label wlabel" for="svoffset">V<sub>offset</sub> (V)</label>
-					<input ng-model="speaker.voffset" ng-blur= "updateSpkV()" type="number" id="svoffset" class="ctl-input wlabel" data-placement="right" placeholder="0" min="0" max="5"/>
+					<input ng-model="speaker.voffset" ng-blur= "updateSpkV()" type="number" id="svoffset" class="ctl-input wlabel" data-placement="right" />
 					<br />
 					<label class = "ctl-label wlabel" for="fcenter">f<sub>center</sub> (Hz)</label>
 					<input ng-model="speaker.f0" ng-blur= "updateSpkF()" type="number" id="fcenter" class="ctl-input wlabel" data-placement="right" placeholder="1300" min="100" max="5000"/>
