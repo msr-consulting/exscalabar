@@ -1,0 +1,3 @@
+(function() {
+	angular.module('main')
+	.controller('pasGraph', ['$scope', function($scope, net, $http, cvt, Data, $log) {

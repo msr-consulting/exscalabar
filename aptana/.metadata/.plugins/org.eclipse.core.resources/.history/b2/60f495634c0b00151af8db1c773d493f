@@ -1,0 +1,109 @@
+<div class="row">
+	<div class="col-lg-4 col-md-5 col-sm-5 col-xs-4" role="main" ng-controller ="pas">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				Speaker Control
+			</div>
+			<div class="panel-body">
+				<div class="form-group" id="spk" >
+					<label class = "ctl-label wlabel" for="svrange">V<sub>range</sub> (V)</label>
+					<input ng-model="speaker.vrange" ng-blur= "updateSpkV()" type="number" id="svrange" class="ctl-input wlabel" data-placement="right" />
+					<br />
+					<label class = "ctl-label wlabel" for="svoffset">V<sub>offset</sub> (V)</label>
+					<input ng-model="speaker.voffset" ng-blur= "updateSpkV()" type="number" id="svoffset" class="ctl-input wlabel" data-placement="right" />
+					<br />
+					<label class = "ctl-label wlabel" for="fcenter">f<sub>center</sub> (Hz)</label>
+					<input ng-model="speaker.f0" ng-blur= "updateSpkF()" type="number" id="fcenter" class="ctl-input wlabel" data-placement="right" placeholder="1300" min="100" max="5000"/>
+					<br />
+					<label class = "ctl-label wlabel" for="df">&Delta;f (Hz)</label>
+					<input ng-model="speaker.df" ng-blur= "updateSpkF()" type="number" id="df" class="ctl-input wlabel" placeholder="100" min="1" max="1000" data-toggle="tooltip" title="Speaker chirp bandwidth in Hz."/>
+
+					<br />
+					<button ng-click = "setPos()" type="button" class="btn btn-primary" id ="spk_on" value="Speaker" ng-switch on = "speaker.pos" >
+						<div ng-switch-when = true>
+							Speaker
+						</div>
+						<div ng-switch-when = false>
+							Laser
+						</div>
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				Speaker Cycle
+			</div>
+			<div class="panel-body">
+				<div class="form-group" id="spk">
+					<label class = "ctl-label wlabel" for="period">Period (s)</label>
+					<input ng-model = "cycle.period" ng-change="updateCycle()" type="number" id="period" class="ctl-input wlabel" placeholder="360" min ="10" max="5000"/>
+					<br/>
+					<label class = "ctl-label wlabel" for="length">Length (s)</label>
+					<input ng-model="cycle.length" ng-change="updateCycle()" type="number wlabel" id="length" class="ctl-input wlabel" placeholder="0" min="1" max="100"/>
+					<button ng-click= "updateAuto()" type="button" class="btn btn-primary" id ="cycle_on" value="Auto" ng-switch on="cycle.auto">
+						<div ng-switch-when = true>
+							Auto
+						</div>
+						<div ng-switch-when = false>
+							Manual
+						</div>
+						<div ng-switch-default>
+							Manual
+						</div>
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				Laser Control
+			</div>
+			<div class="panel-body">
+				<label class = "ctl-label" for="period">Period (s)</label>
+				<input type="number" id="period" class="span3 ctl-input" placeholder="360" min ="10" max="5000"/>
+				<button type="button" class="btn btn-primary" id ="cycle_on" value="Auto">
+					Auto
+				</button>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="col-lg-11 col-md-10 col-sm-9 col-xs-9">
+	<div id="content">
+		<div class="container">
+			<div id="placeholder" class="demo-placeholder" style="width:380px;height:250px"></div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Variable</th>
+						<th>Cell 1</th>
+						<th>Cell 2</th>
+						<th>Cell 3</th>
+						<th>Cell 4</th>
+						<th>Cell 5</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>f0</td>
+						<td>{{ data.cell[0].f0[0] }}</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

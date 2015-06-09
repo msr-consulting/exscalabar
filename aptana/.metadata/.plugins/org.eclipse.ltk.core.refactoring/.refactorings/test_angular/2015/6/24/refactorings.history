@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;test_angular/views/view-ctl/pasGraph-ctl.js&apos; to &apos;pasGraph.ctl.js&apos;" description="Rename resource &apos;pasGraph-ctl.js&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="views/view-ctl/pasGraph-ctl.js" name="pasGraph.ctl.js" stamp="1433827558159" updateReferences="true"/>
+</session>

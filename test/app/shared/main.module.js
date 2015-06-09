@@ -1,4 +1,4 @@
 /* Start with an IIFE */
 (function(){
-	angular.module('main',['ngRoute']);
+	angular.module('main',['ngRoute', 'nvd3']);
 })();

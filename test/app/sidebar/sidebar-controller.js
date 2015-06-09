@@ -23,12 +23,12 @@
 			//$scope.time = Data.getTime();
 			
 			/* Retrieve the data object that contains the parsed data */
-			data = Data.getData();
+			//data = Data.getData();
 			
 			/* Populate the variables pertinent to the sidebar */
-			$scope.time = data.time;
-			$scope.filter = data.filter;
-			$scope.save = data.save;
+			$scope.time = Data.time[0];
+			$scope.filter = Data.filter;
+			$scope.save = Data.save;
 			
 			//$scope.filter = Data.getFilter();
 		});
