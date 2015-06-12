@@ -24,20 +24,31 @@
 					tickFormat : function(d) {
 						return d3.format('.01f')(d);
 					}
+				},
+				xAxis : {
+					tickFormat : function(d) {
+						return d3.time.format('%X')(new Date(d));
+					}
 				}
 			}
 		};
 
-		$scope.data = [{
-			values : [],
-			key : 'Cell 1 IA'
-		}];
+		$scope.data = [ 
+			{ values : [], key : 'Cell 1 Q'},
+			{ values : [], key : 'Cell 2 Q'},
+			{ values : [], key : 'Cell 3 Q'},
+			{ values : [], key : 'Cell 4 Q'},
+			{ values : [], key : 'Cell 5 Q'},
+		];
 
 		$scope.run = true;
 
-		//var x = 0;
+
 		$scope.$on('dataAvailable', function() {
-			$scope.data[0].values = {x: Data.time, y: Data.pas.cell[0].Q};
+			for (var i = 0; i < 5; i++) {
+				$scope.data[i].values = Data.pas.cell[i].Q;
+			}
+			
 			//$scope.$apply();
 			});
 
