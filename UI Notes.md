@@ -12,6 +12,8 @@ Bootstrap is built on [jQuery](http://jquery.com/) and as such, we will use the 
 libraries.  jQuery will be used to handle events associated with individual UI controls as well as 
 [AJAX](https://developer.mozilla.org/en-US/docs/AJAX) requests for data.
 
+I think that the direction we should move is to utilize one of the Javascript MVC frameworks.  [Backbone.js](http://backbonejs.org/) with [Underscore.js](http://underscorejs.org/) looks like one of the best candidates as it is pretty lightweight and will likely provide what we need.  [Angular.js](https://angularjs.org/) from Google also looks promising, but has some limitations that I don't really understand and it looks like they will do a massive break when moving up from 1 to 2.  In any case, we need to consider a single page application (SPA) as this would solve a lot of the data problems that I anticipate.  Each of these frameworks provides this.
+
 ## General Layout
 
 The general layout will be defined such that transitioning from page to page will be a smooth experience.  The UI will use the grid system to contain the base elements.  The UI will be roughly divided into four main parts: a navigation bar, a side bar, a main container and a message bar.  *At no point should any of the elements in the UI collide or overlap!*

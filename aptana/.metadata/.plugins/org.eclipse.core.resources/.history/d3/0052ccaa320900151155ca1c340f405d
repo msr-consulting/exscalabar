@@ -1,0 +1,40 @@
+label.ctl-label.wlabel{
+    width: 75px;
+    text-align:right;
+    clear: both;
+    float:left;
+    margin-right:15px;
+    margin-top:10px;
+}
+input.ctl-input.wlabel{
+    width:5em;
+    float:left;
+    margin-top:10px;
+}
+.panel-heading{
+    font-variant:small-caps;
+    text-align:center;
+    font-weight:bold;
+    font-size:140%
+}
+.panel{
+    width:15em;
+    padding:0px;
+}
+
+input.wide{
+    width:8em;
+    margin-top:5px;
+}
+label.small{
+    width: 2em;
+    float:left;
+    text-align:right;
+    margin-right:5px;
+    margin-top:5px;
+}
+			
+.fixed-label {
+	width: 75px !important;
+}
+

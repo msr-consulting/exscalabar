@@ -1,0 +1,109 @@
+/** This is the main service for retrieving data at regular intervals.
+ *
+ */
+
+(function() {
+	angular.module('main').factory('Data', ['$rootScope', '$http', '$log', 'net',
+	function($rootScope, $http, $log, net) {
+
+		/* Contains data specific to the PAS */
+		pasData = {
+			"f0" : [],
+			"IA" : [],
+			"Q" : [],
+			"p" : [],
+			"abs" : []
+		};
+
+		function updateTime(t) {
+			/* The reference for LabVIEW time is 1 Jan 1904.  JS days
+			 * are zero based so set the value to the correct date for
+			 * reference.
+			 */
+			var lvDate = new Date(1904, 0, 1);
+			lvDate.setSeconds(t);
+			var strTime = lvDate.getHours() + ':' + (lvDate.getMinutes() < 10 ? "0" : "") + lvDate.getMinutes() + ':' + (lvDate.getSeconds() < 10 ? "0" : "") + lvDate.getSeconds() + '.' + lvDate.getMilliseconds();
+		}
+
+		var crdObject = {
+			"tau" : [],
+			"tau0" : [],
+			"taucorr" : [],
+			"tau0corr" : [],
+			"ext" : [],
+			"extcorr" : [],
+			"stdvTau" : [],
+			"etau" : [],
+			"max" : []
+		};
+
+		var pasWFDataObj = {
+			"micf" : [],
+			"mict" : [],
+			"pd" : []
+		};
+
+		/* The full data object contains arrays of data as defined in the objects above */
+		var dataObj = {
+			"time" : null,
+			"filter" : true,
+			"save" : true,
+			"o3cal" : false
+		};
+		
+		// Defines array lengths - 100 == 100 seconds of data
+		var maxLength = 100;
+5
+		dataObj.pas = {};
+		dataObj.pas.cell = [pasData];
+		dataObj.pas.drive = true;
+
+		/* Call this to poll the server for data */
+		dataObj.getData = function() {
+			promise = $http.get('http://' + net.address() + '/xService/General/Data').success(function(data, status, headers, config) {
+				$rootScope.$broadcast('dataAvailable');
+				
+				// Time comes back in string format so no need to translate...
+				dataObj.time = data.Time;
+
+				// TODO: Fix this hideousness!!!  Has to be a better way...
+				for (var index in data.PAS.CellData) {
+
+					/* Make sure we have all of the cells accounted for */
+					if ((dataObj.pas.cell.length - 1) < index) {
+						dataObj.pas.cell.push(pasData);
+					}
+
+					/* Handle the resonant frequency data */
+					if (dataObj.pas.cell[index].f0.length >= maxLength) {
+						dataObj.pas.cell[index].f0.pop();
+					}
+
+					dataObj.pas.cell[index].f0.unshift(data.PAS.CellData[index].derived.f0);
+
+					/* Handle the integrated area data */
+					if (dataObj.pas.cell[index].IA.length >= maxLength) {
+						dataObj.pas.cell[index].IA.pop();
+					}
+
+					dataObj.pas.cell[index].IA.unshift(data.PAS.CellData[index].derived.IA);
+
+					/* Handle the quality data */
+					if (dataObj.pas.cell[index].Q.length >= maxLength) {
+						dataObj.pas.cell[index].Q.pop();
+					}
+					dataObj.pas.cell[index].Q.unshift(data.PAS.CellData[index].derived.Q);
+				
+				}
+				
+				console.log(data.PAS.CellData[0].derived.Q);
+				console.log(dataObj.pas.cell[0].Q);	
+				dataObj.pas.drive = data.PAS.Drive;
+			});
+		};
+
+		return dataObj;
+
+	}]);
+})();
+

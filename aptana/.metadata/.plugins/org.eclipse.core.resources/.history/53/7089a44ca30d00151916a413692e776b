@@ -1,0 +1,53 @@
+
+                        }
+                    }, true);
+
+                    //subscribe on global events
+                    angular.forEach(scope.events, function(eventHandler, event){
+                        scope.$on(event, function(e){
+                            return eventHandler(e, scope);
+                        });
+                    });
+
+                    // remove completely when directive is destroyed
+                    element.on('$destroy', function () {
+                        scope.api.clearElement();
+                    });
+                }
+            };
+        }])
+
+        .factory('utils', function(){
+            return {
+                debounce: function(func, wait, immediate) {
+                    var timeout;
+                    return function() {
+                        var context = this, args = arguments;
+                        var later = function() {
+                            timeout = null;
+                            if (!immediate) func.apply(context, args);
+                        };
+                        var callNow = immediate && !timeout;
+                        clearTimeout(timeout);
+                        timeout = setTimeout(later, wait);
+                        if (callNow) func.apply(context, args);
+                    };
+                },
+                deepExtend: function(dst){
+                    var me = this;
+                    angular.forEach(arguments, function(obj) {
+                        if (obj !== dst) {
+                            angular.forEach(obj, function(value, key) {
+                                if (dst[key] && dst[key].constructor && dst[key].constructor === Object) {
+                                    me.deepExtend(dst[key], value);
+                                } else {
+                                    dst[key] = value;
+                                }
+                            });
+                        }
+                    });
+                    return dst;
+                }
+            };
+        });
+})();
