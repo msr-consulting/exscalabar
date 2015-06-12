@@ -75,8 +75,8 @@
 					dataObj.time.pop();
 					shiftData = true;
 				}
-
-				dataObj.time.unshift(updateTime(data.Time).getTime());
+				var t = updateTime(data.Time).getTime();
+				dataObj.time.unshift(t);
 
 				// TODO: Fix this hideousness!!!  Has to be a better way...
 				for (var index in data.PAS.CellData) {
@@ -95,11 +95,11 @@
 						dataObj.pas.cell[index].abs.pop();
 					}
 
-					dataObj.pas.cell[index].f0.unshift(data.PAS.CellData[index].derived.f0);
-					dataObj.pas.cell[index].IA.unshift(data.PAS.CellData[index].derived.IA);
-					dataObj.pas.cell[index].Q.unshift(data.PAS.CellData[index].derived.Q);
-					dataObj.pas.cell[index].p.unshift(data.PAS.CellData[index].derived.noiseLim);
-					dataObj.pas.cell[index].abs.unshift(data.PAS.CellData[index].derived.abs);
+					dataObj.pas.cell[index].f0.unshift( {x : t, y : data.PAS.CellData[index].derived.f0});
+					dataObj.pas.cell[index].IA.unshift( {x : t, y : data.PAS.CellData[index].derived.IA});
+					dataObj.pas.cell[index].Q.unshift(  {x : t, y : data.PAS.CellData[index].derived.Q});
+					dataObj.pas.cell[index].p.unshift(  {x : t, y : data.PAS.CellData[index].derived.noiseLim});
+					dataObj.pas.cell[index].abs.unshift({x : t, y : data.PAS.CellData[index].derived.abs});
 
 					/* This is one off data and is not a function of time... */
 					dataObj.pas.cell[index].micf = data.PAS.CellData[index].MicFreq.Y;
