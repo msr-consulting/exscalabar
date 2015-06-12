@@ -24,6 +24,11 @@
 					tickFormat : function(d) {
 						return d3.format('.01f')(d);
 					}
+				},
+				xAxis : {
+					tickFormat : function(d) {
+						return d3.time.format('%X')(new Date(d));
+					}
 				}
 			}
 		};
