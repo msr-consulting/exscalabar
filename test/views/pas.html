@@ -69,8 +69,19 @@
 				</div>
 			</div>
 		</div>
-		<div ng-controller="pPlot" class="col-lg-8 col-md-7">
-
+		<div ng-controller="plotPASQ" class="col-lg-8 col-md-7">
+			<nvd3 options="options" data="data" config="{refreshDataOnly: true}"></nvd3>
+		</div>
+		<div ng-controller="plotPASf0" class="col-lg-8 col-md-7">
+			<nvd3 options="options" data="data" config="{refreshDataOnly: true}"></nvd3>
+		</div>
+		<div ng-controller="plotPASIA" class="col-lg-8 col-md-7">
+			<nvd3 options="options" data="data" config="{refreshDataOnly: true}"></nvd3>
+		</div>
+		<div ng-controller="plotPASp" class="col-lg-8 col-md-7">
+			<nvd3 options="options" data="data" config="{refreshDataOnly: true}"></nvd3>
+		</div>
+		<div ng-controller="plotPASabs" class="col-lg-8 col-md-7">
 			<nvd3 options="options" data="data" config="{refreshDataOnly: true}"></nvd3>
 		</div>
 	</div>
