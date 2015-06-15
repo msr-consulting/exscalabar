@@ -75,6 +75,7 @@
 					dataObj.time.pop();
 					shiftData = true;
 				}
+				
 				var t = updateTime(data.Time).getTime();
 				dataObj.time.unshift(t);
 

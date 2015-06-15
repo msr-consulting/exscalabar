@@ -1,6 +1,15 @@
 function buildPlotController(controllerName, fieldName, ylabel) {
 	angular.module('main')
 	.controller(controllerName, ['$scope', 'Data', function($scope, Data) {
+		
+		/* This will serve as teh context menu for the plots so that we can switch
+		 * plots.  The index will serve to tell what plot we want.
+		 */
+		var index = 0;
+		$scope.menuOptions =[['Q', function($itemScope){index = 0;}],
+		['IA', function(){index = 1;}],
+		['f0', function(){index = 2;}],
+		['abs', function(){index = 3;}]];
 
 	$scope.options = {
 		chart : {
@@ -55,7 +64,7 @@ function buildPlotController(controllerName, fieldName, ylabel) {
 		for (var i = 0; i < 5; i++) {
 			$scope.data[i].values = Data.pas.cell[i][fieldName];
 		}
-		//$scope.$apply();
+		
 		});
 
 	}]);
