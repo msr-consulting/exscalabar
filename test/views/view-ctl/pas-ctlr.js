@@ -44,7 +44,7 @@
 			$scope.speaker.pos = !$scope.speaker.pos;
 			var val = $scope.speaker.pos ? 1 : 0;
 			cvt.setPasSpkCtl($scope.speaker);
-			$http.get('http://' + net.address() + '/xService/PAS_CMD/SpkSw?SpkSw=' + val);
+			$http.get(net.address() + 'PAS_CMD/SpkSw?SpkSw=' + val);
 		};
 
 		$scope.updateSpkV = function() {
@@ -70,7 +70,7 @@
 			};
 
 			cvt.setPasSpkCtl($scope.speaker);
-			$http.get('http://' + net.address() + '/xService/PAS_CMD/UpdateSpkVparams?Vrange=' + $scope.speaker.vrange + '&Voffset=' + $scope.speaker.voffset);
+			$http.get(net.address() + 'PAS_CMD/UpdateSpkVparams?Vrange=' + $scope.speaker.vrange + '&Voffset=' + $scope.speaker.voffset);
 		};
 
 		$scope.updateSpkF = function() {
@@ -82,12 +82,12 @@
 				}
 			};
 			cvt.setPasSpkCtl($scope.speaker);
-			$http.get('http://' + net.address() + '/xService/PAS_CMD/Spk?df=' + $scope.speaker.df + '&f0=' + $scope.speaker.fc);
+			$http.get(net.address() + 'PAS_CMD/Spk?df=' + $scope.speaker.df + '&f0=' + $scope.speaker.fc);
 		};
 
 		$scope.updateCycle = function() {
 			var val = $scope.cycle.auto ? 1 : 0;
-			$http.get('http://' + net.address() + '/xService/PAS_CMD/UpdateSpkCycle?Length=' + $scope.cycle.length + '&Period=' + $scope.cycle.period + '&Cycle=' + val);
+			$http.get(net.address() + 'PAS_CMD/UpdateSpkCycle?Length=' + $scope.cycle.length + '&Period=' + $scope.cycle.period + '&Cycle=' + val);
 		};
 
 		$scope.updateAuto = function() {
