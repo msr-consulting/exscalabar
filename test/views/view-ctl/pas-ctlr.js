@@ -5,11 +5,6 @@
 		//var spk = cvt.getPasSpkCtl();
 
 		$scope.speaker = cvt.getPasSpkCtl();
-		/*{"vrange": spk.vrange,
-		 "voffset": spk.voffset,
-		 "f0":spk.f0,
-		 "df": spk.df,
-		 "pos": spk.pos};*/
 
 		$scope.cycle = {
 			"period" : 360,
@@ -19,7 +14,6 @@
 
 		var maxVrange = 10;
 		var maxVoffset = 5;
-		//$scope.pasCell = Data.
 
 		var flim = {
 			"high" : 3000,

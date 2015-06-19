@@ -7,6 +7,7 @@
 		$scope.ip = net.ip;
 		$scope.port = net.port;
 		$scope.time = "Not connected";
+		$scope.connected = false;
 		
 		$scope.changeIP = function(){
 			net.setIP($scope.ip);
@@ -18,6 +19,8 @@
 		// Initially time is not available
 		$scope.time = "Not Connected";
 		
+		$scope.connected= false;
+		
 		
 		$scope.$on('dataAvailable', function(){
 			
@@ -25,6 +28,11 @@
 			$scope.time = Data.tObj.toLocaleTimeString('en-US', { hour12: false });
 			$scope.filter = Data.filter;
 			$scope.save = Data.save;
+			$scope.connected = true;
+		});
+		
+		$scope.$on('dataNotAvailable', function(){
+			$scope.connected = false;
 		});
 
 		$scope.saveData = function() {

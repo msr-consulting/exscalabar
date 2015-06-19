@@ -9,31 +9,31 @@
 					<div class="col-md-12">
 						<div class="form-group" id="fcrd">
 							<label class = "ctl-label" for="bluerate">f<sub>blue</sub> (Hz)</label>
-							<input type="number" id="bluerate" class="form-control" placeholder="2000" data-toggle="tooltip" data-placement="right" title="Blue laser repetition rate (in Hz)."/>
+							<input ng-model = "blue.rate" type="number" id="bluerate" class="form-control" data-toggle="tooltip" data-placement="right" title="Blue laser repetition rate (in Hz)."/>
 							<br />
 							<label class = "ctl-label" for="redrate">f<sub>red</sub> (Hz)</label>
-							<input type="number" id="redrate" class="form-control" placeholder="1000"/>
+							<input ng-model = "red.rate" type="number" id="redrate" class="form-control" />
 						</div>
 					</div>
 					<div class="col-md-12">
 						<div class="form-group" id ="dccrd">
 							<label class = "ctl-label" for="bluedc">DC<sub>blue</sub> (Hz)</label>
-							<input type="number" id="bluedc" class="form-control" placeholder="50"/>
+							<input ng-model = "blue.DC" type="number" id="bluedc" class="form-control"/>
 							<br />
 							<label class = "ctl-label" for="reddc">DC<sub>red</sub> (Hz)</label>
-							<input type="number" id="reddc" class="form-control" placeholder="50"/>
+							<input ng-model = "red.DC" type="number" id="reddc" class="form-control"/>
 						</div>
 					</div>
 					<div class="col-md-12">
 						<div class="form-group">
-							<button type="button" class="btn btn-primary" id ="benable">
+							<button type="button" class="btn btn-primary" id ="benable" ng-class="{'active': benabled}">
 								Blue Enabled
 							</button>
 						</div>
 					</div>
 					<div class="col-md-12">
 						<div class="form-group">
-							<button type="button" class="btn btn-primary" id ="renable">
+							<button type="button" class="btn btn-primary" id ="renable" ng-class="{'active': renabled}">
 								Red Enabled
 							</button>
 						</div>

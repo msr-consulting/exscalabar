@@ -112,6 +112,8 @@
 				dataObj.pas.drive = data.PAS.Drive;
 				
 				$rootScope.$broadcast('dataAvailable');
+			}).error(function(){
+				$rootScope.$broadcast('dataNotAvailable');
 			});
 		};
 
