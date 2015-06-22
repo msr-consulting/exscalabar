@@ -7,6 +7,7 @@
 		$scope.ip = net.ip;
 		$scope.port = net.port;
 		$scope.time = "Not connected";
+		$scope.connected = false;
 		
 		$scope.changeIP = function(){
 			net.setIP($scope.ip);
@@ -18,19 +19,20 @@
 		// Initially time is not available
 		$scope.time = "Not Connected";
 		
+		$scope.connected= false;
+		
 		
 		$scope.$on('dataAvailable', function(){
-			//$scope.time = Data.getTime();
-			
-			/* Retrieve the data object that contains the parsed data */
-			//data = Data.getData();
 			
 			/* Populate the variables pertinent to the sidebar */
-			$scope.time = Data.time[0];
+			$scope.time = Data.tObj.toLocaleTimeString('en-US', { hour12: false });
 			$scope.filter = Data.filter;
 			$scope.save = Data.save;
-			
-			//$scope.filter = Data.getFilter();
+			$scope.connected = true;
+		});
+		
+		$scope.$on('dataNotAvailable', function(){
+			$scope.connected = false;
 		});
 
 		$scope.saveData = function() {
@@ -41,7 +43,7 @@
 				$scope.save = 1;
 			}
 
-			$http.get('http://' + net.address() + '/xService/General/Save?save='+$scope.save.toString());
+			$http.get(net.address() + 'General/Save?save='+$scope.save.toString());
 		};
 
 		$scope.setFilter = function() {
@@ -50,12 +52,12 @@
 			} else {
 				$scope.filter = 1;
 			}
-			$http.get('http://' + net.address() + '/xService/General/Save?save='+$scope.filter.toString());
+			$http.get(net.address() + 'General/Save?save='+$scope.filter.toString());
 
 		};
 		
 		$scope.stop = function(){
-			$http.get('http://' + net.address() + '/xService/General/Stop');
+			$http.get(net.address() + 'General/Stop');
 		};
 
 	}]);

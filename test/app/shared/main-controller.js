@@ -4,13 +4,15 @@
  */
 
 (function() {
-	angular.module('main').controller('MainCtlr', ['Data', '$scope', '$interval',
-	function(Data, $scope, $interval) {
+	angular.module('main').controller('MainCtlr', ['Data', '$scope', '$interval', 'cvt',
+	function(Data, $scope, $interval, cvt) {
 
 		/* Call the data service at regular intervals; this will force a regular update of the
 		 * data object.
 		 */
-		$interval(Data.getData, 1000);
+		$interval(function(){
+			Data.getData();
+			cvt.checkCvt();}, 1000);
 
 	}]);
 })();

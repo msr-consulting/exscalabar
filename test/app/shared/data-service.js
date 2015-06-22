@@ -13,7 +13,6 @@
 			 */
 			var lvDate = new Date(1904, 0, 1);
 			lvDate.setSeconds(t);
-			// var strTime = lvDate.getHours() + ':' + (lvDate.getMinutes() < 10 ? "0" : "") + lvDate.getMinutes() + ':' + (lvDate.getSeconds() < 10 ? "0" : "") + lvDate.getSeconds() + '.' + lvDate.getMilliseconds();
 			return lvDate;
 		}
 
@@ -47,6 +46,7 @@
 		 */
 		var dataObj = {
 			"time" : null,
+			"tObj": new Date(),
 			"filter" : true,
 			"save" : true,
 			"o3cal" : false,
@@ -68,15 +68,16 @@
 
 		/* Call this to poll the server for data */
 		dataObj.getData = function() {
-			promise = $http.get('http://' + net.address() + '/xService/General/Data').success(function(data, status, headers, config) {
-				$rootScope.$broadcast('dataAvailable');
+			promise = $http.get(net.address() + 'General/Data').success(function(data, status, headers, config) {
 
 				if (dataObj.time.length - 1 >= maxLength) {
 					dataObj.time.pop();
 					shiftData = true;
 				}
 				
-				var t = updateTime(data.Time).getTime();
+				
+				dataObj.tObj = updateTime(data.Time);
+				var t = dataObj.tObj.getTime();
 				dataObj.time.unshift(t);
 
 				// TODO: Fix this hideousness!!!  Has to be a better way...
@@ -110,6 +111,10 @@
 
 				}
 				dataObj.pas.drive = data.PAS.Drive;
+				
+				$rootScope.$broadcast('dataAvailable');
+			}).error(function(){
+				$rootScope.$broadcast('dataNotAvailable');
 			});
 		};
 

@@ -2,7 +2,9 @@
 	<nav class="bs-docs-sidebar hidden-print affix-top" >
 		<ul class="nav bs-docs-sidenav">
 			<li>
-				<div class="alert alert-info"><b>{{time}}</b></div>
+				<div class="alert alert-info">
+					<b>{{time}}</b>
+				</div>
 			</li>
 			<li class>
 				<button class="btn btn-default" type="button" ng-click = "saveData()" ng-class="{'active': save}">
@@ -26,8 +28,13 @@
 					<input ng-model="port" ng-change="changePort()"type="text" id="port" class="ctl-input wide" />
 				</div>
 			</li>
-			<li class>
-				<div id = "connection"></div>
+			<li class ng-switch on="connected">
+				<div ng-switch-when = true>
+					<span class="label label-success">Connected</span>
+				</div>
+				<div ng-switch-when = false>
+					<span class="label label-danger">Not Connected</span>
+				</div>
 			</li>
 
 		</ul>

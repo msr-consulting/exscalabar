@@ -3,7 +3,7 @@
  */
 
 (function() {
-	angular.module('main').factory('cvt', function() {
+	angular.module('main').factory('cvt', ['$http','net', function($http,net) {
 
 		var cvt = {
 			"save" : true
@@ -19,9 +19,9 @@
 				"f0" : 1350,
 				"df" : 100,
 				"pos" : true,
-				"auto": false,
-				"period": 360,
-				"length":30
+				"auto" : false,
+				"period" : 360,
+				"length" : 30
 			},
 			"las" : {
 				"f" : [],
@@ -31,10 +31,16 @@
 			}
 		};
 
-		var crd = {	
+		cvt.crd = {
 			"fred" : 1000,
+			"dcred" : 50,
 			"fblue" : 2000,
-			"pmt_gain" : []
+			"dcblue" : 50,
+			"kred" : 1,
+			"kblue" : 1,
+			"kpmt" : [],
+			"eblue" : true,
+			"ered" : true
 		};
 
 		var filter = {
@@ -51,7 +57,17 @@
 			pas.spk = spk;
 		};
 
+		/* TODO: Implement server side CVT communication. */
+		/* Check the CVT on the server to make sure nothing has changed.  We will have multiple objects
+		 * to check and will broadcast based on who has changed.
+		 */
+		cvt.checkCvt = function() {
+			promise = $http.get(net.address() + 'General/cvt').success(function(data, status, headers, config) {
+				;
+			});
+		};
+
 		return cvt;
 
-	});
+	}]);
 })();
