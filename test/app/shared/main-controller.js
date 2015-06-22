@@ -16,3 +16,27 @@
 
 	}]);
 })();
+
+(function() {
+	angular.module('main').directive('chart', function(){
+    	return{
+        	restrict: 'E',
+        	link: function(scope, elem, attrs){
+            
+	            var chart = null,
+    	            opts  = {xaxis: { mode: "time" } };
+                   
+        	    scope.$watch(attrs.ngModel, function(v){
+            	    if(!chart){
+                	    chart = $.plot(elem, v , opts);
+                    	elem.show();
+	                }else{
+    	                chart.setData(v);
+        	            chart.setupGrid();
+            	        chart.draw();
+                	}
+            	});
+        	}
+    	};
+	});
+})();

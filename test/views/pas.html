@@ -69,7 +69,18 @@
 				</div>
 			</div>
 		</div>
-		<div ng-controller="plotPASQ" class="col-lg-8 col-md-7">
+		
+		<chart ng-model='dataf0' style="width:600px;height:300px" class="col-lg-8 col-md-7" ></chart>
+
+		<chart ng-model='dataIA' style="width:600px;height:300px" class="col-lg-8 col-md-7" ></chart>
+
+		<chart ng-model='datap' style="width:600px;height:300px" class="col-lg-8 col-md-7" ></chart>
+
+		<chart ng-model='dataQ' style="width:600px;height:300px" class="col-lg-8 col-md-7" ></chart>
+
+		<chart ng-model='dataabs' style="width:600px;height:300px" class="col-lg-8 col-md-7" ></chart>
+		
+		<!-- <div ng-controller="plotPASQ" class="col-lg-8 col-md-7">
 			<nvd3 options="options" data="data" config="{refreshDataOnly: true}"></nvd3>
 		</div>
 		<div ng-controller="plotPASf0" class="col-lg-8 col-md-7">
@@ -83,7 +94,7 @@
 		</div>
 		<div ng-controller="plotPASabs" class="col-lg-8 col-md-7">
 			<nvd3 options="options" data="data" config="{refreshDataOnly: true}"></nvd3>
-		</div>
+		</div> -->
 	</div>
 
 	<div class="row">
