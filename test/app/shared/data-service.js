@@ -96,11 +96,12 @@
 						dataObj.pas.cell[index].abs.pop();
 					}
 
-					dataObj.pas.cell[index].f0.unshift( {x : t, y : data.PAS.CellData[index].derived.f0});
-					dataObj.pas.cell[index].IA.unshift( {x : t, y : data.PAS.CellData[index].derived.IA});
-					dataObj.pas.cell[index].Q.unshift(  {x : t, y : data.PAS.CellData[index].derived.Q});
-					dataObj.pas.cell[index].p.unshift(  {x : t, y : data.PAS.CellData[index].derived.noiseLim});
-					dataObj.pas.cell[index].abs.unshift({x : t, y : data.PAS.CellData[index].derived.ext});
+					dataObj.pas.cell[index].f0.unshift( [t, data.PAS.CellData[index].derived.f0] );
+					dataObj.pas.cell[index].IA.unshift( [t, data.PAS.CellData[index].derived.IA] );
+					dataObj.pas.cell[index].Q.unshift( [t, data.PAS.CellData[index].derived.Q] );
+					dataObj.pas.cell[index].p.unshift( [t, data.PAS.CellData[index].derived.noiseLim] );
+					dataObj.pas.cell[index].abs.unshift( [t, data.PAS.CellData[index].derived.ext] );
+
 
 					/* This is one off data and is not a function of time... */
 					dataObj.pas.cell[index].micf = data.PAS.CellData[index].MicFreq.Y;
