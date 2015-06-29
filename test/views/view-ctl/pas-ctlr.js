@@ -2,8 +2,6 @@
 	angular.module('main').controller('pas', ['$scope', 'net', '$http', 'cvt', 'Data', '$log',
 	function($scope, net, $http, cvt, Data, $log) {
 
-		//var spk = cvt.getPasSpkCtl();
-
 		$scope.speaker = cvt.getPasSpkCtl();
 
 		$scope.cycle = {
@@ -26,7 +24,11 @@
 
 			$scope.data = Data.pas;
 
-			//console.log($scope.data.cell[0].f0[0]);
+			$scope.dataf0 = [Data.pas.cell[0].f0, Data.pas.cell[1].f0, Data.pas.cell[2].f0, Data.pas.cell[3].f0, Data.pas.cell[4].f0];
+			$scope.dataIA = [Data.pas.cell[0].IA, Data.pas.cell[1].IA, Data.pas.cell[2].IA, Data.pas.cell[3].IA, Data.pas.cell[4].IA];
+			$scope.datap = [Data.pas.cell[0].p, Data.pas.cell[1].p, Data.pas.cell[2].p, Data.pas.cell[3].p, Data.pas.cell[4].p];
+			$scope.dataQ = [Data.pas.cell[0].Q, Data.pas.cell[1].Q, Data.pas.cell[2].Q, Data.pas.cell[3].Q, Data.pas.cell[4].Q];
+			$scope.dataabs = [Data.pas.cell[0].abs, Data.pas.cell[1].abs, Data.pas.cell[2].abs, Data.pas.cell[3].abs, Data.pas.cell[4].abs];
 
 		});
 

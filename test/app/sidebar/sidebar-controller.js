@@ -27,7 +27,12 @@
 			/* Populate the variables pertinent to the sidebar */
 			$scope.time = Data.tObj.toLocaleTimeString('en-US', { hour12: false });
 			$scope.filter = Data.filter;
-			$scope.save = Data.save;
+			
+			/* TODO: Have an issue with saving data - doesn't appear to be returning properly.
+			 * The save variable should be in the CVT rather than in the data object.
+			 *
+			 */
+			//$scope.save = Data.save;
 			$scope.connected = true;
 		});
 		
@@ -37,13 +42,12 @@
 
 		$scope.saveData = function() {
 
-			if ($scope.save != 0) {
-				$scope.save = 0;
-			} else {
-				$scope.save = 1;
-			}
-
-			$http.get(net.address() + 'General/Save?save='+$scope.save.toString());
+			$scope.save = !$scope.save;
+			
+			// TODO: Check to see if this is correct.
+			var s = $scope.save ? 1:0;
+			
+			$http.get(net.address() + 'General/Save?save='+s.toString());
 		};
 
 		$scope.setFilter = function() {
