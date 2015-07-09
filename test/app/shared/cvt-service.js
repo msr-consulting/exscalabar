@@ -63,7 +63,7 @@
 		 */
 		cvt.checkCvt = function() {
 			promise = $http.get(net.address() + 'General/cvt').success(function(data, status, headers, config) {
-				;
+				
 			});
 		};
 

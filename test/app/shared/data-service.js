@@ -26,7 +26,7 @@
 			this.micf = [];
 			this.mict = [];
 			this.pd = [];
-		};
+		}
 
 		function crdObject() {
 			this.tau = [];
@@ -39,13 +39,13 @@
 			this.etau = [];
 			this.max = [];
 			this.rd = [];
-		};
+		}
 
 		/* The full data object contains arrays of data as defined in the objects above.
 		 * This object is INTENDED to be static...
 		 */
 		var dataObj = {
-			"time" : null,
+			"cTime" : null,
 			"tObj": new Date(),
 			"filter" : true,
 			"save" : true,

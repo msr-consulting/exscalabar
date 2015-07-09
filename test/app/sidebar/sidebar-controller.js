@@ -51,7 +51,7 @@
 		};
 
 		$scope.setFilter = function() {
-			if ($scope.filter != 0) {
+			if ($scope.filter !== 0) {
 				$scope.filter = 0;
 			} else {
 				$scope.filter = 1;

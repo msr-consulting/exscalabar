@@ -55,7 +55,7 @@
 				if ($scope.speaker.vrange < 0) {
 					$scope.speaker.vrange = 0;
 				}
-			};
+			}
 
 			if ($scope.speaker.voffset > maxVoffset) {
 				$scope.speaker.voffset = maxVoffset;
@@ -63,7 +63,7 @@
 				if ($scope.speaker.voffset < 0) {
 					$scope.speaker.voffset = 0;
 				}
-			};
+			}
 
 			cvt.setPasSpkCtl($scope.speaker);
 			$http.get(net.address() + 'PAS_CMD/UpdateSpkVparams?Vrange=' + $scope.speaker.vrange + '&Voffset=' + $scope.speaker.voffset);
@@ -76,7 +76,7 @@
 				if ($scope.speaker.f0 < flim.low) {
 					$scope.speaker.f0 = flim.low;
 				}
-			};
+			}
 			cvt.setPasSpkCtl($scope.speaker);
 			$http.get(net.address() + 'PAS_CMD/Spk?df=' + $scope.speaker.df + '&f0=' + $scope.speaker.fc);
 		};
