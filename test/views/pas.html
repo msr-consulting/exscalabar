@@ -69,67 +69,86 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="col-md-8">
-
-		<div class="row">
-		<div ng-controller="plotPASQ">
-			<div id="chartContainerQ" style="height: 300px; width: 100%;"></div>
-		</div>
-		</div>
-		<div class="row">
-		<div ng-controller="plotPASf0">
-			<div id="chartContainerf0" style="height: 300px; width: 100%;"></div>
-		</div>
-		</div>
-		<div class="row">
-		<div ng-controller="plotPASIA">
-			<div id="chartContainerIA" style="height: 300px; width: 100%;"></div>
-		</div>
-		</div>
-		<div class="row">
-		<div ng-controller="plotPASp">
-			<div id="chartContainerp" style="height: 300px; width: 100%;"></div>
-		</div>
-		</div>
-		<div class="row">
-		<div ng-controller="plotPASabs">
-			<div id="chartContainerabs" style="height: 300px; width: 100%;"></div>
-		</div>
-		</div>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-md-6">
-			<div class="table-responsive">
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th>Variable</th>
-							<th>Cell 1</th>
-							<th>Cell 2</th>
-							<th>Cell 3</th>
-							<th>Cell 4</th>
-							<th>Cell 5</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td><b>f0</b></td>
-							<td ng-repeat="i in data.cell track by $index">{{ i.f0[0] | number}}</td>
-						</tr>
-						<tr>
-							<td>Q</td>
-							<td ng-repeat="i in data.cell track by $index">{{ i.Q[0] | number:2}}</td>
-						</tr>
-						<tr>
-							<td>IA</td>
-							<td ng-repeat="i in data.cell track by $index">{{ i.IA[0] | number:2 }}</td>
-						</tr>
-					</tbody>
-				</table>
+			<div class="row">
+				<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseQ" aria-expanded="false" aria-controls="collapseExample">
+					Show Q Plot
+				</button>
+				<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseIA" aria-expanded="false" aria-controls="collapseExample">
+					Show IA Plot
+				</button>
+				<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapsef0" aria-expanded="false" aria-controls="collapseExample">
+					Show f0 Plot
+				</button>
+				<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseAbs" aria-expanded="false" aria-controls="collapseExample">
+					Show abs Plot
+				</button>
+				<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseP" aria-expanded="false" aria-controls="collapseExample">
+					Show p Plot
+				</button>
+			</div>
+			<div class="row collapse" id="collapseQ">
+				<div ng-controller="plotPASQ">
+					<div id="chartContainerQ" style="height: 300px; width: 100%;"></div>
+				</div>
+			</div>
+			<div class="row collapse" id="collapsef0">
+				<div ng-controller="plotPASf0">
+					<div id="chartContainerf0" style="height: 300px; width: 100%;"></div>
+				</div>
+			</div>
+			<div class="row collapse" id="collapseIA">
+				<div ng-controller="plotPASIA">
+					<div id="chartContainerIA" style="height: 300px; width: 100%;"></div>
+				</div>
+			</div>
+			<div class="row collapse" id="collapseP">
+				<div ng-controller="plotPASp">
+					<div id="chartContainerp" style="height: 300px; width: 100%;"></div>
+				</div>
+			</div>
+			<div class="row collapse" id="collapseAbs">
+				<div ng-controller="plotPASabs">
+					<div id="chartContainerabs" style="height: 300px; width: 100%;"></div>
+				</div>
 			</div>
 		</div>
+
 	</div>
+
 </div>
+
+<!--<div class="row">
+<div class="col-md-6">
+<div class="table-responsive">
+<table class="table table-striped">
+<thead>
+<tr>
+<th>Variable</th>
+<th>Cell 1</th>
+<th>Cell 2</th>
+<th>Cell 3</th>
+<th>Cell 4</th>
+<th>Cell 5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><b>f0</b></td>
+<td ng-repeat="i in data.cell track by $index">{{ i.f0[0] | number}}</td>
+</tr>
+<tr>
+<td>Q</td>
+<td ng-repeat="i in data.cell track by $index">{{ i.Q[0] | number:2}}</td>
+</tr>
+<tr>
+<td>IA</td>
+<td ng-repeat="i in data.cell track by $index">{{ i.IA[0] | number:2 }}</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>-->
