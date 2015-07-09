@@ -1,6 +1,6 @@
 <div ng-controller ="pas">
 	<div class="row">
-		<div class="col-lg-4 col-md-5 col-sm-5 col-xs-4" role="main" >
+		<div class="col-md-4" role="main" >
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					Speaker Control
@@ -69,36 +69,39 @@
 				</div>
 			</div>
 		</div>
+		
+		<div class="col-md-8">
 
-		<chart ng-model='dataf0' style="width:600px;height:300px" class="col-lg-8 col-md-7" ></chart>
-
-		<chart ng-model='dataIA' style="width:600px;height:300px" class="col-lg-8 col-md-7" ></chart>
-
-		<chart ng-model='datap' style="width:600px;height:300px" class="col-lg-8 col-md-7" ></chart>
-
-		<chart ng-model='dataQ' style="width:600px;height:300px" class="col-lg-8 col-md-7" ></chart>
-
-		<chart ng-model='dataabs' style="width:600px;height:300px" class="col-lg-8 col-md-7" ></chart>
-
-		<!-- <div ng-controller="plotPASQ" class="col-lg-8 col-md-7">
-		<nvd3 options="options" data="data" config="{refreshDataOnly: true}"></nvd3>
+		<div class="row">
+		<div ng-controller="plotPASQ">
+			<div id="chartContainerQ" style="height: 300px; width: 100%;"></div>
 		</div>
-		<div ng-controller="plotPASf0" class="col-lg-8 col-md-7">
-		<nvd3 options="options" data="data" config="{refreshDataOnly: true}"></nvd3>
 		</div>
-		<div ng-controller="plotPASIA" class="col-lg-8 col-md-7">
-		<nvd3 options="options" data="data" config="{refreshDataOnly: true}"></nvd3>
+		<div class="row">
+		<div ng-controller="plotPASf0">
+			<div id="chartContainerf0" style="height: 300px; width: 100%;"></div>
 		</div>
-		<div ng-controller="plotPASp" class="col-lg-8 col-md-7">
-		<nvd3 options="options" data="data" config="{refreshDataOnly: true}"></nvd3>
 		</div>
-		<div ng-controller="plotPASabs" class="col-lg-8 col-md-7">
-		<nvd3 options="options" data="data" config="{refreshDataOnly: true}"></nvd3>
-		</div> -->
+		<div class="row">
+		<div ng-controller="plotPASIA">
+			<div id="chartContainerIA" style="height: 300px; width: 100%;"></div>
+		</div>
+		</div>
+		<div class="row">
+		<div ng-controller="plotPASp">
+			<div id="chartContainerp" style="height: 300px; width: 100%;"></div>
+		</div>
+		</div>
+		<div class="row">
+		<div ng-controller="plotPASabs">
+			<div id="chartContainerabs" style="height: 300px; width: 100%;"></div>
+		</div>
+		</div>
+		</div>
 	</div>
 
 	<div class="row">
-		<div class="col-lg-6">
+		<div class="col-md-6">
 			<div class="table-responsive">
 				<table class="table table-striped">
 					<thead>
