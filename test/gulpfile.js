@@ -7,7 +7,9 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 
-var alt_watch_list = ["app/shared/main.module.js","app/shared/network-service.js","app/shared/cvt-service.js",
+var alt_watch_list = ["app/shared/main.module.js",
+"app/shared/network-service.js",
+"app/shared/cvt-service.js",
 "app/shared/main-config.js",
 "app/shared/main-controller.js",
 "app/shared/data-service.js",
@@ -23,7 +25,8 @@ var alt_watch_list = ["app/shared/main.module.js","app/shared/network-service.js
 "views/cals/tableInput-ctlr.js",
 "app/msg/msg-directive.js",
 "app/sidebar/sidebar-directive.js",
-"app/navigation/nav-directive.js"];
+"app/navigation/nav-directive.js",
+"assets/contextMenu.js"];
 
 var watch_list = ['./app/**/*.js', './views/**/*.js'];
 

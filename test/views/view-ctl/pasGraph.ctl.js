@@ -11,8 +11,9 @@ function buildPlotController(controllerName, fieldName, ylabel) {
 		['f0', function(){index = 2;}],
 		['abs', function(){index = 3;}]];
 
+	/* Removed axis title as it is redundant... */
 	$("#chartContainer" + fieldName).CanvasJSChart({ //Pass chart options
-		title : {text: fieldName + " vs Time"},
+		//title : {text: fieldName + " vs Time"},
 		axisX: {title: "Time", valueFormatString: "HH:mm:ss"},
 		axisY: {title: ylabel},
 		legend: {
