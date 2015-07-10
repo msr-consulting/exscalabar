@@ -8,12 +8,17 @@
 		<item value="749" key="dialogHeight"/>
 		<item value="1440" key="dialogWidth"/>
 		<list key="textEntries">
+			<item value="2"/>
 		</list>
 		<list key="orderedElements">
+			<item value="com.aptana.editor.toggleWordWrapCommand"/>
 		</list>
 		<list key="orderedProviders">
+			<item value="org.eclipse.ui.commands"/>
 		</list>
 		<list key="textArray">
+			<item value="word wrap"/>
+			<item value="word wra"/>
 		</list>
 	</section>
 	<section name="InstallationDialogSettings">
