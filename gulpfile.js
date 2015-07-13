@@ -7,6 +7,15 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 
+/* One thing that we have to be sure of is that the AngularJS dependencies
+ * in each of the scripts are properly resolved and annotated before minification.
+ * We can do this explicitly with the notation ['dependency', function(dependency){...}]
+ * or we can drop this notation and use the gulp-ng-annotate.  I am trying to 
+ * keep the dependencies explicity, but look out for problems where these are
+ * not properly called out (maybe do to a missed capital letter or a misspelling).
+ */
+//var ngannotate = require('gulp-ng-annotate');
+
 var alt_watch_list = ["app/shared/main.module.js",
 "app/shared/network-service.js",
 "app/shared/cvt-service.js",

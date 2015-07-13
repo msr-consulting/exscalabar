@@ -767,7 +767,7 @@ function buildPlotController(controllerName, fieldName, ylabel) {
 
 (function(){
 	angular.module('main')
-	.factory('tableService', function($rootScope){
+	.factory('tableService', ["$rootScope", function($rootScope){
 		var tabService = {
 			curTab: '',
 			getTab: function(){return this.curTab;},
@@ -779,7 +779,7 @@ function buildPlotController(controllerName, fieldName, ylabel) {
 		};
 		
 		return tabService;
-	});
+	}]);
 	
 })();
 
