@@ -7,12 +7,25 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 
+<<<<<<< HEAD
 /* Since order matters, we can't just glob everything, but we must 
  * make sure that the files are in the correct order. Since we have
  * to alter this list and we don't watch everything, make sure to
  * restart gulp if this file is changed.
  */
 var watch_list = ["app/shared/main.module.js",
+=======
+/* One thing that we have to be sure of is that the AngularJS dependencies
+ * in each of the scripts are properly resolved and annotated before minification.
+ * We can do this explicitly with the notation ['dependency', function(dependency){...}]
+ * or we can drop this notation and use the gulp-ng-annotate.  I am trying to 
+ * keep the dependencies explicity, but look out for problems where these are
+ * not properly called out (maybe do to a missed capital letter or a misspelling).
+ */
+//var ngannotate = require('gulp-ng-annotate');
+
+var alt_watch_list = ["app/shared/main.module.js",
+>>>>>>> 9fdc7bcf82648ae1df6d593d78c38ac8f9bae1f9
 "app/shared/network-service.js",
 "app/shared/cvt-service.js",
 "app/shared/main-config.js",

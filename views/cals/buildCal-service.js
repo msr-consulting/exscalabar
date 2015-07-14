@@ -6,7 +6,7 @@
 
 (function(){
 	angular.module('main')
-	.factory('tableService', function($rootScope){
+	.factory('tableService', ["$rootScope", function($rootScope){
 		var tabService = {
 			curTab: '',
 			getTab: function(){return this.curTab;},
@@ -17,6 +17,6 @@
 		};
 		
 		return tabService;
-	});
+	}]);
 	
 })();
