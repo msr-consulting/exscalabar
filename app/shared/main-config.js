@@ -12,6 +12,9 @@
 		.when('/PAS',{templateUrl:'views/pas.html'})
 		.when('/O3',{templateUrl:'views/cals/ozone.html'})
 		.when('/', {templateUrl:'views/main.html'})
-		.when('/#', {templateUrl:'views/main.html'});
+		.when('/#', {templateUrl:'views/main.html'})
+		.when('/Flows', {templateUrl:'views/flows.html'})
+		.when('/Temperature', {templateUrl:'views/temperature.html'})
+		.when('/Humidifier', {templateUrl:'views/humidifier.html'});
 	}]);
 })();

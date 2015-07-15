@@ -59,8 +59,10 @@
 (function() {
 	angular.module('main').factory('cvt', ['$http','net', function($http,net) {
 
+		// TODO: Add broadcast to let everyone know when the cvt has been updated by the server.
 		var cvt = {
-			"save" : true
+			"save" : true,
+			"ozone": false
 		};
 
 		/* All controls that must be updated for the PAS
@@ -140,7 +142,10 @@
 		.when('/PAS',{templateUrl:'views/pas.html'})
 		.when('/O3',{templateUrl:'views/cals/ozone.html'})
 		.when('/', {templateUrl:'views/main.html'})
-		.when('/#', {templateUrl:'views/main.html'});
+		.when('/#', {templateUrl:'views/main.html'})
+		.when('/Flows', {templateUrl:'views/flows.html'})
+		.when('/Temperature', {templateUrl:'views/temperature.html'})
+		.when('/Humidifier', {templateUrl:'views/humidifier.html'});
 	}]);
 })();
 /** This is the main controller that is sucked into the entire program (this is placed
@@ -149,40 +154,46 @@
  */
 
 (function() {
-	angular.module('main').controller('MainCtlr', ['Data', '$scope', '$interval', 'cvt',
-	function(Data, $scope, $interval, cvt) {
+	angular.module('main').controller('MainCtlr', ['Data', '$scope', '$interval', 'cvt', 'deviceCfg',
+	function(Data, $scope, $interval, cvt, deviceCfg) {
 
 		/* Call the data service at regular intervals; this will force a regular update of the
 		 * data object.
 		 */
-		$interval(function(){
+		$interval(function() {
 			Data.getData();
-			cvt.checkCvt();}, 1000);
+			cvt.checkCvt();
+			deviceCfg.checkCfg();
+		}, 1000);
 
 	}]);
 })();
 
 (function() {
-	angular.module('main').directive('chart', function(){
-    	return{
-        	restrict: 'E',
-        	link: function(scope, elem, attrs){
-            
-	            var chart = null,
-    	            opts  = {xaxis: { mode: "time" } };
-                   
-        	    scope.$watch(attrs.ngModel, function(v){
-            	    if(!chart){
-                	    chart = $.plot(elem, v , opts);
-                    	elem.show();
-	                }else{
-    	                chart.setData(v);
-        	            chart.setupGrid();
-            	        chart.draw();
-                	}
-            	});
-        	}
-    	};
+	angular.module('main').directive('chart', function() {
+		return {
+			restrict : 'E',
+			link : function(scope, elem, attrs) {
+
+				var chart = null,
+				    opts = {
+					xaxis : {
+						mode : "time"
+					}
+				};
+
+				scope.$watch(attrs.ngModel, function(v) {
+					if (!chart) {
+						chart = $.plot(elem, v, opts);
+						elem.show();
+					} else {
+						chart.setData(v);
+						chart.setupGrid();
+						chart.draw();
+					}
+				});
+			}
+		};
 	});
 })();
 
@@ -381,6 +392,28 @@
 	}]);
 })();
 
+(function() {
+	angular.module('main').controller('startCal', ['$scope', '$http', 'net', 'cvt', 
+	function($scope, $http, net, cvt) {
+
+		$scope.cal = cvt.ozone;
+
+		/* This is the primary function of this controller.  When the button is hit,
+		 * flip the switch on the calibration button so that it indicates the user can 
+		 * Start a cal or that a cal is currently running.  We will also send the current cal
+		 * state for storage in the cvt AND send the request to the server.
+		 */
+		// TODO: Test this on the server side.
+		$scope.startCalibration = function() {
+			$scope.cal = !$scope.cal;
+			var calState = $scope.cal ? 1 : 0;
+			cvt.ozone = $scope.cal;
+			$http.get(net.address() + 'General/ozone?start=' + calState.toString());
+		};
+	}]);
+
+})();
+
 /* This service returns the current value of a selected portion
  * of the calibration building table.  This service is required 
  * by the O3Table controller.  Load this service first before 
@@ -389,7 +422,7 @@
 
 (function(){
 	angular.module('main')
-	.factory('tableService', function($rootScope){
+	.factory('tableService', ["$rootScope", function($rootScope){
 		var tabService = {
 			curTab: '',
 			getTab: function(){return this.curTab;},
@@ -400,7 +433,7 @@
 		};
 		
 		return tabService;
-	});
+	}]);
 	
 })();
 
@@ -484,6 +517,8 @@
 		return savedData;
 	});
 })();
+
+/* This controller handles saving calibration data */
 
 (function() {
 	angular.module('main').controller('Save', ['$scope', 'SaveData', '$http','net', 

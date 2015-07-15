@@ -1,3 +1,5 @@
+/* This controller handles saving calibration data */
+
 (function() {
 	angular.module('main').controller('Save', ['$scope', 'SaveData', '$http','net', 
 	function($scope, SaveData, $http, net) {

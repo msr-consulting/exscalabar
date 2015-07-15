@@ -32,19 +32,30 @@
 		</tbody>
 	</table>
 </div>
-<form class="form-inline">
+<form class="form-inline" ng-controller="Save">
 	<div class="form-group">
 		<label class="sr-only" for="fileName">Password</label>
 		<input type="text" class="form-control" value="defaultCal">
 	</div>
-	<div ng-controller ="Save">
+	<div>
 		<button type="button" class="btn btn-default" ng-click="save()">
 			Save Cal
 		</button>
 	</div>
 
-	<button id ="set_def" type="button" class="btn btn-default">
+	<button type="button" class="btn btn-default">
 		Set Current as Default
 	</button>
+
 </form>
+
 <textarea id="xml_out" rows ="10" cols="30"></textarea>
+<br />
+<button ng-controller="startCal" ng-click = "startCalibration()" type="button" class="btn btn-primary" ng-switch on = "cal" value ="Start Calibration">
+	<div ng-switch-when = true>
+		Cal Running...
+	</div>
+	<div ng-switch-default>
+		Start Cal
+	</div>
+</button>

@@ -5,8 +5,10 @@
 (function() {
 	angular.module('main').factory('cvt', ['$http','net', function($http,net) {
 
+		// TODO: Add broadcast to let everyone know when the cvt has been updated by the server.
 		var cvt = {
-			"save" : true
+			"save" : true,
+			"ozone": false
 		};
 
 		/* All controls that must be updated for the PAS
