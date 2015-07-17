@@ -1,6 +1,6 @@
 /* Start with an IIFE */
 (function(){
-	angular.module('main',['ngRoute', 'ui.bootstrap.contextMenu']);
+	angular.module('main',['ngRoute', 'ui.bootstrap', 'ui.bootstrap.contextMenu']);
 })();
 
 /** This service handles network settings that can be set in the sidebar.
@@ -911,6 +911,23 @@ function buildPlotController(controllerName, fieldName, ylabel) {
 })();
 
 (function() {
+	angular.module('main').controller("flowCtlr", ['$scope',
+	function($scope) {
+
+		function flowDevice(id, t, isCtl){
+			this.ID = id;
+			this.type = t;
+			this.isController = isCtl;
+		}
+		
+		$scope.Devices = [new flowDevice("test1", "mflow", false), 
+							new flowDevice("test2", "mflow", false), 
+							new flowDevice("test3", "mflow", false)
+						 ];
+	}]);
+})();
+
+(function() {
 	angular.module('main').directive('msg', msgFunc);
 
 	function msgFunc() {
@@ -1037,19 +1054,3 @@ angular.module('ui.bootstrap.contextMenu', [])
         });
     };
 }]);
-(function() {
-	angular.module('main').controller("flowCtlr", ['$scope',
-	function($scope) {
-
-		function flowDevice(id, t, isCtl){
-			this.ID = id;
-			this.type = t;
-			this.isController = isCtl;
-		}
-		
-		$scope.Devices = [new flowDevice("test1", "mflow", false), 
-							new flowDevice("test2", "mflow", false), 
-							new flowDevice("test3", "mflow", false)
-						 ];
-	}]);
-})();

@@ -38,11 +38,11 @@ var watch_list = ["app/shared/main.module.js",
 "views/view-ctl/mainPas.ctlr.js",
 "views/view-ctl/pas-ctlr.js",
 "views/view-ctl/pasGraph.ctl.js",
+"views/view-ctl/flow.ctlr.js",
 "app/msg/msg-directive.js",
 "app/sidebar/sidebar-directive.js",
 "app/navigation/nav-directive.js",
-"assets/contextMenu.js",
-"views/view-ctl/flow.ctlr.js"];
+"assets/contextMenu.js"];
 
 
 /* Lint Task - check for errors in the js code... */
