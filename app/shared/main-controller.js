@@ -4,8 +4,8 @@
  */
 
 (function() {
-	angular.module('main').controller('MainCtlr', ['Data', '$scope', '$interval', 'cvt', 'deviceCfg',
-	function(Data, $scope, $interval, cvt, deviceCfg) {
+	angular.module('main').controller('MainCtlr', ['Data', '$scope', '$interval', 'cvt', 
+	function(Data, $scope, $interval, cvt) {
 
 		/* Call the data service at regular intervals; this will force a regular update of the
 		 * data object.
@@ -13,7 +13,7 @@
 		$interval(function() {
 			Data.getData();
 			cvt.checkCvt();
-			deviceCfg.checkCfg();
+			//deviceCfg.checkCfg();
 		}, 1000);
 
 	}]);

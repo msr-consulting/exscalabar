@@ -41,7 +41,8 @@ var watch_list = ["app/shared/main.module.js",
 "app/msg/msg-directive.js",
 "app/sidebar/sidebar-directive.js",
 "app/navigation/nav-directive.js",
-"assets/contextMenu.js"];
+"assets/contextMenu.js",
+"views/view-ctl/flow.ctlr.js"];
 
 
 /* Lint Task - check for errors in the js code... */

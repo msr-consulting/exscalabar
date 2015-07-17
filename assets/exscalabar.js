@@ -154,8 +154,8 @@
  */
 
 (function() {
-	angular.module('main').controller('MainCtlr', ['Data', '$scope', '$interval', 'cvt', 'deviceCfg',
-	function(Data, $scope, $interval, cvt, deviceCfg) {
+	angular.module('main').controller('MainCtlr', ['Data', '$scope', '$interval', 'cvt', 
+	function(Data, $scope, $interval, cvt) {
 
 		/* Call the data service at regular intervals; this will force a regular update of the
 		 * data object.
@@ -163,7 +163,7 @@
 		$interval(function() {
 			Data.getData();
 			cvt.checkCvt();
-			deviceCfg.checkCfg();
+			//deviceCfg.checkCfg();
 		}, 1000);
 
 	}]);
@@ -1037,3 +1037,19 @@ angular.module('ui.bootstrap.contextMenu', [])
         });
     };
 }]);
+(function() {
+	angular.module('main').controller("flowCtlr", ['$scope',
+	function($scope) {
+
+		function flowDevice(id, t, isCtl){
+			this.ID = id;
+			this.type = t;
+			this.isController = isCtl;
+		}
+		
+		$scope.Devices = [new flowDevice("test1", "mflow", false), 
+							new flowDevice("test2", "mflow", false), 
+							new flowDevice("test3", "mflow", false)
+						 ];
+	}]);
+})();

@@ -1,6 +1,31 @@
-<h2 class="sub-header">Flow Data</h2>
-<div ng-controller="flowCtrl">
-	
-</div>
+<div ng-controller="flowCtlr">
+	<accordion close-others=false>
+		<accordion-group heading="Flow Control" is-open=false is-disabled=false>
+			<p>
+				Set the flow control data here.
+			</p>
+		</accordion-group>
+		<accordion-group heading="Flow Data" is-open=true is-disabled=false>
+			<div class="table-responsive">
+				<table class="table table-striped">
+					<tr>
+						<th>ID</th>
+						<th>Q</th>
+						<th>Q0</th>
+						<th>T</th>
+						<th>P</th>
+						<th>Q<sub>sp</sub></th>
+					</tr>
+					<tr ng-repeat="device in Devices track by $index">
+						<td>{{device.ID}}</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td><td ></td>
+					</tr>
 
-<p>Here is where all of the flow data goes.  Need to be able to handle configuration.  Want to read the configuration file or store the flow data in an XML file for broadcast.</p>
+				</table>
+			</div>
+		</accordion-group>
+	</accordion>
+</div>
