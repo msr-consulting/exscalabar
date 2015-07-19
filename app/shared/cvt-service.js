@@ -8,7 +8,8 @@
 		// TODO: Add broadcast to let everyone know when the cvt has been updated by the server.
 		var cvt = {
 			"save" : true,
-			"ozone": false
+			"ozone": false,
+			"fctl": []
 		};
 
 		/* All controls that must be updated for the PAS

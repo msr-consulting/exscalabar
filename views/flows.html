@@ -1,9 +1,12 @@
 <div ng-controller="flowCtlr">
 	<accordion close-others=false>
 		<accordion-group heading="Flow Control" is-open=false is-disabled=false>
-			<p>
-				Set the flow control data here.
-			</p>
+			<div ng-repeat="device in Devices track by $index">
+				<div class="input-group" ng-if="device.isController">
+					<label for="fc_{{$index}}">{{device.ID}}</label>
+					<input type="text" class="form-control" id = "fc_{{device.index}}" value="{{device.sp}}"/>
+				</div>
+			</div>
 		</accordion-group>
 		<accordion-group heading="Flow Data" is-open=true is-disabled=false>
 			<div class="table-responsive">
@@ -26,6 +29,11 @@
 
 				</table>
 			</div>
+		</accordion-group>
+		<accordion-group heading="Flow Graphs" is-open=false is-disabled=false>
+			<p>
+				Display graphs here.
+			</p>
 		</accordion-group>
 	</accordion>
 </div>
