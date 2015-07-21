@@ -12,7 +12,7 @@
 		 */
 		$interval(function() {
 			Data.getData();
-			cvt.checkCvt();
+			//cvt.checkCvt();
 			//deviceCfg.checkCfg();
 		}, 1000);
 

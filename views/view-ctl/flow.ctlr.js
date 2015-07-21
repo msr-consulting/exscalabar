@@ -7,7 +7,7 @@
 		
 		//Array that will hold the setpoints...
 		$scope.setpoints = [];
-
+ 
 		function flowDevice(id, t, isCtl, sp){
 			this.ID = id;
 			this.type = t;

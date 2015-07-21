@@ -56,12 +56,24 @@
 		// Defines array lengths - 100 == 100 seconds of data
 		var maxLength = 300;
 
+		/* This is the structure for the flow device data */
+		function fdevice(){
+			this.ID = "";
+			this.Q = 0;	// Volumetric flow rate
+			this.Q0 = 0;	// Mass flow rate
+			this.P = 0;	// Pressure in mb
+			this.T = 0;	// Temperature in degrees C
+			this.Qsp = 0;	// Flow setpoint
+		};
+
 		/* Variable that indicates everyone needs to shift... */
 		var shiftData = false;
 
 		dataObj.pas = {};
 		dataObj.pas.cell = [new pasData()];
 		dataObj.pas.drive = true;
+		
+		dataObj.flowData = [new fdevice()];
 
 		dataObj.crd = {};
 		dataObj.crd.cell = [new crdObject()];
@@ -115,6 +127,7 @@
 				$rootScope.$broadcast('dataAvailable');
 			}).error(function(){
 				$rootScope.$broadcast('dataNotAvailable');
+				$log.debug(status);
 			});
 		};
 

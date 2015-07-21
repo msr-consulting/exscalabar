@@ -3,13 +3,14 @@
  */
 
 (function() {
-	angular.module('main').factory('cvt', ['$http','net', function($http,net) {
+	angular.module('main').factory('cvt', ['$http', 'net',
+	function($http, net) {
 
 		// TODO: Add broadcast to let everyone know when the cvt has been updated by the server.
 		var cvt = {
 			"save" : true,
-			"ozone": false,
-			"fctl": []
+			"ozone" : false,
+			"fctl" : []
 		};
 
 		/* All controls that must be updated for the PAS
@@ -66,7 +67,7 @@
 		 */
 		cvt.checkCvt = function() {
 			promise = $http.get(net.address() + 'General/cvt').success(function(data, status, headers, config) {
-				
+
 			});
 		};
 
