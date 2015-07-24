@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OZONE>
+	<Wait>20<\Wait>
+	<Filter>FALSE<\Filter>
+	<O2 Valve>FALSE<\O2 Valve>
+	<O3 Generator>FALSE<\O3 Generator>
+	<QO2>100<\QO2>
+	<O2 Valve>FALSE<\O2 Valve>
+<\OZONE>

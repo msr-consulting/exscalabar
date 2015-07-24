@@ -64,7 +64,7 @@
 			this.P = 0;	// Pressure in mb
 			this.T = 0;	// Temperature in degrees C
 			this.Qsp = 0;	// Flow setpoint
-		};
+		}
 
 		/* Variable that indicates everyone needs to shift... */
 		var shiftData = false;
@@ -72,7 +72,7 @@
 		dataObj.pas = {};
 		dataObj.pas.cell = [new pasData()];
 		dataObj.pas.drive = true;
-		
+
 		dataObj.flowData = [new fdevice()];
 
 		dataObj.crd = {};
@@ -86,8 +86,8 @@
 					dataObj.time.pop();
 					shiftData = true;
 				}
-				
-				
+
+
 				dataObj.tObj = updateTime(data.Time);
 				var t = dataObj.tObj.getTime();
 				dataObj.time.unshift(t);
@@ -123,7 +123,7 @@
 
 				}
 				dataObj.pas.drive = data.PAS.Drive;
-				
+
 				$rootScope.$broadcast('dataAvailable');
 			}).error(function(){
 				$rootScope.$broadcast('dataNotAvailable');
@@ -135,4 +135,3 @@
 
 	}]);
 })();
-

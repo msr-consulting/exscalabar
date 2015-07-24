@@ -6,6 +6,8 @@ var jshint = require('gulp-jshint');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
+var connect = require('gulp-connect');
+var open = require('gulp-open');
 
 /* Since order matters, we can't just glob everything, but we must
 * make sure that the files are in the correct order. Since we have
@@ -67,5 +69,18 @@ gulp.task('watch', function() {
 	gulp.watch(watch_list, ['lint', 'scripts']);
 });
 
+/* Make a connection on port 8080. */
+gulp.task('connect', function(){
+	connect.server({
+		livereload:true
+	});
+});
+
+/* This will open the UI in the default browser. */
+gulp.task('open', function(){
+	gulp.src(__filename)
+	.pipe(open({uri: 'http://localhost:8080'}));
+});
+
 // Default Task
-gulp.task('default', ['lint', 'scripts', 'watch']); 
+gulp.task('default', ['lint', 'scripts', 'connect', 'open', 'watch']);
