@@ -50,6 +50,7 @@
 			"filter" : true,
 			"save" : true,
 			"o3cal" : false,
+			"Cabin" :false,
 			"time" : []
 		};
 
@@ -123,6 +124,8 @@
 
 				}
 				dataObj.pas.drive = data.PAS.Drive;
+
+				dataObj.Cabin = data.Cabin;
 
 				$rootScope.$broadcast('dataAvailable');
 			}).error(function(){
