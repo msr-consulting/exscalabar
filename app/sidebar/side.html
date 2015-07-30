@@ -22,10 +22,10 @@
 			<li class>
 				<div class="form-group" id="address">
 					<label class = "ctl-label small" for="ip">IP</label>
-					<input ng-model="ip" ng-change="changeIP()" type="text" class = "ctl-input wide" id="ip" data-toggle="tooltip" data-placement="right" />
+					<input ng-model="ip" ng-change="changeIP()" type="text"  class="form-control" id="ip" data-toggle="tooltip" data-placement="right" />
 					<br>
 					<label class = "ctl-label small" for="port">Port</label>
-					<input ng-model="port" ng-change="changePort()"type="text" id="port" class="ctl-input wide" />
+					<input class="form-control" ng-model="port" ng-change="changePort()" type="text" id="port" />
 				</div>
 			</li>
 			<li class ng-switch on="connected">
