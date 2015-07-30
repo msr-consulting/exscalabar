@@ -10,6 +10,7 @@
 		var cvt = {
 			"save" : true,
 			"ozone" : false,
+			"filter_pos": true,
 			"fctl" : []
 		};
 
@@ -47,12 +48,12 @@
 			"ered" : true
 		};
 
-		var filter = {
-			"pos" : true,
-			"auto" : false,
-			"period" : 360,
-			"length" : 30
+		cvt.filter_cycle = {
+      "period" : 360,
+      "length" : 20,
+      "auto" : false
 		};
+
 
 		cvt.getPasSpkCtl = function() {
 			return pas.spk;

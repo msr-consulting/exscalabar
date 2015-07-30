@@ -7,16 +7,16 @@
 				</div>
 			</li>
 			<li class>
-				<button class="btn btn-default" type="button" ng-click = "saveData()" ng-class="{'active': save}">
+				<button class="btn btn-default btn-block" type="button" ng-click = "saveData()" ng-class="{'active': save}">
 					Save
 				</button>
 			</li>
 			<li>
-				<button class="btn btn-default" type="button" ng-click = "setFilter()" ng-class="{'active': filter}">
+				<button class="btn btn-default btn-block" type="button" ng-click = "setFilter()" ng-class="{'active': filter}">
 					Filter
 				</button></li>
 			<li class>
-				<button class="btn btn-default" type="button" ng-click = "stop()">
+				<button class="btn btn-default btn-block" type="button" ng-click = "stop()">
 					Stop
 				</button>
 			</li>
@@ -24,7 +24,6 @@
 				<div class="form-group" id="address">
 					<label class = "ctl-label small" for="ip">IP</label>
 					<input ng-model="ip" ng-change="changeIP()" type="text"  class="form-control" id="ip" data-toggle="tooltip" data-placement="right" />
-					<br>
 					<label class = "ctl-label small" for="port">Port</label>
 					<input class="form-control" ng-model="port" ng-change="changePort()" type="text" id="port" />
 				</div>

@@ -1,6 +1,8 @@
 <div  ng-controller="pas">
   <accordion close-others=false>
     <accordion-group heading="Controls" is-disabled=false is-open=true>
+      <div class="row">
+        <div class="col-md-2">
       <div class="panel panel-default">
         <div class="panel-heading">
           Speaker Control
@@ -10,23 +12,23 @@
             <label for="svrange">V
               <sub>range</sub>
               (V)</label>
-            <input id="svrange" ng-blur="updateSpkV()" ng-model="speaker.vrange" type="number"/>
+            <input id="svrange" class = "form-control" ng-blur="updateSpkV()" ng-model="speaker.vrange" type="number"/>
             <br/>
             <label for="svoffset">V
               <sub>offset</sub>
               (V)</label>
-            <input  id="svoffset" ng-blur="updateSpkV()" ng-model="speaker.voffset" type="number"/>
+            <input  id="svoffset" class = "form-control" ng-blur="updateSpkV()" ng-model="speaker.voffset" type="number"/>
             <br/>
             <label for="fcenter">f
               <sub>center</sub>
               (Hz)</label>
-            <input  id="fcenter" max="5000" min="100" ng-blur="updateSpkF()" ng-model="speaker.f0" placeholder="1300" type="number"/>
+            <input  id="fcenter" class = "form-control" max="5000" min="100" ng-blur="updateSpkF()" ng-model="speaker.f0" placeholder="1300" type="number"/>
             <br/>
             <label for="df">&Delta;f (Hz)</label>
-            <input  id="df" max="1000" min="1" ng-blur="updateSpkF()" ng-model="speaker.df" placeholder="100" title="Speaker chirp bandwidth in Hz." type="number"/>
+            <input  id="df" class = "form-control" max="1000" min="1" ng-blur="updateSpkF()" ng-model="speaker.df" placeholder="100" title="Speaker chirp bandwidth in Hz." type="number"/>
 
             <br/>
-            <button ng-click="setPos()" class="btn btn-primary"  ng-switch on ="speaker.pos" type="button" value="Speaker">
+            <button ng-click="setPos()" class="btn btn-primary btn-block"  ng-switch on ="speaker.pos" type="button" value="Speaker">
               <div ng-switch-when = true>
                 Speaker
               </div>
@@ -37,6 +39,8 @@
           </div>
         </div>
       </div>
+      </div>
+      <div class="col-md-2">
       <div class="panel panel-default">
         <div class="panel-heading">
           Speaker Cycle
@@ -44,11 +48,11 @@
         <div class="panel-body">
           <div class="form-group" id="spk">
             <label for="period">Period (s)</label>
-            <input  ng-model="cycle.period" id="period" max="5000" min ="1" ng-change="updateCycle()" placeholder="360" type="number"/>
+            <input  class = "form-control" ng-model="cycle.period" id="period" max="5000" min ="1" ng-change="updateCycle()" placeholder="360" type="number"/>
             <br/>
             <label for="length">Length (s)</label>
-            <input  id="length" max="100" min="1" ng-change="updateCycle()" ng-model="cycle.length" placeholder="0" type="number"/>
-            <button class="btn btn-primary" ng-click="updateAuto()" ng-switch on="cycle.auto" type="button" value="Auto">
+            <input  class = "form-control" id="length" max="100" min="1" ng-change="updateCycle()" ng-model="cycle.length" placeholder="0" type="number"/>
+            <button class="btn btn-primary btn-block" ng-click="updateAuto()" ng-switch on="cycle.auto" type="button" value="Auto">
               <div  ng-switch-when=true>
                 Auto
               </div>
@@ -62,18 +66,67 @@
           </div>
         </div>
       </div>
+      </div>
+        <div class="col-md-8">
       <div class="panel panel-default">
         <div class="panel-heading">
           Laser Control
         </div>
         <div class="panel-body">
-          <label for="period">Period (s)</label>
-          <input  id="period" max="5000" min="10"  placeholder="360" type="number"/>
-          <button class="btn btn-primary" type="button" value="Auto">
-            Auto
-          </button>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Cell</th>
+                  <th>V<sub>range</sub> (V)</th>
+                  <th>V<sub>offset</sub> (V)</th>
+                  <th>f<sub>0</sub> (Hz)</th>
+                  <th>Modulation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td><input class="col-md-8" type="text"></td>
+                  <td><input class="col-md-8" type="text"></td>
+                  <td><input class="col-md-8" type="text"></td>
+                  <td>  <button class="btn btn-primary btn-block"type="button" value="Sine">Sine</button></td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td><input class="col-md-8" type="text"></td>
+                  <td><input class="col-md-8" type="text"></td>
+                  <td><input class="col-md-8" type="text"></td>
+                  <td>  <button class="btn btn-primary btn-block"type="button" value="Sine">Sine</button></td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td><input class="col-md-8" type="text"></td>
+                  <td><input class="col-md-8" type="text"></td>
+                  <td><input class="col-md-8" type="text"></td>
+                  <td>  <button class="btn btn-primary btn-block"type="button" value="Sine">Sine</button></td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td><input class="col-md-8" type="text"></td>
+                  <td><input class="col-md-8" type="text"></td>
+                  <td><input class="col-md-8" type="text"></td>
+                  <td>  <button class="btn btn-primary btn-block"type="button" value="Sine">Sine</button></td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td><input class="col-md-8" type="text"></td>
+                  <td><input class="col-md-8" type="text"></td>
+                  <td><input class="col-md-8" type="text"></td>
+                  <td>  <button class="btn btn-primary btn-block"type="button" value="Sine">Sine</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
+      </div>
+    </div>
     </accordion-group>
     <accordion-group heading="Indicators" is-disabled="false" is-open="false">
         <div class="table-responsive">
@@ -128,7 +181,3 @@
 
 </accordion-group>
 </accordion>
-
-<!--<div class="row">
-
-</div>-->

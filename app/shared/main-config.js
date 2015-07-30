@@ -1,6 +1,6 @@
-/** This file conigures the routing for the main page.  These are the views which 
- * Will be displayed when the user clicks a heading in the navigation menu. 
- * 
+/** This file conigures the routing for the main page.  These are the views which
+ * Will be displayed when the user clicks a heading in the navigation menu.
+ *
  * Routing requires the inclusion of 'angular-route.js' file and the module ngRoute.
  */
 
@@ -15,6 +15,7 @@
 		.when('/#', {templateUrl:'views/main.html'})
 		.when('/Flows', {templateUrl:'views/flows.html'})
 		.when('/Temperature', {templateUrl:'views/temperature.html'})
-		.when('/Humidifier', {templateUrl:'views/humidifier.html'});
+		.when('/Humidifier', {templateUrl:'views/humidifier.html'})
+		.when('/Common', {templateUrl:'views/common.html'});
 	}]);
 })();

@@ -64,6 +64,7 @@
 		var cvt = {
 			"save" : true,
 			"ozone" : false,
+			"filter_pos": true,
 			"fctl" : []
 		};
 
@@ -101,12 +102,12 @@
 			"ered" : true
 		};
 
-		var filter = {
-			"pos" : true,
-			"auto" : false,
-			"period" : 360,
-			"length" : 30
+		cvt.filter_cycle = {
+      "period" : 360,
+      "length" : 20,
+      "auto" : false
 		};
+
 
 		cvt.getPasSpkCtl = function() {
 			return pas.spk;
@@ -130,9 +131,9 @@
 	}]);
 })();
 
-/** This file conigures the routing for the main page.  These are the views which 
- * Will be displayed when the user clicks a heading in the navigation menu. 
- * 
+/** This file conigures the routing for the main page.  These are the views which
+ * Will be displayed when the user clicks a heading in the navigation menu.
+ *
  * Routing requires the inclusion of 'angular-route.js' file and the module ngRoute.
  */
 
@@ -147,9 +148,11 @@
 		.when('/#', {templateUrl:'views/main.html'})
 		.when('/Flows', {templateUrl:'views/flows.html'})
 		.when('/Temperature', {templateUrl:'views/temperature.html'})
-		.when('/Humidifier', {templateUrl:'views/humidifier.html'});
+		.when('/Humidifier', {templateUrl:'views/humidifier.html'})
+		.when('/Common', {templateUrl:'views/common.html'});
 	}]);
 })();
+
 /** This is the main controller that is sucked into the entire program (this is placed
  * 	in the body tag).  The main thing that it will do is call the data service at regular
  * 	intervals which will broadcast the data when called.
@@ -457,16 +460,16 @@
 	
 })();
 
-/** This controller is placed on the O3 cal page and defines what will happen 
- * 	when a user double clicks on a table element.  
- * 
- * 	When the element containing this controller is first displayed, the values 
- * 	in the attribute table_vals will be used to populate the canned table for 
+/** This controller is placed on the O3 cal page and defines what will happen
+ * 	when a user double clicks on a table element.
+ *
+ * 	When the element containing this controller is first displayed, the values
+ * 	in the attribute table_vals will be used to populate the canned table for
  * 	sequence building using the ng-repeat directive.
- * 
- * 	When the user double clicks on a row, the controller will call the tableService 
- * 	setTab method.  This in turn updates the attributes of that service with the ID 
- * 	of the row that was clicked.  That ID is then broadcast and picked up by the 
+ *
+ * 	When the user double clicks on a row, the controller will call the tableService
+ * 	setTab method.  This in turn updates the attributes of that service with the ID
+ * 	of the row that was clicked.  That ID is then broadcast and picked up by the
  * 	tableInput-ctlr which populates the table for the sequence with a default value
  * 	for the selected element.
  */
@@ -474,50 +477,50 @@
 (function() {
 	angular.module('main')
 	.controller('O3Table', ['$scope', 'tableService', function($scope, tableService) {
-		
+
 		/* Contains the entries that will go into the canned table. */
 		$scope.table_vals = [ {
 			"id": "Wait",
 			"step" : "Wait",
 			"descr" : "Set a wait time in the ozone cal in seconds"
-		}, 
+		},
 		{
 			"id": "Filter",
 			"step" : "Filter",
-			"descr" : "Boolean that sets the filter state (<code>TRUE</code> or<code>FALSE</code>)"
-		}, 
+			"descr" : "Boolean that sets the filter state."
+		},
 		{
 			"id": "Speaker",
 			"step" : "Speaker",
-			"descr" : "Boolean that sets the speaker state (<code>TRUE</code> or<code>FALSE</code>)"
-		}, 
+			"descr" : "Boolean that sets the speaker state."
+		},
 		{
 			"id": "O2 Valve",
 			"step" : "O2 Valve",
-			"descr" : "Boolean that sets the O2 valve position (<code>TRUE</code> or<code>FALSE</code>)"
-		}, 
+			"descr" : "Boolean that sets the O2 valve position."
+		},
 		{
 			"id": "O3 Valve",
 			"step" : "O3 Valve",
-			"descr" : "Boolean that sets the O3 valve state (<code>TRUE</code> or<code>FALSE</code>)"
-		}, 
+			"descr" : "Boolean that sets the O3 valve state."
+		},
 		{
 			"id": "O3 Generator",
 			"step" : "O3 Generator",
-			"descr" : "Boolean that sets the O3 generator state (<code>TRUE</code> or<code>FALSE</code>)"
-		}, 
+			"descr" : "Boolean that sets the O3 generator state."
+		},
 		{
 			"id": "QO2",
 			"step" : "O2 Flow Rate",
 			"descr" : "Numeric to set the oxygen flow rate"
 		}];
-		
+
 		/* Handle row double clicks */
 		$scope.clickRow = function(row){
-			
+
 			/* tableService will broadcast the the listeners the current ID */
 			tableService.setTab(row.id.toString());
-			
+
 		};
 	}]);
 })();
@@ -541,9 +544,10 @@
 /* This controller handles saving calibration data */
 
 (function() {
-	angular.module('main').controller('Save', ['$scope', 'SaveData', '$http','net', 
+	angular.module('main').controller('Save', ['$scope', 'SaveData', '$http','net',
 	function($scope, SaveData, $http, net) {
 
+		$scope.cal_file = "default";
 		$scope.save = function() {
 			var xml = '<?xml version="1.0" encoding="utf-8"?>\r\n<OZONE>\r\n';
 			SaveData.getData().forEach(function(entry) {
@@ -555,7 +559,7 @@
 			/* Send the calibration profile as XML data. */
 			$http({
 				method : 'POST',
-				url : 'http://' + net.address() + '/xService/Calibration/saveCalFile?file_name=test_ang',
+				url : net.address() + '/xService/Calibration/saveCalFile?file_name=' + $scope.cal_file + ".xml",
 				data : xml,
 				headers : {
 					"Content-Type" : 'application/x-www-form-urlencoded'
@@ -609,6 +613,42 @@
 		});
 
 	}]);
+})();
+
+(function(){
+  angular.module('main').controller('filter', ['$scope', 'net', '$http', 'cvt',
+  function($scope, net, $http, cvt){
+
+    /* Filter cycle consists of a period that defines the time in seconds
+     * between which the filter is cycled to true, length of time in seconds
+     * that the filter is on and a boolean indicating whether the syste is set
+     * to cycle.
+     */
+    $scope.cycle = cvt.filter_cycle;
+    $scope.position = cvt.filter_pos;
+
+    $scope.updateCycle = function(){
+      var val = $scope.cycle.auto ? 1 : 0;
+      $http.get(net.address() + 'General/FilterCycle?Length=' +
+      $scope.cycle.length + '&Period=' + $scope.cycle.period + '&auto=' + val);
+      cvt.filter_cycle = {"period": $scope.cycle.period,
+                          "length":$scope.cycle.length,
+                          "auto": $scope.cycle.auto};
+
+    };
+
+    $scope.updateFilter = function(){
+      var val = $scope.position ? 1:0;
+      $http.get(net.address() + 'General/UpdateFilter?State=' + val);
+      cvt.pos = $scope.position;
+
+    };
+
+    $scope.updateAuto = function() {
+			$scope.cycle.auto = !$scope.cycle.auto;
+			$scope.updateCycle();
+		};
+}]);
 })();
 
 (function() {

@@ -1,61 +1,65 @@
-<div class="table-responsive">
-	<table class="table table-bordered table-striped" id="xml-table" ng-controller="O3Table">
-		<thead>
-			<tr>
-				<th>Step</th>
-				<th>Description</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr ng-repeat="val in table_vals" ng-dblclick="clickRow(val)">
-				<th scope="row" id ="{{val.id}}">{{val.step}}</th><td>{{val.descr}}</td>
-			</tr>
-		</tbody>
-	</table>
-</div>
-<div class="table-responsive" ng-controller ="InputTable">
-	<table class="table table-bordered table-striped" id="cal-table">
-		<colgroup>
-			<col class="col-xs-1" />
-			<col class="col-xs-7" />
-		</colgroup>
-		<thead>
-			<tr>
-				<th>Step</th>
-				<th>Value</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr ng-repeat="datum in data">
-				<td>{{datum.id}}</td><td contenteditable>{{datum.val}}</td>
-			</tr>
-		</tbody>
-	</table>
-</div>
-<form class="form-inline" ng-controller="Save">
-	<div class="form-group">
-		<label class="sr-only" for="fileName">Password</label>
-		<input type="text" class="form-control" value="defaultCal">
+<div class="row">
+	<div class="col-md-4">
+		<div class="table-responsive">
+			<table class="table table-bordered table-striped" id="xml-table" ng-controller="O3Table">
+				<thead>
+					<tr>
+						<th>Step</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="val in table_vals" ng-dblclick="clickRow(val)">
+						<th scope="row" id="{{val.id}}">{{val.step}}</th>
+						<td>{{val.descr}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
-	<div>
-		<button type="button" class="btn btn-default" ng-click="save()">
-			Save Cal
+	<div class="col-md-4">
+		<div class="table-responsive" ng-controller="InputTable">
+			<table class="table table-bordered table-striped" id="cal-table">
+				<colgroup>
+					<col class="col-md-4" />
+					<col class="col-md-8" />
+				</colgroup>
+				<thead>
+					<tr>
+						<th>Step</th>
+						<th>Value</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="datum in data">
+						<td>{{datum.id}}</td>
+						<td contenteditable>{{datum.val}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="col-md-2">
+		<form class="form-inline" ng-controller="Save">
+			<div class="form-group">
+				<label class="sr-only" for="fileName">Password</label>
+				<input type="text" ng-model="cal_file" class="form-control">
+				<button type="button" class="btn btn-default btn-block" ng-click="save()">
+					Save Cal
+				</button>
+
+				<button type="button" class="btn btn-default btn-block">
+					Set Current as Default
+				</button>
+			</div>
+
+		</form>
+		<button ng-controller="startCal" ng-click="startCalibration()" type="button" class="btn btn-primary btn-block" ng-switch on="cal" value="Start Calibration">
+			<div ng-switch-when=t rue>
+				Cal Running...
+			</div>
+			<div ng-switch-default>
+				Start Cal
+			</div>
 		</button>
 	</div>
-
-	<button type="button" class="btn btn-default">
-		Set Current as Default
-	</button>
-
-</form>
-
-<textarea id="xml_out" rows ="10" cols="30"></textarea>
-<br />
-<button ng-controller="startCal" ng-click = "startCalibration()" type="button" class="btn btn-primary" ng-switch on = "cal" value ="Start Calibration">
-	<div ng-switch-when = true>
-		Cal Running...
-	</div>
-	<div ng-switch-default>
-		Start Cal
-	</div>
-</button>
