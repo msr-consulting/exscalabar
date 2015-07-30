@@ -10,16 +10,17 @@
 				<button class="btn btn-default" type="button" ng-click = "saveData()" ng-class="{'active': save}">
 					Save
 				</button>
+			</li>
+			<li>
 				<button class="btn btn-default" type="button" ng-click = "setFilter()" ng-class="{'active': filter}">
 					Filter
-				</button>
-			</li>
+				</button></li>
 			<li class>
 				<button class="btn btn-default" type="button" ng-click = "stop()">
 					Stop
 				</button>
 			</li>
-			<li class>
+			<li>
 				<div class="form-group" id="address">
 					<label class = "ctl-label small" for="ip">IP</label>
 					<input ng-model="ip" ng-change="changeIP()" type="text"  class="form-control" id="ip" data-toggle="tooltip" data-placement="right" />
@@ -29,11 +30,25 @@
 				</div>
 			</li>
 			<li class ng-switch on="connected">
-				<div ng-switch-when = true>
-					<span class="label label-success">Connected</span>
+				<div ng-switch-when = true class="alert alert-success">
+					Connected
 				</div>
-				<div ng-switch-when = false>
-					<span class="label label-danger">Not Connected</span>
+				<div ng-switch-when = false class="alert alert-danger">
+					Not Connected
+				</div>
+			</li>
+			<li class ng-switch on="cabin">
+				<div ng-switch-when = true class="alert alert-success">
+					Inlet
+				</div>
+				<div ng-switch-when = false class="alert alert-info">
+					Cabin
+				</div>
+			</li>
+			<li class ng-switch on="o3On">
+				<!-- Show nothing when an ozone cal is not running -->
+				<div ng-switch-when = true class="alert alert-success">
+					Ozone Cal Active
 				</div>
 			</li>
 
