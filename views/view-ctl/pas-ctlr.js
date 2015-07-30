@@ -19,6 +19,25 @@
 		};
 		$scope.data = Data.pas;
 
+		function lasSet(vr,vo,f0,mod){
+			this.Vrange = 10;
+			this.Voffset = 5;
+			this.f0 = 1300;
+			this.modulation = false};
+
+		$scope.lasCtl = [];
+
+		for(index = 0; index < 5; index++){
+			$scope.lasCtl.push(new lasSet());
+		}
+
+		$scope.updateMod = function(i){
+			$scope.lasCtl[i].modulation = !$scope.lasCtl[i].modulation;
+		}
+		/*$scope.updateLasCtl = function(){
+			$log.debug($scope.lasCtrl)
+		};*/
+
 		// Listen for data
 		$scope.$on('dataAvailable', function() {
 
@@ -30,6 +49,11 @@
 			$scope.dataQ = [Data.pas.cell[0].Q, Data.pas.cell[1].Q, Data.pas.cell[2].Q, Data.pas.cell[3].Q, Data.pas.cell[4].Q];
 			$scope.dataabs = [Data.pas.cell[0].abs, Data.pas.cell[1].abs, Data.pas.cell[2].abs, Data.pas.cell[3].abs, Data.pas.cell[4].abs];
 
+			if ($scope.data.drive){
+				for (i = 0; i< 5; i++){
+					$scope.lasCtl[i].f0 = $scope.data.cell[i].f0[0][1];
+				}
+			}
 		});
 
 		/* Use functions and the ng-change or ng-click directive to handle DOM events rather than
