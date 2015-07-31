@@ -1,74 +1,71 @@
-<div class="row">
-	<div class="col-lg-1 col-md-2 col-sm-3 col-xs-3" role="main">
-		<div class="row">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					Laser Control
-				</div>
-				<div class="row">
-					<div class="col-md-12">
+<div ng-controller="crd">
+	<accordion close-others="false">
+		<accordion-group heading="Controls" is-disabled=false is-open=true>
+			<div class="row">
+				<div class="col-md-2">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							Laser Control
+						</div>
+						<div class="row">
+							<div ng-repeat="ctl in laser_ctl track by $index">
+								<div class="col-md-2">
+									<div class="panel panel-default">
+										<div class="panel-heading">{{ctl.id}}</div>
+										<div class="form-group">
+											<label for="las_rate_{{$index}}">f (Hz)</label>
+											<input type="number" id = "las_rate_{{$index}}" class="form-control" ng-model="laser_ctl[{{1index}}].rate">
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+
 						<div class="form-group" id="fcrd">
-							<label class = "ctl-label" for="bluerate">f<sub>blue</sub> (Hz)</label>
-							<input ng-model = "blue.rate" type="number" id="bluerate" class="form-control" data-toggle="tooltip" data-placement="right" title="Blue laser repetition rate (in Hz)."/>
+							<label class="ctl-label" for="bluerate">f<sub>blue</sub> (Hz)</label>
+							<input ng-model="blue.rate" type="number" id="bluerate" class="form-control" data-toggle="tooltip" data-placement="right" title="Blue laser repetition rate (in Hz)." />
 							<br />
-							<label class = "ctl-label" for="redrate">f<sub>red</sub> (Hz)</label>
-							<input ng-model = "red.rate" type="number" id="redrate" class="form-control" />
+							<label class="ctl-label" for="redrate">f<sub>red</sub> (Hz)</label>
+							<input ng-model="red.rate" type="number" id="redrate" class="form-control" />
 						</div>
-					</div>
-					<div class="col-md-12">
-						<div class="form-group" id ="dccrd">
-							<label class = "ctl-label" for="bluedc">DC<sub>blue</sub> (Hz)</label>
-							<input ng-model = "blue.DC" type="number" id="bluedc" class="form-control"/>
+						<div class="form-group" id="dccrd">
+							<label class="ctl-label" for="bluedc">DC<sub>blue</sub> (Hz)</label>
+							<input ng-model="blue.DC" type="number" id="bluedc" class="form-control" />
 							<br />
-							<label class = "ctl-label" for="reddc">DC<sub>red</sub> (Hz)</label>
-							<input ng-model = "red.DC" type="number" id="reddc" class="form-control"/>
+							<label class="ctl-label" for="reddc">DC<sub>red</sub> (Hz)</label>
+							<input ng-model="red.DC" type="number" id="reddc" class="form-control" />
 						</div>
-					</div>
-					<div class="col-md-12">
 						<div class="form-group">
-							<button type="button" class="btn btn-primary" id ="benable" ng-class="{'active': benabled}">
+							<button type="button" class="btn btn-primary btn-block" id="benable" ng-class="{'active': benabled}">
 								Blue Enabled
 							</button>
 						</div>
-					</div>
-					<div class="col-md-12">
 						<div class="form-group">
-							<button type="button" class="btn btn-primary" id ="renable" ng-class="{'active': renabled}">
+							<button type="button" class="btn btn-primary btn-block" id="renable" ng-class="{'active': renabled}">
 								Red Enabled
 							</button>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="panel panel-default" data-toggle="tooltip" data-placement="right"  title="PMT gains in volts.">
-				<div class="panel-heading">
-					Laser Gain
-				</div>
-				<div class="row">
-					<div class="col-md-5">
-						<label class = "ctl-label" for="g1">Gain 1</label>
+				<div class="col-md-2">
+					<div class="panel panel-default" data-toggle="tooltip" data-placement="right" title="PMT gains in volts.">
+						<div class="panel-heading">
+							Laser Gain
+						</div>
+						<label class="ctl-label" for="g1">Gain 1</label>
 						<input type="number" id="g1" class="form-control" placeholder="5" />
-						<br />
-						<label class = "ctl-label" for="g2">Gain 2</label>
+						<label class="ctl-label" for="g2">Gain 2</label>
 						<input type="number" id="g2" class="form-control" placeholder="5" />
-						<br />
-						<label class = "ctl-label" for="g3">Gain 3</label>
+						<label class="ctl-label" for="g3">Gain 3</label>
 						<input type="number" id="g3" class="form-control" placeholder="5" />
-						<br />
-						<label class = "ctl-label" for="g4">Gain 4</label>
+						<label class="ctl-label" for="g4">Gain 4</label>
 						<input type="number" id="g4" class="form-control" placeholder="5" />
-						<br />
-						<label class = "ctl-label" for="g5">Gain 5</label>
+						<label class="ctl-label" for="g5">Gain 5</label>
 						<input type="number" id="g5" class="form-control" placeholder="5" />
-						<br />
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-	<div class="col-lg-11 col-md-10 col-sm-9 col-xs-9">
-
-	</div>
+			</accodion-group>
+	</accordion>
 </div>
