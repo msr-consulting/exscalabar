@@ -1,6 +1,7 @@
 /* Start with an IIFE */
 (function(){
-	angular.module('main',['ngRoute', 'ui.bootstrap', 'ui.bootstrap.contextMenu']);
+	angular.module('main',['ngRoute', 'ui.bootstrap',
+	'ui.bootstrap.contextMenu', 'nvd3']);
 })();
 
 /** This service handles network settings that can be set in the sidebar.
@@ -97,7 +98,7 @@
 			"dcblue" : 50,
 			"kred" : 1,
 			"kblue" : 1,
-			"kpmt" : [],
+			"kpmt" : [0,0,0,0,0],
 			"eblue" : true,
 			"ered" : true
 		};
@@ -159,7 +160,7 @@
  */
 
 (function() {
-	angular.module('main').controller('MainCtlr', ['Data', '$scope', '$interval', 'cvt', 
+	angular.module('main').controller('MainCtlr', ['Data', '$scope', '$interval', 'cvt',
 	function(Data, $scope, $interval, cvt) {
 
 		/* Call the data service at regular intervals; this will force a regular update of the
@@ -207,221 +208,228 @@
  */
 
 (function() {
-	angular.module('main').factory('Data', ['$rootScope', '$http', '$log', 'net',
-	function($rootScope, $http, $log, net) {
+    angular.module('main').factory('Data', ['$rootScope', '$http', '$log', 'net',
+      function($rootScope, $http, $log, net) {
 
-		/* The full data object contains arrays of data as defined in the objects above.
-		 * This object is INTENDED to be static...
-		 */
-		var dataObj = {
-			"cTime" : null,
-			"tObj": new Date(),
-			"filter" : true,
-			"save" : true,
-			"o3cal" : false,
-			"Cabin" :false,
-			"time" : []
-		};
+        /* The full data object contains arrays of data as defined in the objects above.
+         * This object is INTENDED to be static...
+         */
+        var dataObj = {
+          "cTime": null,
+          "tObj": new Date(),
+          "filter": true,
+          "save": true,
+          "o3cal": false,
+          "Cabin": false,
+          "time": []
+        };
 
-		// Defines array lengths - 100 == 100 seconds of data
-		var maxLength = 300;
+        // Defines array lengths - 100 == 100 seconds of data
+        var maxLength = 300;
 
-		/* Variable that indicates everyone needs to shift... */
-		var shiftData = false;
+        /* Variable that indicates everyone needs to shift... */
+        var shiftData = false;
 
-		dataObj.pas = {};
-		dataObj.pas.cell = [new pasData()];
-		dataObj.pas.drive = true;
+        dataObj.pas = {};
+        dataObj.pas.cell = [new pasData()];
+        dataObj.pas.drive = true;
 
-		dataObj.flowData = [new fdevice()];
+        dataObj.flowData = [new fdevice()];
 
-		// Currently, the CRD data strictly consists of cell data.
-		dataObj.crd = {};
+        // Currently, the CRD data strictly consists of cell data.
+        dataObj.crd = {};
 
-		// Add a single cell to allocate space for the cell array.
-		dataObj.crd.cell = [new crdObject()];
+        // Add a single cell to allocate space for the cell array.
+        dataObj.crd.cell = [new crdObject()];
 
-		/* Call this to poll the server for data */
-		dataObj.getData = function() {
-			promise = $http.get(net.address() + 'General/Data')
-			.success(function(data, status, headers, config) {
+        /* Call this to poll the server for data */
+        dataObj.getData = function() {
+          promise = $http.get(net.address() + 'General/Data')
+            .success(function(data, status, headers, config) {
 
-				/* The maximum length of the array is defined by the variable maxLength.
-				 * If the array is greater or equal than this, pop the array and then
-				 * place a new value at the front of the array using unshift().  Also,
-				 * set the flag shiftData to true to indicate to others that they neeed
-				 * to do likewise.
-				 */
-				if (dataObj.time.length - 1 >= maxLength) {
-					dataObj.time.pop();
-					shiftData = true;
-				}
-
-
-				dataObj.tObj = updateTime(data.Time);
-
-				var t = dataObj.tObj.getTime();
-				dataObj.time.unshift(t);
-
-				dataObj = handlePAS(data, dataObj, shiftData);
-				dataObj = handleCRD(data, dataObj, shiftData);
-				dataObj.Cabin = data.Cabin;
-
-				$rootScope.$broadcast('dataAvailable');
-			}).error(function(){
-				$rootScope.$broadcast('dataNotAvailable');
-				$log.debug(status);
-			});
-		};
-
-		return dataObj;
-
-	}]);
-
-	function updateTime(t) {
-		/* The reference for LabVIEW time is 1 Jan 1904.  JS days
-		 * are zero based so set the value to the correct date for
-		 * reference.
-		 */
-		var lvDate = new Date(1904, 0, 1);
-		lvDate.setSeconds(t);
-		return lvDate;
-	}
-
-	/** This is the structure for the flow device data */
-	function fdevice(){
-		this.ID = "";
-		this.Q = 0;	// Volumetric flow rate
-		this.Q0 = 0;	// Mass flow rate
-		this.P = 0;	// Pressure in mb
-		this.T = 0;	// Temperature in degrees C
-		this.Qsp = 0;	// Flow setpoint
-	}
-
-	/** Contains data specific to the PAS */
-	function pasData() {
-		this.f0 = [];
-		this.IA = [];
-		this.Q = [];
-		this.p = [];
-		this.abs = [];
-		this.micf = [];
-		this.mict = [];
-		this.pd = [];
-	}
-
-	/**
-	* This object is used to store {x,y} pairs of data for plotting of the CRD
-	* data.  The x value is time and the y is the value indicated by the property.
-	*/
-	function crdObject() {
-		this.tau = [];
-		this.tau0 = [];
-		this.taucorr = [];
-		this.tau0corr = [];
-		this.ext = [];
-		this.extcorr = [];
-		this.stdvTau = [];
-		this.etau = [];
-		this.max = [];
-		this.rd = [];
-	}
-
-	/**
-	 * This function handles allocation of the PAS data.  All data may be plotted
-	 * and as such the data is divided up into arrays of {x,y} pairs for use by
-	 * plotting libraries.  The length of the arrays is defined by the service
-	 * and the length is indicated by the input shift.
-	 * @param {Object} d - this is the JSON data object returned by the server.
-	 * @param {Object} Data - data object that will be broadcasted to controllers.
-	 * @param {boolean} shift - indicates whether we have the correct number of
-	 * points in the array and need to start shifting the data.
-	 * @return {Object} - returns the Data object defined in the inputs.
-	 */
-	function handlePAS(d, Data, shift){
-		var t = Data.time[0];
-		// Handle the PAS data
-		// TODO: Fix this hideousness!!!  Has to be a better way...
-		for (var index in d.PAS.CellData) {
-
-			/* Make sure we have all of the cells accounted for */
-			if ((Data.pas.cell.length - 1) < index) {
-				Data.pas.cell.push(new pasData());
-			}
-
-			/* Pop all of the ordered arrays if the arrays are of the set length... */
-			if (shift) {
-				Data.pas.cell[index].f0.pop();
-				Data.pas.cell[index].IA.pop();
-				Data.pas.cell[index].Q.pop();
-				Data.pas.cell[index].p.pop();
-				Data.pas.cell[index].abs.pop();
-			}
-
-			// TODO: This doesn't look right - the points should be an object, right?
-			Data.pas.cell[index].f0.unshift( [t, d.PAS.CellData[index].derived.f0] );
-			Data.pas.cell[index].IA.unshift( [t, d.PAS.CellData[index].derived.IA] );
-			Data.pas.cell[index].Q.unshift( [t, d.PAS.CellData[index].derived.Q] );
-			Data.pas.cell[index].p.unshift( [t, d.PAS.CellData[index].derived.noiseLim] );
-			Data.pas.cell[index].abs.unshift( [t, d.PAS.CellData[index].derived.ext] );
+              /* The maximum length of the array is defined by the variable maxLength.
+               * If the array is greater or equal than this, pop the array and then
+               * place a new value at the front of the array using unshift().  Also,
+               * set the flag shiftData to true to indicate to others that they neeed
+               * to do likewise.
+               */
+							 // TODO: Get rid of this array - it is not used!
+              if (dataObj.time.length - 1 >= maxLength) {
+                dataObj.time.pop();
+                shiftData = true;
+              }
 
 
-			/* This is one off data and is not a function of time... */
-			Data.pas.cell[index].micf = d.PAS.CellData[index].MicFreq.Y;
-			Data.pas.cell[index].mict = d.PAS.CellData[index].MicTime.Y;
-			Data.pas.cell[index].pd = d.PAS.CellData[index].PhotoDiode.Y;
+              dataObj.tObj = updateTime(Number(data.Time));
 
-		}
-		Data.pas.drive = d.PAS.Drive;
+              var t = dataObj.tObj.getTime();
+              dataObj.time.unshift(t);
 
-		return Data;
-	}
+              dataObj = handlePAS(data, dataObj, shiftData);
+              dataObj = handleCRD(data, dataObj, shiftData);
+              dataObj.Cabin = data.Cabin;
 
-	/**
-	 * This function handles allocation of the CRD data.  All data may be plotted
-	 * and as such the data is divided up into arrays of {x,y} pairs for use by
-	 * plotting libraries.  The length of the arrays is defined by the service
-	 * and the length is indicated by the input shift.
-	 * @param {Object} d - this is the JSON data object returned by the server.
-	 * @param {Object} Data - data object that will be broadcasted to controllers.
-	 * @param {boolean} shift - indicates whether we have the correct number of
-	 * points in the array and need to start shifting the data.
-	 * @return {Object} - returns the Data object defined in the inputs.
-	 */
-	function handleCRD(d, Data, shift){
+              $rootScope.$broadcast('dataAvailable');
+            }).error(function() {
+              $rootScope.$broadcast('dataNotAvailable');
+              $log.debug(status);
+            });
+        };
 
-		var t = Data.time[0];
+        return dataObj;
 
-		// Handle the CRD data
-		for (var index in d.CellData){
-			if ((Data.crd.cell.length-1) < index ){
-				Data.crd.cell.push(new crdObject());
-				if (shift){
-					Data.crd.cell[index].tau.pop();
-					Data.crd.cell[index].tau0.pop();
-					Data.crd.cell[index].taucorr.pop();
-					Data.crd.cell[index].tau0corr.pop();
-					Data.crd.cell[index].ext.pop();
-					Data.crd.cell[index].extcorr.pop();
-					Data.crd.cell[index].stdvTau.pop();
-					Data.crd.cell[index].etau.pop();
-					Data.crd.cell[index].max.pop();
+      }
+    ]);
 
-				}
-				Data.crd.cell[index].tau.unshift([t, d.CellData[index].extParam.Tau]);
-				Data.crd.cell[index].tau0corr.unshift([t, d.CellData[index].extParam.Tau0cor]);
-				Data.crd.cell[index].taucorr.unshift([t, d.CellData[index].extParam.taucorr]);
-				Data.crd.cell[index].tau0.unshift([t, d.CellData[index].extParam.Tau0]);
-				Data.crd.cell[index].ext.unshift([t, d.CellData[index].extParam.ext]);
-				Data.crd.cell[index].extcorr.unshift([t, d.CellData[index].extParam.extCorr]);
-				Data.crd.cell[index].stdvTau.unshift([t, d.CellData[index].extParam.stdevTau]);
-				Data.crd.cell[index].etau.unshift([t, d.CellData[index].extParam.eTau]);
-				Data.crd.cell[index].max.unshift([t, d.CellData[index].extParam.max]);
-			}
+		/** Function to return current time.
+		 	* @param {Double} t - time in seconds since January 1, 1904.
+			* @return {Date} - date object with date from server.
+			*/
+    function updateTime(t) {
+      /* The reference for LabVIEW time is 1 Jan 1904.  JS days
+       * are zero based so set the value to the correct date for
+       * reference.
+       */
+      var lvDate = new Date(1904, 0, 1);
+      lvDate.setSeconds(t);
+      return lvDate;
+    }
 
-		}
-		return Data;
-	}
+    /** This is the structure for the flow device data */
+    function fdevice() {
+      this.ID = "";
+      this.Q = 0; // Volumetric flow rate
+      this.Q0 = 0; // Mass flow rate
+      this.P = 0; // Pressure in mb
+      this.T = 0; // Temperature in degrees C
+      this.Qsp = 0; // Flow setpoint
+    }
+
+    /** Contains data specific to the PAS */
+    function pasData() {
+      this.f0 = [];
+      this.IA = [];
+      this.Q = [];
+      this.p = [];
+      this.abs = [];
+      this.micf = [];
+      this.mict = [];
+      this.pd = [];
+    }
+
+    /**
+     * This object is used to store {x,y} pairs of data for plotting of the CRD
+     * data.  The x value is time and the y is the value indicated by the property.
+     */
+    function crdObject() {
+      this.tau = [];
+      this.tau0 = [];
+      this.taucorr = [];
+      this.tau0corr = [];
+      this.ext = [];
+      this.extcorr = [];
+      this.stdvTau = [];
+      this.etau = [];
+      this.max = [];
+      this.rd = [];
+    }
+
+    /**
+     * This function handles allocation of the PAS data.  All data may be plotted
+     * and as such the data is divided up into arrays of {x,y} pairs for use by
+     * plotting libraries.  The length of the arrays is defined by the service
+     * and the length is indicated by the input shift.
+     * @param {Object} d - this is the JSON data object returned by the server.
+     * @param {Object} Data - data object that will be broadcasted to controllers.
+     * @param {boolean} shift - indicates whether we have the correct number of
+     * points in the array and need to start shifting the data.
+     * @return {Object} - returns the Data object defined in the inputs.
+     */
+    function handlePAS(d, Data, shift) {
+      var t = Data.time[0];
+      // Handle the PAS data
+      // TODO: Fix this hideousness!!!  Has to be a better way...
+      for (var index in d.PAS.CellData) {
+
+        /* Make sure we have all of the cells accounted for */
+        if ((Data.pas.cell.length - 1) < index) {
+          Data.pas.cell.push(new pasData());
+        }
+
+        /* Pop all of the ordered arrays if the arrays are of the set length... */
+        if (shift) {
+          Data.pas.cell[index].f0.pop();
+          Data.pas.cell[index].IA.pop();
+          Data.pas.cell[index].Q.pop();
+          Data.pas.cell[index].p.pop();
+          Data.pas.cell[index].abs.pop();
+        }
+
+        // TODO: This doesn't look right - the points should be an object, right?
+        Data.pas.cell[index].f0.unshift({x:t, y:d.PAS.CellData[index].derived.f0});
+        Data.pas.cell[index].IA.unshift({x:t, y:d.PAS.CellData[index].derived.IA});
+        Data.pas.cell[index].Q.unshift({x:t, y:d.PAS.CellData[index].derived.Q});
+        Data.pas.cell[index].p.unshift({x:t, y:d.PAS.CellData[index].derived.noiseLim});
+        Data.pas.cell[index].abs.unshift({x:t, y:d.PAS.CellData[index].derived.ext});
+
+
+        /* This is one off data and is not a function of time... */
+        Data.pas.cell[index].micf = d.PAS.CellData[index].MicFreq.Y;
+        Data.pas.cell[index].mict = d.PAS.CellData[index].MicTime.Y;
+        Data.pas.cell[index].pd = d.PAS.CellData[index].PhotoDiode.Y;
+
+      }
+      Data.pas.drive = d.PAS.Drive;
+
+      return Data;
+    }
+
+    /**
+     * This function handles allocation of the CRD data.  All data may be plotted
+     * and as such the data is divided up into arrays of {x,y} pairs for use by
+     * plotting libraries.  The length of the arrays is defined by the service
+     * and the length is indicated by the input shift.
+     * @param {Object} d - this is the JSON data object returned by the server.
+     * @param {Object} Data - data object that will be broadcasted to controllers.
+     * @param {boolean} shift - indicates whether we have the correct number of
+     * points in the array and need to start shifting the data.
+     * @return {Object} - returns the Data object defined in the inputs.
+     */
+    function handleCRD(d, Data, shift) {
+
+      var t = Data.time[0];
+
+      // Handle the CRD data
+      for (var index in d.CellData) {
+        if ((Data.crd.cell.length - 1) < index) {
+          Data.crd.cell.push(new crdObject());
+        }
+        if (shift) {
+          Data.crd.cell[index].tau.pop();
+          Data.crd.cell[index].tau0.pop();
+          Data.crd.cell[index].taucorr.pop();
+          Data.crd.cell[index].tau0corr.pop();
+          Data.crd.cell[index].ext.pop();
+          Data.crd.cell[index].extcorr.pop();
+          Data.crd.cell[index].stdvTau.pop();
+          Data.crd.cell[index].etau.pop();
+          Data.crd.cell[index].max.pop();
+
+        }
+        Data.crd.cell[index].tau.unshift({x:t, y:d.CellData[index].extParam.Tau});
+        Data.crd.cell[index].tau0corr.unshift({x:t,y:d.CellData[index].extParam.Tau0cor});
+        Data.crd.cell[index].taucorr.unshift({x:t, y:d.CellData[index].extParam.taucorr});
+        Data.crd.cell[index].tau0.unshift({x:t, y:d.CellData[index].extParam.Tau0});
+        Data.crd.cell[index].ext.unshift({x:t, y:d.CellData[index].extParam.ext});
+        Data.crd.cell[index].extcorr.unshift({x:t, y:d.CellData[index].extParam.extCorr});
+        Data.crd.cell[index].stdvTau.unshift({x:t, y:d.CellData[index].extParam.stdevTau});
+        Data.crd.cell[index].etau.unshift({x:t, y:d.CellData[index].extParam.eTau});
+        Data.crd.cell[index].max.unshift({x:t, y:d.CellData[index].extParam.max});
+      }
+
+
+    return Data;
+  }
 })();
 
 (function() {
@@ -733,41 +741,112 @@
 })();
 
 (function() {
-	angular.module('main').controller('crd', ['$scope', 'net', '$http', 'cvt', 'Data',
-	function($scope, net, $http, cvt, Data) {
+  angular.module('main').controller('crd', ['$scope', 'cvt', 'Data',
+    function($scope, cvt, Data) {
 
-		// Lasers have three inputs
-		var laserInput = function(_rate, _DC, _k, enabled, ID) {
-			this.rate = _rate;
-			this.DC = _DC;
-			this.k = _k;
-			this.en = enabled
-			this.id = ID;
-		};
-		/* Variable for laser control binding; first element is related to blue,
-		 * second to red.
-		 */
-		$scope.laser_ctl = [
-			new laserInput(cvt.crd.fblue, cvt.crd.dcblue, cvt.crd.kblue, cvt.crd.eblue, "Blue Laser"),
-			new laserInput(cvt.crd.fred, cvt.crd.dcred, cvt.crd.kred, cvt.crd.ered, "Red Laser")];
+      // Lasers have three inputs
+      var laserInput = function(_rate, _DC, _k, enabled, ID) {
+        this.rate = _rate;
+        this.DC = _DC;
+        this.k = _k;
+        this.en = enabled;
+        this.id = ID;
+      };
+      /* Variable for laser control binding; first element is related to blue,
+       * second to red.
+       */
+      $scope.laser_ctl = [
+        new laserInput(cvt.crd.fblue, cvt.crd.dcblue, cvt.crd.kblue, cvt.crd.eblue, "Blue Laser"),
+        new laserInput(cvt.crd.fred, cvt.crd.dcred, cvt.crd.kred, cvt.crd.ered, "Red Laser")
+      ];
 
-		$scope.pmt = cvt.crd.kpmt;
+      $scope.pmt = cvt.crd.kpmt;
 
-		// TODO: Implement enabled functionality
-		$scope.setbEnable = function() {
-			$scope.benabled = !$scope.benabled;
-			cvt.crd.eblue = $scope.benabled;
-			//$http.get(net.address() + 'PAS_CMD/SpkSw?SpkSw=' + val);
-		};
+      $scope.data = Data.crd;
 
-		// TODO: Implement enabled functionality
-		$scope.setrEnable = function() {
-			$scope.renabled = !$scope.renabled;
-			cvt.crd.ered = $scope.renabled;
-			//$http.get(net.address() + 'PAS_CMD/SpkSw?SpkSw=' + val);
+      // TODO: Implement enabled functionality
+      $scope.setEnable = function(index) {
 
-		};
-	}]);
+        $scope.laser_ctl[index].en = !$scope.laser_ctl[index].en;
+        var enabled = $scope.laser_ctl[index].en;
+        switch (index) {
+          case 0:
+            cvt.crd.eblue = enabled;
+            break;
+          case 1:
+            cvt.crd.ered = enabled;
+            break;
+          default:
+
+        }
+
+      };
+
+      $scope.tauData = [{
+        values: [],
+        key: '&tau;'
+      }, {
+        values: [],
+        key: '&tau<sub>0</sub>'
+      }, {
+          values: [],
+        key: '&tau<sub>0</sub>'
+      }, {
+        values: [],
+        key: '&sigma;<sub>&tau;</sub>'
+      }];
+
+      $scope.options = {
+        chart: {
+          type: 'lineChart',
+          height: 300,
+          margin: {
+            top: 20,
+            right: 40,
+            bottom: 60,
+            left: 75
+          },
+          x: function(d) {
+            return d.x;
+          },
+          y: function(d) {
+            return d.y;
+          },
+          useInteractiveGuideline: true,
+          yAxis: {
+            tickFormat: function(d) {
+              return d3.format('0.01f')(d);
+            },
+            axisLabel: 'Testing'
+          },
+          xAxis: {
+            tickFormat: function(d) {
+              return d3.time.format('%X')(new Date(d));
+            },
+            rotateLabels: -45
+          },
+          transitionDuration: 500,
+          showXAxis: true,
+          showYAxis: true
+        }
+      };
+
+      $scope.$on('dataAvailable', function() {
+
+        $scope.data = Data.crd;
+
+        $scope.tauData[0].values = $scope.data.cell[0].max;
+        $scope.tauData[1].values = $scope.data.cell[0].tau0;
+        $scope.tauData[2].values = $scope.data.cell[0].stdvTau;
+
+
+      });
+
+
+
+
+    }
+  ]);
 })();
 
 /** This is the controller which is used to handle the PAS graph on the main page.
@@ -861,123 +940,179 @@
 })();
 
 (function() {
-	angular.module('main').controller('pas', ['$scope', 'net', '$http', 'cvt', 'Data', '$log',
-	function($scope, net, $http, cvt, Data, $log) {
+  angular.module('main').controller('pas', ['$scope', 'net', '$http', 'cvt', 'Data', '$log',
+    function($scope, net, $http, cvt, Data, $log) {
 
-		$scope.speaker = cvt.getPasSpkCtl();
+      $scope.speaker = cvt.getPasSpkCtl();
 
-		$scope.cycle = {
-			"period" : 360,
-			"length" : 20,
-			"auto" : false
-		};
+      $scope.cycle = {
+        "period": 360,
+        "length": 20,
+        "auto": false
+      };
 
-		var maxVrange = 10;
-		var maxVoffset = 5;
+      var maxVrange = 10;
+      var maxVoffset = 5;
 
-		var flim = {
-			"high" : 3000,
-			"low" : 500
-		};
-		$scope.data = Data.pas;
+      var flim = {
+        "high": 3000,
+        "low": 500
+      };
+      $scope.data = Data.pas;
 
-		function lasSet(vr,vo,f0,mod){
-			this.Vrange = 10;
-			this.Voffset = 5;
-			this.f0 = 1300;
-			this.modulation = false};
+      function lasSet(vr, vo, f0, mod) {
+        this.Vrange = 10;
+        this.Voffset = 5;
+        this.f0 = 1300;
+        this.modulation = false
+      };
 
-		$scope.lasCtl = [];
+      $scope.lasCtl = [];
 
-		for(index = 0; index < 5; index++){
-			$scope.lasCtl.push(new lasSet());
-		}
+      for (index = 0; index < 5; index++) {
+        $scope.lasCtl.push(new lasSet());
+      }
 
-		$scope.updateMod = function(i){
-			$scope.lasCtl[i].modulation = !$scope.lasCtl[i].modulation;
-		}
-		/*$scope.updateLasCtl = function(){
-			$log.debug($scope.lasCtrl)
-		};*/
+      $scope.updateMod = function(i) {
+        $scope.lasCtl[i].modulation = !$scope.lasCtl[i].modulation;
+      }
 
-		// Listen for data
-		$scope.$on('dataAvailable', function() {
+      $scope.testData = [{
+        values: [],
+        key: 'Cell 1'
+      }, {
+        values: [],
+        key: 'Cell 2'
+      }, {
+        values: [],
+        key: 'Cell 3'
+      }, {
+        values: [],
+        key: 'Cell 4'
+      }, {
+        values: [],
+        key: 'Cell 5'
+      }];
 
-			$scope.data = Data.pas;
+      $scope.options = {
+        chart: {
+          type: 'lineChart',
+          height: 300,
+          margin: {
+            top: 20,
+            right: 40,
+            bottom: 60,
+            left: 75
+          },
+          x: function(d) {
+            return d.x;
+          },
+          y: function(d) {
+            return d.y;
+          },
+          useInteractiveGuideline: true,
+          yAxis: {
+            tickFormat: function(d) {
+              return d3.format('0.03f')(d);
+            },
+            axisLabel: 'Testing'
+          },
+          xAxis: {
+            tickFormat: function(d) {
+              return d3.time.format('%X')(new Date(d));
+            },
+            rotateLabels: -45
+          },
+          transitionDuration: 500,
+          showXAxis: true,
+          showYAxis: true
+        }
+      };
+      // Listen for data
+      $scope.$on('dataAvailable', function() {
 
-			$scope.dataf0 = [Data.pas.cell[0].f0, Data.pas.cell[1].f0, Data.pas.cell[2].f0, Data.pas.cell[3].f0, Data.pas.cell[4].f0];
-			$scope.dataIA = [Data.pas.cell[0].IA, Data.pas.cell[1].IA, Data.pas.cell[2].IA, Data.pas.cell[3].IA, Data.pas.cell[4].IA];
-			$scope.datap = [Data.pas.cell[0].p, Data.pas.cell[1].p, Data.pas.cell[2].p, Data.pas.cell[3].p, Data.pas.cell[4].p];
-			$scope.dataQ = [Data.pas.cell[0].Q, Data.pas.cell[1].Q, Data.pas.cell[2].Q, Data.pas.cell[3].Q, Data.pas.cell[4].Q];
-			$scope.dataabs = [Data.pas.cell[0].abs, Data.pas.cell[1].abs, Data.pas.cell[2].abs, Data.pas.cell[3].abs, Data.pas.cell[4].abs];
 
-			if ($scope.data.drive){
-				for (i = 0; i< 5; i++){
-					$scope.lasCtl[i].f0 = $scope.data.cell[i].f0[0][1];
-				}
-			}
-		});
 
-		/* Use functions and the ng-change or ng-click directive to handle DOM events rather than
-		 * $watch to prevent updates at init that could hose things up */
+        $scope.data = Data.pas;
 
-		$scope.setPos = function() {
+        $scope.dataf0 = [Data.pas.cell[0].f0, Data.pas.cell[1].f0, Data.pas.cell[2].f0, Data.pas.cell[3].f0, Data.pas.cell[4].f0];
+        $scope.dataIA = [Data.pas.cell[0].IA, Data.pas.cell[1].IA, Data.pas.cell[2].IA, Data.pas.cell[3].IA, Data.pas.cell[4].IA];
+        $scope.datap = [Data.pas.cell[0].p, Data.pas.cell[1].p, Data.pas.cell[2].p, Data.pas.cell[3].p, Data.pas.cell[4].p];
+        $scope.dataQ = [Data.pas.cell[0].Q, Data.pas.cell[1].Q, Data.pas.cell[2].Q, Data.pas.cell[3].Q, Data.pas.cell[4].Q];
+        $scope.dataabs = [Data.pas.cell[0].abs, Data.pas.cell[1].abs, Data.pas.cell[2].abs, Data.pas.cell[3].abs, Data.pas.cell[4].abs];
 
-			$scope.speaker.pos = !$scope.speaker.pos;
-			var val = $scope.speaker.pos ? 1 : 0;
-			cvt.setPasSpkCtl($scope.speaker);
-			$http.get(net.address() + 'PAS_CMD/SpkSw?SpkSw=' + val);
-		};
+        for (i = 0; i < 5; i++) {
+          $scope.testData[i].values = $scope.data.cell[i].IA;
 
-		$scope.updateSpkV = function() {
+        }
+        if ($scope.data.drive) {
+          for (i = 0; i < 5; i++) {
+            $scope.lasCtl[i].f0 = $scope.data.cell[i].f0[0][1];
+          }
+        }
+      });
 
-			/* Allow the user to enter data that is outside of the determined range but
-			 * correct it if it goes beyond the limits above.
-			 */
+      /* Use functions and the ng-change or ng-click directive to handle DOM events rather than
+       * $watch to prevent updates at init that could hose things up */
 
-			if ($scope.speaker.vrange > maxVrange) {
-				$scope.speaker.vrange = maxVrange;
-			} else {
-				if ($scope.speaker.vrange < 0) {
-					$scope.speaker.vrange = 0;
-				}
-			}
+      $scope.setPos = function() {
 
-			if ($scope.speaker.voffset > maxVoffset) {
-				$scope.speaker.voffset = maxVoffset;
-			} else {
-				if ($scope.speaker.voffset < 0) {
-					$scope.speaker.voffset = 0;
-				}
-			}
+        $scope.speaker.pos = !$scope.speaker.pos;
+        var val = $scope.speaker.pos ? 1 : 0;
+        cvt.setPasSpkCtl($scope.speaker);
+        $http.get(net.address() + 'PAS_CMD/SpkSw?SpkSw=' + val);
+      };
 
-			cvt.setPasSpkCtl($scope.speaker);
-			$http.get(net.address() + 'PAS_CMD/UpdateSpkVparams?Vrange=' + $scope.speaker.vrange + '&Voffset=' + $scope.speaker.voffset);
-		};
+      $scope.updateSpkV = function() {
 
-		$scope.updateSpkF = function() {
-			if ($scope.speaker.f0 > flim.high) {
-				$scope.speaker.f0 = flim.high;
-			} else {
-				if ($scope.speaker.f0 < flim.low) {
-					$scope.speaker.f0 = flim.low;
-				}
-			}
-			cvt.setPasSpkCtl($scope.speaker);
-			$http.get(net.address() + 'PAS_CMD/Spk?df=' + $scope.speaker.df + '&f0=' + $scope.speaker.fc);
-		};
+        /* Allow the user to enter data that is outside of the determined range but
+         * correct it if it goes beyond the limits above.
+         */
 
-		$scope.updateCycle = function() {
-			var val = $scope.cycle.auto ? 1 : 0;
-			$http.get(net.address() + 'PAS_CMD/UpdateSpkCycle?Length=' + $scope.cycle.length + '&Period=' + $scope.cycle.period + '&Cycle=' + val);
-		};
+        if ($scope.speaker.vrange > maxVrange) {
+          $scope.speaker.vrange = maxVrange;
+        } else {
+          if ($scope.speaker.vrange < 0) {
+            $scope.speaker.vrange = 0;
+          }
+        }
 
-		$scope.updateAuto = function() {
-			$scope.cycle.auto = !$scope.cycle.auto;
-			$scope.updateCycle();
-		};
+        if ($scope.speaker.voffset > maxVoffset) {
+          $scope.speaker.voffset = maxVoffset;
+        } else {
+          if ($scope.speaker.voffset < 0) {
+            $scope.speaker.voffset = 0;
+          }
+        }
 
-	}]);
+        cvt.setPasSpkCtl($scope.speaker);
+        $http.get(net.address() + 'PAS_CMD/UpdateSpkVparams?Vrange=' + $scope.speaker.vrange + '&Voffset=' + $scope.speaker.voffset);
+      };
+
+      $scope.updateSpkF = function() {
+        if ($scope.speaker.f0 > flim.high) {
+          $scope.speaker.f0 = flim.high;
+        } else {
+          if ($scope.speaker.f0 < flim.low) {
+            $scope.speaker.f0 = flim.low;
+          }
+        }
+        cvt.setPasSpkCtl($scope.speaker);
+        $http.get(net.address() + 'PAS_CMD/Spk?df=' + $scope.speaker.df + '&f0=' + $scope.speaker.fc);
+      };
+
+      $scope.updateCycle = function() {
+        var val = $scope.cycle.auto ? 1 : 0;
+        $http.get(net.address() + 'PAS_CMD/UpdateSpkCycle?Length=' + $scope.cycle.length + '&Period=' + $scope.cycle.period + '&Cycle=' + val);
+      };
+
+      $scope.updateAuto = function() {
+        $scope.cycle.auto = !$scope.cycle.auto;
+        $scope.updateCycle();
+      };
+
+    }
+  ]);
 })();
 
 function buildPlotController(controllerName, fieldName, ylabel) {
@@ -1157,7 +1292,7 @@ function buildPlotController(controllerName, fieldName, ylabel) {
 
 (function() {
 	angular.module('main').directive('sidebar', sidebar);
-	
+
 	function sidebar() {
 		return {
 			restrict : 'E',

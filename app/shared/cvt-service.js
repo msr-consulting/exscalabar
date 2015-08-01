@@ -43,7 +43,7 @@
 			"dcblue" : 50,
 			"kred" : 1,
 			"kblue" : 1,
-			"kpmt" : [],
+			"kpmt" : [0,0,0,0,0],
 			"eblue" : true,
 			"ered" : true
 		};

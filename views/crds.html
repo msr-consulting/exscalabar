@@ -1,71 +1,98 @@
 <div ng-controller="crd">
 	<accordion close-others="false">
-		<accordion-group heading="Controls" is-disabled=false is-open=true>
+		<accordion-group heading="Controls" is-disabled=false is-open=false>
 			<div class="row">
-				<div class="col-md-2">
+				<div class="col-md-4">
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							Laser Control
 						</div>
 						<div class="row">
 							<div ng-repeat="ctl in laser_ctl track by $index">
-								<div class="col-md-2">
+								<div class="col-md-6">
 									<div class="panel panel-default">
 										<div class="panel-heading">{{ctl.id}}</div>
 										<div class="form-group">
-											<label for="las_rate_{{$index}}">f (Hz)</label>
-											<input type="number" id = "las_rate_{{$index}}" class="form-control" ng-model="laser_ctl[{{1index}}].rate">
+											<label for="rate_{{$index}}">f (Hz)</label>
+											<input type="number" id="rate_{{$index}}" class="form-control" ng-model="ctl.rate">
 										</div>
-
+										<div class="form-group">
+											<label for="dc_{{$index}}">DC (%)</label>
+											<input type="number" id="dc_{{$index}}" class="form-control" ng-model="ctl.DC">
+										</div>
+										<div class="form-group">
+											<label for="k_{{$index}}">Gain</label>
+											<input type="number" id="k_{{$index}}" class="form-control" ng-model="ctl.k">
+										</div>
+										<button ng-class="ctl.en ? 'btn btn-primary btn-block':'btn btn-warning btn-block'" ng-model="ctl.en" ng-click = "setEnable($index)" ng-switch on = "ctl.en">
+											<strong><div ng-switch-when=true>Enabled</div>
+											<div ng-switch-when=false>Disabled</div></strong>
+										</button>
 									</div>
 								</div>
 							</div>
-						</div>
-
-						<div class="form-group" id="fcrd">
-							<label class="ctl-label" for="bluerate">f<sub>blue</sub> (Hz)</label>
-							<input ng-model="blue.rate" type="number" id="bluerate" class="form-control" data-toggle="tooltip" data-placement="right" title="Blue laser repetition rate (in Hz)." />
-							<br />
-							<label class="ctl-label" for="redrate">f<sub>red</sub> (Hz)</label>
-							<input ng-model="red.rate" type="number" id="redrate" class="form-control" />
-						</div>
-						<div class="form-group" id="dccrd">
-							<label class="ctl-label" for="bluedc">DC<sub>blue</sub> (Hz)</label>
-							<input ng-model="blue.DC" type="number" id="bluedc" class="form-control" />
-							<br />
-							<label class="ctl-label" for="reddc">DC<sub>red</sub> (Hz)</label>
-							<input ng-model="red.DC" type="number" id="reddc" class="form-control" />
-						</div>
-						<div class="form-group">
-							<button type="button" class="btn btn-primary btn-block" id="benable" ng-class="{'active': benabled}">
-								Blue Enabled
-							</button>
-						</div>
-						<div class="form-group">
-							<button type="button" class="btn btn-primary btn-block" id="renable" ng-class="{'active': renabled}">
-								Red Enabled
-							</button>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-2">
 					<div class="panel panel-default" data-toggle="tooltip" data-placement="right" title="PMT gains in volts.">
 						<div class="panel-heading">
-							Laser Gain
+							PMT Gain
 						</div>
-						<label class="ctl-label" for="g1">Gain 1</label>
-						<input type="number" id="g1" class="form-control" placeholder="5" />
-						<label class="ctl-label" for="g2">Gain 2</label>
-						<input type="number" id="g2" class="form-control" placeholder="5" />
-						<label class="ctl-label" for="g3">Gain 3</label>
-						<input type="number" id="g3" class="form-control" placeholder="5" />
-						<label class="ctl-label" for="g4">Gain 4</label>
-						<input type="number" id="g4" class="form-control" placeholder="5" />
-						<label class="ctl-label" for="g5">Gain 5</label>
-						<input type="number" id="g5" class="form-control" placeholder="5" />
+						<div ng-repeat="p in pmt track by $index">
+							<label for="g{{$index}}">Cell {{$index+1}}</label>
+							<input type="number" class="form-control" id="g{{$index}}" ng-model="p">
+						</div>
+
 					</div>
 				</div>
 			</div>
-			</accodion-group>
+		</accordion-group>
+
+		<accordion-group heading="Indicators" is-disabled="false" is-open="false">
+			<div class="row">
+				<div class="col-md-8">
+					<div class="table-responsive">
+						<table class="table table-striped">
+							<colgroup>
+								<col class="col-md-1"></col>
+								<col class="col-md-2"></col>
+								<col class="col-md-2"></col>
+								<col class="col-md-2"></col>
+								<col class="col-md-2"></col>
+								<col class="col-md-2"></col>
+							</colgroup>
+							<thead>
+								<tr>
+									<th>Cell</th>
+									<th>&tau;</th>
+									<th>&tau;<sub>0</sub></th>
+									<th>&tau;_</th>
+									<th>&tau;<sub>0</sub>_</th>
+									<th>ext (Mm
+										<sup>-1</sup>)</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="cell in data.cell track by $index">
+									<td>
+										{{$index+1}}
+									</td>
+									<td>{{ cell.tau[0].y | number}}</td>
+									<td>{{ cell.tau0[0].y | number:2}}</td>
+									<td >{{ cell.taucorr[0].y | number:2 }}</td>
+									<td >{{ cell.tau0corr[0].y | number:2 }}</td>
+									<td >{{ cell.ext[0].y | number:2 }}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+		</accordion-group>
+		<accordion-group is-open=true is-disabled=false heading="Plots">
+			<nvd3 options="options" data="tauData" config="{refreshDataOnly:true}"></nvd3>
+		</accordion-group>
 	</accordion>
 </div>
