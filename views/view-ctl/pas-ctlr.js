@@ -2,7 +2,7 @@
   angular.module('main').controller('pas', ['$scope', 'net', '$http', 'cvt', 'Data', '$log',
     function($scope, net, $http, cvt, Data, $log) {
 
-      $scope.speaker = cvt.getPasSpkCtl();
+      $scope.speaker = cvt.pas.spk;
 
       $scope.cycle = {
         "period": 360,
@@ -19,23 +19,41 @@
       };
       $scope.data = Data.pas;
 
-      function lasSet(vr, vo, f0, mod) {
-        this.Vrange = 10;
-        this.Voffset = 5;
-        this.f0 = 1300;
-        this.modulation = false
-      };
+      /** PAS Laser settings object.  The settings are
+       * * Vrange = voltage range in volts of laser modulation
+       * * Voffset = voltage offset in volts for laser modulation.
+       * * f0 = modulation frequency in Hz
+       * * modulation = boolean representing sine (false) or square (true)
+       */
+      function lasSet(vr, vo, f0, mod, en) {
+        this.Vrange = vr;
+        this.Voffset = vo;
+        this.f0 = f0;
+        this.modulation = mod;
+        this.lasEn = false;
+      }
 
       $scope.lasCtl = [];
 
-      for (index = 0; index < 5; index++) {
-        $scope.lasCtl.push(new lasSet());
+      /** NOTE: This loop initializes the laser controls based on what is
+       * in the CVT.  If the initial speaker setting is TRUE, then
+       * the value of f0 will be overrun IMMEDIATELY.
+       */
+      for (i = 0; i < cvt.pas.las.vr.length; i++) {
+
+        $scope.lasCtl.push(new lasSet(cvt.pas.las.vr[i],
+          cvt.pas.las.voffset[i],
+          cvt.pas.las.f0[i],
+          cvt.pas.las.modulation[i],
+          cvt.pas.las.enable[i]));
+
       }
 
       $scope.updateMod = function(i) {
         $scope.lasCtl[i].modulation = !$scope.lasCtl[i].modulation;
-      }
+      };
 
+      /** Data that will be used for plotting. */
       $scope.testData = [{
         values: [],
         key: 'Cell 1'
@@ -53,6 +71,7 @@
         key: 'Cell 5'
       }];
 
+      /** Options used for plotting. */
       $scope.options = {
         chart: {
           type: 'lineChart',
@@ -87,6 +106,7 @@
           showYAxis: true
         }
       };
+
       // Listen for data
       $scope.$on('dataAvailable', function() {
 
@@ -105,22 +125,18 @@
 
         }
         if ($scope.data.drive) {
-          for (i = 0; i < 5; i++) {
-            $scope.lasCtl[i].f0 = $scope.data.cell[i].f0[0][1];
+          for (i = 0; i < $scope.data.cell.length; i++) {
+            $scope.lasCtl[i].f0 = $scope.data.cell[i].f0[0].y;
           }
         }
       });
 
-      /* Use functions and the ng-change or ng-click directive to handle DOM events rather than
-       * $watch to prevent updates at init that could hose things up */
-
+      /** Set the speaker position and update the CVT. */
       $scope.setPos = function() {
-
         $scope.speaker.pos = !$scope.speaker.pos;
-        var val = $scope.speaker.pos ? 1 : 0;
         cvt.setPasSpkCtl($scope.speaker);
-        $http.get(net.address() + 'PAS_CMD/SpkSw?SpkSw=' + val);
       };
+
 
       $scope.updateSpkV = function() {
 
@@ -145,8 +161,10 @@
         }
 
         cvt.setPasSpkCtl($scope.speaker);
-        $http.get(net.address() + 'PAS_CMD/UpdateSpkVparams?Vrange=' + $scope.speaker.vrange + '&Voffset=' + $scope.speaker.voffset);
+
       };
+
+      //TODO: Get rid of $http requests here!!!
 
       $scope.updateSpkF = function() {
         if ($scope.speaker.f0 > flim.high) {
@@ -170,6 +188,28 @@
         $scope.updateCycle();
       };
 
+      $scope.updateVr = function() {
+        var x = [];
+        for (i = 0; i < $scope.lasCtl.length; i++) {
+          x.push($scope.lasCtl[i].Vrange);
+        }
+        cvt.pas.las.setVr(x);
+      };
+      $scope.updateVo = function() {
+        var x = [];
+        for (i = 0; i < $scope.lasCtl.length; i++) {
+          x.push($scope.lasCtl[i].Voffset);
+        }
+        cvt.pas.las.setVo(x);
+      };
+
+      $scope.updatef0 = function() {
+        var x = [];
+        for (i = 0; i < $scope.lasCtl.length; i++) {
+          x.push($scope.lasCtl[i].f0);
+        }
+        cvt.pas.las.setf0(x);
+      };
     }
   ]);
 })();

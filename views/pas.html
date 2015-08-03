@@ -87,30 +87,44 @@
                         <sub>0</sub> (Hz)
                       </th>
                       <th>Modulation</th>
+                      <th>Enable</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr ng-repeat="n in data.cell track by $index">
+                    <tr ng-repeat="n in lasCtl track by $index">
                       <td>{{$index+1}}</td>
                       <td>
-                        <input class="col-md-8" type="text" ng-model="lasCtl[$index].Vrange">
+                        <input class="col-md-12" type="text" ng-model="n.Vrange" ng-blur = "updateVr()">
                       </td>
                       <td>
-                        <input class="col-md-8" type="text" ng-model="lasCtl[$index].Voffset">
+                        <input class="col-md-12" type="text" ng-model="n.Voffset" ng-blure="updateVo()">
                       </td>
                       <td>
-                        <input class="col-md-8" type="text" ng-model="lasCtl[$index].f0">
+                        <input class="col-md-12" type="text" ng-model="n.f0" ng-blur="updatef0()">
                       </td>
                       <td>
-                        <button class="btn btn-primary btn-block" type="button" value="Sine" ng-click="lasCtl[$index].modulation = !lasCtl[$index].modulation" ng-switch on="lasCtl[$index].modulation">
+                        <button class="btn btn-primary btn-block" type="button" value="Sine" ng-click="n.modulation = !n.modulation" ng-switch on="n.modulation">
                           <div ng-switch-when=true>
                             Square
                           </div>
-                          <div false ng-switch-when=>
+                          <div  ng-switch-when=false>
                             Sine
                           </div>
                           <div ng-switch-default>
                             Sine
+                          </div>
+                        </button>
+                      </td>
+                      <td>
+                        <button class="btn btn-primary btn-block" type="button" value="Disabled" ng-click="n.enable = !n.enable" ng-switch on="n.enable">
+                          <div ng-switch-when=true>
+                            Enabled
+                          </div>
+                          <div  ng-switch-when=false>
+                            Disabled
+                          </div>
+                          <div ng-switch-default>
+                            Disabled
                           </div>
                         </button>
                       </td>
