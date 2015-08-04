@@ -6,19 +6,25 @@
 
 /** This service handles network settings that can be set in the sidebar.
  *  This communicates the settings in the sidebar to the other portions of
- *  the application that require the ip address and port. 
- * 
- *  This application stores the settings in local storage so that they are 
+ *  the application that require the ip address and port.
+ *
+ *  This application stores the settings in local storage so that they are
  *  restored on refresh.
  */
 
 (function() {
 	angular.module('main').factory('net', function() {
 
+		/* On power up, check for the key 'ip' in the local cache.  If it does not
+		 * exist, add the key and set it to the value below.
+		 */
 		if (!localStorage.ip) {
 			localStorage.ip = "192.168.0.73";
 		}
 
+		/* On power up, check for the key 'port' in the local cache.  If it does not
+		 * exist, add the key and set it to the value 8001 (the debug port).
+		 */
 		if (!localStorage.port) {
 			localStorage.port = "8001";
 		}
@@ -32,31 +38,49 @@
 					"port" : this._port
 				};
 			},
+
+			/** Setter for the IP Address and port of the server.  This function
+			  * will cache the data using an HTML5 localStorage call.
+				*/
 			setNetworkParams : function(ip, port) {
 				this._ip = ip;
 				this.port = port;
 				localStorage.ip = ip;
 				localStorage.port = port;
 			},
+
+			/** Set the IP address of the local server.  Cache the address using
+			  * HTML5 localStorage.
+				* @param {string} - IP address in xxx.xxx.xxx.xxx form.
+				*/
 			setIP : function(ip) {
 				this.ip = ip;
 				localStorage.ip = ip;
 			},
+
+			/** Set the port on which we are talking to the server.  Cache the port
+			  * using HTML5 localStorage.
+				* @param {integer} - Value for port.
+				*/
 			setPort : function(port) {
 				this.port = port;
 				localStorage.port = port;
 			},
+
+			/** Use this function to return the address of the web service.
+			  * @return {string} - address in format 'http://[IP]:[Port]/xService/'
+				*/
 			address : function() {
 				return 'http://' + this.ip + ':' + this.port  + '/xService/';
 			}
 		};
 	});
 
-})(); 
+})();
+
 /* This service maintains a current value table of control values so that all are properly
  * controls will be properly populated.
  */
-
 (function() {
   angular.module('main').factory('cvt', ['$http', 'net',
     function($http, net) {
@@ -69,12 +93,10 @@
         "fctl": []
       };
 
-
-
       /* All controls that must be updated for the PAS
        * operation.
        */
-			 // TODO: Get rid of hardcoded portion of this...
+      // TODO: Get rid of hardcoded portion of this...
       cvt.pas = {
         "spk": {
           "vrange": 5,
@@ -91,7 +113,7 @@
           "voffset": [1, 2, 3, 4, 5],
           "f0": [1351, 1352, 1353, 1354, 1355],
           "modulation": [false, false, false, false, false],
-					"enable": [false, false, false, false, false]
+          "enable": [false, false, false, false, false]
         }
       };
 
@@ -113,11 +135,11 @@
         "auto": false
       };
 
-			// TODO: Encapsulate all functionality in individual objects...
+      // TODO: Encapsulate all functionality in individual objects...
 
-			/** Set the laser modulation frequency for each cell.
-			  * @param {array} - array of frequencies in Hz.
-				*/
+      /** Set the laser modulation frequency for each cell.
+       * @param {array} - array of frequencies in Hz.
+       */
       cvt.pas.las.setf0 = function(f0) {
         cvt.pas.las.f0 = f0;
 
@@ -126,37 +148,71 @@
 
       };
 
-			/** Set the laser voltage range.
-			  * @param {array} - array of voltages in Volts.
-				*/
+      /** Set the laser voltage range.
+       * @param {array} - array of voltages in Volts.
+       */
       cvt.pas.las.setVr = function(vr) {
         cvt.pas.las.vr = vr;
 
         $http.get(net.address() +
           'PAS_CMD/UpdateVrange?Vrange=' + vr.join(','));
 
-      }
+      };
 
-			/** Set the laser voltage offset.
-			  * @param {array} - voltage offset in volts.
-				*/
+      /** Set the laser voltage offset.
+       * @param {array} - voltage offset in volts.
+       */
       cvt.pas.las.setVo = function(vo) {
         cvt.pas.las.vr = vr;
 
         $http.get(net.address() +
           'PAS_CMD/UpdateVoffset?Voffset=' + vo.join(','));
 
+      };
+
+      // TODO: Update server side to make sure that the modulation is updated.
+      cvt.pas.las.updateMod = function(mod){
+        cvt.pas.las.moduldation = mod;
+
+        var val = [];
+
+        for (i = 0; i < mod.length; i++){
+          val.push(mod?1:0);
+        }
+
+        //$http.get(net.address() +
+        //  'PAS_CMD/UpdateVoffset?Voffset=' + val.join(','));
+
+      };
+
+      // TODO: Fix service to handle byte array not single number.
+      cvt.pas.las.updateEnable = function(en){
+        cvt.pas.las.enable = en;
       }
 
       /** Store the current speaker control setting and send the settign to
        * the server.
        * @param {boolean} - false = laser; true = speaker.
        */
-      cvt.setPasSpkCtl = function(spk) {
-        pas.spk = spk;
+      cvt.pas.spk.updateCtl = function(spk) {
+        cvt.pas.spk = spk;
         var val = spk.pos ? 1 : 0;
 
         $http.get(net.address() + 'PAS_CMD/SpkSw?SpkSw=' + val);
+        $http.get(net.address() + 'PAS_CMD/Spk?df=' + cvt.pas.spk.df + '&f0=' + cvt.pas.spk.f0);
+        $http.get(net.address() + 'PAS_CMD/UpdateSpkVparams?Voffset=' + cvt.pas.spk.voffset +
+          '&Vrange=' + cvt.pas.spk.vrange);
+
+      };
+
+      cvt.pas.spk.updateCycle = function(auto, p, l) {
+        cvt.pas.spk.auto = auto;
+        cvt.pas.spk.length = l;
+        cvt.pas.spk.period = p;
+        var val = auto ? 1 : 0;
+
+        $http.get(net.address() + 'PAS_CMD/UpdateSpkCycle?Length=' + l + '&Period=' + p + '&Cycle=' + val);
+
       };
 
       /* TODO: Implement server side CVT communication. */
@@ -892,150 +948,13 @@
   ]);
 })();
 
-/** This is the controller which is used to handle the PAS graph on the main page.
- *  The graph uses a right click menu to change the data stream which is being plotted.
- * 
- */
-
-(function() {
-	angular.module('main').controller('mainPasCtlr', ['$scope', 'Data', 
-	function($scope, Data) {
-		
-		// Index the plot to visualize
-		var index = 0;
-		var labels = ['Q','IA','f0', 'abs'];
-		
-		$scope.menuOptions =	[['Q', function(){
-									index = 0;
-									$scope.options.chart.yAxis.axisLabel = labels[index];
-									}],
-								['IA', function(){	
-									index = 1;
-									$scope.options.chart.yAxis.axisLabel = labels[index];
-												}],
-								['f0', function(){	
-									index = 2;
-									$scope.options.chart.yAxis.axisLabel = labels[index];
-												}
-								],
-								['abs', function(){	index = 3;
-													$scope.options.chart.yAxis.axisLabel = labels[index];
-												}
-								]];
-
-		$scope.options = {
-			chart : {
-				type : 'lineChart',
-				height : 180,
-				margin : {
-					top : 20,
-					right : 20,
-					bottom : 40,
-					left : 75
-				},
-				x : function(d) {
-					return d.x;
-				},
-				y : function(d) {
-					return d.y;
-				},
-				useInteractiveGuideline : true,
-				
-				transitionDuration : 0,
-				yAxis : {
-					showMaxMin: false,
-					axisLabel: labels[index],
-					tickFormat : function(d) {
-						return d3.format('.02f')(d);
-					}
-				},
-				xAxis : {
-					axisLabel: 'Time',
-					tickFormat : function(d) {
-						return d3.time.format('%X')(new Date(d));
-					}
-				}
-			},
-			title: {
-				enable: false,
-				text: labels[index] + ' vs Time'
-			}
-		};
-
-		$scope.data = [ 
-			{ values : [], key : 'Cell 1 '},
-			{ values : [], key : 'Cell 2 '},
-			{ values : [], key : 'Cell 3 '},
-			{ values : [], key : 'Cell 4 '},
-			{ values : [], key : 'Cell 5 '},
-		];
-	
-		$scope.run = true;
-
-		$scope.$on('dataAvailable', function() {
-			for (var i = 0; i < 5; i++) {
-				$scope.data[i].values = Data.pas.cell[i][labels[index]];
-			}
-		
-		});
-
-	}]);
-})();
-
 (function() {
   angular.module('main').controller('pas', ['$scope', 'net', '$http', 'cvt', 'Data', '$log',
     function($scope, net, $http, cvt, Data, $log) {
 
-      $scope.speaker = cvt.pas.spk;
-
-      $scope.cycle = {
-        "period": 360,
-        "length": 20,
-        "auto": false
-      };
-
-      var maxVrange = 10;
-      var maxVoffset = 5;
-
-      var flim = {
-        "high": 3000,
-        "low": 500
-      };
       $scope.data = Data.pas;
 
-      /** PAS Laser settings object.  The settings are
-       * * Vrange = voltage range in volts of laser modulation
-       * * Voffset = voltage offset in volts for laser modulation.
-       * * f0 = modulation frequency in Hz
-       * * modulation = boolean representing sine (false) or square (true)
-       */
-      function lasSet(vr, vo, f0, mod, en) {
-        this.Vrange = vr;
-        this.Voffset = vo;
-        this.f0 = f0;
-        this.modulation = mod;
-        this.lasEn = false;
-      }
 
-      $scope.lasCtl = [];
-
-      /** NOTE: This loop initializes the laser controls based on what is
-       * in the CVT.  If the initial speaker setting is TRUE, then
-       * the value of f0 will be overrun IMMEDIATELY.
-       */
-      for (i = 0; i < cvt.pas.las.vr.length; i++) {
-
-        $scope.lasCtl.push(new lasSet(cvt.pas.las.vr[i],
-          cvt.pas.las.voffset[i],
-          cvt.pas.las.f0[i],
-          cvt.pas.las.modulation[i],
-          cvt.pas.las.enable[i]));
-
-      }
-
-      $scope.updateMod = function(i) {
-        $scope.lasCtl[i].modulation = !$scope.lasCtl[i].modulation;
-      };
 
       /** Data that will be used for plotting. */
       $scope.testData = [{
@@ -1108,13 +1027,34 @@
           $scope.testData[i].values = $scope.data.cell[i].IA;
 
         }
-        if ($scope.data.drive) {
-          for (i = 0; i < $scope.data.cell.length; i++) {
-            $scope.lasCtl[i].f0 = $scope.data.cell[i].f0[0].y;
-          }
-        }
       });
 
+
+
+
+    }
+  ]);
+})();
+
+(function() {
+  angular.module('main').controller('pasSpk', ['$scope', 'cvt', 'Data',
+    function($scope, cvt, Data) {
+
+      var maxVrange = 10;
+      var maxVoffset = 5;
+
+      $scope.speaker = cvt.pas.spk;
+
+      var flim = {
+        "high": 3000,
+        "low": 500
+      };
+
+      $scope.cycle = {
+        "period": cvt.pas.spk.period,
+        "length": cvt.pas.spk.length,
+        "auto": cvt.pas.spk.auto
+      };
       /** Set the speaker position and update the CVT. */
       $scope.setPos = function() {
         $scope.speaker.pos = !$scope.speaker.pos;
@@ -1143,12 +1083,8 @@
             $scope.speaker.voffset = 0;
           }
         }
-
-        cvt.setPasSpkCtl($scope.speaker);
-
+        cvt.pas.spk.updateCtl($scope.speaker);
       };
-
-      //TODO: Get rid of $http requests here!!!
 
       $scope.updateSpkF = function() {
         if ($scope.speaker.f0 > flim.high) {
@@ -1158,20 +1094,69 @@
             $scope.speaker.f0 = flim.low;
           }
         }
-        cvt.setPasSpkCtl($scope.speaker);
-        $http.get(net.address() + 'PAS_CMD/Spk?df=' + $scope.speaker.df + '&f0=' + $scope.speaker.fc);
+        cvt.pas.spk.updateCtl($scope.speaker);
       };
 
       $scope.updateCycle = function() {
-        var val = $scope.cycle.auto ? 1 : 0;
-        $http.get(net.address() + 'PAS_CMD/UpdateSpkCycle?Length=' + $scope.cycle.length + '&Period=' + $scope.cycle.period + '&Cycle=' + val);
+        cvt.pas.updateSpkCycle($scope.cycle.auto,
+          $scope.cycle.period, $scope.cycle.length);
       };
 
       $scope.updateAuto = function() {
         $scope.cycle.auto = !$scope.cycle.auto;
         $scope.updateCycle();
       };
+    }
+  ]);
+})();
 
+(function() {
+  angular.module('main').controller('pasLas', ['$scope', 'cvt', 'Data',
+    function($scope, cvt, Data) {
+
+      $scope.lasCtl = [];
+
+      /** NOTE: This loop initializes the laser controls based on what is
+       * in the CVT.  If the initial speaker setting is TRUE, then
+       * the value of f0 will be overrun IMMEDIATELY.
+       */
+      for (i = 0; i < cvt.pas.las.vr.length; i++) {
+
+        $scope.lasCtl.push(new lasSet(cvt.pas.las.vr[i],
+          cvt.pas.las.voffset[i],
+          cvt.pas.las.f0[i],
+          cvt.pas.las.modulation[i],
+          cvt.pas.las.enable[i]));
+
+      }
+
+      // Listen for data
+      $scope.$on('dataAvailable', function() {
+
+        /* If the current position of the speaker is TRUE (speaker is on),
+         * populate the modulation frequencies in the laser controls with
+         * the current resonant frequency measured by the microphone.
+         */
+        if (Data.pas.drive) {
+          for (i = 0; i < Data.pas.cell.length; i++) {
+            $scope.lasCtl[i].f0 = $scope.data.cell[i].f0[0].y;
+          }
+        }
+      });
+
+      $scope.updateMod = function(i) {
+        $scope.lasCtl[i].modulation = !$scope.lasCtl[i].modulation;
+
+        var x = [];
+        for (j = 0; j < $scope.lasCtl.length; j++) {
+          x.push($scope.lasCtl[j].modulation);
+        }
+        cvt.pas.las.updateMod(x);
+      };
+
+      /* Update the laser voltage range for the lasers in the current value
+       * table.
+       */
       $scope.updateVr = function() {
         var x = [];
         for (i = 0; i < $scope.lasCtl.length; i++) {
@@ -1179,6 +1164,8 @@
         }
         cvt.pas.las.setVr(x);
       };
+
+      /* Update the voltage offset in the current value table. */
       $scope.updateVo = function() {
         var x = [];
         for (i = 0; i < $scope.lasCtl.length; i++) {
@@ -1194,110 +1181,35 @@
         }
         cvt.pas.las.setf0(x);
       };
+
+      $scope.updateEnable = function(i) {
+
+        $scope.lasCtl[i].lasEn = !$scope.lasCtl[i].lasEn;
+        var x = [];
+        for (i = 0; i < $scope.lasCtl.length; i++) {
+          x.push($scope.lasCtl[i].lasEn);
+        }
+        cvt.pas.las.updateEnable(x);
+
+      }
+
     }
   ]);
-})();
 
-function buildPlotController(controllerName, fieldName, ylabel) {
-	angular.module('main')
-	.controller(controllerName, ['$scope', 'Data', function($scope, Data) {
-		
-		/* This will serve as teh context menu for the plots so that we can switch
-		 * plots.  The index will serve to tell what plot we want.
-		 */
-		var index = 0;
-		$scope.menuOptions =[['Q', function($itemScope){index = 0;}],
-		['IA', function(){index = 1;}],
-		['f0', function(){index = 2;}],
-		['abs', function(){index = 3;}]];
+  /** PAS Laser settings object.  The settings are
+   * * Vrange = voltage range in volts of laser modulation
+   * * Voffset = voltage offset in volts for laser modulation.
+   * * f0 = modulation frequency in Hz
+   * * modulation = boolean representing sine (false) or square (true)
+   */
+  function lasSet(vr, vo, f0, mod, en) {
+    this.Vrange = vr;
+    this.Voffset = vo;
+    this.f0 = f0;
+    this.modulation = mod;
+    this.lasEn = false;
+  }
 
-	/* Removed axis title as it is redundant... */
-	$("#chartContainer" + fieldName).CanvasJSChart({ //Pass chart options
-		//title : {text: fieldName + " vs Time"},
-		axisX: {title: "Time", valueFormatString: "HH:mm:ss"},
-		axisY: {title: ylabel},
-		legend: {
-			verticalAlign: "top",
-			cursor: "pointer",
-            itemclick: function (e) {
-                if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-                    e.dataSeries.visible = false;
-                } else {
-                    e.dataSeries.visible = true;
-                }
- 
-                e.chart.render();
-            }
-        },
-		data: [
-			{
-				showInLegend: true,
-				name: "Cell 0",
-				type: "line",
-				xValueType: "dateTime",
-				dataPoints: [ ]
-			},
-			{
-				showInLegend: true,
-				name: "Cell 1",
-				type: "line",
-				xValueType: "dateTime",
-				dataPoints: [ ]
-			},
-			{
-				showInLegend: true,
-				name: "Cell 2",
-				type: "line",
-				xValueType: "dateTime",
-				dataPoints: [ ]
-			},
-			{
-				showInLegend: true,
-				name: "Cell 3",
-				type: "line",
-				xValueType: "dateTime",
-				dataPoints: [ ]
-			},
-			{
-				showInLegend: true,
-				name: "Cell 4",
-				type: "line",
-				xValueType: "dateTime",
-				dataPoints: [ ]
-			},
-
-	]});
-           	// { x: 1435336292000, y :71},
-            	// { x: 1435336293000, y : 55 },
-           		// { x: 1435336294000, y:  50 },
-            	// { x: 1435336300000, y : 65 },
-            	// { x: 1435336303000, y : 95 },
-             	// { x: 1435336304000, y : 68 },
-            	// { x: 1435336308000, y : 28 },
-
-
-	
-	$scope.chart = $("#chartContainer" + fieldName).CanvasJSChart();
-	
-	$scope.chart.render();
-	
-	$scope.$on('dataAvailable', function() {
-		for (var i = 0; i < 5; i++) {
-			$scope.chart.options.data[i].dataPoints = Data.pas.cell[i][fieldName];
-			$scope.chart.render();
-		}
-		
-		});
-
-	}]);
-}
-
-(function() {
-	buildPlotController('plotPASQ', 'Q', 'Q');
-	buildPlotController('plotPASf0', 'f0', 'f0 (Hz)');
-	buildPlotController('plotPASIA', 'IA', 'IA (???)');
-	buildPlotController('plotPASp', 'p', 'p (???)');
-	buildPlotController('plotPASabs', 'abs', 'abs (???)');
 })();
 
 (function() {

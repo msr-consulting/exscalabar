@@ -7,16 +7,18 @@
 				</div>
 			</li>
 			<li class>
-				<button class="btn btn-default btn-block" type="button" ng-click = "saveData()" ng-class="{'active': save}">
-					Save
+				<button class="btn btn-block" type="button" ng-click = "saveData()" value="Saving..." ng-switch on = "save" ng-class = "{'btn-success':save, 'btn-danger': !save}">
+					<div ng-switch-when="true">Saving...</div>
+					<div ng-switch-when="false">No Save!</div>
+					<div ng-switch-default>Saving...</div>
 				</button>
 			</li>
 			<li>
-				<button class="btn btn-default btn-block" type="button" ng-click = "setFilter()" ng-class="{'active': filter}">
+				<button class="btn btn-primary btn-block" type="button" ng-click = "setFilter()" ng-class="{'active': filter}">
 					Filter
 				</button></li>
 			<li class>
-				<button class="btn btn-default btn-block" type="button" ng-click = "stop()">
+				<button class="btn btn-primary btn-block" type="button" ng-click = "stop()">
 					Stop
 				</button>
 			</li>
