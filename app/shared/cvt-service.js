@@ -12,6 +12,10 @@
         "filter_pos": true,
         "fctl": []
       };
+      cvt.humidifier = {
+        high: new humidifier(0.75, 1, 0, 90, false),
+        med: new humidifier(0.75, 1, 0, 80, false)
+      };
 
       /* All controls that must be updated for the PAS
        * operation.
@@ -108,7 +112,7 @@
       // TODO: Fix service to handle byte array not single number.
       cvt.pas.las.updateEnable = function(en){
         cvt.pas.las.enable = en;
-      }
+      };
 
       /** Store the current speaker control setting and send the settign to
        * the server.
@@ -149,4 +153,19 @@
 
     }
   ]);
+
+  /** Object that provides a humidifier interface.
+    * @param {float} p - proportional control input
+    * @param {float} i - integral control input
+    * @param {float} p - derivative control input
+    * @param {float} sp - setpoint
+    * @param {boolean} en - enable byte
+    */
+  function humidifier(p,i,d,sp,en){
+    this.p = p;
+    this.i = i;
+    this.d = d;
+    this.sp = sp;
+    this.en = en;
+  }
 })();

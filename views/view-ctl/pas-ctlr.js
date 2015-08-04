@@ -4,10 +4,35 @@
 
       $scope.data = Data.pas;
 
+      var selPlot = 0;
+
+      $scope.menuOptions = [
+        ['IA', function($itemScope) {
+          selPlot = 0;
+          $scope.options.chart.yAxis.axisLabel = 'IA';
+        }],
+        ['f0', function($itemScope) {
+          selPlot = 1;
+          $scope.options.chart.yAxis.axisLabel = 'f0 (Hz)';
+        }],
+        ['Q', function($itemScope) {
+          selPlot = 2;
+          $scope.options.chart.yAxis.axisLabel = 'Q';
+        }],
+        ['p', function($itemScope) {
+          selPlot = 3;
+          $scope.options.chart.yAxis.axisLabel = 'p';
+        }],
+        ['abs', function($itemScope) {
+          selPlot = 4;
+          $scope.options.chart.yAxis.axisLabel = 'Absorption (Mm-1)';
+        }]
+      ];
+
 
 
       /** Data that will be used for plotting. */
-      $scope.testData = [{
+      $scope.plotData = [{
         values: [],
         key: 'Cell 1'
       }, {
@@ -31,7 +56,7 @@
           height: 300,
           margin: {
             top: 20,
-            right: 40,
+            right: 10,
             bottom: 60,
             left: 75
           },
@@ -44,7 +69,7 @@
           useInteractiveGuideline: true,
           yAxis: {
             tickFormat: function(d) {
-              return d3.format('0.03f')(d);
+              return d3.format('0.01f')(d);
             },
             axisLabel: 'Testing'
           },
@@ -67,14 +92,25 @@
 
         $scope.data = Data.pas;
 
-        $scope.dataf0 = [Data.pas.cell[0].f0, Data.pas.cell[1].f0, Data.pas.cell[2].f0, Data.pas.cell[3].f0, Data.pas.cell[4].f0];
-        $scope.dataIA = [Data.pas.cell[0].IA, Data.pas.cell[1].IA, Data.pas.cell[2].IA, Data.pas.cell[3].IA, Data.pas.cell[4].IA];
-        $scope.datap = [Data.pas.cell[0].p, Data.pas.cell[1].p, Data.pas.cell[2].p, Data.pas.cell[3].p, Data.pas.cell[4].p];
-        $scope.dataQ = [Data.pas.cell[0].Q, Data.pas.cell[1].Q, Data.pas.cell[2].Q, Data.pas.cell[3].Q, Data.pas.cell[4].Q];
-        $scope.dataabs = [Data.pas.cell[0].abs, Data.pas.cell[1].abs, Data.pas.cell[2].abs, Data.pas.cell[3].abs, Data.pas.cell[4].abs];
-
         for (i = 0; i < 5; i++) {
-          $scope.testData[i].values = $scope.data.cell[i].IA;
+          switch (selPlot) {
+            case 0:
+              $scope.plotData[i].values = $scope.data.cell[i].IA;
+              break;
+            case 1:
+              $scope.plotData[i].values = $scope.data.cell[i].f0;
+              break;
+            case 2:
+              $scope.plotData[i].values = $scope.data.cell[i].Q;
+              break;
+            case 3:
+              $scope.plotData[i].values = $scope.data.cell[i].p;
+              break;
+            case 4:
+              $scope.plotData[i].values = $scope.data.cell[i].abs;
+              break;
+          }
+
 
         }
       });

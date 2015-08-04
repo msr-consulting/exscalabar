@@ -79,7 +79,7 @@
         }
         cvt.pas.las.updateEnable(x);
 
-      }
+      };
 
     }
   ]);

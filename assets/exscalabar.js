@@ -92,6 +92,10 @@
         "filter_pos": true,
         "fctl": []
       };
+      cvt.humidifier = {
+        high: new humidifier(0.75, 1, 0, 90, false),
+        med: new humidifier(0.75, 1, 0, 80, false)
+      };
 
       /* All controls that must be updated for the PAS
        * operation.
@@ -188,7 +192,7 @@
       // TODO: Fix service to handle byte array not single number.
       cvt.pas.las.updateEnable = function(en){
         cvt.pas.las.enable = en;
-      }
+      };
 
       /** Store the current speaker control setting and send the settign to
        * the server.
@@ -229,6 +233,21 @@
 
     }
   ]);
+
+  /** Object that provides a humidifier interface.
+    * @param {float} p - proportional control input
+    * @param {float} i - integral control input
+    * @param {float} p - derivative control input
+    * @param {float} sp - setpoint
+    * @param {boolean} en - enable byte
+    */
+  function humidifier(p,i,d,sp,en){
+    this.p = p;
+    this.i = i;
+    this.d = d;
+    this.sp = sp;
+    this.en = en;
+  }
 })();
 
 /** This file conigures the routing for the main page.  These are the views which
@@ -239,7 +258,8 @@
 
 (function(){
 	angular.module('main')
-	.config(['$routeProvider', function($routeProvider){
+	.config(['$routeProvider',
+	function($routeProvider){
 		$routeProvider
 		.when('/CRDS',{templateUrl:'views/crds.html'})
 		.when('/PAS',{templateUrl:'views/pas.html'})
@@ -954,10 +974,35 @@
 
       $scope.data = Data.pas;
 
+      var selPlot = 0;
+
+      $scope.menuOptions = [
+        ['IA', function($itemScope) {
+          selPlot = 0;
+          $scope.options.chart.yAxis.axisLabel = 'IA';
+        }],
+        ['f0', function($itemScope) {
+          selPlot = 1;
+          $scope.options.chart.yAxis.axisLabel = 'f0 (Hz)';
+        }],
+        ['Q', function($itemScope) {
+          selPlot = 2;
+          $scope.options.chart.yAxis.axisLabel = 'Q';
+        }],
+        ['p', function($itemScope) {
+          selPlot = 3;
+          $scope.options.chart.yAxis.axisLabel = 'p';
+        }],
+        ['abs', function($itemScope) {
+          selPlot = 4;
+          $scope.options.chart.yAxis.axisLabel = 'Absorption (Mm-1)';
+        }]
+      ];
+
 
 
       /** Data that will be used for plotting. */
-      $scope.testData = [{
+      $scope.plotData = [{
         values: [],
         key: 'Cell 1'
       }, {
@@ -981,7 +1026,7 @@
           height: 300,
           margin: {
             top: 20,
-            right: 40,
+            right: 10,
             bottom: 60,
             left: 75
           },
@@ -994,7 +1039,7 @@
           useInteractiveGuideline: true,
           yAxis: {
             tickFormat: function(d) {
-              return d3.format('0.03f')(d);
+              return d3.format('0.01f')(d);
             },
             axisLabel: 'Testing'
           },
@@ -1017,14 +1062,25 @@
 
         $scope.data = Data.pas;
 
-        $scope.dataf0 = [Data.pas.cell[0].f0, Data.pas.cell[1].f0, Data.pas.cell[2].f0, Data.pas.cell[3].f0, Data.pas.cell[4].f0];
-        $scope.dataIA = [Data.pas.cell[0].IA, Data.pas.cell[1].IA, Data.pas.cell[2].IA, Data.pas.cell[3].IA, Data.pas.cell[4].IA];
-        $scope.datap = [Data.pas.cell[0].p, Data.pas.cell[1].p, Data.pas.cell[2].p, Data.pas.cell[3].p, Data.pas.cell[4].p];
-        $scope.dataQ = [Data.pas.cell[0].Q, Data.pas.cell[1].Q, Data.pas.cell[2].Q, Data.pas.cell[3].Q, Data.pas.cell[4].Q];
-        $scope.dataabs = [Data.pas.cell[0].abs, Data.pas.cell[1].abs, Data.pas.cell[2].abs, Data.pas.cell[3].abs, Data.pas.cell[4].abs];
-
         for (i = 0; i < 5; i++) {
-          $scope.testData[i].values = $scope.data.cell[i].IA;
+          switch (selPlot) {
+            case 0:
+              $scope.plotData[i].values = $scope.data.cell[i].IA;
+              break;
+            case 1:
+              $scope.plotData[i].values = $scope.data.cell[i].f0;
+              break;
+            case 2:
+              $scope.plotData[i].values = $scope.data.cell[i].Q;
+              break;
+            case 3:
+              $scope.plotData[i].values = $scope.data.cell[i].p;
+              break;
+            case 4:
+              $scope.plotData[i].values = $scope.data.cell[i].abs;
+              break;
+          }
+
 
         }
       });
@@ -1191,7 +1247,7 @@
         }
         cvt.pas.las.updateEnable(x);
 
-      }
+      };
 
     }
   ]);
@@ -1215,46 +1271,46 @@
 (function() {
 	angular.module('main').controller("flowCtlr", ['$scope', "Data", "cvt",
 	function($scope, Data, cvt) {
-		
+
 		// Stores the position in the controller array
 		var i = -1;
-		
+
 		//Array that will hold the setpoints...
 		$scope.setpoints = [];
- 
+
 		function flowDevice(id, t, isCtl, sp){
 			this.ID = id;
 			this.type = t;
 			this.isController = isCtl;
-			
+
 			// TODO: This should be set by the CVT based on i
 			this.sp = sp;
-			
+
 			// If this device is not a controller, the index will be -1...
 			this.index = -1;
-			
-			/* If this device is a controller, push the new setpoint into the 
+
+			/* If this device is a controller, push the new setpoint into the
 			 * setpoint array and update the index.
 			 * REALLY, THIS SHOULD BE PURELY A FUNCTION OF THE CVT AND SHOULD
 			 * NOT BE CONTROLLED BY THIS HERE - THIS IS TEMPORARY....
 			 */
-			
+
 			// TESTED AND FUNCTIONAL
 			if (isCtl){
 				$scope.setpoints.push(sp);
 				// Update the global index
 				i += 1;
-				
+
 				// Update the instance controller index...
 				this.index = i;
 			}
 		}
-		
-		/* TODO: This is hard coded now but should not be.  IDs should correspond to config 
+
+		/* TODO: This is hard coded now but should not be.  IDs should correspond to config
 		 * file IDs.
-		 */		
-		$scope.Devices = [new flowDevice("Dry Red", "mflow", true,0), 
-							new flowDevice("Dry Blue", "mflow", false,0), 
+		 */
+		$scope.Devices = [new flowDevice("Dry Red", "mflow", true,0),
+							new flowDevice("Dry Blue", "mflow", false,0),
 							new flowDevice("Denuded Blue", "mflow", false,0),
 							new flowDevice("Denuded Red", "mflow", true,0),
 							new flowDevice("PAS Green", "mflow", false,0),
@@ -1264,12 +1320,32 @@
 							new flowDevice("Pressure Controller", "pressure", false,0),
 							new flowDevice("O3 Bypass", "mflow", true,0),
 						 ];
-		
-		/* Update the CVT - the CVT should call the server... */			 
+
+		/* Update the CVT - the CVT should call the server... */
 		$scope.updateSP = function(){
-			
+
 		};
 	}]);
+})();
+
+(function() {
+  angular.module('main').controller('humidifier', ['$scope', 'cvt', 'Data',
+    function($scope, cvt, Data) {
+
+      $scope.high = cvt.humidifier.high;
+      $scope.med = cvt.humidifier.med;
+
+      $scope.updateMedEn = function(){
+        $scope.med.en = !$scope.med.en;
+        cvt.humidifier.med = $scope.med.en;
+      };
+      $scope.updateHighEn = function(){
+        $scope.high.en = !$scope.high.en;
+        cvt.humidifier.high = $scope.high.en;
+      };
+
+    }
+  ]);
 })();
 
 (function() {

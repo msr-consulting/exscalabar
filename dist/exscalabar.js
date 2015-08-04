@@ -593,7 +593,7 @@
  */
 
 (function() {
-	angular.module('main').controller('mainPasCtlr', ['$scope', 'Data', 
+	angular.module('main').controller('Ctlr', ['$scope', 'Data', 
 	function($scope, Data) {
 		
 		// Index the plot to visualize

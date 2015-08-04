@@ -1,13 +1,54 @@
-<div>
-  <accordion close-others="false">
-    <accordion-group is-open=false is-disabled=false heading="Humidifier Control">
-      <p>Put humidifier controls here</p>
-    </accordion-group>
-    <accordion-group is-open="false" is-disabled="false" heading="Current Data">
-      <p>Maybe we will put indicators in the tab above?</p>
-    </accordion-group>
-    <accordion-group is-open="true" is-disabled="false" heading="Humiditifier Plots">
-      <p>Put plotted data here...</p>
-    </accordion-group>
-  </accordion>
+<div ng-controller="humidifier">
+  <div class="row">
+    <div class="col-md-2">
+      <div class="row">
+        <div class="panel panel-default">
+          <div class="panel-heading">Med Humidity</div>
+          <div class="panel-body">
+            <div class="form-group">
+              <label for="pm">Proportional</label>
+              <input class="form-control" id="pm" type="number" ng-model="med.p">
+              <label for="im">Integral</label>
+              <input class="form-control" id="im" type="number" ng-model="med.i">
+              <label for="dm">Derivative</label>
+              <input class="form-control" id="dm" type="number" ng-model="med.d">
+              <label for="rhm">RH
+                <sub>sp</sub>
+              </label>
+              <input class="form-control" id="rhm" type="number" ng-model="med.sp">
+              <button class="btn btn-primary btn-block" type="button" value="Disabled" ng-click="updateMedEn()" ng-switch on="med.en">
+                <div ng-switch-when="true">Enabled</div>
+                <div ng-switch-when="false">Disabled</div></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="panel panel-default">
+          <div class="panel-heading">High Humidity</div>
+          <div class="panel-body">
+            <div class="form-group">
+              <label for="ph">Proportional</label>
+              <input class="form-control" id="ph" type="number" ng-model="high.p">
+              <label for="ih">Integral</label>
+              <input class="form-control" id="ih" type="number" ng-model="high.i">
+              <label for="dh">Derivative</label>
+              <input class="form-control" id="dh" type="number" ng-model="high.d">
+              <label for="rhh">RH
+                <sub>sp</sub>
+              </label>
+              <input class="form-control" id="rhh" type="number" ng-model="high.sp">
+              <button class="btn btn-primary btn-block" type="button" value="Disabled" ng-click="updateHighEn()" ng-switch on="high.en">
+                <div ng-switch-when="true">Enabled</div>
+                <div ng-switch-when="false">Disabled</div></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-10"><div class="row"><p>Plot controller output here.</p></div><div class="row">
+      <p>Rh plot here.</p>
+    </div></div>
+  </div>
 </div>
