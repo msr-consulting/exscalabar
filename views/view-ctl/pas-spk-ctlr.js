@@ -20,7 +20,7 @@
       /** Set the speaker position and update the CVT. */
       $scope.setPos = function() {
         $scope.speaker.pos = !$scope.speaker.pos;
-        cvt.setPasSpkCtl($scope.speaker);
+        cvt.pas.spk.updateCtl($scope.speaker);
       };
 
 
@@ -60,7 +60,7 @@
       };
 
       $scope.updateCycle = function() {
-        cvt.pas.updateSpkCycle($scope.cycle.auto,
+        cvt.pas.spk.updateCycle($scope.cycle.auto,
           $scope.cycle.period, $scope.cycle.length);
       };
 

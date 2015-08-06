@@ -14,8 +14,9 @@
 				</button>
 			</li>
 			<li>
-				<button class="btn btn-primary btn-block" type="button" ng-click = "setFilter()" ng-class="{'active': filter}">
-					Filter
+				<button class="btn btn-primary btn-block" type="button" ng-click = "setFilter()" ng-class="{'active': filter}" ng-switch on="filter" ng-class="{'btn-primary':filter,'btn-info':!filter}">
+					<div ng-switch-when="true">Filter</div>
+					<div class="" ng-switch-when="false">Sample</div>
 				</button></li>
 			<li class>
 				<button class="btn btn-primary btn-block" type="button" ng-click = "stop()">

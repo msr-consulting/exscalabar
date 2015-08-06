@@ -3,7 +3,7 @@
 	.controller('Sidebar', ['$scope','$http', 'Data', 'net', function($scope, $http, Data, net) {
 
 		$scope.save = 1;
-		$scope.filter = 1;
+		$scope.filter = true;
 		$scope.ip = net.ip;
 		$scope.port = net.port;
 		$scope.time = "Not connected";
@@ -54,12 +54,10 @@
 		};
 
 		$scope.setFilter = function() {
-			if ($scope.filter !== 0) {
-				$scope.filter = 0;
-			} else {
-				$scope.filter = 1;
-			}
-			$http.get(net.address() + 'General/Save?save='+$scope.filter.toString());
+
+			$scope.filter = !$scope.filter;
+			var x = $scope.filter?1:0;
+			$http.get(net.address() + 'General/UpdateFilter?State='+x);
 
 		};
 
