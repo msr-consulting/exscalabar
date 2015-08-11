@@ -1,20 +1,36 @@
 /* The logger applies to the display of the element in the message bar*/
 #logger {
-	/*font-size: 1rem;*/
-	line-height:1;
-	color: red;
-	height: 5rem;
-	overflow-y: scroll;
-	width: 100%;
+  /*font-size: 1rem;*/
+  line-height: 1;
+  color: red;
+  height: 5rem;
+  overflow-y: scroll;
+  width: 100%;
 }
-
-.alert-msg{
+.alert-msg {
   padding-top: 5px;
   padding-bottom: 5px;
-  margin:0;
+  margin: 0;
 }
 
-.label-as-badge{
-  
+/* This is for providing the badges indicating how many messages of each type
+ * we have at the pottom of the page.
+ */
+.label-as-badge {
   border-radius: 1em;
+}
+
+/* Using the fixed nav, so we need to adjust the padding...
+ * For screenwidths not concealing the nav, set the padding to 120px,
+ * otherwise it should be 0.
+ */
+@media(min-width:769px) {
+  body {
+    padding-top: 120px;
+  }
+}
+@media(max-width:768px) {
+  body {
+    pading-top: 0px;
+  }
 }
