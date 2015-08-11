@@ -3,15 +3,15 @@
     "CellData": [
       {
         "derived": {
-          "f0": 1360,
-          "IA": -0.0006516487337648869,
-          "Q": 0.5521097183227539,
+          "f0": 98644,
+          "IA": 0,
+          "Q": 1375.7587890625,
           "max": [
-            0.000547307834494859,
-            1376
+            0.0003171723510604352,
+            1394
           ],
-          "noiseLim": 0.007395063691180073,
-          "ext": -0.0006516487080658849
+          "noiseLim": 1e-12,
+          "ext": 0
         },
         "fitData": {
           "parameters": [
@@ -47,23 +47,23 @@
           "Y": [],
           "dt": 0.001
         },
-        "lRMS": 2.617922203349175,
+        "lRMS": 1.7241911280998414,
         "T": [
-          2.63,
-          2.62
+          1.73,
+          1.72
         ]
       },
       {
         "derived": {
-          "f0": -19265,
-          "IA": 0.0015355385839939117,
-          "Q": -168.0636749267578,
+          "f0": -18105,
+          "IA": -0.0009504766785539687,
+          "Q": -247.3743896484375,
           "max": [
-            0.0004556808853521943,
-            1309
+            0.0003032301610801369,
+            1302
           ],
-          "noiseLim": 0.007754405511450686,
-          "ext": 0.0015355385632775942
+          "noiseLim": 0.007604992660340208,
+          "ext": -0.000950476642588495
         },
         "fitData": {
           "parameters": [
@@ -99,10 +99,10 @@
           "Y": [],
           "dt": 0.001
         },
-        "lRMS": 2.6218923471030555,
+        "lRMS": 1.7283066681466899,
         "T": [
-          2.62,
-          2.62
+          1.73,
+          1.73
         ]
       },
       {
@@ -151,23 +151,23 @@
           "Y": [],
           "dt": 0.001
         },
-        "lRMS": 2.629026831083877,
+        "lRMS": 1.7335983271685185,
         "T": [
-          2.63,
-          2.62
+          1.73,
+          1.72
         ]
       },
       {
         "derived": {
-          "f0": 21756,
-          "IA": 0,
-          "Q": 189.79824829101562,
+          "f0": 1350,
+          "IA": -0.008079247549176216,
+          "Q": 0.5477674007415771,
           "max": [
-            0.00046436654520221055,
-            1390
+            0.0002585328184068203,
+            1330
           ],
-          "noiseLim": 1e-12,
-          "ext": 0
+          "noiseLim": 0.007537401174954607,
+          "ext": -0.008079247808454593
         },
         "fitData": {
           "parameters": [
@@ -203,23 +203,23 @@
           "Y": [],
           "dt": 0.001
         },
-        "lRMS": 2.688043930333574,
+        "lRMS": 1.7937965162370089,
         "T": [
-          2.62,
-          2.62
+          1.73,
+          1.72
         ]
       },
       {
         "derived": {
-          "f0": -22399,
-          "IA": 0.011693630367517471,
-          "Q": -148.50875854492188,
+          "f0": 1362,
+          "IA": 0.0056914715096354485,
+          "Q": 0.55286705493927,
           "max": [
-            0.0003279858792666346,
-            1311
+            0.0004782048927154392,
+            1370
           ],
-          "noiseLim": 0.008609257133055787,
-          "ext": 0.011693630688160428
+          "noiseLim": 0.00761870653341439,
+          "ext": 0.005691471434984996
         },
         "fitData": {
           "parameters": [
@@ -255,10 +255,10 @@
           "Y": [],
           "dt": 0.001
         },
-        "lRMS": 2.6256409176109057,
+        "lRMS": 1.731107602034364,
         "T": [
-          2.62,
-          2.61
+          1.72,
+          1.72
         ]
       }
     ],
@@ -275,7 +275,7 @@
         "eTau": 0,
         "taucorr": 0,
         "Tau0": 0,
-        "max": -66.52100372314453
+        "max": -64.02549743652344
       },
       "hkData": {
         "rhDilFac": 1,
@@ -300,7 +300,7 @@
         "eTau": 0,
         "taucorr": 0,
         "Tau0": 0,
-        "max": -14.567500114440918
+        "max": -12.197999954223633
       },
       "hkData": {
         "rhDilFac": 1,
@@ -325,7 +325,7 @@
         "eTau": 0,
         "taucorr": 0,
         "Tau0": 0,
-        "max": -111.05149841308594
+        "max": -104.74299621582031
       },
       "hkData": {
         "rhDilFac": 1,
@@ -350,7 +350,7 @@
         "eTau": 0,
         "taucorr": 0,
         "Tau0": 0,
-        "max": -34.420501708984375
+        "max": -27.98699951171875
       },
       "hkData": {
         "rhDilFac": 1,
@@ -375,7 +375,7 @@
         "eTau": 0,
         "taucorr": 0,
         "Tau0": 0,
-        "max": 11797.16796875
+        "max": 406.343994140625
       },
       "hkData": {
         "rhDilFac": 1,
@@ -393,34 +393,67 @@
   ],
   "TestAlicat": {
     "Type": "MC",
-    "P": 843.92,
-    "T": 28.9,
+    "P": 841.85,
+    "T": 31.44,
     "Q": 0,
     "Qsp": 1,
     "Q0": 0
   },
   "vDryBlue": {
+    "RH": "42.25",
+    "T": "28.00",
+    "Td": "13.99"
+  },
+  " vDryRed": {
     "RH": "0.00",
     "T": "0.00",
     "Td": "0.00"
   },
-  " vDryRed": {
-    "RH": "49.28",
-    "T": "25.31",
-    "Td": "13.92"
-  },
   "hTEC": {
-    "Tobj": "Inf",
+    "Tobj": "115.73",
     "Tsink": "25.00",
     "Vout": "0.99"
   },
   "pDryBlue": {
-    "P": 851.9,
-    "T": 26.6
+    "P": 849.7,
+    "T": 30.5
   },
-  "Time": "3521036528.32",
+  "Time": "3522076563.45",
   "Filter": false,
   "O3": false,
   "Cabin": false,
-  "Save": false
+  "Save": false,
+  "Msg": [
+    "18:34:58.07 Instrument ePAS is in configuration.",
+    "18:34:58.11 [pas] Configuration complete!",
+    "18:34:58.12 [inst] Configuration of insrument with ID ePAS successful!",
+    "18:34:58.14 Instrument eCRDS is in configuration.",
+    "18:34:58.24 [crd] Blue laser and analog input armed for operation.",
+    "18:34:58.30 [crd] Start laser operation and acquistion.",
+    "18:34:58.32 [crd] Configuration complete!",
+    "18:34:58.33 [inst] Configuration of insrument with ID eCRDS successful!",
+    "18:34:58.35 [udp] Listening for data on 239.1.4.6:50001.",
+    "18:34:58.37 [alicat] Configuring alicat device with ID TestAlicat.",
+    "18:34:59.22 [ERROR] -1801: Start value too large in Get Waveform Subset.VI.",
+    "18:34:59.23 [pas] Speaker state changed to TRUE.",
+    "18:34:59.25 [pas] Speaker state changed to TRUE.",
+    "18:34:59.27 [pas] Speaker voltage parameters changed to : Vrange = 0.00, Voffset = 5.00.",
+    "18:34:59.50 [alicat] New setpoint for Alicat device TestAlicat is 1.00",
+    "18:34:59.52 [alicat] Configuration for Alicat device TestAlicat complete!",
+    "18:34:59.67 [ERROR] -1073807253: VISA Read in Serial Session.lvclass:Asynchronous Read.vi:7320002->Serial Session.lvclass:Get String.vi:4840001->Vaisala Library.lvlib:Vaisala.lvclass:Send CMD.vi->Vaisala Library.lvlib:Vaisala.lvclass:Close Connection in POLL Mode.vi->Vaisala Library.lvlib:Vaisala.lvclass:Configure Device.vi->DAQ Device.lvlib:Device.lvclass:Pre Launch Init.vi:2610001->Actor Framework.lvlib:Actor.lvclass:Actor.vi:6640012->Actor Framework.lvlib:Actor.lvclass:Actor.vi.ACBRProxyCaller.69D0002C",
+    "18:34:59.81 [ERROR] -1073807253: VISA Read in Serial Session.lvclass:Asynchronous Read.vi:7320002->Serial Session.lvclass:Get String.vi:4840001->Vaisala Library.lvlib:Vaisala.lvclass:Send CMD.vi->Vaisala Library.lvlib:Vaisala.lvclass:Set Delay Interval.vi->Vaisala Library.lvlib:Vaisala.lvclass:Configure Device.vi->DAQ Device.lvlib:Device.lvclass:Pre Launch Init.vi:2610001->Actor Framework.lvlib:Actor.lvclass:Actor.vi:6640013->Actor Framework.lvlib:Actor.lvclass:Actor.vi.ACBRProxyCaller.69D0002C",
+    "18:34:59.85 [mTEC] Live communication set to DISABLE.",
+    "18:34:59.88 [mTEC] Live communication set to ENABLE.",
+    "18:34:59.91 [mTEC] New input selection for controller hTEC.  Value is now Live Current/Voltage.",
+    "18:34:59.96 [ppt] Changed units for pDryBlue to mbar.",
+    "18:35:00.01 [ppt] Configuration for pDryBlue complete.",
+    "18:35:00.03 [file] Initialization successful.",
+    "18:35:00.04 [file] Initialization successful.",
+    "18:35:00.13 [ctl] Filter state changed to TRUE",
+    "18:35:00.14 [ctl] Filter cycle parameters updated.  Period is now 240 s; length of filter is 60 s; and the system set auto to FALSE.",
+    "18:35:00.19 [ctl] Set sample path to cabin is TRUE.",
+    "18:35:01.65 [file] New file opened at u:/exscalabar/Data/test_20150810_183501.txt.",
+    "18:35:01.71 [file] New file opened at v:/exscalabar/Data/test_20150810_183501.txt.",
+    "18:35:20.22 [pas] Speaker state changed to FALSE."
+  ]
 }

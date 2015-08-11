@@ -149,6 +149,14 @@
         });
       };
 
+      cvt.flows = {};
+
+      cvt.flows.updateSP = function(id, sp){
+        cvt.flows[id] = sp;
+        $http.get(net.address() + 'General/DevSP?SP=' + sp + '&DevID=' + id);
+
+      }
+
       return cvt;
 
     }

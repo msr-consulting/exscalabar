@@ -1,0 +1,20 @@
+/* The logger applies to the display of the element in the message bar*/
+#logger {
+	/*font-size: 1rem;*/
+	line-height:1;
+	color: red;
+	height: 5rem;
+	overflow-y: scroll;
+	width: 100%;
+}
+
+.alert-msg{
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin:0;
+}
+
+.label-as-badge{
+  
+  border-radius: 1em;
+}

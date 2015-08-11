@@ -1,0 +1,21 @@
+<div ng-controller="msgCtlr">
+  <div class="row">
+    <div class="col-md-10">
+      <div id="logger">
+        <div class="logger">
+          <div ng-repeat="msg in msgs track by $index">
+            <div class="alert-msg" role="alert" ng-class="{'alert-info': error_code[$index]==0, 'alert-warning': error_code[$index]==1, 'alert-danger': error_code[$index]==2}">
+              <strong>{{msg}}</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <span class="label label-info label-as-badge">{{num_codes[0]}}</span>
+      <span class="label label-warning label-as-badge">{{num_codes[1]}}</span>
+      <span class="label label-danger label-as-badge">{{num_codes[2]}}</span>
+      <button class="btn btn-primary btn-block" ng-click="clrMsgs()">Clear</button>
+    </div>
+  </div>
+</div>
