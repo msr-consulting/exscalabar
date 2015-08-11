@@ -22,3 +22,12 @@ The developer may bypass the use of this tool entirely simply by placing the ref
 The application entry point (``index.html``) resides within the top-level directory along with some documentation and helper files.  The main application uses AngularJS to inject views into this portion of the application via [directives](https://docs.angularjs.org/guide/directive) and store and share data between views via [services](https://docs.angularjs.org/guide/services).  
 
 There are two types of views within the application - a view that is shared across all portions of the UI (such as the sidebar and navigation bar) and views that provide functionality particular to an aspect of instrument operation (such as the PAS or CRDS control).  The former views and their respective controllers and services are stored within the folder ``app`` in the main directory.  The latter are stored in the folder ``views``.
+
+## Resources
+
+* D3 Tree Layout - http://www.d3noob.org/2014/01/tree-diagrams-in-d3js_11.html
+* D3 eBook - https://leanpub.com/D3-Tips-and-Tricks
+* AngularUI for Bootstrap - https://angular-ui.github.io/bootstrap/
+* Bootstrap - http://getbootstrap.com/
+* GulpJS - http://gulpjs.com/
+* Node Package Manager (NPM) - https://www.npmjs.com/package/npm
