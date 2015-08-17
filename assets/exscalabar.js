@@ -726,6 +726,9 @@
 		$scope.connected = false;
 		$scope.o3On = false;
 		$scope.cabin = false;
+		$scope.pumpBlocked = false;
+		$scope.impBlocked = false;
+		$scope.interlock = false;
 
 		$scope.changeIP = function(){
 			net.setIP($scope.ip);

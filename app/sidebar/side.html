@@ -6,7 +6,7 @@
 					<b>{{time}}</b>
 				</div>
 			</li>
-			<li class>
+			<li>
 				<button class="btn btn-block" type="button" ng-click = "saveData()" value="Saving..." ng-switch on = "save" ng-class = "{'btn-success':save, 'btn-danger': !save}">
 					<div ng-switch-when="true">Saving...</div>
 					<div ng-switch-when="false">No Save!</div>
@@ -53,6 +53,27 @@
 					Ozone Cal Active
 				</div>
 			</li>
+			<li class ng-show="pumpBlocked">
+				<!-- Show nothing when an ozone cal is not running -->
+				<div class="alert alert-danger">
+					Pump Blocked!
+				</div>
+			</li>
+			<li class ng-show="impBlocked">
+				<!-- Show nothing when an ozone cal is not running -->
+				<div class="alert alert-danger">
+					Impactor Blocked!
+				</div>
+			</li>
+			<li class ng-switch on="interlock">
+				<div ng-switch-when = true class="alert alert-danger">
+					Potential Laser Exposure!
+				</div>
+				<div ng-switch-when = false class="alert alert-info">
+					Lasers Contained.
+				</div>
+			</li>
+
 
 		</ul>
 
