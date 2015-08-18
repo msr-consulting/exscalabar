@@ -1,24 +1,39 @@
 <div ng-controller="filter">
-<div class="panel-default panel">
-  <div class="panel-heading">Filter Input</div>
-  <div class="panel-body">
-    <div class="form-group">
-      <label for="period">Period (s)</label>
-      <input  ng-model="cycle.period" id="period" ng-blur="updateCycle()" type="number"/>
-      <label for="length">Length (s)</label>
-      <input  id="length" ng-blur="updateCycle()" ng-model="cycle.length" type="number"/>
-      <button class="btn btn-primary" ng-click="updateAuto()" ng-switch on="cycle.auto" type="button" value="Auto">
-        <div  ng-switch-when=true>
-          Auto
-        </div>
-        <div  ng-switch-when= false>
-          Manual
-        </div>
-        <div ng-switch-default>
-          Manual
-        </div>
-      </button>
+  <div class="panel-default panel">
+    <div class="panel-heading">Filter Input</div>
+    <div class="panel-body">
+      <div class="form-group">
+        <label for="period">Period (s)</label>
+        <input ng-model="cycle.period" id="period" ng-blur="updateCycle()" type="number" />
+        <label for="length">Length (s)</label>
+        <input id="length" ng-blur="updateCycle()" ng-model="cycle.length" type="number" />
+        <button class="btn btn-primary" ng-click="updateAuto()" ng-switch on="cycle.auto" type="button" value="Auto">
+          <div ng-switch-when=true>
+            Auto
+          </div>
+          <div ng-switch-when=f alse>
+            Manual
+          </div>
+          <div ng-switch-default>
+            Manual
+          </div>
+        </button>
+      </div>
     </div>
   </div>
-</div>
+  <div ng-controller="power">
+    <div class="panel panel-default">
+      <div class="panel-heading">Power</div>
+      <div class="panel-body">
+        <div ng-repeat="(key,value) in power">
+          <button class="btn btn-primary" ng-model="power[key]" type="button" ng-switch on="power[key]" ng-click="toggle(key)">
+            <div ng-switch-when="true">{{key}} On</div>
+            <div ng-switch-default>
+              {{key}} Off
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
