@@ -111,7 +111,12 @@
     };
   }
 
-  function pas() {
+  function pas($http, net) {
+
+    this.http = $http;
+
+    this.net = net;
+
     this.spk = {
       "vrange": 5,
       "voffset": 0,
@@ -132,9 +137,9 @@
     };
 
     this.las.setf0 = function(f0) {
-      cvt.pas.las.f0 = f0;
+      this.las.f0 = f0;
 
-      $http.get(net.address() +
+      this.http.get(this.net.address() +
         'PAS_CMD/UpdateFr?f0=' + f0.join(','));
 
     };
@@ -143,9 +148,9 @@
      * @param {array} - array of voltages in Volts.
      */
     this.las.setVr = function(vr) {
-      cvt.pas.las.vr = vr;
+      this.las.vr = vr;
 
-      $http.get(net.address() +
+      this.http.get(this.net.address() +
         'PAS_CMD/UpdateVrange?Vrange=' + vr.join(','));
 
     };
@@ -154,16 +159,16 @@
      * @param {array} - voltage offset in volts.
      */
     this.las.setVo = function(vo) {
-      cvt.pas.las.vr = vr;
+      this.las.vr = vr;
 
-      $http.get(net.address() +
+      this.http.get(this.net.address() +
         'PAS_CMD/UpdateVoffset?Voffset=' + vo.join(','));
 
     };
 
     // TODO: Update server side to make sure that the modulation is updated.
     this.las.updateMod = function(mod) {
-      cvt.pas.las.moduldation = mod;
+      this.las.moduldation = mod;
 
       var val = [];
 
@@ -178,7 +183,7 @@
 
     // TODO: Fix service to handle byte array not single number.
     this.las.updateEnable = function(en) {
-      cvt.pas.las.enable = en;
+      this.las.enable = en;
     };
 
     /** Store the current speaker control setting and send the settign to
@@ -186,23 +191,23 @@
      * @param {boolean} - false = laser; true = speaker.
      */
     this.spk.updateCtl = function(spk) {
-      cvt.pas.spk = spk;
+      this.spk = spk;
       var val = spk.pos ? 1 : 0;
 
-      $http.get(net.address() + 'PAS_CMD/SpkSw?SpkSw=' + val);
-      $http.get(net.address() + 'PAS_CMD/Spk?df=' + cvt.pas.spk.df + '&f0=' + cvt.pas.spk.f0);
-      $http.get(net.address() + 'PAS_CMD/UpdateSpkVparams?Voffset=' + cvt.pas.spk.voffset +
-        '&Vrange=' + cvt.pas.spk.vrange);
+      this.http.get(this.net.address() + 'PAS_CMD/SpkSw?SpkSw=' + val);
+      this.http.get(this.net.address() + 'PAS_CMD/Spk?df=' + cvt.pas.spk.df + '&f0=' + this.spk.f0);
+      this.http.get(this.net.address() + 'PAS_CMD/UpdateSpkVparams?Voffset=' + this.spk.voffset +
+        '&Vrange=' + this.spk.vrange);
 
     };
 
     this.spk.updateCycle = function(auto, p, l) {
-      cvt.pas.spk.auto = auto;
-      cvt.pas.spk.length = l;
-      cvt.pas.spk.period = p;
+      this.spk.auto = auto;
+      this.spk.length = l;
+      this.spk.period = p;
       var val = auto ? 1 : 0;
 
-      $http.get(net.address() + 'PAS_CMD/UpdateSpkCycle?Length=' + l + '&Period=' + p + '&Cycle=' + val);
+      this.http.get(this.net.address() + 'PAS_CMD/UpdateSpkCycle?Length=' + l + '&Period=' + p + '&Cycle=' + val);
 
     };
   }

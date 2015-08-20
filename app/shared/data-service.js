@@ -4,7 +4,7 @@
 
 (function() {
   angular.module('main').factory('Data', ['$rootScope', '$http', '$log', 'net',
-    function($rootScope, $http, $log, net) {
+    'cvt', function($rootScope, $http, $log, net, cvt) {
 
       // Arrays of Devices
       // TODO: Make sure this is not hardcoded...
@@ -59,6 +59,8 @@
       // Add a single cell to allocate space for the cell array.
       dataObj.crd.cell = [new crdObject()];
 
+      var f0 = [];
+
       /* Call this to poll the server for data */
       dataObj.getData = function() {
         promise = $http.get(net.address() + 'General/Data')
@@ -101,6 +103,20 @@
 
 
             dataObj.tObj = updateTime(Number(data.Time));
+
+
+            /* If the speaker is on, then send a command to set the modulation
+             * frequencies properly.
+             */
+            if (data.PAS.drive){
+
+              // Set the array to null
+              f0 = [];
+              for (i = 0; i< data.PAS.CellData.length; i++){
+                f0.push(data.PAS.CellData[i]);
+              }
+              cvt.pas.las.setf0(f0);
+            }
 
             var t = dataObj.tObj.getTime();
             dataObj.time.unshift(t);
