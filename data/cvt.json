@@ -1,0 +1,43 @@
+{
+  "crd": {
+    "fred": 1000,
+    "fblue": 2000,
+    "dcred": 0.500000,
+    "dcblue": 0.500000,
+    "klaser": [1.00, 1.000000, 1.000000, 1.000000, 1.000000],
+    "kpmt": [1.00, 1.000000, 1.000000, 1.000000, 1.000000]
+  },
+  "pas.spk": {
+    "fcenter": 1350,
+    "df": 100,
+    "cycle": "TRUE",
+    "length": 60,
+    "period": 240,
+    "enabled": ["TRUE", "TRUE", "TRUE", "TRUE", "TRUE"],
+    "voffset": [2.50, 2.500000, 2.500000, 2.500000, 2.500000],
+    "vrange": [5.00, 5.000000, 5.000000, 5.000000, 5.000000],
+    "ienabled": ["TRUE", "TRUE", "TRUE", "TRUE", "TRUE"]
+  },
+  "pas.las": {
+    "f0": [0.00],
+    "vrange": [5.00, 5.000000, 5.000000, 5.000000, 5.000000],
+    "voffset": [2.50, 2.500000, 2.500000, 2.500000, 2.500000],
+    "enabled": ["TRUE", "TRUE", "TRUE", "TRUE", "TRUE"]
+  },
+  "Filter": {
+    "pos": "TRUE",
+    "period": 240,
+    "length": 60,
+    "auto": "FALSE"
+  },
+  "General": {
+    "filter": "TRUE",
+    "inlet": "TRUE"
+  },
+  "TestAlicat": {
+    "Setpoint": 0.000000
+  },
+  "hTEC": {
+    "Setpoint": 0.000000
+  }
+}

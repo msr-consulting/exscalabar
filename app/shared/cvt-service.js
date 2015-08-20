@@ -155,7 +155,7 @@
         cvt.flows[id] = sp;
         $http.get(net.address() + 'General/DevSP?SP=' + sp + '&DevID=' + id);
 
-      }
+      };
 
       return cvt;
 

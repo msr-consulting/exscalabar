@@ -235,7 +235,7 @@
         cvt.flows[id] = sp;
         $http.get(net.address() + 'General/DevSP?SP=' + sp + '&DevID=' + id);
 
-      }
+      };
 
       return cvt;
 
@@ -295,7 +295,7 @@
 		 */
 		$interval(function() {
 			Data.getData();
-			//cvt.checkCvt();
+			cvt.checkCvt();
 			//deviceCfg.checkCfg();
 		}, 1000);
 
@@ -381,7 +381,7 @@
         dataObj.msg = [];
         return x;
 
-      }
+      };
 
       dataObj.flowData = [new fdevice()];
 

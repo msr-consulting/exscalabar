@@ -49,7 +49,7 @@
         dataObj.msg = [];
         return x;
 
-      }
+      };
 
       dataObj.flowData = [new fdevice()];
 
