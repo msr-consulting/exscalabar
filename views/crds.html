@@ -14,7 +14,7 @@
 										<div class="panel-heading">{{ctl.id}}</div>
 										<div class="form-group">
 											<label for="rate_{{$index}}">f (Hz)</label>
-											<input type="number" id="rate_{{$index}}" class="form-control" ng-model="ctl.rate">
+											<input type="number" id="rate_{{$index}}" class="form-control" ng-blur="setRate($index, ctl.rate)" ng-model="ctl.rate">
 										</div>
 										<div class="form-group">
 											<label for="dc_{{$index}}">DC (%)</label>

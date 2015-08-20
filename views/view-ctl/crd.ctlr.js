@@ -10,6 +10,11 @@
         this.en = enabled;
         this.id = ID;
       };
+
+      $scope.setRate = function(i, f){
+        cvt.crd.setLaserRate(i, f);
+
+      }
       /* Variable for laser control binding; first element is related to blue,
        * second to red.
        */
