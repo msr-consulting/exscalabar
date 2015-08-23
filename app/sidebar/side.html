@@ -1,5 +1,5 @@
 <div ng-controller="Sidebar">
-	<nav class="bs-docs-sidebar hidden-print affix-top" >
+	<nav class="bs-docs-sidebar hidden-print affix-top">
 		<ul class="nav bs-docs-sidenav">
 			<li>
 				<div class="alert alert-info">
@@ -7,49 +7,56 @@
 				</div>
 			</li>
 			<li>
-				<button class="btn btn-block" type="button" ng-click = "saveData()" value="Saving..." ng-switch on = "save" ng-class = "{'btn-success':save, 'btn-danger': !save}">
+				<button class="btn btn-block" type="button" ng-click="saveData()" value="Saving..." ng-switch on="save" ng-class="{'btn-success':save, 'btn-danger': !save}">
 					<div ng-switch-when="true">Saving...</div>
 					<div ng-switch-when="false">No Save!</div>
 					<div ng-switch-default>Saving...</div>
 				</button>
 			</li>
 			<li>
-				<button class="btn btn-primary btn-block" type="button" ng-click = "setFilter()" ng-class="{'active': filter}" ng-switch on="filter" ng-class="{'btn-primary':filter,'btn-info':!filter}">
+				<button class="btn btn-primary btn-block" type="button" ng-click="setFilter()" ng-class="{'active': filter}" ng-switch on="filter" ng-class="{'btn-primary':filter,'btn-info':!filter}">
 					<div ng-switch-when="true">Filter</div>
-					<div class="" ng-switch-when="false">Sample</div>
-				</button></li>
+					<div ng-switch-when="false">Sample</div>
+				</button>
+			</li>
+			<li>
+				<button class="btn btn-primary btn-block" type="button" ng-switch on="cabin" ng-click ="setCabin()" ng-class="{'btn-primary':cabin,'btn-info':!cabin}">
+					<div ng-switch-when="true">Inlet</div>
+					<div ng-switch-when="false">Cabin</div>
+				</button>
+			</li>
 			<li class>
-				<button class="btn btn-primary btn-block" type="button" ng-click = "stop()">
+				<button class="btn btn-primary btn-block" type="button" ng-click="stop()">
 					Stop
 				</button>
 			</li>
 			<li>
 				<div class="form-group" id="address">
-					<label class = "ctl-label small" for="ip">IP</label>
-					<input ng-model="ip" ng-change="changeIP()" type="text"  class="form-control" id="ip" data-toggle="tooltip" data-placement="right" />
-					<label class = "ctl-label small" for="port">Port</label>
+					<label class="ctl-label small" for="ip">IP</label>
+					<input ng-model="ip" ng-change="changeIP()" type="text" class="form-control" id="ip" data-toggle="tooltip" data-placement="right" />
+					<label class="ctl-label small" for="port">Port</label>
 					<input class="form-control" ng-model="port" ng-change="changePort()" type="text" id="port" />
 				</div>
 			</li>
 			<li class ng-switch on="connected">
-				<div ng-switch-when = true class="alert alert-success">
+				<div ng-switch-when=t rue class="alert alert-success">
 					Connected
 				</div>
-				<div ng-switch-when = false class="alert alert-danger">
+				<div ng-switch-when=f alse class="alert alert-danger">
 					Not Connected
 				</div>
 			</li>
 			<li class ng-switch on="cabin">
-				<div ng-switch-when = true class="alert alert-success">
+				<div ng-switch-when=t rue class="alert alert-success">
 					Inlet
 				</div>
-				<div ng-switch-when = false class="alert alert-info">
+				<div ng-switch-when=f alse class="alert alert-info">
 					Cabin
 				</div>
 			</li>
 			<li class ng-switch on="o3On">
 				<!-- Show nothing when an ozone cal is not running -->
-				<div ng-switch-when = true class="alert alert-success">
+				<div ng-switch-when=t rue class="alert alert-success">
 					Ozone Cal Active
 				</div>
 			</li>
@@ -66,10 +73,10 @@
 				</div>
 			</li>
 			<li class ng-switch on="interlock">
-				<div ng-switch-when = true class="alert alert-danger">
+				<div ng-switch-when=t rue class="alert alert-danger">
 					Potential Laser Exposure!
 				</div>
-				<div ng-switch-when = false class="alert alert-info">
+				<div ng-switch-when=f alse class="alert alert-info">
 					Lasers Contained.
 				</div>
 			</li>

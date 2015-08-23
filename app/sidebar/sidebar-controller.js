@@ -64,6 +64,14 @@
 
 		};
 
+		/** Flip the switch cabin switch.
+		  */
+		$scope.setCabin = function(){
+			$scope.cabin = !$scope.cabin;
+			var x = $scope.cabin?1:0;
+			$http.get(net.address() + 'General/Cabin?Cabin='+x);
+		};
+
 		$scope.stop = function(){
 			$http.get(net.address() + 'General/Stop');
 		};

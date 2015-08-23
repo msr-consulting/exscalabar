@@ -116,7 +116,7 @@
        * to check and will broadcast based on who has changed.
        */
       cvt.checkCvt = function() {
-        promise = $http.get(net.address() + 'General/cvt').success(function(data, status, headers, config) {
+        promise = $http.get(net.address() + 'General/cvt').then(function(data, status, headers, config) {
           cvt.crd.fred = data.crd.fred;
           cvt.crd.fblue = data.crd.fblue;
           cvt.crd.dcred = data.crd.dcred;
@@ -839,6 +839,14 @@
 			var x = $scope.filter?1:0;
 			$http.get(net.address() + 'General/UpdateFilter?State='+x);
 
+		};
+
+		/** Flip the switch cabin switch.
+		  */
+		$scope.setCabin = function(){
+			$scope.cabin = !$scope.cabin;
+			var x = $scope.cabin?1:0;
+			$http.get(net.address() + 'General/Cabin?Cabin='+x);
 		};
 
 		$scope.stop = function(){

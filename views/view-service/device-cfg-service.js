@@ -25,7 +25,7 @@
 
 		// TODO: Add server side functionality for updating the configuration.
 		cfg.checkCfg = function() {
-			promise = $http.get(net.address() + 'General/deviceCfg').success(function(data, status, headers, config) {
+			promise = $http.get(net.address() + 'General/deviceCfg').then(function(data, status, headers, config) {
 
 			} /* End success*/);
 		};
