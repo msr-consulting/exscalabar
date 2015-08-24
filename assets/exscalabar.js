@@ -92,16 +92,13 @@
         "filter_pos": true,
         "fctl": []
       };
+
       cvt.humidifier = {
         high: new humidifier(0.75, 1, 0, 90, false),
         med: new humidifier(0.75, 1, 0, 80, false)
       };
 
-      /* All controls that must be updated for the PAS
-       * operation.
-       */
-      // TODO: Get rid of hardcoded portion of this...
-      cvt.pas = new pas();
+      cvt.pas = new pas($http, net);
 
       cvt.crd = new crd($http, net);
 
@@ -117,11 +114,16 @@
        */
       cvt.checkCvt = function() {
         promise = $http.get(net.address() + 'General/cvt').then(function(data, status, headers, config) {
-          cvt.crd.fred = data.crd.fred;
-          cvt.crd.fblue = data.crd.fblue;
-          cvt.crd.dcred = data.crd.dcred;
-          cvt.crd.dcblue = data.crd.dcblue;
-          cvt.crd.kpmt = data.crd.kpmt;
+
+          var crd = data.data.crd;
+          var pas = data.data.pas;
+
+          cvt.crd.fred = crd.fred;
+          cvt.crd.fblue = crd.fblue;
+          cvt.crd.dcred = crd.dcred;
+          cvt.crd.dcblue = crd.dcblue;
+          cvt.crd.kpmt = crd.kpmt;
+
         });
       };
 
@@ -191,6 +193,14 @@
     };
   }
 
+  /** This object defines all of the functionality required for operating
+    * the PAS.  This is the current value table information that will be
+    * stored and manipulated during operation.
+    * @param $http (object) - this is the http service that is produced by
+    *                         angular.  This is used for communicating with the
+    *                         server.
+    * @param net (object) - local service for retrieving IP and port information.
+    */
   function pas($http, net) {
 
     this.http = $http;
