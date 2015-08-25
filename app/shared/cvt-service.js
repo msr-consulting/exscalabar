@@ -123,9 +123,9 @@
     */
   function pas($http, net) {
 
-    this.http = $http;
+    http = $http;
 
-    this.net = net;
+    net = net;
 
     this.spk = {
       "vrange": 5,
@@ -147,9 +147,9 @@
     };
 
     this.las.setf0 = function(f0) {
-      this.las.f0 = f0;
+      this.f0 = f0;
 
-      this.http.get(this.net.address() +
+      http.get(net.address() +
         'PAS_CMD/UpdateFr?f0=' + f0.join(','));
 
     };

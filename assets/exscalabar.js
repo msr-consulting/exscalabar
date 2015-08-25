@@ -203,9 +203,9 @@
     */
   function pas($http, net) {
 
-    this.http = $http;
+    http = $http;
 
-    this.net = net;
+    net = net;
 
     this.spk = {
       "vrange": 5,
@@ -227,9 +227,9 @@
     };
 
     this.las.setf0 = function(f0) {
-      this.las.f0 = f0;
+      this.f0 = f0;
 
-      this.http.get(this.net.address() +
+      http.get(net.address() +
         'PAS_CMD/UpdateFr?f0=' + f0.join(','));
 
     };
@@ -495,12 +495,12 @@
             /* If the speaker is on, then send a command to set the modulation
              * frequencies properly.
              */
-            if (data.PAS.drive){
+            if (data.PAS.Drive){
 
               // Set the array to null
               f0 = [];
               for (i = 0; i< data.PAS.CellData.length; i++){
-                f0.push(data.PAS.CellData[i]);
+                f0.push(data.PAS.CellData[i].derived.f0);
               }
               cvt.pas.las.setf0(f0);
             }
