@@ -82,8 +82,8 @@
  * controls will be properly populated.
  */
 (function() {
-  angular.module('main').factory('cvt', ['$http', 'net',
-    function($http, net) {
+  angular.module('main').factory('cvt', ['$http', 'net','$rootScope',
+    function($http, net, $rootScope) {
 
       // TODO: Add broadcast to let everyone know when the cvt has been updated by the server.
       var cvt = {
@@ -118,11 +118,38 @@
           var crd = data.data.crd;
           var pas = data.data.pas;
 
+          /*for (var p in crd){
+            if (crd.hasOwnProperty(p)){
+              if (cvt.crd[p] != crd[p]){
+                cvt.crd[p] = crd[p];
+              }
+            }
+          }*/
+          /* Update the CRD controls */
           cvt.crd.fred = crd.fred;
           cvt.crd.fblue = crd.fblue;
           cvt.crd.dcred = crd.dcred;
           cvt.crd.dcblue = crd.dcblue;
           cvt.crd.kpmt = crd.kpmt;
+
+          /* Update PAS laser controls */
+          cvt.pas.las.f0 = pas.las.f0;
+          cvt.pas.las.vrange = pas.las.vrange;
+          cvt.pas.las.voffset = pas.las.voffset;
+          cvt.pas.las.enable = pas.las.enabled;
+
+          /* Update PAS speaker controls */
+          cvt.pas.spk.f0 = pas.spk.fcenter;
+          cvt.pas.spk.df = pas.spk.df;
+          cvt.pas.spk.vrange = pas.spk.vrange;
+          cvt.pas.spk.voffset = pas.spk.voffset;
+          cvt.pas.spk.auto = pas.spk.cycle;
+          cvt.pas.spk.length = pas.spk.length;
+          cvt.pas.spk.period = pas.spk.period;
+          cvt.pas.spk.pos = pas.spk.enabled;
+
+          /* Let interested parties know the CVT has been updated */
+          $rootScope.$broadcast('cvtUpdated');
 
         });
       };
@@ -158,8 +185,9 @@
   /** This object defines the values associated with the
    * the control of the CRD.
    */
-  function crd($http, net) {
-    this.http = $http;
+  function crd(_http, _net) {
+    var http = _http;
+    var net = _net;
 
     this.net = net;
     // Red laser frequency in Hz
@@ -188,8 +216,11 @@
         cmd = 'CRDS_CMD/fred?Rate=' + f;
       }
 
-      this.http.get(this.net.address() + cmd);
+      http.get(net.address() + cmd);
 
+    };
+    this.setEnable = function(index,val){
+      //var cmd =
     };
   }
 
@@ -201,11 +232,11 @@
     *                         server.
     * @param net (object) - local service for retrieving IP and port information.
     */
-  function pas($http, net) {
+  function pas(_http, _net) {
 
-    http = $http;
+    var http = _http;
 
-    net = net;
+    var net = _net;
 
     this.spk = {
       "vrange": 5,
@@ -258,7 +289,7 @@
 
     // TODO: Update server side to make sure that the modulation is updated.
     this.las.updateMod = function(mod) {
-      this.las.moduldation = mod;
+      this.moduldation = mod;
 
       var val = [];
 
@@ -273,7 +304,7 @@
 
     // TODO: Fix service to handle byte array not single number.
     this.las.updateEnable = function(en) {
-      this.las.enable = en;
+      this.enable = en;
     };
 
     /** Store the current speaker control setting and send the settign to
@@ -281,23 +312,23 @@
      * @param {boolean} - false = laser; true = speaker.
      */
     this.spk.updateCtl = function(spk) {
-      this.spk = spk;
+      //this = spk;
       var val = spk.pos ? 1 : 0;
 
-      this.http.get(this.net.address() + 'PAS_CMD/SpkSw?SpkSw=' + val);
-      this.http.get(this.net.address() + 'PAS_CMD/Spk?df=' + cvt.pas.spk.df + '&f0=' + this.spk.f0);
-      this.http.get(this.net.address() + 'PAS_CMD/UpdateSpkVparams?Voffset=' + this.spk.voffset +
-        '&Vrange=' + this.spk.vrange);
+      http.get(net.address() + 'PAS_CMD/SpkSw?SpkSw=' + val);
+      http.get(net.address() + 'PAS_CMD/Spk?df=' + this.df + '&f0=' + this.f0);
+      http.get(net.address() + 'PAS_CMD/UpdateSpkVparams?Voffset=' + this.voffset +
+        '&Vrange=' + this.vrange);
 
     };
 
     this.spk.updateCycle = function(auto, p, l) {
-      this.spk.auto = auto;
-      this.spk.length = l;
-      this.spk.period = p;
+      this.auto = auto;
+      this.length = l;
+      this.period = p;
       var val = auto ? 1 : 0;
 
-      this.http.get(this.net.address() + 'PAS_CMD/UpdateSpkCycle?Length=' + l + '&Period=' + p + '&Cycle=' + val);
+      http.get(net.address() + 'PAS_CMD/UpdateSpkCycle?Length=' + l + '&Period=' + p + '&Cycle=' + val);
 
     };
   }
@@ -495,7 +526,7 @@
             /* If the speaker is on, then send a command to set the modulation
              * frequencies properly.
              */
-            if (data.PAS.Drive){
+            /*if (data.PAS.Drive){
 
               // Set the array to null
               f0 = [];
@@ -503,7 +534,7 @@
                 f0.push(data.PAS.CellData[i].derived.f0);
               }
               cvt.pas.las.setf0(f0);
-            }
+            }*/
 
             var t = dataObj.tObj.getTime();
             dataObj.time.unshift(t);
@@ -1156,7 +1187,8 @@
       $scope.setRate = function(i, f){
         cvt.crd.setLaserRate(i, f);
 
-      }
+      };
+      
       /* Variable for laser control binding; first element is related to blue,
        * second to red.
        */
@@ -1392,11 +1424,13 @@
         "low": 500
       };
 
-      $scope.cycle = {
-        "period": cvt.pas.spk.period,
-        "length": cvt.pas.spk.length,
-        "auto": cvt.pas.spk.auto
-      };
+      $scope.$on('cvtUpdated', function(){
+
+        $scope.speaker = cvt.pas.spk;
+
+
+      });
+
       /** Set the speaker position and update the CVT. */
       $scope.setPos = function() {
         $scope.speaker.pos = !$scope.speaker.pos;
@@ -1440,12 +1474,12 @@
       };
 
       $scope.updateCycle = function() {
-        cvt.pas.spk.updateCycle($scope.cycle.auto,
-          $scope.cycle.period, $scope.cycle.length);
+        cvt.pas.spk.updateCycle($scope.speaker.auto,
+          $scope.speaker.period, $scope.speaker.length);
       };
 
       $scope.updateAuto = function() {
-        $scope.cycle.auto = !$scope.cycle.auto;
+        $scope.speaker.auto = !$scope.speaker.auto;
         $scope.updateCycle();
       };
     }
@@ -1484,6 +1518,22 @@
             $scope.lasCtl[i].f0 = $scope.data.cell[i].f0[0].y;
           }
         }
+      });
+
+      $scope.$on('cvtUpdated', function(){
+
+        // Update the laser controls if something has set them on the
+        // server-side.
+        for (i = 0; i < cvt.pas.las.vr.length; i++) {
+
+          $scope.lasCtl[i].vr = cvt.pas.las.vr[i];
+          $scope.lasCtl[i].vo = cvt.pas.las.voffset[i];
+          $scope.lasCtl[i].f0 =   cvt.pas.las.f0[i];
+          $scope.lasCtl[i].mod =   cvt.pas.las.modulation[i];
+          $scope.lasCtl[i].en =   cvt.pas.las.enable[i];
+
+        }
+
       });
 
       $scope.updateMod = function(i) {

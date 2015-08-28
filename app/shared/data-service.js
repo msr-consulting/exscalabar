@@ -108,7 +108,7 @@
             /* If the speaker is on, then send a command to set the modulation
              * frequencies properly.
              */
-            if (data.PAS.Drive){
+            /*if (data.PAS.Drive){
 
               // Set the array to null
               f0 = [];
@@ -116,7 +116,7 @@
                 f0.push(data.PAS.CellData[i].derived.f0);
               }
               cvt.pas.las.setf0(f0);
-            }
+            }*/
 
             var t = dataObj.tObj.getTime();
             dataObj.time.unshift(t);

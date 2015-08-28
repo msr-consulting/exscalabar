@@ -32,6 +32,22 @@
         }
       });
 
+      $scope.$on('cvtUpdated', function(){
+
+        // Update the laser controls if something has set them on the
+        // server-side.
+        for (i = 0; i < cvt.pas.las.vr.length; i++) {
+
+          $scope.lasCtl[i].vr = cvt.pas.las.vr[i];
+          $scope.lasCtl[i].vo = cvt.pas.las.voffset[i];
+          $scope.lasCtl[i].f0 =   cvt.pas.las.f0[i];
+          $scope.lasCtl[i].mod =   cvt.pas.las.modulation[i];
+          $scope.lasCtl[i].en =   cvt.pas.las.enable[i];
+
+        }
+
+      });
+
       $scope.updateMod = function(i) {
         $scope.lasCtl[i].modulation = !$scope.lasCtl[i].modulation;
 

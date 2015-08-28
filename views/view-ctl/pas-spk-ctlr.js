@@ -12,11 +12,13 @@
         "low": 500
       };
 
-      $scope.cycle = {
-        "period": cvt.pas.spk.period,
-        "length": cvt.pas.spk.length,
-        "auto": cvt.pas.spk.auto
-      };
+      $scope.$on('cvtUpdated', function(){
+
+        $scope.speaker = cvt.pas.spk;
+
+
+      });
+
       /** Set the speaker position and update the CVT. */
       $scope.setPos = function() {
         $scope.speaker.pos = !$scope.speaker.pos;
@@ -60,12 +62,12 @@
       };
 
       $scope.updateCycle = function() {
-        cvt.pas.spk.updateCycle($scope.cycle.auto,
-          $scope.cycle.period, $scope.cycle.length);
+        cvt.pas.spk.updateCycle($scope.speaker.auto,
+          $scope.speaker.period, $scope.speaker.length);
       };
 
       $scope.updateAuto = function() {
-        $scope.cycle.auto = !$scope.cycle.auto;
+        $scope.speaker.auto = !$scope.speaker.auto;
         $scope.updateCycle();
       };
     }

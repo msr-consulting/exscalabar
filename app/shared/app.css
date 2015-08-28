@@ -20,17 +20,18 @@
   border-radius: 1em;
 }
 
+
 /* Using the fixed nav, so we need to adjust the padding...
  * For screenwidths not concealing the nav, set the padding to 120px,
  * otherwise it should be 0.
  */
 @media(min-width:769px) {
   body {
-    padding-top: 120px;
+    padding-top: 60px;
   }
 }
 @media(max-width:768px) {
   body {
-    pading-top: 0px;
+    pading-top: 120px;
   }
 }
