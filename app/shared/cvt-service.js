@@ -2,16 +2,21 @@
  * controls will be properly populated.
  */
 (function() {
-  angular.module('main').factory('cvt', ['$http', 'net','$rootScope',
+  angular.module('main').factory('cvt', ['$http', 'net', '$rootScope',
     function($http, net, $rootScope) {
 
-      // TODO: Add broadcast to let everyone know when the cvt has been updated by the server.
       var cvt = {
         "save": true,
         "ozone": false,
         "filter_pos": true,
         "fctl": []
       };
+
+      /* Indicates whether this is the first time this is called.  If it is, the
+       * value is non-zero (TRUE).  On the first successful poll of the server,
+       * this value will be set to zero.
+       */
+      var first_Call = 1;
 
       cvt.humidifier = {
         high: new humidifier(0.75, 1, 0, 90, false),
@@ -33,45 +38,55 @@
        * to check and will broadcast based on who has changed.
        */
       cvt.checkCvt = function() {
-        promise = $http.get(net.address() + 'General/cvt').then(function(data, status, headers, config) {
 
-          var crd = data.data.crd;
-          var pas = data.data.pas;
+        promise = $http.get(net.address() + 'General/cvt?force=' + first_Call).then(function(data, status, headers, config) {
 
-          /*for (var p in crd){
-            if (crd.hasOwnProperty(p)){
-              if (cvt.crd[p] != crd[p]){
-                cvt.crd[p] = crd[p];
+          // After the first successful call, set this value to false (0).
+          first_Call = 0;
+
+          // If the CVT has not changed or this is not the first call, then the
+          // CVT object should be empty.
+          if (!isEmpty(data)) {
+
+            var crd = data.data.crd;
+            var pas = data.data.pas;
+
+            /*for (var p in crd){
+              if (crd.hasOwnProperty(p)){
+                if (cvt.crd[p] != crd[p]){
+                  cvt.crd[p] = crd[p];
+                }
               }
-            }
-          }*/
-          /* Update the CRD controls */
-          cvt.crd.fred = crd.fred;
-          cvt.crd.fblue = crd.fblue;
-          cvt.crd.dcred = crd.dcred;
-          cvt.crd.dcblue = crd.dcblue;
-          cvt.crd.kpmt = crd.kpmt;
+            }*/
+            /* Update the CRD controls */
+            cvt.crd.fred = crd.fred;
+            cvt.crd.fblue = crd.fblue;
+            cvt.crd.dcred = crd.dcred;
+            cvt.crd.dcblue = crd.dcblue;
+            cvt.crd.kpmt = crd.kpmt;
 
-          /* Update PAS laser controls */
-          cvt.pas.las.f0 = pas.las.f0;
-          cvt.pas.las.vrange = pas.las.vrange;
-          cvt.pas.las.voffset = pas.las.voffset;
-          cvt.pas.las.enable = pas.las.enabled;
+            /* Update PAS laser controls */
+            cvt.pas.las.f0 = pas.las.f0;
+            cvt.pas.las.vrange = pas.las.vrange;
+            cvt.pas.las.voffset = pas.las.voffset;
+            cvt.pas.las.enable = pas.las.enabled;
 
-          /* Update PAS speaker controls */
-          cvt.pas.spk.f0 = pas.spk.fcenter;
-          cvt.pas.spk.df = pas.spk.df;
-          cvt.pas.spk.vrange = pas.spk.vrange;
-          cvt.pas.spk.voffset = pas.spk.voffset;
-          cvt.pas.spk.auto = pas.spk.cycle;
-          cvt.pas.spk.length = pas.spk.length;
-          cvt.pas.spk.period = pas.spk.period;
-          cvt.pas.spk.pos = pas.spk.enabled;
+            /* Update PAS speaker controls */
+            cvt.pas.spk.f0 = pas.spk.fcenter;
+            cvt.pas.spk.df = pas.spk.df;
+            cvt.pas.spk.vrange = pas.spk.vrange;
+            cvt.pas.spk.voffset = pas.spk.voffset;
+            cvt.pas.spk.auto = pas.spk.cycle;
+            cvt.pas.spk.length = pas.spk.length;
+            cvt.pas.spk.period = pas.spk.period;
+            cvt.pas.spk.pos = pas.spk.enabled;
 
-          /* Let interested parties know the CVT has been updated */
-          $rootScope.$broadcast('cvtUpdated');
+            /* Let interested parties know the CVT has been updated */
+            $rootScope.$broadcast('cvtUpdated');
+          }
 
         });
+
       };
 
       cvt.flows = {};
@@ -129,29 +144,29 @@
     // Red enable state
     this.ered = true;
 
-    this.setLaserRate = function(index, f){
+    this.setLaserRate = function(index, f) {
 
       var cmd = 'CRDS_CMD/fblue?Rate=' + f;
-      if (index){
+      if (index) {
         cmd = 'CRDS_CMD/fred?Rate=' + f;
       }
 
       http.get(net.address() + cmd);
 
     };
-    this.setEnable = function(index,val){
+    this.setEnable = function(index, val) {
       //var cmd =
     };
   }
 
   /** This object defines all of the functionality required for operating
-    * the PAS.  This is the current value table information that will be
-    * stored and manipulated during operation.
-    * @param $http (object) - this is the http service that is produced by
-    *                         angular.  This is used for communicating with the
-    *                         server.
-    * @param net (object) - local service for retrieving IP and port information.
-    */
+   * the PAS.  This is the current value table information that will be
+   * stored and manipulated during operation.
+   * @param $http (object) - this is the http service that is produced by
+   *                         angular.  This is used for communicating with the
+   *                         server.
+   * @param net (object) - local service for retrieving IP and port information.
+   */
   function pas(_http, _net) {
 
     var http = _http;
@@ -251,6 +266,15 @@
       http.get(net.address() + 'PAS_CMD/UpdateSpkCycle?Length=' + l + '&Period=' + p + '&Cycle=' + val);
 
     };
+  }
+
+  function isEmpty(obj) {
+    for (var prop in obj) {
+      if (obj.hasOwnProperty(prop))
+        return false;
+    }
+
+    return true;
   }
 
   function filter() {

@@ -42,10 +42,13 @@
     "filter": true,
     "inlet": true
   },
-  "TestAlicat": {
-    "Setpoint": 0.000000
+  "testalicat": {
+    "setpoint": 0.000000
   },
-  "hTEC": {
-    "Setpoint": 0.000000
+  "htec": {
+    "setpoint": 0.000000
+  },
+  "general": {
+    "purge": true
   }
 }

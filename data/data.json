@@ -1,459 +1,343 @@
 {
   "PAS": {
-    "CellData": [
-      {
-        "derived": {
-          "f0": 98644,
-          "IA": 0,
-          "Q": 1375.7587890625,
-          "max": [
-            0.0003171723510604352,
-            1394
-          ],
-          "noiseLim": 1e-12,
-          "ext": 0
-        },
-        "fitData": {
-          "parameters": [
-            0
-          ],
-          "covariance": [
-            [
-              0,
-              0
-            ],
-            [
-              0,
-              0
-            ]
-          ]
-        },
-        "IABack": 0,
-        "FittedData": {
-          "Y": [
-            0
-          ],
-          "dt": 0
-        },
-        "MicFreq": {
-          "Y": [],
-          "dt": 1
-        },
-        "MicTime": {
-          "Y": [],
-          "dt": 0.00025
-        },
-        "PhotoDiode": {
-          "Y": [],
-          "dt": 0.001
-        },
-        "lRMS": 1.7241911280998414,
-        "T": [
-          1.73,
-          1.72
+    "CellData": [{
+      "derived": {
+        "f0": 1365,
+        "IA": -0.010351812466979027,
+        "Q": 0.55376702547073364,
+        "max": [0.00037082645576447248, 1337],
+        "noiseLim": 0.0076828801847895973,
+        "ext": -0.010351811974036784
+      },
+      "fitData": {
+        "parameters": [0],
+        "covariance": [
+          [0, 0],
+          [0, 0]
         ]
       },
-      {
-        "derived": {
-          "f0": -18105,
-          "IA": -0.0009504766785539687,
-          "Q": -247.3743896484375,
-          "max": [
-            0.0003032301610801369,
-            1302
-          ],
-          "noiseLim": 0.007604992660340208,
-          "ext": -0.000950476642588495
-        },
-        "fitData": {
-          "parameters": [
-            0
-          ],
-          "covariance": [
-            [
-              0,
-              0
-            ],
-            [
-              0,
-              0
-            ]
-          ]
-        },
-        "IABack": 0,
-        "FittedData": {
-          "Y": [
-            0
-          ],
-          "dt": 0
-        },
-        "MicFreq": {
-          "Y": [],
-          "dt": 1
-        },
-        "MicTime": {
-          "Y": [],
-          "dt": 0.00025
-        },
-        "PhotoDiode": {
-          "Y": [],
-          "dt": 0.001
-        },
-        "lRMS": 1.7283066681466899,
-        "T": [
-          1.73,
-          1.73
+      "IABack": 0,
+      "FittedData": {
+        "Y": [0],
+        "dt": 0
+      },
+      "MicFreq": {
+        "Y": [],
+        "dt": 1
+      },
+      "MicTime": {
+        "Y": [],
+        "dt": 0.00025000000000000001
+      },
+      "PhotoDiode": {
+        "Y": [],
+        "dt": 0.001
+      },
+      "lRMS": 2.6256335502266968,
+      "T": [2.63, 2.62]
+    }, {
+      "derived": {
+        "f0": 1342,
+        "IA": -0.0019017409067600965,
+        "Q": 0.54383784532546997,
+        "max": [0.00029250714578665793, 1335],
+        "noiseLim": 0.0071543955265944521,
+        "ext": -0.0019017410237637394
+      },
+      "fitData": {
+        "parameters": [0],
+        "covariance": [
+          [0, 0],
+          [0, 0]
         ]
       },
-      {
-        "derived": {
-          "f0": -1842049,
-          "IA": -2.9999999880125916e-12,
-          "Q": -24327.99609375,
-          "max": [
-            0,
-            1300
-          ],
-          "noiseLim": 1e-12,
-          "ext": -3.000000133943692e-12
-        },
-        "fitData": {
-          "parameters": [
-            0
-          ],
-          "covariance": [
-            [
-              0,
-              0
-            ],
-            [
-              0,
-              0
-            ]
-          ]
-        },
-        "IABack": 0,
-        "FittedData": {
-          "Y": [
-            0
-          ],
-          "dt": 0
-        },
-        "MicFreq": {
-          "Y": [],
-          "dt": 1
-        },
-        "MicTime": {
-          "Y": [],
-          "dt": 0.00025
-        },
-        "PhotoDiode": {
-          "Y": [],
-          "dt": 0.001
-        },
-        "lRMS": 1.7335983271685185,
-        "T": [
-          1.73,
-          1.72
+      "IABack": 0,
+      "FittedData": {
+        "Y": [0],
+        "dt": 0
+      },
+      "MicFreq": {
+        "Y": [],
+        "dt": 1
+      },
+      "MicTime": {
+        "Y": [],
+        "dt": 0.00025000000000000001
+      },
+      "PhotoDiode": {
+        "Y": [],
+        "dt": 0.001
+      },
+      "lRMS": 2.6296582516139986,
+      "T": [2.63, 2.63]
+    }, {
+      "derived": {
+        "f0": 1356,
+        "IA": -0.0028553688898682594,
+        "Q": 0.54929274320602417,
+        "max": [0.00021244247909635305, 1371],
+        "noiseLim": 0.0070744586357031946,
+        "ext": -0.0028553688301930225
+      },
+      "fitData": {
+        "parameters": [0],
+        "covariance": [
+          [0, 0],
+          [0, 0]
         ]
       },
-      {
-        "derived": {
-          "f0": 1350,
-          "IA": -0.008079247549176216,
-          "Q": 0.5477674007415771,
-          "max": [
-            0.0002585328184068203,
-            1330
-          ],
-          "noiseLim": 0.007537401174954607,
-          "ext": -0.008079247808454593
-        },
-        "fitData": {
-          "parameters": [
-            0
-          ],
-          "covariance": [
-            [
-              0,
-              0
-            ],
-            [
-              0,
-              0
-            ]
-          ]
-        },
-        "IABack": 0,
-        "FittedData": {
-          "Y": [
-            0
-          ],
-          "dt": 0
-        },
-        "MicFreq": {
-          "Y": [],
-          "dt": 1
-        },
-        "MicTime": {
-          "Y": [],
-          "dt": 0.00025
-        },
-        "PhotoDiode": {
-          "Y": [],
-          "dt": 0.001
-        },
-        "lRMS": 1.7937965162370089,
-        "T": [
-          1.73,
-          1.72
+      "IABack": 0,
+      "FittedData": {
+        "Y": [0],
+        "dt": 0
+      },
+      "MicFreq": {
+        "Y": [],
+        "dt": 1
+      },
+      "MicTime": {
+        "Y": [],
+        "dt": 0.00025000000000000001
+      },
+      "PhotoDiode": {
+        "Y": [],
+        "dt": 0.001
+      },
+      "lRMS": 2.6365835603790506,
+      "T": [2.63, 2.63]
+    }, {
+      "derived": {
+        "f0": -1842049,
+        "IA": -2.9999999880125916e-012,
+        "Q": -24327.99609375,
+        "max": [0, 1300],
+        "noiseLim": 9.9999999999999998e-013,
+        "ext": -3.0000001339436919e-012
+      },
+      "fitData": {
+        "parameters": [0],
+        "covariance": [
+          [0, 0],
+          [0, 0]
         ]
       },
-      {
-        "derived": {
-          "f0": 1362,
-          "IA": 0.0056914715096354485,
-          "Q": 0.55286705493927,
-          "max": [
-            0.0004782048927154392,
-            1370
-          ],
-          "noiseLim": 0.00761870653341439,
-          "ext": 0.005691471434984996
-        },
-        "fitData": {
-          "parameters": [
-            0
-          ],
-          "covariance": [
-            [
-              0,
-              0
-            ],
-            [
-              0,
-              0
-            ]
-          ]
-        },
-        "IABack": 0,
-        "FittedData": {
-          "Y": [
-            0
-          ],
-          "dt": 0
-        },
-        "MicFreq": {
-          "Y": [],
-          "dt": 1
-        },
-        "MicTime": {
-          "Y": [],
-          "dt": 0.00025
-        },
-        "PhotoDiode": {
-          "Y": [],
-          "dt": 0.001
-        },
-        "lRMS": 1.731107602034364,
-        "T": [
-          1.72,
-          1.72
+      "IABack": 0,
+      "FittedData": {
+        "Y": [0],
+        "dt": 0
+      },
+      "MicFreq": {
+        "Y": [],
+        "dt": 1
+      },
+      "MicTime": {
+        "Y": [],
+        "dt": 0.00025000000000000001
+      },
+      "PhotoDiode": {
+        "Y": [],
+        "dt": 0.001
+      },
+      "lRMS": 2.6958834445260651,
+      "T": [2.63, 2.63]
+    }, {
+      "derived": {
+        "f0": -20220,
+        "IA": -0.0050975587218999863,
+        "Q": -176.38984680175781,
+        "max": [0.00043907843064516783, 1309],
+        "noiseLim": 0.0084669328058003656,
+        "ext": -0.0050975588793044646
+      },
+      "fitData": {
+        "parameters": [0],
+        "covariance": [
+          [0, 0],
+          [0, 0]
         ]
-      }
-    ],
-    "Drive": "FALSE"
+      },
+      "IABack": 0,
+      "FittedData": {
+        "Y": [0],
+        "dt": 0
+      },
+      "MicFreq": {
+        "Y": [],
+        "dt": 1
+      },
+      "MicTime": {
+        "Y": [],
+        "dt": 0.00025000000000000001
+      },
+      "PhotoDiode": {
+        "Y": [],
+        "dt": 0.001
+      },
+      "lRMS": 2.6332238059520749,
+      "T": [2.62, 2.62]
+    }],
+    "Drive": false
   },
-  "CellData": [
-    {
-      "extParam": {
-        "Tau": 0,
-        "Tau0cor": 0,
-        "ext": 0,
-        "extCorr": 0,
-        "stdevTau": 0,
-        "eTau": 0,
-        "taucorr": 0,
-        "Tau0": 0,
-        "max": -64.02549743652344
-      },
-      "hkData": {
-        "rhDilFac": 1,
-        "Q": 0,
-        "Tmean": 0,
-        "extDilFac": 1,
-        "rhCell": 0,
-        "P": 0,
-        "T": 0
-      },
-      "Ringdowns": [
-        []
-      ]
+  "CellData": [{
+    "extParam": {
+      "Tau": 0,
+      "Tau0cor": 0,
+      "ext": 0,
+      "extCorr": 0,
+      "stdevTau": 0,
+      "eTau": 0,
+      "taucorr": 0,
+      "Tau0": 0,
+      "max": -40.314498901367188
     },
-    {
-      "extParam": {
-        "Tau": 0,
-        "Tau0cor": 0,
-        "ext": 0,
-        "extCorr": 0,
-        "stdevTau": 0,
-        "eTau": 0,
-        "taucorr": 0,
-        "Tau0": 0,
-        "max": -12.197999954223633
-      },
-      "hkData": {
-        "rhDilFac": 1,
-        "Q": 0,
-        "Tmean": 0,
-        "extDilFac": 1,
-        "rhCell": 0,
-        "P": 0,
-        "T": 0
-      },
-      "Ringdowns": [
-        []
-      ]
+    "hkData": {
+      "rhDilFac": 1,
+      "Q": 0,
+      "Tmean": 0,
+      "extDilFac": 1,
+      "rhCell": 0,
+      "P": 0,
+      "T": 0
     },
-    {
-      "extParam": {
-        "Tau": 0,
-        "Tau0cor": 0,
-        "ext": 0,
-        "extCorr": 0,
-        "stdevTau": 0,
-        "eTau": 0,
-        "taucorr": 0,
-        "Tau0": 0,
-        "max": -104.74299621582031
-      },
-      "hkData": {
-        "rhDilFac": 1,
-        "Q": 0,
-        "Tmean": 0,
-        "extDilFac": 1,
-        "rhCell": 0,
-        "P": 0,
-        "T": 0
-      },
-      "Ringdowns": [
-        []
-      ]
+    "Ringdowns": [
+      []
+    ]
+  }, {
+    "extParam": {
+      "Tau": 0,
+      "Tau0cor": 0,
+      "ext": 0,
+      "extCorr": 0,
+      "stdevTau": 0,
+      "eTau": 0,
+      "taucorr": 0,
+      "Tau0": 0,
+      "max": -2.7929999828338623
     },
-    {
-      "extParam": {
-        "Tau": 0,
-        "Tau0cor": 0,
-        "ext": 0,
-        "extCorr": 0,
-        "stdevTau": 0,
-        "eTau": 0,
-        "taucorr": 0,
-        "Tau0": 0,
-        "max": -27.98699951171875
-      },
-      "hkData": {
-        "rhDilFac": 1,
-        "Q": 0,
-        "Tmean": 0,
-        "extDilFac": 1,
-        "rhCell": 0,
-        "P": 0,
-        "T": 0
-      },
-      "Ringdowns": [
-        []
-      ]
+    "hkData": {
+      "rhDilFac": 1,
+      "Q": 0,
+      "Tmean": 0,
+      "extDilFac": 1,
+      "rhCell": 0,
+      "P": 838.4024658203125,
+      "T": 0
     },
-    {
-      "extParam": {
-        "Tau": 0,
-        "Tau0cor": 0,
-        "ext": 0,
-        "extCorr": 0,
-        "stdevTau": 0,
-        "eTau": 0,
-        "taucorr": 0,
-        "Tau0": 0,
-        "max": 406.343994140625
-      },
-      "hkData": {
-        "rhDilFac": 1,
-        "Q": 0,
-        "Tmean": 0,
-        "extDilFac": 1,
-        "rhCell": 0,
-        "P": 0,
-        "T": 0
-      },
-      "Ringdowns": [
-        []
-      ]
-    }
-  ],
+    "Ringdowns": [
+      []
+    ]
+  }, {
+    "extParam": {
+      "Tau": 0,
+      "Tau0cor": 0,
+      "ext": 0,
+      "extCorr": 0,
+      "stdevTau": 0,
+      "eTau": 0,
+      "taucorr": 0,
+      "Tau0": 0,
+      "max": -107.73549652099609
+    },
+    "hkData": {
+      "rhDilFac": 1,
+      "Q": 0,
+      "Tmean": 0,
+      "extDilFac": 1,
+      "rhCell": 0,
+      "P": 838.4024658203125,
+      "T": 0
+    },
+    "Ringdowns": [
+      []
+    ]
+  }, {
+    "extParam": {
+      "Tau": 0,
+      "Tau0cor": 0,
+      "ext": 0,
+      "extCorr": 0,
+      "stdevTau": 0,
+      "eTau": 0,
+      "taucorr": 0,
+      "Tau0": 0,
+      "max": -51.602500915527344
+    },
+    "hkData": {
+      "rhDilFac": 1,
+      "Q": 0,
+      "Tmean": 0,
+      "extDilFac": 1,
+      "rhCell": 0,
+      "P": 838.4024658203125,
+      "T": 0
+    },
+    "Ringdowns": [
+      []
+    ]
+  }, {
+    "extParam": {
+      "Tau": 0,
+      "Tau0cor": 0,
+      "ext": 0,
+      "extCorr": 0,
+      "stdevTau": 0,
+      "eTau": 0,
+      "taucorr": 0,
+      "Tau0": 0,
+      "max": 200.40400695800781
+    },
+    "hkData": {
+      "rhDilFac": 1,
+      "Q": 0,
+      "Tmean": 0,
+      "extDilFac": 1,
+      "rhCell": 0,
+      "P": 838.4024658203125,
+      "T": 0
+    },
+    "Ringdowns": [
+      []
+    ]
+  }],
   "TestAlicat": {
     "Type": "MC",
-    "P": 841.85,
-    "T": 31.44,
-    "Q": 0,
-    "Qsp": 1,
-    "Q0": 0
+    "P": 837.71,
+    "T": 29.17,
+    "Q": 0.00,
+    "Qsp": 1.00,
+    "Q0": 0.00
   },
   "vDryBlue": {
-    "RH": "42.25",
-    "T": "28.00",
-    "Td": "13.99"
+    "RH": "0.00",
+    "T": "0.00",
+    "Td": "0.00"
   },
-  " vDryRed": {
+  "vDryRed": {
     "RH": "0.00",
     "T": "0.00",
     "Td": "0.00"
   },
   "hTEC": {
-    "Tobj": "115.73",
-    "Tsink": "25.00",
-    "Vout": "0.99"
+    "Tobj": "0.00",
+    "Tsink": "0.00",
+    "Vout": "0.00"
   },
   "pDryBlue": {
-    "P": 849.7,
-    "T": 30.5
+    "P": 0.000000,
+    "T": 0.000000
   },
-  "Time": "3522076563.45",
+  "Time": "3524012838.35",
   "Filter": false,
   "O3": false,
   "Cabin": false,
   "Save": false,
-  "Msg": [
-    "18:34:58.07 Instrument ePAS is in configuration.",
-    "18:34:58.11 [pas] Configuration complete!",
-    "18:34:58.12 [inst] Configuration of insrument with ID ePAS successful!",
-    "18:34:58.14 Instrument eCRDS is in configuration.",
-    "18:34:58.24 [crd] Blue laser and analog input armed for operation.",
-    "18:34:58.30 [crd] Start laser operation and acquistion.",
-    "18:34:58.32 [crd] Configuration complete!",
-    "18:34:58.33 [inst] Configuration of insrument with ID eCRDS successful!",
-    "18:34:58.35 [udp] Listening for data on 239.1.4.6:50001.",
-    "18:34:58.37 [alicat] Configuring alicat device with ID TestAlicat.",
-    "18:34:59.22 [ERROR] -1801: Start value too large in Get Waveform Subset.VI.",
-    "18:34:59.23 [pas] Speaker state changed to TRUE.",
-    "18:34:59.25 [pas] Speaker state changed to TRUE.",
-    "18:34:59.27 [pas] Speaker voltage parameters changed to : Vrange = 0.00, Voffset = 5.00.",
-    "18:34:59.50 [alicat] New setpoint for Alicat device TestAlicat is 1.00",
-    "18:34:59.52 [alicat] Configuration for Alicat device TestAlicat complete!",
-    "18:34:59.67 [ERROR] -1073807253: VISA Read in Serial Session.lvclass:Asynchronous Read.vi:7320002->Serial Session.lvclass:Get String.vi:4840001->Vaisala Library.lvlib:Vaisala.lvclass:Send CMD.vi->Vaisala Library.lvlib:Vaisala.lvclass:Close Connection in POLL Mode.vi->Vaisala Library.lvlib:Vaisala.lvclass:Configure Device.vi->DAQ Device.lvlib:Device.lvclass:Pre Launch Init.vi:2610001->Actor Framework.lvlib:Actor.lvclass:Actor.vi:6640012->Actor Framework.lvlib:Actor.lvclass:Actor.vi.ACBRProxyCaller.69D0002C",
-    "18:34:59.81 [ERROR] -1073807253: VISA Read in Serial Session.lvclass:Asynchronous Read.vi:7320002->Serial Session.lvclass:Get String.vi:4840001->Vaisala Library.lvlib:Vaisala.lvclass:Send CMD.vi->Vaisala Library.lvlib:Vaisala.lvclass:Set Delay Interval.vi->Vaisala Library.lvlib:Vaisala.lvclass:Configure Device.vi->DAQ Device.lvlib:Device.lvclass:Pre Launch Init.vi:2610001->Actor Framework.lvlib:Actor.lvclass:Actor.vi:6640013->Actor Framework.lvlib:Actor.lvclass:Actor.vi.ACBRProxyCaller.69D0002C",
-    "18:34:59.85 [mTEC] Live communication set to DISABLE.",
-    "18:34:59.88 [mTEC] Live communication set to ENABLE.",
-    "18:34:59.91 [mTEC] New input selection for controller hTEC.  Value is now Live Current/Voltage.",
-    "18:34:59.96 [ppt] Changed units for pDryBlue to mbar.",
-    "18:35:00.01 [ppt] Configuration for pDryBlue complete.",
-    "18:35:00.03 [file] Initialization successful.",
-    "18:35:00.04 [file] Initialization successful.",
-    "18:35:00.13 [ctl] Filter state changed to TRUE",
-    "18:35:00.14 [ctl] Filter cycle parameters updated.  Period is now 240 s; length of filter is 60 s; and the system set auto to FALSE.",
-    "18:35:00.19 [ctl] Set sample path to cabin is TRUE.",
-    "18:35:01.65 [file] New file opened at u:/exscalabar/Data/test_20150810_183501.txt.",
-    "18:35:01.71 [file] New file opened at v:/exscalabar/Data/test_20150810_183501.txt.",
-    "18:35:20.22 [pas] Speaker state changed to FALSE."
-  ]
+  "Msg": ["04:27:18.03 [ERROR] 1: Scan From String (arg 1) in Vaisala Library.lvlib:Vaisala.lvclass:Get Data.vi->DAQ Device.lvlib:Device.lvclass:Actor Core.vi:5880002->Actor Framework.lvlib:Actor.lvclass:Actor.vi:6640012->Actor Framework.lvlib:Actor.lvclass:Actor.vi.ACBRProxyCaller.9970002F", "04:27:18.11 [ERROR] 1: Scan From String (arg 1) in Vaisala Library.lvlib:Vaisala.lvclass:Get Data.vi->DAQ Device.lvlib:Device.lvclass:Actor Core.vi:5880003->Actor Framework.lvlib:Actor.lvclass:Actor.vi:6640013->Actor Framework.lvlib:Actor.lvclass:Actor.vi.ACBRProxyCaller.9970002F"],
+  "fcycle": {
+    "te": "185.1",
+    "tt": "60.0"
+  },
+  "pBlocked": "FALSE",
+  "interlock": "FALSE",
+  "impBlocked": "FALSE",
+  "impDiffV": "10.6"
 }
