@@ -15,7 +15,7 @@
         cvt.crd.setLaserRate(i, f);
 
       };
-      
+
       /* Variable for laser control binding; first element is related to blue,
        * second to red.
        */
@@ -25,6 +25,8 @@
       ];
 
       $scope.pmt = cvt.crd.kpmt;
+
+      $scope.purge = false;
 
       $scope.data = Data.crd;
 
