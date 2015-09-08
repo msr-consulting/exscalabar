@@ -39,17 +39,17 @@
        */
       cvt.checkCvt = function() {
 
-        promise = $http.get(net.address() + 'General/cvt?force=' + first_Call).then(function(data, status, headers, config) {
+        promise = $http.get(net.address() + 'General/cvt?force=' + first_Call).then(function(response) {
 
           // After the first successful call, set this value to false (0).
           first_Call = 0;
 
           // If the CVT has not changed or this is not the first call, then the
           // CVT object should be empty.
-          if (!isEmpty(data)) {
+          if (!isEmpty(response.data)) {
 
-            var crd = data.data.crd;
-            var pas = data.data.pas;
+            var crd = response.data.crd;
+            var pas = response.data.pas;
 
             /*for (var p in crd){
               if (crd.hasOwnProperty(p)){

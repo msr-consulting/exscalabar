@@ -119,17 +119,17 @@
        */
       cvt.checkCvt = function() {
 
-        promise = $http.get(net.address() + 'General/cvt?force=' + first_Call).then(function(data, status, headers, config) {
+        promise = $http.get(net.address() + 'General/cvt?force=' + first_Call).then(function(response) {
 
           // After the first successful call, set this value to false (0).
           first_Call = 0;
 
           // If the CVT has not changed or this is not the first call, then the
           // CVT object should be empty.
-          if (!isEmpty(data)) {
+          if (!isEmpty(response.data)) {
 
-            var crd = data.data.crd;
-            var pas = data.data.pas;
+            var crd = response.data.crd;
+            var pas = response.data.pas;
 
             /*for (var p in crd){
               if (crd.hasOwnProperty(p)){
@@ -506,27 +506,27 @@
       /* Call this to poll the server for data */
       dataObj.getData = function() {
         promise = $http.get(net.address() + 'General/Data')
-          .success(function(data, status, headers, config) {
+          .then(function(response) {
 
             // Object creation for devices
             for (i = 0; i < alicats.length; i++) {
-              if (alicats[i] in data) {
-                dataObj[alicats[i]] = data[alicats[i]];
+              if (alicats[i] in response.data) {
+                dataObj[alicats[i]] = response.data[alicats[i]];
               }
 
             }
 
             // Object creation for devices
             for (i = 0; i < ppts.length; i++) {
-              if (ppts[i] in data) {
-                dataObj[ppts[i]] = data[ppts[i]];
+              if (ppts[i] in response.data) {
+                dataObj[ppts[i]] = response.data[ppts[i]];
               }
 
             }
             // Object creation for devices
             for (i = 0; i < vaisalas.length; i++) {
-              if (vaisalas[i] in data) {
-                dataObj[vaisalas[i]] = data[vaisalas[i]];
+              if (vaisalas[i] in response.data) {
+                dataObj[vaisalas[i]] = response.data[vaisalas[i]];
               }
 
             }
@@ -544,7 +544,7 @@
             }
 
 
-            dataObj.tObj = updateTime(Number(data.Time));
+            dataObj.tObj = updateTime(Number(response.data.Time));
 
 
             /* If the speaker is on, then send a command to set the modulation
@@ -563,24 +563,24 @@
             var t = dataObj.tObj.getTime();
             dataObj.time.unshift(t);
 
-            dataObj = handlePAS(data, dataObj, shiftData);
-            dataObj = handleCRD(data, dataObj, shiftData);
-            dataObj.Cabin = data.Cabin;
+            dataObj = handlePAS(response.data, dataObj, shiftData);
+            dataObj = handleCRD(response.data, dataObj, shiftData);
+            dataObj.Cabin = response.data.Cabin;
 
             $rootScope.$broadcast('dataAvailable');
 
 
-            if (data.Msg.length > 0) {
+            if (response.data.Msg.length > 0) {
 
               if (dataObj.msg.length > 0) {
-                dataObj.msg.concat(data.Msg);
+                dataObj.msg.concat(response.data.Msg);
               } else {
-                dataObj.msg = data.Msg.slice();
+                dataObj.msg = response.data.Msg.slice();
               }
 
               $rootScope.$broadcast('msgAvailable');
             }
-          }).error(function() {
+          }, function(response) {
             $rootScope.$broadcast('dataNotAvailable');
             $log.debug(status);
           });
