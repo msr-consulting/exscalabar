@@ -199,7 +199,8 @@
     this.stdvTau = [];
     this.etau = [];
     this.max = [];
-    this.rd = [];
+    this.avg_rd = [];
+    this.fit_rd = [];
   }
 
   /**
@@ -281,9 +282,12 @@
   function handleCRD(d, Data, shift) {
 
     var t = Data.time[0];
-
+    
     // Handle the CRD data
     for (var index in d.CellData) {
+      Data.crd.cell[index].avg_rd = d.CellData[index].Ringdowns[0];
+      Data.crd.cell[index].fit_rd = d.CellData[index].Ringdowns[1];
+
       if ((Data.crd.cell.length - 1) < index) {
         Data.crd.cell.push(new crdObject());
       }
