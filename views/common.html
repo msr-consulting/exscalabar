@@ -11,7 +11,7 @@
           <div ng-switch-when=true>
             Auto
           </div>
-          <div ng-switch-when=f alse>
+          <div ng-switch-when=false>
             Manual
           </div>
           <div ng-switch-default>
@@ -19,6 +19,8 @@
           </div>
         </button>
       </div>
+      <label for="tremain">t<sub>remain</sub> (s)</label>
+      <input type="number" ng-model="tremain" id="tremain" readonly />
     </div>
   </div>
   <div ng-controller="power">

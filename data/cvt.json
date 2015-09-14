@@ -33,13 +33,13 @@
     }
   },
   "filter": {
-    "pos": true,
-    "period": 240,
-    "length": 60,
-    "auto": false
+    "pos": false,
+    "period": 360,
+    "length": 20,
+    "auto": true
   },
   "general": {
-    "filter": true,
+    "filter": false,
     "inlet": true
   },
   "testalicat": {
@@ -49,6 +49,7 @@
     "setpoint": 0.000000
   },
   "general": {
+    "power": 26,
     "purge": true
   }
 }

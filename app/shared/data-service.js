@@ -4,7 +4,8 @@
 
 (function() {
   angular.module('main').factory('Data', ['$rootScope', '$http', '$log', 'net',
-    'cvt', function($rootScope, $http, $log, net, cvt) {
+    'cvt',
+    function($rootScope, $http, $log, net, cvt) {
 
       // Arrays of Devices
       // TODO: Make sure this is not hardcoded...
@@ -17,7 +18,6 @@
       var dataObj = {
         "cTime": null,
         "tObj": new Date(),
-        "filter": true,
         "save": true,
         "o3cal": false,
         "Cabin": false,
@@ -34,6 +34,11 @@
       dataObj.pas = {};
       dataObj.pas.cell = [new pasData()];
       dataObj.pas.drive = true;
+
+      dataObj.filter = {
+        "state": true,
+        "tremain": 0
+      }
 
       /** Clear out the message queue by first copying the msg arrays
        * to a new variable x and then setting the msg array to an
@@ -73,6 +78,13 @@
               }
 
             }
+
+            // Handle filter infomration
+            dataObj.filter.state = response.data.Filter;
+            // Time remaining in cycle is the total time minus the elapsed time
+            var tremain = response.data.fcycle.tt-response.data.fcycle.te;
+            // Don't let this time fall below 0
+            dataObj.filter.tremain = tremain > 0? tremain : 0;
 
             // Object creation for devices
             for (i = 0; i < ppts.length; i++) {
@@ -120,6 +132,7 @@
 
             var t = dataObj.tObj.getTime();
             dataObj.time.unshift(t);
+
 
             dataObj = handlePAS(response.data, dataObj, shiftData);
             dataObj = handleCRD(response.data, dataObj, shiftData);
@@ -282,15 +295,16 @@
   function handleCRD(d, Data, shift) {
 
     var t = Data.time[0];
-    
+
     // Handle the CRD data
     for (var index in d.CellData) {
-      Data.crd.cell[index].avg_rd = d.CellData[index].Ringdowns[0];
-      Data.crd.cell[index].fit_rd = d.CellData[index].Ringdowns[1];
 
       if ((Data.crd.cell.length - 1) < index) {
         Data.crd.cell.push(new crdObject());
       }
+
+      Data.crd.cell[index].avg_rd = d.CellData[index].Ringdowns[0];
+      Data.crd.cell[index].fit_rd = d.CellData[index].Ringdowns[1];
       if (shift) {
         Data.crd.cell[index].tau.pop();
         Data.crd.cell[index].tau0.pop();

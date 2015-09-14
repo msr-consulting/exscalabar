@@ -161,6 +161,9 @@
             cvt.pas.spk.period = pas.spk.period;
             cvt.pas.spk.pos = pas.spk.enabled;
 
+            cvt.filter_cycle.period = response.data.filter.period;
+            cvt.filter_cycle.length = response.data.filter.length;
+            cvt.filter_cycle.auto = response.data.filter.auto;
             /* Let interested parties know the CVT has been updated */
             $rootScope.$broadcast('cvtUpdated');
           }
@@ -446,7 +449,8 @@
 
 (function() {
   angular.module('main').factory('Data', ['$rootScope', '$http', '$log', 'net',
-    'cvt', function($rootScope, $http, $log, net, cvt) {
+    'cvt',
+    function($rootScope, $http, $log, net, cvt) {
 
       // Arrays of Devices
       // TODO: Make sure this is not hardcoded...
@@ -459,7 +463,6 @@
       var dataObj = {
         "cTime": null,
         "tObj": new Date(),
-        "filter": true,
         "save": true,
         "o3cal": false,
         "Cabin": false,
@@ -476,6 +479,11 @@
       dataObj.pas = {};
       dataObj.pas.cell = [new pasData()];
       dataObj.pas.drive = true;
+
+      dataObj.filter = {
+        "state": true,
+        "tremain": 0
+      }
 
       /** Clear out the message queue by first copying the msg arrays
        * to a new variable x and then setting the msg array to an
@@ -515,6 +523,13 @@
               }
 
             }
+
+            // Handle filter infomration
+            dataObj.filter.state = response.data.Filter;
+            // Time remaining in cycle is the total time minus the elapsed time
+            var tremain = response.data.fcycle.tt-response.data.fcycle.te;
+            // Don't let this time fall below 0
+            dataObj.filter.tremain = tremain > 0? tremain : 0;
 
             // Object creation for devices
             for (i = 0; i < ppts.length; i++) {
@@ -562,6 +577,7 @@
 
             var t = dataObj.tObj.getTime();
             dataObj.time.unshift(t);
+
 
             dataObj = handlePAS(response.data, dataObj, shiftData);
             dataObj = handleCRD(response.data, dataObj, shiftData);
@@ -724,15 +740,16 @@
   function handleCRD(d, Data, shift) {
 
     var t = Data.time[0];
-    
+
     // Handle the CRD data
     for (var index in d.CellData) {
-      Data.crd.cell[index].avg_rd = d.CellData[index].Ringdowns[0];
-      Data.crd.cell[index].fit_rd = d.CellData[index].Ringdowns[1];
 
       if ((Data.crd.cell.length - 1) < index) {
         Data.crd.cell.push(new crdObject());
       }
+
+      Data.crd.cell[index].avg_rd = d.CellData[index].Ringdowns[0];
+      Data.crd.cell[index].fit_rd = d.CellData[index].Ringdowns[1];
       if (shift) {
         Data.crd.cell[index].tau.pop();
         Data.crd.cell[index].tau0.pop();
@@ -1127,15 +1144,25 @@
 
 (function(){
   angular.module('main').controller('filter', ['$scope', 'net', '$http', 'cvt',
-  function($scope, net, $http, cvt){
+  'Data', function($scope, net, $http, cvt, Data){
 
     /* Filter cycle consists of a period that defines the time in seconds
      * between which the filter is cycled to true, length of time in seconds
      * that the filter is on and a boolean indicating whether the syste is set
      * to cycle.
      */
-    $scope.cycle = cvt.filter_cycle;
+
+    $scope.cycle = {
+      "auto": cvt.filter_cycle.auto,
+      "period":cvt.filter_cycle.period,
+      "length":cvt.filter_cycle.length
+    }
+
     $scope.position = cvt.filter_pos;
+
+
+    $scope.tremain = Data.filter.tremain;
+    $scope.state = Data.filter.state;
 
     $scope.updateCycle = function(){
       var val = $scope.cycle.auto ? 1 : 0;
@@ -1158,6 +1185,19 @@
 			$scope.cycle.auto = !$scope.cycle.auto;
 			$scope.updateCycle();
 		};
+
+    $scope.$on('dataAvailable', function(){
+      $scope.tremain = Data.filter.tremain;
+      $scope.state = Data.filter.state;
+    });
+
+    $scope.$on('cvtUpdated', function(){
+      $scope.cycle = {
+        "auto": cvt.filter_cycle.auto,
+        "period":cvt.filter_cycle.period,
+        "length":cvt.filter_cycle.length
+      }
+    });
 }]);
 })();
 
@@ -1192,7 +1232,6 @@
             index +=1;
           }
         }
-        alert(num);
 
       };
     }

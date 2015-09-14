@@ -29,7 +29,6 @@
             index +=1;
           }
         }
-        alert(num);
 
       };
     }

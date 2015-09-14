@@ -81,6 +81,9 @@
             cvt.pas.spk.period = pas.spk.period;
             cvt.pas.spk.pos = pas.spk.enabled;
 
+            cvt.filter_cycle.period = response.data.filter.period;
+            cvt.filter_cycle.length = response.data.filter.length;
+            cvt.filter_cycle.auto = response.data.filter.auto;
             /* Let interested parties know the CVT has been updated */
             $rootScope.$broadcast('cvtUpdated');
           }
