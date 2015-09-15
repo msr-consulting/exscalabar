@@ -39,18 +39,18 @@
 				</div>
 			</li>
 			<li class ng-switch on="connected">
-				<div ng-switch-when=t rue class="alert alert-success">
+				<div ng-switch-when="true" class="alert alert-success">
 					Connected
 				</div>
-				<div ng-switch-when=f alse class="alert alert-danger">
+				<div ng-switch-when="false" class="alert alert-danger">
 					Not Connected
 				</div>
 			</li>
 			<li class ng-switch on="cabin">
-				<div ng-switch-when=t rue class="alert alert-success">
+				<div ng-switch-when="true" class="alert alert-success">
 					Inlet
 				</div>
-				<div ng-switch-when=f alse class="alert alert-info">
+				<div ng-switch-when="false" class="alert alert-info">
 					Cabin
 				</div>
 			</li>
@@ -73,10 +73,10 @@
 				</div>
 			</li>
 			<li class ng-switch on="interlock">
-				<div ng-switch-when=t rue class="alert alert-danger">
+				<div ng-switch-when="true" class="alert alert-danger">
 					Potential Laser Exposure!
 				</div>
-				<div ng-switch-when=f alse class="alert alert-info">
+				<div ng-switch-when="false" class="alert alert-info">
 					Lasers Contained.
 				</div>
 			</li>
