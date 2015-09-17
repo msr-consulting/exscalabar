@@ -38,7 +38,7 @@
       dataObj.filter = {
         "state": true,
         "tremain": 0
-      }
+      };
 
       /** Clear out the message queue by first copying the msg arrays
        * to a new variable x and then setting the msg array to an
@@ -65,11 +65,16 @@
       dataObj.crd.cell = [new crdObject()];
 
       var f0 = [];
+      var busy = false;
+
 
       /* Call this to poll the server for data */
       dataObj.getData = function() {
+        if (busy){return;}
+        busy = true;
         promise = $http.get(net.address() + 'General/Data')
           .then(function(response) {
+
 
             // Object creation for devices
             for (i = 0; i < alicats.length; i++) {
@@ -82,9 +87,9 @@
             // Handle filter infomration
             dataObj.filter.state = response.data.Filter;
             // Time remaining in cycle is the total time minus the elapsed time
-            var tremain = response.data.fcycle.tt-response.data.fcycle.te;
+            var tremain = response.data.fcycle.tt - response.data.fcycle.te;
             // Don't let this time fall below 0
-            dataObj.filter.tremain = tremain > 0? tremain : 0;
+            dataObj.filter.tremain = tremain > 0 ? tremain : 0;
 
             // Object creation for devices
             for (i = 0; i < ppts.length; i++) {
@@ -150,10 +155,13 @@
               }
 
               $rootScope.$broadcast('msgAvailable');
+              busy = false;
             }
           }, function(response) {
             $rootScope.$broadcast('dataNotAvailable');
             $log.debug(status);
+          }).finally(function(){
+            busy = false;
           });
       };
 

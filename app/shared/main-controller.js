@@ -19,7 +19,7 @@
 	}]);
 })();
 
-(function() {
+/*(function() {
 	angular.module('main').directive('chart', function() {
 		return {
 			restrict : 'E',
@@ -45,4 +45,4 @@
 			}
 		};
 	});
-})();
+})();*/

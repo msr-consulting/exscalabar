@@ -1,15 +1,11 @@
 (function() {
   angular.module('main').controller('power', ['$scope', 'cvt',
     function($scope, cvt) {
-      $scope.power = {
-        "TEC": false,
-        "Laser": false,
-        "Pump": false,
-        "O3 Gen": false,
-        "Denuder":false
-      };
+      $scope.power = cvt.power;
 
-      $scope.toggle = function(id){
+
+
+      $scope.toggle = function(id) {
         // Flip the bit
         $scope.power[id] = !$scope.power[id];
 
@@ -22,13 +18,15 @@
          * a decimal integer.  We will send this decimal
          * integer back for the power.
          */
-        for (var property in $scope.power){
-          if ($scope.power.hasOwnProperty(property)){
-            val = $scope.power[property]?1:0;
-            num += Math.pow(2,index)*val;
-            index +=1;
+        for (var property in $scope.power) {
+          if ($scope.power.hasOwnProperty(property)) {
+            val = $scope.power[property] ? 1 : 0;
+            num += Math.pow(2, index) * val;
+            index += 1;
           }
+
         }
+        cvt.updatePS(num);
 
       };
     }

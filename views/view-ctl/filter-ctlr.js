@@ -12,7 +12,7 @@
       "auto": cvt.filter_cycle.auto,
       "period":cvt.filter_cycle.period,
       "length":cvt.filter_cycle.length
-    }
+    };
 
     $scope.position = cvt.filter_pos;
 
@@ -52,7 +52,7 @@
         "auto": cvt.filter_cycle.auto,
         "period":cvt.filter_cycle.period,
         "length":cvt.filter_cycle.length
-      }
+      };
     });
 }]);
 })();

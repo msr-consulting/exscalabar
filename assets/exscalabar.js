@@ -89,7 +89,14 @@
         "save": true,
         "ozone": false,
         "filter_pos": true,
-        "fctl": []
+        "fctl": [],
+        "power":{
+          "TEC": false,
+          "Laser": false,
+          "Pump": false,
+          "O3Gen": false,
+          "Denuder":false
+        }
       };
 
       /* Indicates whether this is the first time this is called.  If it is, the
@@ -164,6 +171,20 @@
             cvt.filter_cycle.period = response.data.filter.period;
             cvt.filter_cycle.length = response.data.filter.length;
             cvt.filter_cycle.auto = response.data.filter.auto;
+
+            var power = Number(response.data.general.power).toString(2);
+
+            while (power.length < 5){
+              power = "0" + power;
+
+            }
+
+            cvt.power.Pump = power[0]=='1'?true:false;
+            cvt.power.O3Gen = power[1]=='1'?true:false;
+            cvt.power.Denuder = power[2]=='1'?true:false;
+            cvt.power.Laser = power[3]=='1'?true:false;
+            cvt.power.TEC = power[4]=='1'?true:false;
+
             /* Let interested parties know the CVT has been updated */
             $rootScope.$broadcast('cvtUpdated');
           }
@@ -179,6 +200,10 @@
         $http.get(net.address() + 'General/DevSP?SP=' + sp + '&DevID=' + id);
 
       };
+
+      cvt.updatePS = function(val){
+        $http.get(net.address() + 'General/PowerSupply?val=' + val);
+      }
 
       return cvt;
 
@@ -415,7 +440,7 @@
 	}]);
 })();
 
-(function() {
+/*(function() {
 	angular.module('main').directive('chart', function() {
 		return {
 			restrict : 'E',
@@ -441,7 +466,7 @@
 			}
 		};
 	});
-})();
+})();*/
 
 /** This is the main service for retrieving data at regular intervals.
  *
@@ -483,7 +508,7 @@
       dataObj.filter = {
         "state": true,
         "tremain": 0
-      }
+      };
 
       /** Clear out the message queue by first copying the msg arrays
        * to a new variable x and then setting the msg array to an
@@ -510,11 +535,16 @@
       dataObj.crd.cell = [new crdObject()];
 
       var f0 = [];
+      var busy = false;
+
 
       /* Call this to poll the server for data */
       dataObj.getData = function() {
+        if (busy){return;}
+        busy = true;
         promise = $http.get(net.address() + 'General/Data')
           .then(function(response) {
+
 
             // Object creation for devices
             for (i = 0; i < alicats.length; i++) {
@@ -527,9 +557,9 @@
             // Handle filter infomration
             dataObj.filter.state = response.data.Filter;
             // Time remaining in cycle is the total time minus the elapsed time
-            var tremain = response.data.fcycle.tt-response.data.fcycle.te;
+            var tremain = response.data.fcycle.tt - response.data.fcycle.te;
             // Don't let this time fall below 0
-            dataObj.filter.tremain = tremain > 0? tremain : 0;
+            dataObj.filter.tremain = tremain > 0 ? tremain : 0;
 
             // Object creation for devices
             for (i = 0; i < ppts.length; i++) {
@@ -595,10 +625,13 @@
               }
 
               $rootScope.$broadcast('msgAvailable');
+              busy = false;
             }
           }, function(response) {
             $rootScope.$broadcast('dataNotAvailable');
             $log.debug(status);
+          }).finally(function(){
+            busy = false;
           });
       };
 
@@ -1156,7 +1189,7 @@
       "auto": cvt.filter_cycle.auto,
       "period":cvt.filter_cycle.period,
       "length":cvt.filter_cycle.length
-    }
+    };
 
     $scope.position = cvt.filter_pos;
 
@@ -1196,7 +1229,7 @@
         "auto": cvt.filter_cycle.auto,
         "period":cvt.filter_cycle.period,
         "length":cvt.filter_cycle.length
-      }
+      };
     });
 }]);
 })();
@@ -1204,15 +1237,11 @@
 (function() {
   angular.module('main').controller('power', ['$scope', 'cvt',
     function($scope, cvt) {
-      $scope.power = {
-        "TEC": false,
-        "Laser": false,
-        "Pump": false,
-        "O3 Gen": false,
-        "Denuder":false
-      };
+      $scope.power = cvt.power;
 
-      $scope.toggle = function(id){
+
+
+      $scope.toggle = function(id) {
         // Flip the bit
         $scope.power[id] = !$scope.power[id];
 
@@ -1225,13 +1254,15 @@
          * a decimal integer.  We will send this decimal
          * integer back for the power.
          */
-        for (var property in $scope.power){
-          if ($scope.power.hasOwnProperty(property)){
-            val = $scope.power[property]?1:0;
-            num += Math.pow(2,index)*val;
-            index +=1;
+        for (var property in $scope.power) {
+          if ($scope.power.hasOwnProperty(property)) {
+            val = $scope.power[property] ? 1 : 0;
+            num += Math.pow(2, index) * val;
+            index += 1;
           }
+
         }
+        cvt.updatePS(num);
 
       };
     }
