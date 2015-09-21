@@ -1055,23 +1055,23 @@
 			"descr" : "Boolean that sets the speaker state."
 		},
 		{
-			"id": "O2 Valve",
+			"id": "O2-Valve",
 			"step" : "O2 Valve",
 			"descr" : "Boolean that sets the O2 valve position."
 		},
 		{
-			"id": "O3 Valve",
+			"id": "O3-Valve",
 			"step" : "O3 Valve",
 			"descr" : "Boolean that sets the O3 valve state."
 		},
 		{
-			"id": "O3 Generator",
+			"id": "O3-Generator",
 			"step" : "O3 Generator",
 			"descr" : "Boolean that sets the O3 generator state."
 		},
 		{
 			"id": "QO2",
-			"step" : "O2 Flow Rate",
+			"step" : "QO2",
 			"descr" : "Numeric to set the oxygen flow rate"
 		}];
 
@@ -1111,15 +1111,15 @@
 		$scope.save = function() {
 			var xml = '<?xml version="1.0" encoding="utf-8"?>\r\n<OZONE>\r\n';
 			SaveData.getData().forEach(function(entry) {
-				xml += "\t<" + entry.id + ">" + entry.val + '<\\' + entry.id + '>\r\n';
+				xml += "\t<" + entry.id + ">" + entry.val + '</' + entry.id + '>\r\n';
 			});
 
-			xml += "<\\OZONE>";
+			xml += "</OZONE>";
 
 			/* Send the calibration profile as XML data. */
 			$http({
 				method : 'POST',
-				url : net.address() + '/xService/Calibration/saveCalFile?file_name=' + $scope.cal_file + ".xml",
+				url : net.address() + 'Calibration/saveCalFile?file_name=' + $scope.cal_file + ".xml",
 				data : xml,
 				headers : {
 					"Content-Type" : 'application/x-www-form-urlencoded'
@@ -1142,14 +1142,14 @@
 
 			// The ID from the cal table
 			var tID = tableService.getTab();
-			// Value of the 
+			// Value of the
 			var val = "";
-			
+
 			/* The following switch statement defines the default values */
 			switch (tID) {
-			case "O3 Valve":
-			case"O2 Valve":
-			case"O3 Generator":
+			case "O3-Valve":
+			case"O2-Valve":
+			case"O3-Generator":
 			case "Filter":
 				val = 'FALSE';
 				break;
@@ -1163,7 +1163,7 @@
 				break;
 			default:
 			}
-			
+
 			// Push the data into an array
 			$scope.data.push({
 				"id" : tID,

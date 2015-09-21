@@ -10,14 +10,14 @@
 
 			// The ID from the cal table
 			var tID = tableService.getTab();
-			// Value of the 
+			// Value of the
 			var val = "";
-			
+
 			/* The following switch statement defines the default values */
 			switch (tID) {
-			case "O3 Valve":
-			case"O2 Valve":
-			case"O3 Generator":
+			case "O3-Valve":
+			case"O2-Valve":
+			case"O3-Generator":
 			case "Filter":
 				val = 'FALSE';
 				break;
@@ -31,7 +31,7 @@
 				break;
 			default:
 			}
-			
+
 			// Push the data into an array
 			$scope.data.push({
 				"id" : tID,
