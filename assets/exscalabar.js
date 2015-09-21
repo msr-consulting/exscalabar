@@ -629,7 +629,6 @@
             }
           }, function(response) {
             $rootScope.$broadcast('dataNotAvailable');
-            $log.debug(status);
           }).finally(function(){
             busy = false;
           });
