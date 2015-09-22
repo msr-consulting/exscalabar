@@ -8,15 +8,15 @@
 		$scope.save = function() {
 			var xml = '<?xml version="1.0" encoding="utf-8"?>\r\n<OZONE>\r\n';
 			SaveData.getData().forEach(function(entry) {
-				xml += "\t<" + entry.id + ">" + entry.val + '<\\' + entry.id + '>\r\n';
+				xml += "\t<" + entry.id + ">" + entry.val + '</' + entry.id + '>\r\n';
 			});
 
-			xml += "<\\OZONE>";
+			xml += "</OZONE>";
 
 			/* Send the calibration profile as XML data. */
 			$http({
 				method : 'POST',
-				url : net.address() + '/xService/Calibration/saveCalFile?file_name=' + $scope.cal_file + ".xml",
+				url : net.address() + 'Calibration/saveCalFile?file_name=' + $scope.cal_file + ".xml",
 				data : xml,
 				headers : {
 					"Content-Type" : 'application/x-www-form-urlencoded'

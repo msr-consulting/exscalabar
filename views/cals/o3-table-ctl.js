@@ -33,23 +33,23 @@
 			"descr" : "Boolean that sets the speaker state."
 		},
 		{
-			"id": "O2 Valve",
+			"id": "O2-Valve",
 			"step" : "O2 Valve",
 			"descr" : "Boolean that sets the O2 valve position."
 		},
 		{
-			"id": "O3 Valve",
+			"id": "O3-Valve",
 			"step" : "O3 Valve",
 			"descr" : "Boolean that sets the O3 valve state."
 		},
 		{
-			"id": "O3 Generator",
+			"id": "O3-Generator",
 			"step" : "O3 Generator",
 			"descr" : "Boolean that sets the O3 generator state."
 		},
 		{
 			"id": "QO2",
-			"step" : "O2 Flow Rate",
+			"step" : "QO2",
 			"descr" : "Numeric to set the oxygen flow rate"
 		}];
 

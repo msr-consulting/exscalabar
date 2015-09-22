@@ -8,9 +8,9 @@
 			</li>
 			<li>
 				<button class="btn btn-block" type="button" ng-click="saveData()" value="Saving..." ng-switch on="save" ng-class="{'btn-success':save, 'btn-danger': !save}">
-					<div ng-switch-when="true">Saving...</div>
-					<div ng-switch-when="false">No Save!</div>
-					<div ng-switch-default>Saving...</div>
+					<div ng-switch-when="true"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Saving...</div>
+					<div ng-switch-when="false"><span class="glyphicon glyphicon-floppy-remove" aria-hidden="true"></span> No Save!</div>
+					<div ng-switch-default><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"> Saving...</div>
 				</button>
 			</li>
 			<li>
