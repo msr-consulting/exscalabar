@@ -48,6 +48,38 @@
 
       };
 
+      $scope.ringdownAvg = [{
+        values: [],
+        key: 'Cell 0'
+      }, {
+          values: [],
+          key: 'Cell 1'
+      }, {
+          values: [],
+          key: 'Cell 2'
+      }, {
+          values: [],
+          key: 'Cell 3'
+      }, {
+          values: [],
+          key: 'Cell 4'
+      }];
+      $scope.ringdownFit = [{
+            values: [],
+            key: 'Cell 0'
+      }, {
+          values: [],
+          key: 'Cell 1'
+      }, {
+          values: [],
+          key: 'Cell 2'
+      }, {
+          values: [],
+          key: 'Cell 3'
+      }, {
+          values: [],
+          key: 'Cell 4'
+      }];
       $scope.tauData = [{
         values: [],
         key: '&tau;'
@@ -133,6 +165,14 @@
         $scope.tauData[1].values = $scope.data.cell[0].tau0;
         $scope.tauData[2].values = $scope.data.cell[0].stdvTau;
 
+        $scope.tauData[0].values = $scope.data.cell[0].max;
+        $scope.tauData[1].values = $scope.data.cell[0].tau0;
+        $scope.tauData[2].values = $scope.data.cell[0].stdvTau;
+
+          for (k = 0; k < $scope.data.cell.length; k++) {
+              $scope.ringdownAvg[k].values = $scope.data.cell[k].avg_rd;
+              $scope.ringdownFit[k].values = $scope.data.cell[k].fit_rd;
+          }
 
       });
 
