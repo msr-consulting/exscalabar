@@ -55,13 +55,41 @@
         values: [],
         key: '&tau<sub>0</sub>'
       }, {
-          values: [],
-        key: '&tau<sub>0</sub>'
-      }, {
         values: [],
         key: '&sigma;<sub>&tau;</sub>'
       }];
 
+        $scope.optionsRingdown = {
+            chart: {
+                type: 'lineChart',
+                height: 300,
+                margin: {
+                    top: 20,
+                    right: 40,
+                    bottom: 60,
+                    left: 75
+                },
+                x: function(d) {
+                    return d.x;
+                },
+                y: function(d) {
+                    return d.y;
+                },
+                useInteractiveGuideline: true,
+                yAxis: {
+                    tickFormat: function(d) {
+                        return d3.format('0.01f')(d);
+                    },
+                    axisLabel: 'Testing'
+                },
+                xAxis: {
+                    rotateLabels: -45
+                },
+                transitionDuration: 500,
+                showXAxis: true,
+                showYAxis: true
+            }
+        };
       $scope.options = {
         chart: {
           type: 'lineChart',
