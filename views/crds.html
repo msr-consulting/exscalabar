@@ -92,8 +92,12 @@
 			</div>
 
 		</accordion-group>
-		<accordion-group is-open=true is-disabled=false heading="Plots">
+		<accordion-group is-open=false is-disabled=false heading="Plots">
 			<nvd3 options="options" data="tauData" config="{refreshDataOnly:true}"></nvd3>
+		</accordion-group>
+		<accordion-group is-open=true is-disabled=false heading="Ringdown">
+			<nvd3 options="optionsRingdown" data="ringdownAvg" config="{refreshDataOnly:true}"></nvd3>
+			<nvd3 options="optionsRingdown" data="ringdownFit" config="{refreshDataOnly:true}"></nvd3>
 		</accordion-group>
 	</accordion>
 </div>

@@ -48,6 +48,38 @@
 
       };
 
+      $scope.ringdownAvg = [{
+        values: [],
+        key: 'Cell 0'
+      }, {
+          values: [],
+          key: 'Cell 1'
+      }, {
+          values: [],
+          key: 'Cell 2'
+      }, {
+          values: [],
+          key: 'Cell 3'
+      }, {
+          values: [],
+          key: 'Cell 4'
+      }];
+      $scope.ringdownFit = [{
+            values: [],
+            key: 'Cell 0'
+      }, {
+          values: [],
+          key: 'Cell 1'
+      }, {
+          values: [],
+          key: 'Cell 2'
+      }, {
+          values: [],
+          key: 'Cell 3'
+      }, {
+          values: [],
+          key: 'Cell 4'
+      }];
       $scope.tauData = [{
         values: [],
         key: '&tau;'
@@ -55,13 +87,41 @@
         values: [],
         key: '&tau<sub>0</sub>'
       }, {
-          values: [],
-        key: '&tau<sub>0</sub>'
-      }, {
         values: [],
         key: '&sigma;<sub>&tau;</sub>'
       }];
 
+        $scope.optionsRingdown = {
+            chart: {
+                type: 'lineChart',
+                height: 300,
+                margin: {
+                    top: 20,
+                    right: 40,
+                    bottom: 60,
+                    left: 75
+                },
+                x: function(d) {
+                    return d.x;
+                },
+                y: function(d) {
+                    return d.y;
+                },
+                useInteractiveGuideline: true,
+                yAxis: {
+                    tickFormat: function(d) {
+                        return d3.format('0.01f')(d);
+                    },
+                    axisLabel: 'Testing'
+                },
+                xAxis: {
+                    rotateLabels: -45
+                },
+                transitionDuration: 500,
+                showXAxis: true,
+                showYAxis: true
+            }
+        };
       $scope.options = {
         chart: {
           type: 'lineChart',
@@ -105,6 +165,14 @@
         $scope.tauData[1].values = $scope.data.cell[0].tau0;
         $scope.tauData[2].values = $scope.data.cell[0].stdvTau;
 
+        $scope.tauData[0].values = $scope.data.cell[0].max;
+        $scope.tauData[1].values = $scope.data.cell[0].tau0;
+        $scope.tauData[2].values = $scope.data.cell[0].stdvTau;
+
+          for (k = 0; k < $scope.data.cell.length; k++) {
+              $scope.ringdownAvg[k].values = $scope.data.cell[k].avg_rd;
+              $scope.ringdownFit[k].values = $scope.data.cell[k].fit_rd;
+          }
 
       });
 

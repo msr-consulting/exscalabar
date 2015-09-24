@@ -11,6 +11,18 @@ All files are processed during editing using the [Gulp build tool](http://gulpjs
 * minify
 * uglify 
 * 
+
+So you need to
+
+    sudo npm install -g jshint
+    npm install gulp-jshint
+    npm install gulp-concat
+    npm install gulp-uglify
+    npm install gulp-rename
+    npm install gulp-connect
+    npm install gulp-open
+    npm install gulp-htmlmin
+
 In addition, Gulp provides a web server that allows live reload on change and watches and adjusts the generated files as changes occur.
 
 During the build process, two files are produced and both are stored in the folder found in the main directory ``assets``.  The first file, ``exscalabar.js`` is the concatenated file.  This file can be used for development purposes and contains all of the files required by the system concatenated in the correct order (this list of files is defined in ``gulpfile.js`` under the variable ``watch_list``.

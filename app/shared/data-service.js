@@ -309,9 +309,16 @@
       if ((Data.crd.cell.length - 1) < index) {
         Data.crd.cell.push(new crdObject());
       }
+      
+      Data.crd.cell[index].avg_rd = [];
+      Data.crd.cell[index].fit_rd = [];
+      for (k = 0; k < d.CellData[index].Ringdowns[0].length; k++) {
+        Data.crd.cell[index].avg_rd.push({x: k, y: d.CellData[index].Ringdowns[0][k]});
+        Data.crd.cell[index].fit_rd.push({x: k, y: d.CellData[index].Ringdowns[1][k]});
+      }
 
-      Data.crd.cell[index].avg_rd = d.CellData[index].Ringdowns[0];
-      Data.crd.cell[index].fit_rd = d.CellData[index].Ringdowns[1];
+      //Data.crd.cell[index].avg_rd = d.CellData[index].Ringdowns[0];
+      //Data.crd.cell[index].fit_rd = d.CellData[index].Ringdowns[1];
       if (shift) {
         Data.crd.cell[index].tau.pop();
         Data.crd.cell[index].tau0.pop();
