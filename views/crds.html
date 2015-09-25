@@ -1,107 +1,111 @@
 <div ng-controller="crd">
-	<accordion close-others="false">
-		<accordion-group heading="Controls" is-disabled=false is-open=false>
-			<div class="row">
-				<div class="col-md-4">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							Laser Control
-						</div>
-						<div class="row">
-							<div ng-repeat="ctl in laser_ctl track by $index">
-								<div class="col-md-6">
-									<div class="panel panel-default">
-										<div class="panel-heading">{{ctl.id}}</div>
-										<div class="form-group">
-											<label for="rate_{{$index}}">f (Hz)</label>
-											<input type="number" id="rate_{{$index}}" class="form-control" ng-blur="setRate($index, ctl.rate)" ng-model="ctl.rate">
-										</div>
-										<div class="form-group">
-											<label for="dc_{{$index}}">DC (%)</label>
-											<input type="number" id="dc_{{$index}}" class="form-control" ng-model="ctl.DC">
-										</div>
-										<div class="form-group">
-											<label for="k_{{$index}}">Gain</label>
-											<input type="number" id="k_{{$index}}" class="form-control" ng-model="ctl.k">
-										</div>
-										<button ng-class="ctl.en ? 'btn btn-primary btn-block':'btn btn-warning btn-block'" ng-model="ctl.en" ng-click="setEnable($index)" ng-switch on="ctl.en">
-											<strong>
+    <accordion close-others="false">
+        <accordion-group heading="Controls" is-disabled=false is-open=false>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Laser Control
+                        </div>
+                        <div class="row">
+                            <div ng-repeat="ctl in laser_ctl track by $index">
+                                <div class="col-md-6">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">{{ctl.id}}</div>
+                                        <div class="form-group">
+                                            <label for="rate_{{$index}}">f (Hz)</label>
+                                            <input type="number" id="rate_{{$index}}" class="form-control" ng-blur="setRate($index, ctl.rate)" ng-model="ctl.rate">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="dc_{{$index}}">DC (%)</label>
+                                            <input type="number" id="dc_{{$index}}" class="form-control" ng-model="ctl.DC">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="k_{{$index}}">Gain</label>
+                                            <input type="number" id="k_{{$index}}" class="form-control" ng-model="ctl.k">
+                                        </div>
+                                        <button ng-class="ctl.en ? 'btn btn-primary btn-block':'btn btn-warning btn-block'" ng-model="ctl.en" ng-click="setEnable($index)" ng-switch on="ctl.en">
+                                            <strong>
 												<div ng-switch-when=true>Enabled</div>
 												<div ng-switch-when=false>Disabled</div>
 											</strong>
-										</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-2">
-					<div class="panel panel-default" data-toggle="tooltip" data-placement="right" title="PMT gains in volts.">
-						<div class="panel-heading">
-							PMT Gain
-						</div>
-						<div ng-repeat="p in pmt track by $index">
-							<label for="g{{$index}}">Cell {{$index+1}}</label>
-							<input type="number" class="form-control" id="g{{$index}}" ng-model="p">
-						</div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="panel panel-default" data-toggle="tooltip" data-placement="right" title="PMT gains in volts.">
+                        <div class="panel-heading">
+                            PMT Gain
+                        </div>
+                        <div ng-repeat="p in pmt track by $index">
+                            <label for="g{{$index}}">Cell {{$index+1}}</label>
+                            <input type="number" class="form-control" id="g{{$index}}" ng-model="p">
+                        </div>
 
-					</div>
-				</div>
-				<div class="col-md-2">
-					<button class="btn btn-primary btn-block">WTF??</button>
-				</div>
-			</div>
-		</accordion-group>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-primary btn-block">WTF??</button>
+                </div>
+            </div>
+        </accordion-group>
 
-		<accordion-group heading="Indicators" is-disabled="false" is-open="false">
-			<div class="row">
-				<div class="col-md-8">
-					<div class="table-responsive">
-						<table class="table table-striped">
-							<colgroup>
-								<col class="col-md-1"></col>
-								<col class="col-md-2"></col>
-								<col class="col-md-2"></col>
-								<col class="col-md-2"></col>
-								<col class="col-md-2"></col>
-								<col class="col-md-2"></col>
-							</colgroup>
-							<thead>
-								<tr>
-									<th>Cell</th>
-									<th>&tau;</th>
-									<th>&tau;<sub>0</sub></th>
-									<th>&tau;_</th>
-									<th>&tau;<sub>0</sub>_</th>
-									<th>ext (Mm
-										<sup>-1</sup>)</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr ng-repeat="cell in data.cell track by $index">
-									<td>
-										{{$index+1}}
-									</td>
-									<td>{{ cell.tau[0].y | number}}</td>
-									<td>{{ cell.tau0[0].y | number:2}}</td>
-									<td>{{ cell.taucorr[0].y | number:2 }}</td>
-									<td>{{ cell.tau0corr[0].y | number:2 }}</td>
-									<td>{{ cell.ext[0].y | number:2 }}</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
+        <accordion-group heading="Indicators" is-disabled="false" is-open="false">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <colgroup>
+                                <col class="col-md-1"></col>
+                                <col class="col-md-2"></col>
+                                <col class="col-md-2"></col>
+                                <col class="col-md-2"></col>
+                                <col class="col-md-2"></col>
+                                <col class="col-md-2"></col>
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>Cell</th>
+                                    <th>&tau;</th>
+                                    <th>&tau;<sub>0</sub></th>
+                                    <th>&tau;_</th>
+                                    <th>&tau;<sub>0</sub>_</th>
+                                    <th>ext (Mm
+                                        <sup>-1</sup>)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="cell in data.cell track by $index">
+                                    <td>
+                                        {{$index+1}}
+                                    </td>
+                                    <td>{{ cell.tau[0].y | number}}</td>
+                                    <td>{{ cell.tau0[0].y | number:2}}</td>
+                                    <td>{{ cell.taucorr[0].y | number:2 }}</td>
+                                    <td>{{ cell.tau0corr[0].y | number:2 }}</td>
+                                    <td>{{ cell.ext[0].y | number:2 }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
-		</accordion-group>
-		<accordion-group is-open=false is-disabled=false heading="Plots">
-			<nvd3 options="options" data="tauData" config="{refreshDataOnly:true}"></nvd3>
-		</accordion-group>
-		<accordion-group is-open=true is-disabled=false heading="Ringdown">
-			<nvd3 options="optionsRingdown" data="ringdownAvg" config="{refreshDataOnly:true}"></nvd3>
-			<!--<nvd3 options="optionsRingdown" data="ringdownFit" config="{refreshDataOnly:true}"></nvd3>-->
-		</accordion-group>
-	</accordion>
+        </accordion-group>
+        <accordion-group is-open=false is-disabled=false heading="Plots">
+            <nvd3 options="options" data="tauData" config="{refreshDataOnly:true}"></nvd3>
+        </accordion-group>
+        <accordion-group is-open=true is-disabled=false heading="Ringdown">
+           
+            <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-legend="true" chart-series="series" chart-click="onClick">
+            </canvas>
+            <!--<nvd3 options="optionsRingdown" data="ringdownAvg" config="{refreshDataOnly:true}"></nvd3>-->
+            
+            <!--<nvd3 options="optionsRingdown" data="ringdownFit" config="{refreshDataOnly:true}"></nvd3>-->
+        </accordion-group>
+    </accordion>
 </div>
