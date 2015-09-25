@@ -203,7 +203,7 @@
 
       cvt.updatePS = function(val){
         $http.get(net.address() + 'General/PowerSupply?val=' + val);
-      }
+      };
 
       return cvt;
 
@@ -415,7 +415,8 @@
 		.when('/Flows', {templateUrl:'views/flows.html'})
 		.when('/Temperature', {templateUrl:'views/temperature.html'})
 		.when('/Humidifier', {templateUrl:'views/humidifier.html'})
-		.when('/Common', {templateUrl:'views/common.html'});
+		.when('/Common', {templateUrl:'views/common.html'})
+		.when('/Config', {templateUrl:'views/config.html'});
 	}]);
 })();
 
@@ -779,9 +780,16 @@
       if ((Data.crd.cell.length - 1) < index) {
         Data.crd.cell.push(new crdObject());
       }
+      
+      Data.crd.cell[index].avg_rd = [];
+      Data.crd.cell[index].fit_rd = [];
+      for (k = 0; k < d.CellData[index].Ringdowns[0].length; k++) {
+        Data.crd.cell[index].avg_rd.push({x: k, y: d.CellData[index].Ringdowns[0][k]});
+        Data.crd.cell[index].fit_rd.push({x: k, y: d.CellData[index].Ringdowns[1][k]});
+      }
 
-      Data.crd.cell[index].avg_rd = d.CellData[index].Ringdowns[0];
-      Data.crd.cell[index].fit_rd = d.CellData[index].Ringdowns[1];
+      //Data.crd.cell[index].avg_rd = d.CellData[index].Ringdowns[0];
+      //Data.crd.cell[index].fit_rd = d.CellData[index].Ringdowns[1];
       if (shift) {
         Data.crd.cell[index].tau.pop();
         Data.crd.cell[index].tau0.pop();
@@ -899,8 +907,6 @@
 
 		$scope.save = 1;
 		$scope.filter = true;
-		$scope.ip = net.ip;
-		$scope.port = net.port;
 		$scope.time = "Not connected";
 		$scope.connected = false;
 		$scope.o3On = false;
@@ -909,12 +915,6 @@
 		$scope.impBlocked = false;
 		$scope.interlock = false;
 
-		$scope.changeIP = function(){
-			net.setIP($scope.ip);
-			};
-		$scope.changePort = function(){
-			net.setPort($scope.port);
-			};
 
 		// Initially time is not available
 		$scope.time = "Not Connected";
@@ -924,8 +924,6 @@
 
 		$scope.$on('dataAvailable', function(){
 
-			/* Populate the variables pertinent to the sidebar */
-			$scope.time = Data.tObj.toLocaleTimeString('en-US', { hour12: false });
 			$scope.filter = Data.filter;
 			$scope.cabin = Data.Cabin;
 
@@ -970,6 +968,27 @@
 		$scope.stop = function(){
 			$http.get(net.address() + 'General/Stop');
 		};
+
+	}]);
+})();
+
+(function() {
+	angular.module('main')
+	.controller('configCtlr', ['$scope','$http', 'Data', 'net', function($scope, $http, Data, net) {
+
+
+		$scope.ip = net.ip;
+		$scope.port = net.port;
+
+
+		$scope.changeIP = function(){
+			net.setIP($scope.ip);
+			};
+		$scope.changePort = function(){
+			net.setPort($scope.port);
+			};
+
+
 
 	}]);
 })();
@@ -1281,7 +1300,7 @@
         this.id = ID;
       };
 
-      $scope.setRate = function(i, f){
+      $scope.setRate = function(i, f) {
         cvt.crd.setLaserRate(i, f);
 
       };
@@ -1318,19 +1337,53 @@
 
       };
 
+      $scope.ringdownAvg = ringdownT;
+      $scope.ringdownFit = ringdownT;
+
       $scope.tauData = [{
         values: [],
-        key: '&tau;'
+        key: 'tau'
       }, {
         values: [],
-        key: '&tau<sub>0</sub>'
-      }, {
-          values: [],
-        key: '&tau<sub>0</sub>'
+        key: 'tau_0'
       }, {
         values: [],
-        key: '&sigma;<sub>&tau;</sub>'
+        key: 'sigma_tau'
       }];
+
+      $scope.optionsRingdown = {
+        chart: {
+          type: 'lineChart',
+          height: 300,
+          useVoronoi: false,
+          margin: {
+            top: 20,
+            right: 40,
+            bottom: 60,
+            left: 75
+          },
+          x: function(d) {
+            return d.x;
+          },
+          y: function(d) {
+            return d.y;
+          },
+          useInteractiveGuideline: false,
+          yAxis: {
+            tickFormat: function(d) {
+              return d3.format('d')(d);
+            },
+            axisLabel: 'Testing'
+          },
+          xAxis: {
+            rotateLabels: -45
+          },
+          transitionDuration: 500,
+          showXAxis: true,
+          showYAxis: true
+        }
+      };
+
 
       $scope.options = {
         chart: {
@@ -1348,7 +1401,7 @@
           y: function(d) {
             return d.y;
           },
-          useInteractiveGuideline: true,
+          useInteractiveGuideline: false,
           yAxis: {
             tickFormat: function(d) {
               return d3.format('0.01f')(d);
@@ -1361,7 +1414,7 @@
             },
             rotateLabels: -45
           },
-          transitionDuration: 500,
+          transitionDuration: 0,
           showXAxis: true,
           showYAxis: true
         }
@@ -1371,18 +1424,52 @@
 
         $scope.data = Data.crd;
 
-        $scope.tauData[0].values = $scope.data.cell[0].max;
-        $scope.tauData[1].values = $scope.data.cell[0].tau0;
-        $scope.tauData[2].values = $scope.data.cell[0].stdvTau;
+        var data = updateCRD(Data.crd);
 
+        $scope.tauData = data.tauData;
+        $scope.ringdownAvg = data.rdAvg;
+        $scope.ringdownFit = data.rdFit;
 
       });
-
-
-
-
     }
   ]);
+
+  /* Template for returning ringdown data */
+  var ringdownT = [{
+    values: [],
+    key: 'Cell 0'
+  }, {
+    values: [],
+    key: 'Cell 1'
+  }, {
+    values: [],
+    key: 'Cell 2'
+  }, {
+    values: [],
+    key: 'Cell 3'
+  }, {
+    values: [],
+    key: 'Cell 4'
+  }];
+
+
+  function updateCRD(d){
+    var dataOut = {
+      "tauData": [],
+      "rdFit": ringdownT,
+      "rdAvg":ringdownT
+    }
+    /*dataOut.tauData[0].values = d.cell[0].max;
+    dataOut.tauData[1].values = d.cell[0].tau0;
+    dataOut.tauData[2].values = d.cell[0].stdvTau;*/
+    for (k = 0; k < d.cell.length; k++) {
+      dataOut.rdAvg[k].values = d.cell[k].avg_rd;
+      dataOut.rdFit[k].values = d.cell[k].fit_rd;
+    }
+
+    return dataOut;
+
+  }
 })();
 
 (function() {
@@ -1836,6 +1923,26 @@
 })();
 
 (function() {
+  angular.module('main').factory('navservice', ['$http', 'net', 'cvt',
+    function($http, net, cvt) {
+
+      var nav = {};
+      nav.stop = function() {
+        $http.get(net.address() + 'General/Stop');
+      };
+
+      nav.save = function(save){
+
+        var s = save?1:0;
+        $http.get(net.address() + 'General/Save?save='+s.toString());
+      };
+
+      return nav;
+    }
+  ]);
+})();
+
+(function() {
 	angular.module('main').directive('navi', navi);
 
 	function navi() {
@@ -1847,6 +1954,26 @@
 	}
 
 })(); 
+(function() {
+  angular.module('main').controller('navctlr', ['$scope', 'navservice',
+    function($scope, navservice) {
+
+      $scope.save = true;
+
+      $scope.updateSave = function() {
+        $scope.save = !$scope.save;
+
+        navservice.save($scope.save);
+      };
+
+      $scope.stop = function() {
+        navservice.stop();
+      };
+
+    }
+  ]);
+})();
+
 angular.module('ui.bootstrap.contextMenu', [])
 
 .directive('contextMenu', ["$parse", function ($parse) {

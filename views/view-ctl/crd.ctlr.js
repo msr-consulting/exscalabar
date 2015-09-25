@@ -11,7 +11,7 @@
         this.id = ID;
       };
 
-      $scope.setRate = function(i, f){
+      $scope.setRate = function(i, f) {
         cvt.crd.setLaserRate(i, f);
 
       };
@@ -48,80 +48,54 @@
 
       };
 
-      $scope.ringdownAvg = [{
-        values: [],
-        key: 'Cell 0'
-      }, {
-          values: [],
-          key: 'Cell 1'
-      }, {
-          values: [],
-          key: 'Cell 2'
-      }, {
-          values: [],
-          key: 'Cell 3'
-      }, {
-          values: [],
-          key: 'Cell 4'
-      }];
-      $scope.ringdownFit = [{
-            values: [],
-            key: 'Cell 0'
-      }, {
-          values: [],
-          key: 'Cell 1'
-      }, {
-          values: [],
-          key: 'Cell 2'
-      }, {
-          values: [],
-          key: 'Cell 3'
-      }, {
-          values: [],
-          key: 'Cell 4'
-      }];
+      $scope.ringdownAvg = ringdownT;
+      $scope.ringdownFit = ringdownT;
+
       $scope.tauData = [{
         values: [],
-        key: '&tau;'
+        key: 'tau'
       }, {
         values: [],
-        key: '&tau<sub>0</sub>'
+        key: 'tau_0'
       }, {
         values: [],
-        key: '&sigma;<sub>&tau;</sub>'
+        key: 'sigma_tau'
       }];
 
-        $scope.optionsRingdown = {
-            chart: {
-                type: 'lineChart',
-                height: 300,
-                margin: {
-                    top: 20,
-                    right: 40,
-                    bottom: 60,
-                    left: 75
-                },
-                x: function(d) {
-                    return d.x;
-                },
-                y: function(d) {
-                    return d.y;
-                },
-                useInteractiveGuideline: true,
-                yAxis: {
-                    tickFormat: function(d) {
-                        return d3.format('0.01f')(d);
-                    },
-                    axisLabel: 'Testing'
-                },
-                xAxis: {
-                    rotateLabels: -45
-                },
-                transitionDuration: 500,
-                showXAxis: true,
-                showYAxis: true
-            }
-        };
+      $scope.optionsRingdown = {
+        chart: {
+          type: 'lineChart',
+          height: 300,
+          useVoronoi: false,
+          margin: {
+            top: 20,
+            right: 40,
+            bottom: 60,
+            left: 75
+          },
+          x: function(d) {
+            return d.x;
+          },
+          y: function(d) {
+            return d.y;
+          },
+          useInteractiveGuideline: false,
+          yAxis: {
+            tickFormat: function(d) {
+              return d3.format('d')(d);
+            },
+            axisLabel: 'Testing'
+          },
+          xAxis: {
+            rotateLabels: -45
+          },
+          transitionDuration: 500,
+          showXAxis: true,
+          showYAxis: true
+        }
+      };
+
+
       $scope.options = {
         chart: {
           type: 'lineChart',
@@ -138,7 +112,7 @@
           y: function(d) {
             return d.y;
           },
-          useInteractiveGuideline: true,
+          useInteractiveGuideline: false,
           yAxis: {
             tickFormat: function(d) {
               return d3.format('0.01f')(d);
@@ -151,7 +125,7 @@
             },
             rotateLabels: -45
           },
-          transitionDuration: 500,
+          transitionDuration: 0,
           showXAxis: true,
           showYAxis: true
         }
@@ -161,24 +135,50 @@
 
         $scope.data = Data.crd;
 
-        $scope.tauData[0].values = $scope.data.cell[0].max;
-        $scope.tauData[1].values = $scope.data.cell[0].tau0;
-        $scope.tauData[2].values = $scope.data.cell[0].stdvTau;
+        var data = updateCRD(Data.crd);
 
-        $scope.tauData[0].values = $scope.data.cell[0].max;
-        $scope.tauData[1].values = $scope.data.cell[0].tau0;
-        $scope.tauData[2].values = $scope.data.cell[0].stdvTau;
-
-          for (k = 0; k < $scope.data.cell.length; k++) {
-              $scope.ringdownAvg[k].values = $scope.data.cell[k].avg_rd;
-              $scope.ringdownFit[k].values = $scope.data.cell[k].fit_rd;
-          }
+        $scope.tauData = data.tauData;
+        $scope.ringdownAvg = data.rdAvg;
+        $scope.ringdownFit = data.rdFit;
 
       });
-
-
-
-
     }
   ]);
+
+  /* Template for returning ringdown data */
+  var ringdownT = [{
+    values: [],
+    key: 'Cell 0'
+  }, {
+    values: [],
+    key: 'Cell 1'
+  }, {
+    values: [],
+    key: 'Cell 2'
+  }, {
+    values: [],
+    key: 'Cell 3'
+  }, {
+    values: [],
+    key: 'Cell 4'
+  }];
+
+
+  function updateCRD(d){
+    var dataOut = {
+      "tauData": [],
+      "rdFit": ringdownT,
+      "rdAvg":ringdownT
+    }
+    /*dataOut.tauData[0].values = d.cell[0].max;
+    dataOut.tauData[1].values = d.cell[0].tau0;
+    dataOut.tauData[2].values = d.cell[0].stdvTau;*/
+    for (k = 0; k < d.cell.length; k++) {
+      dataOut.rdAvg[k].values = d.cell[k].avg_rd;
+      dataOut.rdFit[k].values = d.cell[k].fit_rd;
+    }
+
+    return dataOut;
+
+  }
 })();

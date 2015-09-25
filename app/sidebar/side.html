@@ -2,18 +2,6 @@
 	<nav class="bs-docs-sidebar hidden-print affix-top">
 		<ul class="nav bs-docs-sidenav">
 			<li>
-				<div class="alert alert-info">
-					<b>{{time}}</b>
-				</div>
-			</li>
-			<li>
-				<button class="btn btn-block" type="button" ng-click="saveData()" value="Saving..." ng-switch on="save" ng-class="{'btn-success':save, 'btn-danger': !save}">
-					<div ng-switch-when="true"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Saving...</div>
-					<div ng-switch-when="false"><span class="glyphicon glyphicon-floppy-remove" aria-hidden="true"></span> No Save!</div>
-					<div ng-switch-default><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"> Saving...</div>
-				</button>
-			</li>
-			<li>
 				<button class="btn btn-primary btn-block" type="button" ng-click="setFilter()" ng-class="{'active': filter}" ng-switch on="filter" ng-class="{'btn-primary':filter,'btn-info':!filter}">
 					<div ng-switch-when="true">Filter</div>
 					<div ng-switch-when="false">Sample</div>
@@ -30,14 +18,6 @@
 				<button class="btn btn-primary btn-block" type="button" ng-click="stop()">
 					Stop
 				</button>
-			</li>
-			<li>
-				<div class="form-group" id="address">
-					<label class="ctl-label small" for="ip">IP</label>
-					<input ng-model="ip" ng-change="changeIP()" type="text" class="form-control" id="ip" data-toggle="tooltip" data-placement="right" />
-					<label class="ctl-label small" for="port">Port</label>
-					<input class="form-control" ng-model="port" ng-change="changePort()" type="text" id="port" />
-				</div>
 			</li>
 			<li class ng-switch on="connected">
 				<div ng-switch-when="true" class="alert alert-success">

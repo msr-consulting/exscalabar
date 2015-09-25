@@ -17,6 +17,7 @@
 		.when('/Flows', {templateUrl:'views/flows.html'})
 		.when('/Temperature', {templateUrl:'views/temperature.html'})
 		.when('/Humidifier', {templateUrl:'views/humidifier.html'})
-		.when('/Common', {templateUrl:'views/common.html'});
+		.when('/Common', {templateUrl:'views/common.html'})
+		.when('/Config', {templateUrl:'views/config.html'});
 	}]);
 })();

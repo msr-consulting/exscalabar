@@ -24,9 +24,11 @@
 											<label for="k_{{$index}}">Gain</label>
 											<input type="number" id="k_{{$index}}" class="form-control" ng-model="ctl.k">
 										</div>
-										<button ng-class="ctl.en ? 'btn btn-primary btn-block':'btn btn-warning btn-block'" ng-model="ctl.en" ng-click = "setEnable($index)" ng-switch on = "ctl.en">
-											<strong><div ng-switch-when=true>Enabled</div>
-											<div ng-switch-when=false>Disabled</div></strong>
+										<button ng-class="ctl.en ? 'btn btn-primary btn-block':'btn btn-warning btn-block'" ng-model="ctl.en" ng-click="setEnable($index)" ng-switch on="ctl.en">
+											<strong>
+												<div ng-switch-when=true>Enabled</div>
+												<div ng-switch-when=false>Disabled</div>
+											</strong>
 										</button>
 									</div>
 								</div>
@@ -46,7 +48,9 @@
 
 					</div>
 				</div>
-				<div class="col-md-2"><button class="btn btn-primary btn-block"></button></div>
+				<div class="col-md-2">
+					<button class="btn btn-primary btn-block">WTF??</button>
+				</div>
 			</div>
 		</accordion-group>
 
@@ -81,9 +85,9 @@
 									</td>
 									<td>{{ cell.tau[0].y | number}}</td>
 									<td>{{ cell.tau0[0].y | number:2}}</td>
-									<td >{{ cell.taucorr[0].y | number:2 }}</td>
-									<td >{{ cell.tau0corr[0].y | number:2 }}</td>
-									<td >{{ cell.ext[0].y | number:2 }}</td>
+									<td>{{ cell.taucorr[0].y | number:2 }}</td>
+									<td>{{ cell.tau0corr[0].y | number:2 }}</td>
+									<td>{{ cell.ext[0].y | number:2 }}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -97,7 +101,7 @@
 		</accordion-group>
 		<accordion-group is-open=true is-disabled=false heading="Ringdown">
 			<nvd3 options="optionsRingdown" data="ringdownAvg" config="{refreshDataOnly:true}"></nvd3>
-			<nvd3 options="optionsRingdown" data="ringdownFit" config="{refreshDataOnly:true}"></nvd3>
+			<!--<nvd3 options="optionsRingdown" data="ringdownFit" config="{refreshDataOnly:true}"></nvd3>-->
 		</accordion-group>
 	</accordion>
 </div>

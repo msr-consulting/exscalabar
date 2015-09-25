@@ -1,74 +1,94 @@
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
+<div ng-controller="navctlr">
+  <nav class="navbar navbar-default navbar-fixed-top">
 
-      <button class="navbar-toggle" ng-click="isCollapsed = !isCollapsed" ng-init="isCollapsed=true" type="button">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">EXSCALABAR</a>
-    </div>
+    <div class="container">
+      <div class="navbar-header">
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
+        <button class="navbar-toggle" ng-click="isCollapsed = !isCollapsed" ng-init="isCollapsed=true" type="button">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">EXSCALABAR</a>
+      </div>
 
-    <div class="navbar-collapse" ng-class="{collapse: isCollapsed}">
+      <!-- Collect the nav links, forms, and other content for toggling -->
 
-      <ul class="nav navbar-nav">
+      <div class="navbar-collapse" ng-class="{collapse: isCollapsed}">
 
-        <li class="dropdown">
-          <a aria-expanded="false" class="dropdown-toggle" data-toggle="dropdown" role="button">System Control
+        <ul class="nav navbar-nav">
+
+          <li class="dropdown">
+            <a aria-expanded="false" class="dropdown-toggle" data-toggle="dropdown" role="button">System Control
             <span class="caret"></span>
           </a>
-          <ul class="dropdown-menu" role="menu">
-            <li>
-              <a href='./#/CRDS'>CRDS</a>
-            </li>
-            <li>
-              <a href='./#/PAS'>PAS</a>
-            </li>
-            <li>
-              <a href='./#/Flows'>Flow Control</a>
-            </li>
-            <li>
-              <a href='./#/Temperature'>Temperature</a>
-            </li>
-            <li>
-              <a href='./#/Common'>Common</a>
-            </li>
-            <li>
-              <a href='./#/'>Checklist</a>
-            </li>
-            <li>
-              <a href='./#/'>Configuration</a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href='./#/Humidifier'>Humidifier
-            <span class='sr-only'>(current)</span>
-          </a>
-        </li>
-        <li>
+            <ul class="dropdown-menu" role="menu">
+              <li>
+                <a href='./#/CRDS'>CRDS</a>
+              </li>
+              <li>
+                <a href='./#/PAS'>PAS</a>
+              </li>
+              <li>
+                <a href='./#/Flows'>Flow Control</a>
+              </li>
+              <li>
+                <a href='./#/Temperature'>Temperature</a>
+              </li>
+              <li>
+                <a href='./#/Common'>Common</a>
+              </li>
+              <li>
+                <a href='./#/'>Checklist</a>
+              </li>
+            </ul>
+          </li>
           <li>
-            <a href='./#/O3'>Calibration
+            <a href='./#/Humidifier'>Humidifier
             <span class='sr-only'>(current)</span>
           </a>
           </li>
           <li>
-            <a href="#">Housekeeping</a>
-          </li>
+            <li>
+              <a href="#">Housekeeping</a>
+            </li>
 
-      </ul>
-      <ul class="nav navbar-right navbar-nav">
-        <li><a href="#"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a> </li>
-        <li><a href='./#/O3'><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></a> </li>
-        <li><a href='./#/O3'><span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span></a> </li>
-  				</button>
-      </ul>
+        </ul>
+        <ul class="nav navbar-right navbar-nav">
+          <li>
+            <a href="./#/Config" tooltip-placement="bottom" tooltip="Update system configuration" tooltip-trigger="mouseenter" tooltip-append-to-body="true">
+              <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+            </a>
+          </li>
+          <li>
+            <a href='./#/O3' tooltip-placement="bottom" tooltip="Configure calibrations" tooltip-trigger="mouseenter" tooltip-append-to-body="true">
+              <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+            </a>
+          </li>
+          <li ng-model="save" ng-click="updateSave()" ng-switch on="save">
+            <a  tooltip-placement="bottom" tooltip="Click to save data" tooltip-trigger="mouseenter" tooltip-append-to-body="true">
+              <div ng-switch-when="true">
+                <span class="glyphicon glyphicon-floppy-saved green" aria-hidden="true"></span>
+              </div>
+              <div ng-switch-when="false">
+                <span class="glyphicon glyphicon-floppy-remove red" aria-hidden="true"></span>
+              </div>
+              <div ng-switch-default>
+                <span class="glyphicon glyphicon-floppy-remove red" aria-hidden="true"></span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a tooltip-placement="bottom" ng-click="stop()" tooltip="Halt DAQ system" tooltip-trigger="mouseenter" tooltip-append-to-body="true">
+              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </a>
+          </li>
+          </button>
+        </ul>
+
+      </div>
 
     </div>
-
-  </div>
-</nav>
+  </nav>
+</div>

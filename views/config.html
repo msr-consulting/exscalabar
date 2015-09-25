@@ -1,1 +1,18 @@
-<div class="row"></div>
+<div ng-controller="configCtlr">
+  <div class="row">
+    <div class="col-md-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">Network Configuration</div>
+        <div class="panel-body">
+          <div class="form-group" id="address">
+            <label class="ctl-label small" for="ip">IP</label>
+            <input ng-model="ip" ng-change="changeIP()" type="text" class="form-control" id="ip" data-toggle="tooltip" data-placement="right" />
+            <label class="ctl-label small" for="port">Port</label>
+            <input class="form-control" ng-model="port" ng-change="changePort()" type="text" id="port" />
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

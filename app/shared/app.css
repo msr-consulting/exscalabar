@@ -20,6 +20,21 @@
   border-radius: 1em;
 }
 
+.green{
+  color:green;
+}
+.red{color: red;}
+.glyphicon {
+    font-size: 25px;
+}
+
+.badge-notify{
+   background:red;
+   position:relative;
+   top: -10px;
+   left: -35px;
+}
+
 
 /* Using the fixed nav, so we need to adjust the padding...
  * For screenwidths not concealing the nav, set the padding to 120px,

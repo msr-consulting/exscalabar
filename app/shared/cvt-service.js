@@ -123,7 +123,7 @@
 
       cvt.updatePS = function(val){
         $http.get(net.address() + 'General/PowerSupply?val=' + val);
-      }
+      };
 
       return cvt;
 

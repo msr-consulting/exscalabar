@@ -4,8 +4,6 @@
 
 		$scope.save = 1;
 		$scope.filter = true;
-		$scope.ip = net.ip;
-		$scope.port = net.port;
 		$scope.time = "Not connected";
 		$scope.connected = false;
 		$scope.o3On = false;
@@ -14,12 +12,6 @@
 		$scope.impBlocked = false;
 		$scope.interlock = false;
 
-		$scope.changeIP = function(){
-			net.setIP($scope.ip);
-			};
-		$scope.changePort = function(){
-			net.setPort($scope.port);
-			};
 
 		// Initially time is not available
 		$scope.time = "Not Connected";
@@ -29,8 +21,6 @@
 
 		$scope.$on('dataAvailable', function(){
 
-			/* Populate the variables pertinent to the sidebar */
-			$scope.time = Data.tObj.toLocaleTimeString('en-US', { hour12: false });
 			$scope.filter = Data.filter;
 			$scope.cabin = Data.Cabin;
 

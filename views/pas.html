@@ -55,7 +55,7 @@
                   <br/>
                   <label for="length">Length (s)</label>
                   <input  class="form-control" id="length" max="100" min="1" ng-change="updateCycle()" ng-model="speaker.length" placeholder="0" type="number"/>
-                  <button class="btn btn-primary btn-block" ng-click="updateAuto()" ng-switch on="speaker.auto" type="button" value="Auto">
+                  <button tooltip-placement="bottom" tooltip="Set system to cycle speaker automatically" tooltip-trigger="mouseenter" tooltip-append-to-body="true" class="btn btn-primary btn-block" ng-click="updateAuto()" ng-switch on="speaker.auto" type="button" value="Auto">
                     <div ng-switch-when=true>
                       Auto
                     </div>

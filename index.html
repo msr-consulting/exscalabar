@@ -15,7 +15,7 @@
 	<link href="assets/bootstrap-3.3.4-dist/css/sticky-footer-navbar.css" rel="stylesheet">
 	<link href="app/shared/BootstrapXL.css" rel="stylesheet">
 	<link href="assets/nv.d3.css" rel="stylesheet">
-	<link href="app/shared/theme.css" rel="stylesheet">
+	<!--<link href="app/shared/theme.css" rel="stylesheet">-->
 	<link href="app/shared/app.css" rel="stylesheet">
 	<!--<link href="app/shared/form-styling.css" rel="stylesheet"/>-->
 </head>
@@ -31,13 +31,25 @@
 				<sidebar></sidebar>
 			</div>
 		</div>
-		<msg></msg>
-		<!--<footer class="footer">
-		 <div class="container">
-			 <p class="text-muted">Place sticky footer content here.</p>
-		 </div>
-	 </footer>-->
 	</div>
+
+	<footer class="footer" ng-controller="footerCtlr">
+		<div class="container">
+			<div class="row">
+
+				<div class="col-md-2">
+					<div style="padding-top:20px;">{{time}}</div>
+				</div>
+				<div class="col-md-10">
+					<div style="position:absolute;right:0;font-size:20px;">
+						<span class="label label-info label-as-badge" tooltip-placement="top" tooltip="Number of notification messages" tooltip-trigger="mouseenter" tooltip-append-to-body="true">{{num_codes[0]}}</span>
+						<span class="label label-warning label-as-badge" tooltip-placement="top" tooltip="Number of warning messages" tooltip-trigger="mouseenter" tooltip-append-to-body="true">{{num_codes[1]}}</span>
+						<span class="label label-danger label-as-badge" tooltip-placement="top" tooltip="Number of error messages" tooltip-trigger="mouseenter" tooltip-append-to-body="true">{{num_codes[2]}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
 
 	<!--Import libraries -->
 	<!--TODO: Make sure that you have the min libs for production!!! -->
@@ -60,7 +72,9 @@
 	<script src="app/Messages/msg-directive.js"></script>
 	<script src="app/Messages/msg-controller.js"></script>
 	<script src="app/sidebar/sidebar-controller.js"></script>
+	<script src="views/view-ctl/footer.ctlr.js"></script>
 	<script src="views/view-ctl/power-ctlr.js"></script>
+	<script src="views/view-ctl/config.ctlr.js"></script>
 	<script src="views/view-ctl/filter-ctlr.js"></script>
 	<script src="views/view-ctl/crd.ctlr.js"></script>
 	<script src="views/view-ctl/pas-ctlr.js"></script>
@@ -76,6 +90,8 @@
 	<script src="views/cals/saveData-ctrl.js"></script>
 	<script src="views/cals/tableInput-ctlr.js"></script>
 	<script src="app/sidebar/sidebar-directive.js"></script>
+	<script src="app/navigation/nav.service.js"></script>
+	<script src="app/navigation/nav.ctlr.js"></script>
 	<script src="app/navigation/nav-directive.js"></script>
 	<!--<script src="assets/exscalabar.min.js"></script>-->
 

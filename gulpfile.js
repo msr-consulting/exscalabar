@@ -33,6 +33,7 @@ var watch_list = ["app/shared/main.module.js",
 "app/Messages/msg-directive.js",
 "app/Messages/msg-controller.js",
 "app/sidebar/sidebar-controller.js",
+"views/view-ctl/config.ctlr.js",
 "views/cals/startCal-ctl.js",
 "views/cals/buildCal-service.js",
 "views/cals/o3-table-ctl.js",
@@ -49,7 +50,9 @@ var watch_list = ["app/shared/main.module.js",
 "views/view-ctl/humidifier-ctlr.js",
 "app/msg/msg-directive.js",
 "app/sidebar/sidebar-directive.js",
+"app/navigation/nav.service.js",
 "app/navigation/nav-directive.js",
+"app/navigation/nav.ctlr.js",
 "assets/contextMenu.js"];
 
 
