@@ -44,14 +44,12 @@
 			<div class="form-group">
 				<label class="sr-only" for="fileName">Password</label>
 				<input type="text" ng-model="cal_file" class="form-control">
-				<button type="button" class="btn btn-default btn-block" ng-click="save()">
-						<span class="glyphicon glyphicon-transfer" aria-hidden="true"> Save Cal
+				<button type="button" class="btn btn-primary btn-block" ng-click="save()">
+                    <span class="glyphicon glyphicon-transfer pull-left" aria-hidden="true"> </span>Save Cal
 				</button>
-				<button type="button" class="btn btn-default btn-block">
-					<span class="glyphicon glyphicon-check" aria-hidden="true"> Set Current as Default
+				<button type="button" class="btn btn-primary btn-block">
+                    <span class="glyphicon glyphicon-check pull-left" aria-hidden="true"></span> Set as Default
 				</button>
-			</div>
-		</form>
 		<button ng-controller="startCal" ng-click="startCalibration()" type="button" class="btn btn-primary btn-block" ng-switch on="cal" value="Start Calibration">
 			<div ng-switch-when="true">
 				Cal Running...
@@ -60,4 +58,7 @@
 				Start Cal
 			</div>
 		</button>
+			</div>
+		</form>
+		
 	</div>
