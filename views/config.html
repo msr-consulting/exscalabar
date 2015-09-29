@@ -6,13 +6,33 @@
         <div class="panel-body">
           <div class="form-group" id="address">
             <label class="ctl-label small" for="ip">IP</label>
-            <input ng-model="ip" ng-change="changeIP()" type="text" class="form-control" id="ip" data-toggle="tooltip" data-placement="right" />
             <label class="ctl-label small" for="port">Port</label>
-            <input class="form-control" ng-model="port" ng-change="changePort()" type="text" id="port" />
+            <input ng-model="ip" ng-change="changeIP()" type="text" class="form-control" id="ip" data-toggle="tooltip" data-placement="right" placeholder="127.0.0.1" tooltip="Server IP address" tooltip-trigger="mouseenter"/>
+            <input class="form-control" ng-model="port" ng-change="changePort()" type="text" id="port" placeholder="8001" tooltip="Device address; A-Z" tooltip-trigger="mouseenter" tooltip="Server communication port" tooltip-trigger="mouseenter"/>
           </div>
         </div>
       </div>
 
     </div>
+  </div>
+  <div class="row">
+      <div class="panel panel-default" ng-controller="mrAlicatConfigCtlr">
+          <div class="panel-heading">Alicat</div>
+          <div class="panel-body">
+             <div class="form-group">
+                 <label for="acom">COM</label>
+                 <input type="text" id="acom" class="form-control" tooltip="Serial communication port" tooltip-trigger="mouseenter" placeholder="0">
+             </div>
+             <ul class="list-group">
+                 <li class="list-group-item" ng-repeat="device in devices"><input type="checkbox"><span><b>  {{device.id}}: {{device.address}}</span></li>
+             </ul>
+             <div class="form-group">
+                 <input type="text" ng-model="entry.address" id="address" placeholder="A" tooltip="Device address; A-Z" tooltip-trigger="mouseenter"/>
+                 <input type="text" ng-model="entry.id" id="ID" placeholder="device_name" tooltip="Device name" tooltip-trigger="mouseenter"/>
+                 <button class="btn btn-default" ng-click="addDevice()"><span class="glyphicon glyphicon-plus" style="font-size:10px"></span> Add</button>
+             </div>
+              
+          </div>
+      </div>
   </div>
 </div>
