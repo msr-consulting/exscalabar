@@ -1,6 +1,8 @@
 (function () {
     angular.module('main').controller('crd', ['$scope', 'cvt', 'Data',
     function ($scope, cvt, Data) {
+        
+        $scope.rd = {};
 
             // Lasers have three inputs
             var laserInput = function (_rate, _DC, _k, enabled, ID) {
@@ -147,6 +149,7 @@
                 $scope.tauData = data.tauData;
                 $scope.ringdownAvg = data.rdAvg;
                 $scope.ringdownFit = data.rdFit;
+                $scope.rd.api.update();
 
             });
     }
@@ -176,7 +179,8 @@
                 "tauData": [],
                 "rdFit": ringdownT,
                 "rdAvg": ringdownT
-            }
+            };
+        
             /*dataOut.tauData[0].values = d.cell[0].max;
             dataOut.tauData[1].values = d.cell[0].tau0;
             dataOut.tauData[2].values = d.cell[0].stdvTau;*/

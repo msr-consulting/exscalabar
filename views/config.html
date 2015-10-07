@@ -1,4 +1,4 @@
-<div ng-controller="configCtlr">
+<div ng-controller="mrConfigCtlr">
   <div class="row">
     <div class="col-md-2">
       <div class="panel panel-default">
@@ -7,8 +7,8 @@
           <div class="form-group" id="address">
             <label class="ctl-label small" for="ip">IP</label>
             <label class="ctl-label small" for="port">Port</label>
-            <input ng-model="ip" ng-change="changeIP()" type="text" class="form-control" id="ip" data-toggle="tooltip" data-placement="right" placeholder="127.0.0.1" tooltip="Server IP address" tooltip-trigger="mouseenter"/>
-            <input class="form-control" ng-model="port" ng-change="changePort()" type="text" id="port" placeholder="8001" tooltip="Device address; A-Z" tooltip-trigger="mouseenter" tooltip="Server communication port" tooltip-trigger="mouseenter"/>
+            <input ng-model="network.ip" ng-blur="changeIP()" type="text" class="form-control" id="ip" data-toggle="tooltip" data-placement="right" placeholder="127.0.0.1" tooltip="Server IP address" tooltip-trigger="mouseenter"/>
+            <input class="form-control" ng-model="network.port" ng-blur="changePort()" type="text" id="port" placeholder="8001" tooltip="Device address; A-Z" tooltip-trigger="mouseenter" tooltip="Server communication port" tooltip-trigger="mouseenter"/>
           </div>
         </div>
       </div>

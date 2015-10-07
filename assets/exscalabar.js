@@ -972,21 +972,19 @@
 	}]);
 })();
 
-(function() {
-	angular.module('main')
-	.controller('configCtlr', ['$scope','$http', 'Data', 'net', function($scope, $http, Data, net) {
+(function () {
+    angular.module('main')
+        .controller('mrConfigCtlr', ['$scope', '$http', 'Data', 'net', function ($scope, $http, Data, net) {
 
+            $scope.network = {"ip": net.ip,
+                         "port":net.port};
 
-		$scope.ip = net.ip;
-		$scope.port = net.port;
-
-
-		$scope.changeIP = function(){
-			net.setIP($scope.ip);
-			};
-		$scope.changePort = function(){
-			net.setPort($scope.port);
-			};
+            $scope.changeIP = function () {
+                net.setIP($scope.network.ip);
+            };
+            $scope.changePort = function () {
+                net.setPort($scope.network.port);
+            };
 
 
 
@@ -1290,6 +1288,8 @@
 (function () {
     angular.module('main').controller('crd', ['$scope', 'cvt', 'Data',
     function ($scope, cvt, Data) {
+        
+        $scope.rd = {};
 
             // Lasers have three inputs
             var laserInput = function (_rate, _DC, _k, enabled, ID) {
@@ -1436,6 +1436,7 @@
                 $scope.tauData = data.tauData;
                 $scope.ringdownAvg = data.rdAvg;
                 $scope.ringdownFit = data.rdFit;
+                $scope.rd.api.update();
 
             });
     }
@@ -1465,7 +1466,8 @@
                 "tauData": [],
                 "rdFit": ringdownT,
                 "rdAvg": ringdownT
-            }
+            };
+        
             /*dataOut.tauData[0].values = d.cell[0].max;
             dataOut.tauData[1].values = d.cell[0].tau0;
             dataOut.tauData[2].values = d.cell[0].stdvTau;*/
