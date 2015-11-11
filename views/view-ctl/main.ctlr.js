@@ -12,22 +12,30 @@
                             console.log(points, evt);
                         };
 
-                        $scope.plot1Options = getPlotOptions('plot 1', 0, false);
-                        $scope.plot2Options = getPlotOptions('plot 2', 0, true);
+                        $scope.plot1Options = getPlotOptions('plot 1', 0, true);
+                        $scope.plot2Options = getPlotOptions('plot 2', 0, false);
+                        $scope.plot3Options = getPlotOptions('plot 3', 0, false);
+                        $scope.plot4Options = getPlotOptions('plot 4', 0, true);
+                        $scope.plot5Options = getPlotOptions('plot 5', 0, true);
 
                         $scope.plot1Data = getEmptyData();
                         $scope.plot2Data = getEmptyData();
+                        $scope.plot3Data = getEmptyData();
+                        $scope.plot4Data = getEmptyData();
+                        $scope.plot5Data = getEmptyData();
 
                         $scope.$on('dataAvailable', function () {
 
                             $scope.data = Data;
                             
-                            for (k = 0; k < Data.crd.cell.length; k++) {
-                                $scope.plot1Data[k].values = Data.crd.cell[k].avg_rd;
-                            }
-
                             for (i = 1; i < 5; i++) {
-                                $scope.plot2Data[i].values = Data.pas.cell[i].IA;
+                                $scope.plot1Data[i].values = Data.pas.cell[i].f0;
+                                $scope.plot4Data[i].values = Data.pas.cell[i].IA;
+                                $scope.plot5Data[i].values = Data.pas.cell[i].Q;
+                            }
+                            for (k = 0; k < Data.crd.cell.length; k++) {
+                                $scope.plot2Data[k].values = Data.crd.cell[k].avg_rd;
+                                $scope.plot3Data[k].values = Data.crd.cell[k].fit_rd;
                             }
                         });
                     }
