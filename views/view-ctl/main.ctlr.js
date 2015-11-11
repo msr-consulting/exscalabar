@@ -4,9 +4,6 @@
         controller('main2',
                    ['$scope', 'Data',
                     function ($scope, Data) {
-                        
-                        $scope.rd = {};
-                        
                         $scope.purge = false;
                         
                         $scope.data = Data;
@@ -15,148 +12,15 @@
                             console.log(points, evt);
                         };
 
-                        $scope.optionsPlot1 = {
-                            chart: {
-                                type: 'lineChart',
-                                height: 300,
-                                margin: {
-                                    top: 20,
-                                    right: 40,
-                                    bottom: 60,
-                                    left: 75
-                                },
-                                x: function (d) {
-                                    return d.x;
-                                },
-                                y: function (d) {
-                                    return d.y;
-                                },
-                                useInteractiveGuideline: false,
-                                yAxis: {
-                                    tickFormat: function (d) {
-                                        return d3.format('0.01f')(d);
-                                    },
-                                    axisLabel: 'Testing'
-                                },
-                                xAxis: {
-                                    tickFormat: function (d) {
-                                        return d3.time.format('%X')(new Date(d));
-                                    },
-                                    rotateLabels: -45
-                                },
-                                transitionDuration: 0,
-                                showXAxis: true,
-                                showYAxis: true
-                            }
-                        };
+                        $scope.plot1Options = getPlotOptions('plot 1', 0, false);
+                        $scope.plot2Options = getPlotOptions('plot 2', 0, true);
 
-                        /** Options used for plotting. */
-                        $scope.optionsPlot2 = {
-                            chart: {
-                                type: 'lineChart',
-                                height: 300,
-                                margin: {
-                                    top: 20,
-                                    right: 10,
-                                    bottom: 60,
-                                    left: 75
-                                },
-                                x: function(d) {
-                                    return d.x;
-                                },
-                                y: function(d) {
-                                    return d.y;
-                                },
-                                useInteractiveGuideline: true,
-                                yAxis: {
-                                    tickFormat: function(d) {
-                                        return d3.format('0.01f')(d);
-                                    },
-                                    axisLabel: 'Testing'
-                                },
-                                xAxis: {
-                                    tickFormat: function(d) {
-                                        return d3.time.format('%X')(new Date(d));
-                                    },
-                                    rotateLabels: -45
-                                },
-                                transitionDuration: 500,
-                                showXAxis: true,
-                                showYAxis: true
-                            }
-                        };
-
-                        $scope.plot1Data = [{
-                            values: [],
-                            key: 'Cell 0'
-                        }, {
-                            values: [],
-                            key: 'Cell 1'
-                        }, {
-                            values: [],
-                            key: 'Cell 2'
-                        }, {
-                            values: [],
-                            key: 'Cell 3'
-                        }, {
-                            values: [],
-                            key: 'Cell 4'
-                        }];
-                        $scope.plot2Data = [{
-                            values: [],
-                            key: 'Cell 0'
-                        }, {
-                            values: [],
-                            key: 'Cell 1'
-                        }, {
-                            values: [],
-                            key: 'Cell 2'
-                        }, {
-                            values: [],
-                            key: 'Cell 3'
-                        }, {
-                            values: [],
-                            key: 'Cell 4'
-                        }];
+                        $scope.plot1Data = getEmptyData();
+                        $scope.plot2Data = getEmptyData();
 
                         $scope.$on('dataAvailable', function () {
 
                             $scope.data = Data;
-
-                            var dataOut = {
-                                "plot1Data": [{
-                                    values: [],
-                                    key: 'Cell 0'
-                                }, {
-                                    values: [],
-                                    key: 'Cell 1'
-                                }, {
-                                    values: [],
-                                    key: 'Cell 2'
-                                }, {
-                                    values: [],
-                                    key: 'Cell 3'
-                                }, {
-                                    values: [],
-                                    key: 'Cell 4'
-                                }],
-                                "plot2Data": [{
-                                    values: [],
-                                    key: 'Cell 0'
-                                }, {
-                                    values: [],
-                                    key: 'Cell 1'
-                                }, {
-                                    values: [],
-                                    key: 'Cell 2'
-                                }, {
-                                    values: [],
-                                    key: 'Cell 3'
-                                }, {
-                                    values: [],
-                                    key: 'Cell 4'
-                                }]
-                            };
                             
                             for (k = 0; k < Data.crd.cell.length; k++) {
                                 $scope.plot1Data[k].values = Data.crd.cell[k].avg_rd;
@@ -169,4 +33,67 @@
                     }
                    ]);
 
+    function getEmptyData() {
+        return [{
+            values: [],
+            key: 'Cell 0'
+        }, {
+            values: [],
+            key: 'Cell 1'
+        }, {
+            values: [],
+            key: 'Cell 2'
+        }, {
+            values: [],
+            key: 'Cell 3'
+        }, {
+            values: [],
+            key: 'Cell 4'
+        }]; 
+    }
+    
+    function getPlotOptions(yAxisLabel, transitionDuration, isTimePlot) { 
+        var xTickFunction;
+        if (isTimePlot) {
+            xTickFunction = function (d) {
+                return d3.time.format('%X')(new Date(d));
+            };
+        } else {
+            xTickFunction = function (d) {
+                return d;
+            };
+        }
+        return {
+            chart: {
+                type: 'lineChart',
+                height: 300,
+                margin: {
+                    top: 20,
+                    right: 10,
+                    bottom: 60,
+                    left: 75
+                },
+                x: function (d) {
+                    return d.x;
+                },
+                y: function (d) {
+                    return d.y;
+                },
+                useInteractiveGuideline: false,
+                yAxis: {
+                    tickFormat: function (d) {
+                        return d3.format('0.01f')(d);
+                    },
+                    axisLabel: yAxisLabel
+                },
+                xAxis: {
+                    tickFormat: xTickFunction,
+                    rotateLabels: -45
+                },
+                transitionDuration: transitionDuration,
+                showXAxis: true,
+                showYAxis: true
+            }
+        };
+    }
 })();
