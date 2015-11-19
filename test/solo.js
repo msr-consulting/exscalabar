@@ -3,7 +3,7 @@ var data = [];
 function getData() {
     data = [];
     var theDate = new Date(2012, 01, 01, 0, 0, 0, 0);
-    for (var x = 0; x < 1000; x++) {
+    for (var x = 0; x < 20000; x++) {
         data.push([new Date(theDate.getTime()), Math.random()]);
         theDate.setDate(theDate.getDate() + 1);
     }
