@@ -1,33 +1,32 @@
 (function () {
     'use strict';
     angular.module('dygraph', [])
-        .controller('DygraphCtl', ['$scope', function ($scope) {
+        .controller('dygraphCtl', ['$scope', function ($scope) {
             var self = this;
-
-            /*this.init = function (element) {
-                self.$element = element;
-            }*/
             
-        }])
-        .directive('dygraph', function () {
+            $scope.ID = "234";
 
-            var link = function (scope, element) {
+
+        }])
+        .directive('dyGraph', function () {
+
+            var link = function (scope, element, attrs) {
 
                 scope.api = {
                     addGraph: function () {
-                        
+
                         var g = {};
 
                         if (scope.object !== null) {
-                            
+
                             g = new Dygraph( // Add with injected options
                                 element,
                                 scope.data,
                                 scope.options
                             );
-                            
+
                         } else { // Add with default options
-                            
+
                             g = new Dygraph(
                                 element,
                                 scope.data
@@ -47,18 +46,28 @@
                         'file': scope.data
                     });
                 });
-                
+
                 scope.api.addGraph();
             }
 
             return {
                 restrict: 'E',
-                controller: 'DygraphCtl',
+                controller: 'dygraphCtl',
                 scope: {
-                    data: '=', // data to populate chart with
+                    data: '=?', // data to populate chart with
+                    cID:"=",
                     options: '=?' // use API defaults if not present
                 },
-                link: link
+                template: function (el, scope) {
+                    /*if (typeof cID === undefined) {
+                        var rn = Math.floor(Math.random() * 16000);
+                        cID = "dygraph_" + rn.toString();
+                    }*/
+                   // return '<div id="' + cID + '"></div>';
+                },
+                link: function ($scope, el, attrs) {
+                    console.log(cID);
+                }
             }
         });
 })();
