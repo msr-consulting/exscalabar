@@ -97,13 +97,13 @@
 
         </accordion-group>
         <accordion-group is-open=false is-disabled=false heading="Plots">
-            <nvd3 options="options" data="tauData" config="{refreshDataOnly:true}"></nvd3>
+            <dy-graph options="options" data="tauData"></dy-graph>
         </accordion-group>
         <accordion-group is-open=true is-disabled=false heading="Ringdown">
            
             <!--<canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-legend="true" chart-series="series" chart-click="onClick">
             </canvas>-->
-            <nvd3 options="optionsRingdown" data="ringdownAvg" config="{deepWatchData:false, refreshDataOnly:true}"  api="rd.api"></nvd3>
+            <!--<nvd3 options="optionsRingdown" data="ringdownAvg" config="{deepWatchData:false, refreshDataOnly:true}"  api="rd.api"></nvd3>
             
             <!--<nvd3 options="optionsRingdown" data="ringdownFit" config="{refreshDataOnly:true}"></nvd3>-->
         </accordion-group>

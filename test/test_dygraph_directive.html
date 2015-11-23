@@ -13,21 +13,29 @@
     <!-- Bootstrap core CSS -->
     <style type="text/css">
         .dygraphClass {
-            position: absolute;
-            left: 10px;
-            right: 10px;
-            top: 40px;
-            bottom: 10px;
+            width: auto;
+            height: 100%;
         }
     </style>
 
 </head>
 
 <body ng-app="main">
-
-    <p>
-        <dy-graph></dy-graph>
-    </p>
+    <div ng-controller="DygraphCtl">
+        <p style="height:500px;">
+            <dy-graph data="data" options="options"></dy-graph>
+        </p>
+        <p style="height:500px;">
+            <dy-graph data="data" options="options2"></dy-graph>
+        </p>
+        <p>
+            <input ng-model="x" type="number" />
+        </p>
+        <p>
+            <input ng-model="y" type="number" />
+        </p>
+        <button ng-click="addVal()">Add Value</button>
+    </div>
 
 
     <!--Import libraries -->
@@ -48,9 +56,40 @@
     <script src="../app/shared/data-service.js"></script>
     <script src="../app/shared/main-controller.js"></script>
     <script src="../app/shared/main-config.js"></script>
+    <script>
+        /* Just a demo controller...*/
+        (function () {
+            angular.module('dygraph')
+                .controller('DygraphCtl', ['$scope', '$rootScope', function ($scope, $rootScope) {
+                    var self = this;
+
+                    $scope.data = [[1, 2], [15, 0]];
+                    $scope.x = 0;
+                    $scope.y = 12;
+                    $scope.addVal = function () {
+                        $scope.data.push([$scope.x, $scope.y]);
+                    };
+
+                    $scope.options = {
+                        legend: 'always',
+                        title: 'NYC vs. SF',
+                        ylabel: 'Temperature (F)',
+                        xlabel: 'Time (s)'
+                    };
+
+                    $scope.options2 = {
+                        legend: 'always',
+                        title: 'Testing another plot',
+                        ylabel: 'Temperature (C)',
+                        xlabel: 'Time (s)'
+                    };
+
+                    $scope.ID = Math.floor(Math.random() * 16000);
 
 
-    <!-- Begin import of modules -->
+        }])
+        })();
+    </script>
 
 </body>
 
