@@ -3,8 +3,8 @@
     angular.module('dygraph', [])
         .controller('dygraphCtl', ['$scope', function ($scope) {
             var self = this;
-            
-            $scope.ID = "234";
+
+            $scope.ID = Math.floor(Math.random() * 16000);
 
 
         }])
@@ -12,6 +12,19 @@
 
             var link = function (scope, element, attrs) {
 
+                scope.ID = Math.floor(Math.random() * 16000);
+
+                // This is where the content is...
+                var div = element[0].children[0];
+
+                scope.data = [[1,2],[15,0]];
+
+                /*for (var i = 0; i < 1000; i++) {
+                    var base = 10 * Math.sin(i / 90.0);
+                    scope.data.push([i, base, base + Math.sin(i / 2.0)]);
+                }*/
+                console.log(scope.ID);
+                console.log(div);
                 scope.api = {
                     addGraph: function () {
 
@@ -20,7 +33,7 @@
                         if (scope.object !== null) {
 
                             g = new Dygraph( // Add with injected options
-                                element,
+                                div,
                                 scope.data,
                                 scope.options
                             );
@@ -28,7 +41,7 @@
                         } else { // Add with default options
 
                             g = new Dygraph(
-                                element,
+                                div,
                                 scope.data
                             );
                         }
@@ -41,33 +54,35 @@
 
                 // Set up watches
                 // Listen for changes in data
-                scope.$watch('scope.data', function () {
+                /*scope.$watch('scope.data', function () {
                     scope.ref.updateOptions({
                         'file': scope.data
                     });
                 });
 
-                scope.api.addGraph();
+                scope.api.addGraph();*/
             }
 
             return {
                 restrict: 'E',
-                controller: 'dygraphCtl',
+                //controller: 'dygraphCtl',
                 scope: {
-                    data: '=?', // data to populate chart with
-                    cID:"=",
-                    options: '=?' // use API defaults if not present
+                    ID: '=?',
+                    options: '=?',
+                    data: '=?'
                 },
                 template: function (el, scope) {
-                    /*if (typeof cID === undefined) {
-                        var rn = Math.floor(Math.random() * 16000);
-                        cID = "dygraph_" + rn.toString();
-                    }*/
-                   // return '<div id="' + cID + '"></div>';
+                    //scope.ID = Math.floor(Math.random()*16000);
+                    return '<div id="{{ID}}" style="width:600px;height:300px;">Hello World!  The ID is {{ID}}</div>';
                 },
-                link: function ($scope, el, attrs) {
-                    console.log(cID);
-                }
+                link: link
+                    /*function (scope, el, attrs) {
+
+                                        //el.innerHTML = '<div id="div_g">Hello World!</div>';
+                                        scope.ID = Math.floor(Math.random() * 16000);
+
+                                        console.log(scope.ID);
+                                    }*/
             }
         });
 })();
