@@ -1,10 +1,22 @@
 (function () {
     'use strict';
     angular.module('dygraph', [])
-        .directive('dyGraph', function () {
+        .directive('dyGraph', function ($window) {
+
 
             /* Link function used in the DDO returned below...*/
             var link = function (scope, element, attrs) {
+
+               /* var parent = element.parent();
+                console.log(parent)
+                var w = angular.element($window);
+                w.bind('resize', function () {
+                    resize();
+                });
+
+                function resize() {
+                    scope.ref.resize(parent.width(), parent.height());
+                }*/
 
                 // ID for defining the element that will contain the
                 // graph produced by dygraph
@@ -12,10 +24,6 @@
 
                 // This is where the content is...
                 var div = element[0].children[0];
-
-                // Testing to make sure the div is correct...
-                console.log(scope.ID);
-                console.log(div);
 
                 scope.api = {
                     addGraph: function () {
@@ -40,15 +48,21 @@
                         return g;
                     }
                 };
-                
+
                 scope.ref = scope.api.addGraph();
+
 
                 /* reference to the graph - initialize the graph
                  * If object equality (last value in the $watch expression)
                  * is not true, the functionwill not work properly...
                  */
                 scope.$watch('data', function () {
-                    scope.ref.updateOptions( { 'file': scope.data } );
+                    if (scope.data !== 0) {
+                        // Only update if there data
+                        scope.ref.updateOptions({
+                            'file': scope.data
+                        });
+                    }
                 }, true);
             }
 

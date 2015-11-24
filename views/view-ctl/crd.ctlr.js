@@ -1,8 +1,8 @@
 (function () {
     angular.module('main').controller('crd', ['$scope', 'cvt', 'Data',
     function ($scope, cvt, Data) {
-        
-        $scope.rd = {};
+
+            //$scope.rd = {};
 
             // Lasers have three inputs
             var laserInput = function (_rate, _DC, _k, enabled, ID) {
@@ -50,94 +50,17 @@
 
             };
 
-            $scope.ringdownAvg = ringdownT;
-            $scope.ringdownFit = ringdownT;
+            // Space for the ringdown data
+            $scope.ringdownAvg = [];
+            $scope.ringdownFit = [];
 
-            $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-            $scope.series = ['Series A', 'Series B'];
-            $scope.data = [[65, 59, 80, 81, 56, 55, 40],[28, 48, 40, 19, 86, 27, 90]];
-            $scope.onClick = function (points, evt) {
-                console.log(points, evt);
-            };
-
-            $scope.tauData = [{
-                values: [],
-                key: 'tau'
-      }, {
-                values: [],
-                key: 'tau_0'
-      }, {
-                values: [],
-                key: 'sigma_tau'
-      }];
-
-            $scope.optionsRingdown = {
-                chart: {
-                    type: 'lineChart',
-                    height: 300,
-                    useVoronoi: false,
-                    margin: {
-                        top: 20,
-                        right: 40,
-                        bottom: 60,
-                        left: 75
-                    },
-                    x: function (d) {
-                        return d.x;
-                    },
-                    y: function (d) {
-                        return d.y;
-                    },
-                    useInteractiveGuideline: false,
-                    yAxis: {
-                        tickFormat: function (d) {
-                            return d3.format('d')(d);
-                        },
-                        axisLabel: 'Testing'
-                    },
-                    xAxis: {
-                        rotateLabels: -45
-                    },
-                    transitionDuration: 500,
-                    showXAxis: true,
-                    showYAxis: true
-                }
-            };
-
-
+            // dygraph options object
             $scope.options = {
-                chart: {
-                    type: 'lineChart',
-                    height: 300,
-                    margin: {
-                        top: 20,
-                        right: 40,
-                        bottom: 60,
-                        left: 75
-                    },
-                    x: function (d) {
-                        return d.x;
-                    },
-                    y: function (d) {
-                        return d.y;
-                    },
-                    useInteractiveGuideline: false,
-                    yAxis: {
-                        tickFormat: function (d) {
-                            return d3.format('0.01f')(d);
-                        },
-                        axisLabel: 'Testing'
-                    },
-                    xAxis: {
-                        tickFormat: function (d) {
-                            return d3.time.format('%X')(new Date(d));
-                        },
-                        rotateLabels: -45
-                    },
-                    transitionDuration: 0,
-                    showXAxis: true,
-                    showYAxis: true
-                }
+                title: 'Ringdown Data',
+                ylabel: 'Ringdown Magnitude (au)',
+                labels: ["t", "Cell 1", "Cell 2", "Cell 3", "Cell 4", "Cell 5"],
+                valueRange: [-100, 100]
+
             };
 
             $scope.$on('dataAvailable', function () {
@@ -146,47 +69,32 @@
 
                 var data = updateCRD(Data.crd);
 
-                $scope.tauData = data.tauData;
+
+
                 $scope.ringdownAvg = data.rdAvg;
-                $scope.ringdownFit = data.rdFit;
-                $scope.rd.api.update();
+                //$scope.rd.api.update();
 
             });
     }
   ]);
 
-    /* Template for returning ringdown data */
-    var ringdownT = [{
-        values: [],
-        key: 'Cell 0'
-  }, {
-        values: [],
-        key: 'Cell 1'
-  }, {
-        values: [],
-        key: 'Cell 2'
-  }, {
-        values: [],
-        key: 'Cell 3'
-  }, {
-        values: [],
-        key: 'Cell 4'
-  }];
-
-
     function updateCRD(d) {
         var dataOut = {
-                "tauData": [],
-                "rdFit": ringdownT,
-                "rdAvg": ringdownT
-            };
-        
-            /*dataOut.tauData[0].values = d.cell[0].max;
-            dataOut.tauData[1].values = d.cell[0].tau0;
-            dataOut.tauData[2].values = d.cell[0].stdvTau;*/
-        for (k = 0; k < d.cell.length; k++) {
-            dataOut.rdAvg[k].values = d.cell[k].avg_rd;
-            dataOut.rdFit[k].values = d.cell[k].fit_rd;
+            "tauData": [],
+            "rdFit": [],
+            "rdAvg": []
+        };
+
+        /*dataOut.tauData[0].values = d.cell[0].max;
+        dataOut.tauData[1].values = d.cell[0].tau0;
+        dataOut.tauData[2].values = d.cell[0].stdvTau;*/
+        for (k = 0; k < d.cell[0].avg_rd.length; k++) {
+            var aRD = [k];
+            for (j = 0; j < d.cell.length; j++) {
+                aRD.push(d.cell[j].avg_rd[k]);
+
+            }
+            dataOut.rdAvg.push(aRD);
         }
 
         return dataOut;
