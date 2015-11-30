@@ -1,0 +1,3 @@
+[submodule "assets/ad"]
+	path = assets/ad
+	url = https://github.com/lo-co/angular-dygraph

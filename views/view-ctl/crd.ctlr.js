@@ -51,7 +51,7 @@
             };
 
             // Space for the ringdown data
-            $scope.ringdownAvg = [];
+            $scope.ringdownAvg = [[0,NaN,NaN,NaN,NaN,NaN]];
             $scope.ringdownFit = [];
 
             // dygraph options object
