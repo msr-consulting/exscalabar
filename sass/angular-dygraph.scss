@@ -1,0 +1,29 @@
+// Import user defined variables...
+@import '_variables.scss';
+    
+
+.c-dygraphs {
+    .legend {
+        width: auto;
+        margin: 3px 8px;
+        padding: 2px 5px;
+        border: 1px $legend-bc solid;
+        border-radius: $border-radius-base;
+        .series-container {
+            text-align: center;
+            .series{
+                padding: 0px 8px;
+                display: inline-block;
+                
+                a{
+                    text-decoration: none;
+                    color: $nav-disabled-link-color;
+                }
+                a:hover{
+                    color:$nav-disabled-link-hover-color;
+                    cursor:pointer;
+                }
+            }
+        }
+    }
+}

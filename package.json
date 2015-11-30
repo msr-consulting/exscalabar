@@ -36,6 +36,7 @@
     "gulp-ng-annotate": "^1.0.0",
     "gulp-open": "^1.0.0",
     "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.1.0",
     "gulp-server-livereload": "^1.4.0",
     "gulp-uglify": "^1.2.0",
     "jasmine-core": "^2.3.4",

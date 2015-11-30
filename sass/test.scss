@@ -1,0 +1,65 @@
+/* Just a test of .scss */
+
+$my_color: #BADA54;
+
+nav {
+  a{
+    color: $my_color;
+    &:hover {
+      color: darken($my_color, 10%);
+    }
+  }
+}
+
+/* The logger applies to the display of the element in the message bar*/
+#logger {
+  font-size: 1rem;
+  line-height: 1;
+  color: red;
+  height: 10rem;
+  overflow-y: scroll;
+  width: 100%;
+}
+.alert-msg {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin: 0;
+}
+
+/* This is for providing the badges indicating how many messages of each type
+ * we have at the pottom of the page.
+ */
+.label-as-badge {
+  border-radius: 1em;
+}
+
+.green{
+  color:green;
+}
+.red{color: red;}
+.glyphicon {
+    font-size: 25px;
+}
+
+.badge-notify{
+   background:red;
+   position:relative;
+   top: -10px;
+   left: -35px;
+}
+
+
+/* Using the fixed nav, so we need to adjust the padding...
+ * For screenwidths not concealing the nav, set the padding to 120px,
+ * otherwise it should be 0.
+ */
+@media(min-width:769px) {
+  body {
+    padding-top: 60px;
+  }
+}
+@media(max-width:768px) {
+  body {
+    pading-top: 120px;
+  }
+}

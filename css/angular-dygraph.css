@@ -1,0 +1,17 @@
+.c-dygraphs .legend {
+  width: auto;
+  margin: 3px 8px;
+  padding: 2px 5px;
+  border: 1px black solid;
+  border-radius: 5px; }
+  .c-dygraphs .legend .series-container {
+    text-align: center; }
+    .c-dygraphs .legend .series-container .series {
+      padding: 0px 8px;
+      display: inline-block; }
+      .c-dygraphs .legend .series-container .series a {
+        text-decoration: none;
+        color: black; }
+      .c-dygraphs .legend .series-container .series a:hover {
+        color: black;
+        cursor: pointer; }

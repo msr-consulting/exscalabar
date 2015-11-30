@@ -50,17 +50,24 @@
 
             };
 
-            // Space for the ringdown data
-            $scope.ringdownAvg = [[0,NaN,NaN,NaN,NaN,NaN]];
-            $scope.ringdownFit = [];
+            // Space data - allows us to display the dygraph plot with no data if not connected
+            $scope.ringdownAvg = [[0, NaN, NaN, NaN, NaN, NaN]];
+            $scope.pData = [[0, NaN, NaN, NaN, NaN, NaN]];
+            // $scope.ringdownFit = [];
 
             // dygraph options object
             $scope.options = {
                 title: 'Ringdown Data',
                 ylabel: 'Ringdown Magnitude (au)',
-                labels: ["t", "Cell 1", "Cell 2", "Cell 3", "Cell 4", "Cell 5"],
-                valueRange: [-100, 100]
+                labels: ["t", "Cell 1", "Cell 2", "Cell 3", "Cell 4", "Cell 5"]
 
+            };
+
+            $scope.optPData = {
+                title: "CRD Data",
+                ylabel: "data",
+                xlabel: "time",
+                labels: ["t", "Cell 1", "Cell 2", "Cell 3", "Cell 4", "Cell 5"]
             };
 
             $scope.$on('dataAvailable', function () {

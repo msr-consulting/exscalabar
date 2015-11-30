@@ -9,19 +9,20 @@ var rename = require('gulp-rename');
 var connect = require('gulp-connect');
 var open = require('gulp-open');
 var htmlmin = require('gulp-htmlmin');
+var sass = require('gulp-sass');
 
 /* Since order matters, we can't just glob everything, but we must
-* make sure that the files are in the correct order. Since we have
-* to alter this list and we don't watch everything, make sure to
-* restart gulp if this file is changed.
-*/
+ * make sure that the files are in the correct order. Since we have
+ * to alter this list and we don't watch everything, make sure to
+ * restart gulp if this file is changed.
+ */
 /* One thing that we have to be sure of is that the AngularJS dependencies
-* in each of the scripts are properly resolved and annotated before minification.
-* We can do this explicitly with the notation ['dependency', function(dependency){...}]
-* or we can drop this notation and use the gulp-ng-annotate.  I am trying to
-* keep the dependencies explicity, but look out for problems where these are
-* not properly called out (maybe do to a missed capital letter or a misspelling).
-*/
+ * in each of the scripts are properly resolved and annotated before minification.
+ * We can do this explicitly with the notation ['dependency', function(dependency){...}]
+ * or we can drop this notation and use the gulp-ng-annotate.  I am trying to
+ * keep the dependencies explicity, but look out for problems where these are
+ * not properly called out (maybe do to a missed capital letter or a misspelling).
+ */
 //var ngannotate = require('gulp-ng-annotate');
 
 var watch_list = ["app/shared/main.module.js",
@@ -52,43 +53,53 @@ var watch_list = ["app/shared/main.module.js",
 "app/sidebar/sidebar-directive.js",
 "app/navigation/nav.service.js",
 "app/navigation/nav-directive.js",
-"app/navigation/nav.ctlr.js",
-"assets/contextMenu.js"];
+"app/navigation/nav.ctlr.js"];
 
 
 /* Lint Task - check for errors in the js code... */
-gulp.task('lint', function() {
-	return gulp.src(watch_list)
-	.pipe(jshint())
-	.pipe(jshint.reporter('default'));
+gulp.task('lint', function () {
+    return gulp.src(watch_list)
+        .pipe(jshint())
+        .pipe(jshint.reporter('default'));
 });
 
 // Concatenate & Minify JS
-gulp.task('scripts', function() {
-	return gulp.src(watch_list)
-	.pipe(concat('exscalabar.js'))
-	.pipe(gulp.dest('assets'))
-	.pipe(rename('exscalabar.min.js'))
-	.pipe(uglify())
-	.pipe(gulp.dest('assets'));
+gulp.task('scripts', function () {
+    return gulp.src(watch_list)
+        .pipe(concat('exscalabar.js'))
+        .pipe(gulp.dest('assets'))
+        .pipe(rename('exscalabar.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('assets'));
+});
+
+/* Handle SASS preprocessor files */
+gulp.task('styles', function () {
+    gulp.src('sass/**/*.scss')
+        .pipe(sass().on('error', sass.logError))
+        .pipe(gulp.dest('./css/'));
+});
+
+
+/* Make a connection on port 8080. */
+gulp.task('connect', function () {
+    connect.server({
+        livereload: true
+    });
 });
 
 // Watch Files For Changes
-gulp.task('watch', function() {
-	gulp.watch(watch_list, ['lint', 'scripts']);
-});
-
-/* Make a connection on port 8080. */
-gulp.task('connect', function(){
-	connect.server({
-		livereload:true
-	});
+gulp.task('watch', function () {
+    gulp.watch(watch_list, ['lint', 'scripts']);
+    gulp.watch('sass/**/*.scss',['styles']);
 });
 
 /* This will open the UI in the default browser. */
-gulp.task('open', function(){
-	gulp.src(__filename)
-	.pipe(open({uri: 'http://localhost:8080'}));
+gulp.task('open', function () {
+    gulp.src(__filename)
+        .pipe(open({
+            uri: 'http://localhost:8080'
+        }));
 });
 
 /*gulp.task('minify', function() {
@@ -98,6 +109,6 @@ gulp.task('open', function(){
 });*/
 
 // Default Task
-gulp.task('default', ['lint', 'scripts', 'connect', 'open', 'watch']);
+gulp.task('default', ['lint', 'scripts', 'styles', 'connect', 'open', 'watch']);
 
 // TODO: add different builds for distribution and development...
