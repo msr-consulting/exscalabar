@@ -79,15 +79,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="cell in data.cell track by $index">
+                                <tr ng-repeat="cell in data.cell.tau[0] track by $index" ng-if="$index > 0">
                                     <td>
-                                        {{$index+1}}
+                                        {{$index}}
                                     </td>
-                                    <td>{{ cell.tau[0].y | number}}</td>
-                                    <td>{{ cell.tau0[0].y | number:2}}</td>
-                                    <td>{{ cell.taucorr[0].y | number:2 }}</td>
-                                    <td>{{ cell.tau0corr[0].y | number:2 }}</td>
-                                    <td>{{ cell.ext[0].y | number:2 }}</td>
+                                    <td>{{ data.cell.tau[0][$index] | number}}</td>
+                                    <td>{{ data.cell.tau0[0][$index] | number:2}}</td>
+                                    <td>{{ data.cell.taucorr[0][$index] | number:2 }}</td>
+                                    <td>{{ data.cell.tau0corr[0][$index] | number:2 }}</td>
+                                    <td>{{ data.cell.ext[0][$index] | number:2 }}</td>
                                 </tr>
                             </tbody>
                         </table>

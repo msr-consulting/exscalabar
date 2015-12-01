@@ -59,24 +59,25 @@
             $scope.options = {
                 title: 'Ringdown Data',
                 ylabel: 'Ringdown Magnitude (au)',
-                labels: ["t", "Cell 1", "Cell 2", "Cell 3", "Cell 4", "Cell 5"]
+                labels: ["t", "Cell 1", "Cell 2", "Cell 3", "Cell 4", "Cell 5"],
+                legend: 'always'
 
             };
 
             $scope.optPData = {
                 title: "CRD Data",
                 ylabel: "data",
-                xlabel: "time",
-                labels: ["t", "Cell 1", "Cell 2", "Cell 3", "Cell 4", "Cell 5"]
+                labels: ["t", "Cell 1", "Cell 2", "Cell 3", "Cell 4", "Cell 5"],
+                legend: 'always'
             };
 
             $scope.pDataCMOptions = [
                 ['tau', function () {
                     $scope.optPData.ylabel = "tau (us)";
             }],
-                ["tau'", 
+                ["tau'",
                  function () {
-                    $scope.optPData.ylabel = "tau' (us)";
+                        $scope.optPData.ylabel = "tau' (us)";
             }],
                 ['stdev', function () {}]
             ];
@@ -89,6 +90,7 @@
                 var data = updateCRD(Data.crd);
 
                 $scope.ringdownAvg = data.rdAvg;
+                $scope.pData = Data.crd.cell.max;
 
             });
     }
@@ -101,17 +103,10 @@
             "rdAvg": []
         };
 
-        /*dataOut.tauData[0].values = d.cell[0].max;
-        dataOut.tauData[1].values = d.cell[0].tau0;
-        dataOut.tauData[2].values = d.cell[0].stdvTau;*/
-        for (k = 0; k < d.cell[0].avg_rd.length; k++) {
-            var aRD = [k];
-            for (j = 0; j < d.cell.length; j++) {
-                aRD.push(d.cell[j].avg_rd[k]);
-
-            }
-            dataOut.rdAvg.push(aRD);
+        for (i = 1; i < d.cell.tau[0].length; i++) {
+            dataOut.tauData.push([d.cell.tau[0][i], d.cell.tau0[0][i], d.cell.taucorr[0][i], d.cell.tau0corr[0][i], d.cell.ext[0][i]]);
         }
+        dataOut.rdAvg = d.cell.avg_rd;
 
         return dataOut;
 

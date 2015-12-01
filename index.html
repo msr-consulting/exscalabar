@@ -2,105 +2,104 @@
 <html lang="en">
 
 <head>
-	<meta charset="utf-8">
-	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-	<meta name="description" content="EXSCALABAR">
-	<meta name="author" content="Matt Richardson">
-	<link rel="shortcut icon" href="chirp.ico">
+    <meta charset="utf-8">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="EXSCALABAR">
+    <meta name="author" content="Matt Richardson">
+    <link rel="shortcut icon" href="chirp.ico">
 
-	<title>EXSCALABAR</title>
+    <title>EXSCALABAR</title>
 
-	<!-- Bootstrap core CSS -->
-	<link href="assets/bootstrap-3.3.4-dist/css/bootstrap.min.css" rel="stylesheet">
-	<link href="assets/bootstrap-3.3.4-dist/css/sticky-footer-navbar.css" rel="stylesheet">
-	<link href="app/shared/BootstrapXL.css" rel="stylesheet">
-	<!--<link href="app/shared/theme.css" rel="stylesheet">-->
-	<link href="app/shared/app.css" rel="stylesheet">
-	 <style type="text/css">
-        .dygraphClass {
-            width: auto;
-            height: 100%;
+    <!-- Bootstrap core CSS -->
+    <link href="assets/bootstrap-3.3.4-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/bootstrap-3.3.4-dist/css/sticky-footer-navbar.css" rel="stylesheet">
+    <link href="app/shared/BootstrapXL.css" rel="stylesheet">
+    <!--<link href="app/shared/theme.css" rel="stylesheet">-->
+    <link href="app/shared/app.css" rel="stylesheet">
+    <style type="text/css">
+        .dygraph-legend {
+            width: 400px;
         }
     </style>
-	<!--<link href="app/shared/form-styling.css" rel="stylesheet"/>-->
+    <!--<link href="app/shared/form-styling.css" rel="stylesheet"/>-->
 </head>
 
 <body ng-app="main" ng-controller="MainCtlr">
-	<navi></navi>
-	<div class="container">
-		<div class="row">
-			<div class="col-xl-11 col-lg-10 col-md-9 col-sm-9" role="main">
-				<ng-view></ng-view>
-			</div>
-			<div class="col-xl-1 col-lg-2 col-md-3 col-sm-3" role="complementary">
-				<sidebar></sidebar>
-			</div>
-		</div>
-	</div>
+    <navi></navi>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-11 col-lg-10 col-md-9 col-sm-9" role="main">
+                <ng-view></ng-view>
+            </div>
+            <div class="col-xl-1 col-lg-2 col-md-3 col-sm-3" role="complementary">
+                <sidebar></sidebar>
+            </div>
+        </div>
+    </div>
 
-	<footer class="footer" ng-controller="footerCtlr">
-		<div class="container">
-			<div class="row">
+    <footer class="footer" ng-controller="footerCtlr">
+        <div class="container">
+            <div class="row">
 
-				<div class="col-md-2">
-					<div style="padding-top:20px;">{{time}}</div>
-				</div>
-				<div class="col-md-10">
-					<div style="position:absolute;right:0;font-size:20px;">
-						<span class="label label-info label-as-badge" tooltip-placement="top" tooltip="Number of notification messages" tooltip-trigger="mouseenter" tooltip-append-to-body="true">{{num_codes[0]}}</span>
-						<span class="label label-warning label-as-badge" tooltip-placement="top" tooltip="Number of warning messages" tooltip-trigger="mouseenter" tooltip-append-to-body="true">{{num_codes[1]}}</span>
-						<span class="label label-danger label-as-badge" tooltip-placement="top" tooltip="Number of error messages" tooltip-trigger="mouseenter" tooltip-append-to-body="true">{{num_codes[2]}}</span>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
+                <div class="col-md-2">
+                    <div style="padding-top:20px;">{{time}}</div>
+                </div>
+                <div class="col-md-10">
+                    <div style="position:absolute;right:0;font-size:20px;">
+                        <span class="label label-info label-as-badge" tooltip-placement="top" tooltip="Number of notification messages" tooltip-trigger="mouseenter" tooltip-append-to-body="true">{{num_codes[0]}}</span>
+                        <span class="label label-warning label-as-badge" tooltip-placement="top" tooltip="Number of warning messages" tooltip-trigger="mouseenter" tooltip-append-to-body="true">{{num_codes[1]}}</span>
+                        <span class="label label-danger label-as-badge" tooltip-placement="top" tooltip="Number of error messages" tooltip-trigger="mouseenter" tooltip-append-to-body="true">{{num_codes[2]}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-	<!--Import libraries -->
-	<!--TODO: Make sure that you have the min libs for production!!! -->
-	<script src="assets/jquery/jquery-2.1.4.js"></script>
-	<script src="assets/angular.js"></script>
-	<script src="assets/angular-route.js"></script>
-	<script src="assets/ad/js/cirrus-dygraphs-dev.js"></script>
-	<script src="assets/ad/js/angular-dygraph.js"></script>
-	<script src="assets/ui-bootstrap-0.9.0.js"></script>
-	<script src="assets/ui-bootstrap-tpls-0.9.0.js"></script>
-	<script src="assets/cm/contextMenu.js"></script>
+    <!--Import libraries -->
+    <!--TODO: Make sure that you have the min libs for production!!! -->
+    <script src="assets/jquery/jquery-2.1.4.js"></script>
+    <script src="assets/angular.js"></script>
+    <script src="assets/angular-route.js"></script>
+    <script src="assets/ad/js/cirrus-dygraphs-dev.js"></script>
+    <script src="assets/ad/js/angular-dygraph.js"></script>
+    <script src="assets/ui-bootstrap-0.9.0.js"></script>
+    <script src="assets/ui-bootstrap-tpls-0.9.0.js"></script>
+    <script src="assets/cm/contextMenu.js"></script>
 
-	<!-- Begin import of modules -->
-	<script src="assets/contextMenu.js"></script>
-	<script src="app/shared/main.module.js"></script>
-	<script src="app/shared/network-service.js"></script>
-	<script src="app/shared/cvt-service.js"></script>
-	<script src="app/shared/main-config.js"></script>
-	<script src="app/shared/main-controller.js"></script>
-	<script src="app/shared/data-service.js"></script>
-	<script src="app/Messages/msg-directive.js"></script>
-	<script src="app/Messages/msg-controller.js"></script>
-	<script src="app/sidebar/sidebar-controller.js"></script>
-	<script src="views/view-ctl/alicat.config.ctlr.js"></script>
-	<script src="views/view-ctl/footer.ctlr.js"></script>
-	<script src="views/view-ctl/power-ctlr.js"></script>
-	<script src="views/view-ctl/config.ctlr.js"></script>
-	<script src="views/view-ctl/filter-ctlr.js"></script>
-	<script src="views/view-ctl/crd.ctlr.js"></script>
-	<script src="views/view-ctl/pas-ctlr.js"></script>
-	<script src="views/view-ctl/pas-spk-ctlr.js"></script>
-	<script src="views/view-ctl/pas-las-ctlr.js"></script>
-	<script src="views/view-ctl/flow.ctlr.js"></script>
-	<script src="views/view-ctl/humidifier-ctlr.js"></script>
-	<script src="views/view-ctl/power-ctlr.js"></script>
-	<script src="views/cals/startCal-ctl.js"></script>
-	<script src="views/cals/o3-table-ctl.js"></script>
-	<script src="views/cals/buildCal-service.js"></script>
-	<script src="views/cals/saveProfile-service.js"></script>
-	<script src="views/cals/saveData-ctrl.js"></script>
-	<script src="views/cals/tableInput-ctlr.js"></script>
-	<script src="app/sidebar/sidebar-directive.js"></script>
-	<script src="app/navigation/nav.service.js"></script>
-	<script src="app/navigation/nav.ctlr.js"></script>
-	<script src="app/navigation/nav-directive.js"></script>
-	<!--<script src="assets/exscalabar.min.js"></script>-->
+    <!-- Begin import of modules -->
+    <script src="assets/contextMenu.js"></script>
+    <script src="app/shared/main.module.js"></script>
+    <script src="app/shared/network-service.js"></script>
+    <script src="app/shared/cvt-service.js"></script>
+    <script src="app/shared/main-config.js"></script>
+    <script src="app/shared/main-controller.js"></script>
+    <script src="app/shared/data-service.js"></script>
+    <script src="app/Messages/msg-directive.js"></script>
+    <script src="app/Messages/msg-controller.js"></script>
+    <script src="app/sidebar/sidebar-controller.js"></script>
+    <script src="views/view-ctl/alicat.config.ctlr.js"></script>
+    <script src="views/view-ctl/footer.ctlr.js"></script>
+    <script src="views/view-ctl/power-ctlr.js"></script>
+    <script src="views/view-ctl/config.ctlr.js"></script>
+    <script src="views/view-ctl/filter-ctlr.js"></script>
+    <script src="views/view-ctl/crd.ctlr.js"></script>
+    <script src="views/view-ctl/pas-ctlr.js"></script>
+    <script src="views/view-ctl/pas-spk-ctlr.js"></script>
+    <script src="views/view-ctl/pas-las-ctlr.js"></script>
+    <script src="views/view-ctl/flow.ctlr.js"></script>
+    <script src="views/view-ctl/humidifier-ctlr.js"></script>
+    <script src="views/view-ctl/power-ctlr.js"></script>
+    <script src="views/cals/startCal-ctl.js"></script>
+    <script src="views/cals/o3-table-ctl.js"></script>
+    <script src="views/cals/buildCal-service.js"></script>
+    <script src="views/cals/saveProfile-service.js"></script>
+    <script src="views/cals/saveData-ctrl.js"></script>
+    <script src="views/cals/tableInput-ctlr.js"></script>
+    <script src="app/sidebar/sidebar-directive.js"></script>
+    <script src="app/navigation/nav.service.js"></script>
+    <script src="app/navigation/nav.ctlr.js"></script>
+    <script src="app/navigation/nav-directive.js"></script>
+    <!--<script src="assets/exscalabar.min.js"></script>-->
 
 </body>
 
