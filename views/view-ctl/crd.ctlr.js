@@ -70,16 +70,25 @@
                 labels: ["t", "Cell 1", "Cell 2", "Cell 3", "Cell 4", "Cell 5"]
             };
 
+            $scope.pDataCMOptions = [
+                ['tau', function () {
+                    $scope.optPData.ylabel = "tau (us)";
+            }],
+                ["tau'", 
+                 function () {
+                    $scope.optPData.ylabel = "tau' (us)";
+            }],
+                ['stdev', function () {}]
+            ];
+
+            /* Listen for broadcasts from the DATA SERVICE */
             $scope.$on('dataAvailable', function () {
 
                 $scope.data = Data.crd;
 
                 var data = updateCRD(Data.crd);
 
-
-
                 $scope.ringdownAvg = data.rdAvg;
-                //$scope.rd.api.update();
 
             });
     }

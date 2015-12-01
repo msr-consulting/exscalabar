@@ -1,6 +1,6 @@
 [submodule "assets/ad"]
 	path = assets/ad
 	url = https://github.com/lo-co/angular-dygraph
-[submodule "ui.bootstrap.contextMenu"]
-	path = ui.bootstrap.contextMenu
+[submodule "assets/cm"]
+	path = assets/cm
 	url = https://github.com/lo-co/ui.bootstrap.contextMenu

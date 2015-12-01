@@ -1,6 +1,6 @@
 /* Start with an IIFE */
 (function(){
-	angular.module('main',['ngRoute', 'ui.bootstrap','dygraph']);
+	angular.module('main',['ngRoute', 'ui.bootstrap', 'ui.bootstrap.contextMenu', 'dygraph']);
 })();
 
 /** This service handles network settings that can be set in the sidebar.
@@ -1324,16 +1324,25 @@
                 labels: ["t", "Cell 1", "Cell 2", "Cell 3", "Cell 4", "Cell 5"]
             };
 
+            $scope.pDataCMOptions = [
+                ['tau', function () {
+                    $scope.optPData.ylabel = "tau (us)";
+            }],
+                ["tau'", 
+                 function () {
+                    $scope.optPData.ylabel = "tau' (us)";
+            }],
+                ['stdev', function () {}]
+            ];
+
+            /* Listen for broadcasts from the DATA SERVICE */
             $scope.$on('dataAvailable', function () {
 
                 $scope.data = Data.crd;
 
                 var data = updateCRD(Data.crd);
 
-
-
                 $scope.ringdownAvg = data.rdAvg;
-                //$scope.rd.api.update();
 
             });
     }
