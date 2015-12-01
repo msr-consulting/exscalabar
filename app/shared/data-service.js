@@ -224,23 +224,20 @@
      */
     function handlePAS(d, Data, shift) {
         var t = Data.time[0];
+
+
+        /* Pop all of the ordered arrays if the arrays are of the set length... */
+        if (shift) {
+            Data.pas.cell.f0.shift();
+            Data.pas.cell.IA.shift();
+            Data.pas.cell.Q.shift();
+            Data.pas.cell.p.shift();
+            Data.pas.cell.abs.shift();
+        }
         // Handle the PAS data
         // TODO: Fix this hideousness!!!  Has to be a better way...
         for (var index in d.PAS.CellData) {
 
-            /* Make sure we have all of the cells accounted for */
-            if ((Data.pas.cell.length - 1) < index) {
-                Data.pas.cell.push(new pasData());
-            }
-
-            /* Pop all of the ordered arrays if the arrays are of the set length... */
-            if (shift) {
-                Data.pas.cell[index].f0.pop();
-                Data.pas.cell[index].IA.pop();
-                Data.pas.cell[index].Q.pop();
-                Data.pas.cell[index].p.pop();
-                Data.pas.cell[index].abs.pop();
-            }
 
             // TODO: This doesn't look right - the points should be an object, right?
             Data.pas.cell[index].f0.unshift({
