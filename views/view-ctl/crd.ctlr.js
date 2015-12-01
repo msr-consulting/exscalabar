@@ -3,6 +3,7 @@
     function ($scope, cvt, Data) {
 
             //$scope.rd = {};
+        $scope.someText = "hello";
 
             // Lasers have three inputs
             var laserInput = function (_rate, _DC, _k, enabled, ID) {
@@ -28,7 +29,17 @@
 
             $scope.pmt = cvt.crd.kpmt;
 
-            $scope.purge = false;
+            $scope.purge = {
+                pos: false,
+                flow: 0.16,
+                setValve: function () {
+                    $scope.purge.pos = !$scope.purge.pos;
+
+                },
+                setFlow: function(){
+                    
+                }
+            };
 
             $scope.data = Data.crd;
 
@@ -93,8 +104,8 @@
                 $scope.pData = Data.crd.cell.max;
 
             });
-    }
-  ]);
+                    }
+                    ]);
 
     function updateCRD(d) {
         var dataOut = {

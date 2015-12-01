@@ -34,22 +34,23 @@ var watch_list = ["app/shared/main.module.js",
 "app/Messages/msg-directive.js",
 "app/Messages/msg-controller.js",
 "app/sidebar/sidebar-controller.js",
-"views/view-ctl/config.ctlr.js",
-"views/cals/startCal-ctl.js",
-"views/cals/buildCal-service.js",
-"views/cals/o3-table-ctl.js",
-"views/cals/saveProfile-service.js",
-"views/cals/saveData-ctrl.js",
-"views/cals/tableInput-ctlr.js",
-"views/view-ctl/filter-ctlr.js",
+"views/view-ctl/alicat.config.ctlr.js",
+"views/view-ctl/footer.ctlr.js",
 "views/view-ctl/power-ctlr.js",
+"views/view-ctl/config.ctlr.js",
+"views/view-ctl/filter-ctlr.js",
 "views/view-ctl/crd.ctlr.js",
 "views/view-ctl/pas-ctlr.js",
 "views/view-ctl/pas-spk-ctlr.js",
 "views/view-ctl/pas-las-ctlr.js",
 "views/view-ctl/flow.ctlr.js",
 "views/view-ctl/humidifier-ctlr.js",
-"app/msg/msg-directive.js",
+"views/cals/startCal-ctl.js",
+"views/cals/o3-table-ctl.js",
+"views/cals/buildCal-service.js",
+"views/cals/saveProfile-service.js",
+"views/cals/saveData-ctrl.js",
+"views/cals/tableInput-ctlr.js",
 "app/sidebar/sidebar-directive.js",
 "app/navigation/nav.service.js",
 "app/navigation/nav-directive.js",
@@ -67,10 +68,10 @@ gulp.task('lint', function () {
 gulp.task('scripts', function () {
     return gulp.src(watch_list)
         .pipe(concat('exscalabar.js'))
-        .pipe(gulp.dest('assets'))
+        .pipe(gulp.dest('dist'))
         .pipe(rename('exscalabar.min.js'))
         .pipe(uglify())
-        .pipe(gulp.dest('assets'));
+        .pipe(gulp.dest('dist'));
 });
 
 /* Handle SASS preprocessor files */
@@ -91,7 +92,7 @@ gulp.task('connect', function () {
 // Watch Files For Changes
 gulp.task('watch', function () {
     gulp.watch(watch_list, ['lint', 'scripts']);
-    gulp.watch('sass/**/*.scss',['styles']);
+    gulp.watch('sass/**/*.scss', ['styles']);
 });
 
 /* This will open the UI in the default browser. */

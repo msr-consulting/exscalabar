@@ -225,6 +225,11 @@
     function handlePAS(d, Data, shift) {
         var t = Data.time[0];
 
+        var f0 = [d.tObj],
+            IA = [d.tObj],
+            Q = [d.tObj],
+            p = [d.tObj],
+            abs = [d.tObj];
 
         /* Pop all of the ordered arrays if the arrays are of the set length... */
         if (shift) {
@@ -234,32 +239,14 @@
             Data.pas.cell.p.shift();
             Data.pas.cell.abs.shift();
         }
-        // Handle the PAS data
-        // TODO: Fix this hideousness!!!  Has to be a better way...
+
         for (var index in d.PAS.CellData) {
+            f0.push(d.PAS.CellData[index].derived.f0);
+            IA.push(d.PAS.CellData[index].derived.IA);
+            Q.push(d.PAS.CellData[index].derived.Q);
+            p.push(d.PAS.CellData[index].derived.noiseLim);
+            abs.push(d.PAS.CellData[index].derived.ext);
 
-
-            // TODO: This doesn't look right - the points should be an object, right?
-            Data.pas.cell[index].f0.unshift({
-                x: t,
-                y: d.PAS.CellData[index].derived.f0
-            });
-            Data.pas.cell[index].IA.unshift({
-                x: t,
-                y: d.PAS.CellData[index].derived.IA
-            });
-            Data.pas.cell[index].Q.unshift({
-                x: t,
-                y: d.PAS.CellData[index].derived.Q
-            });
-            Data.pas.cell[index].p.unshift({
-                x: t,
-                y: d.PAS.CellData[index].derived.noiseLim
-            });
-            Data.pas.cell[index].abs.unshift({
-                x: t,
-                y: d.PAS.CellData[index].derived.ext
-            });
 
 
             /* This is one off data and is not a function of time... */
@@ -268,9 +255,45 @@
             Data.pas.cell[index].pd = d.PAS.CellData[index].PhotoDiode.Y;
 
         }
+
+        Data.pas.cell.f0.unshift(f0);
+        Data.pas.cell.IA.unshift(IA);
+        Data.pas.cell.Q.unshift(Q);
+        Data.pas.cell.p.unshift(p);
+        Data.pas.cell.abs.unshift(abs);
+
+
         Data.pas.drive = d.PAS.Drive;
+        Data.pas.cell.micf = [];
+        Data.pas.cell.mict = [];
+        Data.pas.cell.pd = [];
+
+        // Alot space for the waveform data...
+        var pd = [],
+            micf = [],
+            mict = [];
+
+        // point by point
+        for (k = 0; k < d.pas.CellData[0].MicFreq.Y.length; k++) {
+            micf = [k];
+            mict = [k];
+            pd = [k];
+            for (j = 0; j < d.pas.CellData.length; j++) {
+                micf.push(d.PAS.CellData[j].MicFreq.Y[j]);
+                mict.push(d.PAS.CellData[j].MicTime.Y[j]);
+                pd.push(d.PAS.CellData[index].PhotoDiode.Y[j]);
+
+
+            }
+
+            // Push the data in cell-wise
+            Data.pas.cell.micf.push(micf);
+            Data.pas.cell.mict.push(mict);
+            Data.pas.cell.pd.push(pd);
+        }
 
         return Data;
+
     }
 
     /**

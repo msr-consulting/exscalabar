@@ -9,7 +9,7 @@
           function ListEntry(addr, id){
               this.address = addr;
               this.id = id;
-          };
+          }
           
           $scope.entry = new ListEntry("A","default");
           
@@ -26,4 +26,4 @@
           };
           
       }]);
-})()
+})();

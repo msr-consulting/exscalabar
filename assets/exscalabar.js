@@ -667,6 +667,11 @@
     function handlePAS(d, Data, shift) {
         var t = Data.time[0];
 
+        var f0 = [d.tObj],
+            IA = [d.tObj],
+            Q = [d.tObj],
+            p = [d.tObj],
+            abs = [d.tObj];
 
         /* Pop all of the ordered arrays if the arrays are of the set length... */
         if (shift) {
@@ -676,32 +681,14 @@
             Data.pas.cell.p.shift();
             Data.pas.cell.abs.shift();
         }
-        // Handle the PAS data
-        // TODO: Fix this hideousness!!!  Has to be a better way...
+
         for (var index in d.PAS.CellData) {
+            f0.push(d.PAS.CellData[index].derived.f0);
+            IA.push(d.PAS.CellData[index].derived.IA);
+            Q.push(d.PAS.CellData[index].derived.Q);
+            p.push(d.PAS.CellData[index].derived.noiseLim);
+            abs.push(d.PAS.CellData[index].derived.ext);
 
-
-            // TODO: This doesn't look right - the points should be an object, right?
-            Data.pas.cell[index].f0.unshift({
-                x: t,
-                y: d.PAS.CellData[index].derived.f0
-            });
-            Data.pas.cell[index].IA.unshift({
-                x: t,
-                y: d.PAS.CellData[index].derived.IA
-            });
-            Data.pas.cell[index].Q.unshift({
-                x: t,
-                y: d.PAS.CellData[index].derived.Q
-            });
-            Data.pas.cell[index].p.unshift({
-                x: t,
-                y: d.PAS.CellData[index].derived.noiseLim
-            });
-            Data.pas.cell[index].abs.unshift({
-                x: t,
-                y: d.PAS.CellData[index].derived.ext
-            });
 
 
             /* This is one off data and is not a function of time... */
@@ -710,9 +697,45 @@
             Data.pas.cell[index].pd = d.PAS.CellData[index].PhotoDiode.Y;
 
         }
+
+        Data.pas.cell.f0.unshift(f0);
+        Data.pas.cell.IA.unshift(IA);
+        Data.pas.cell.Q.unshift(Q);
+        Data.pas.cell.p.unshift(p);
+        Data.pas.cell.abs.unshift(abs);
+
+
         Data.pas.drive = d.PAS.Drive;
+        Data.pas.cell.micf = [];
+        Data.pas.cell.mict = [];
+        Data.pas.cell.pd = [];
+
+        // Alot space for the waveform data...
+        var pd = [],
+            micf = [],
+            mict = [];
+
+        // point by point
+        for (k = 0; k < d.pas.CellData[0].MicFreq.Y.length; k++) {
+            micf = [k];
+            mict = [k];
+            pd = [k];
+            for (j = 0; j < d.pas.CellData.length; j++) {
+                micf.push(d.PAS.CellData[j].MicFreq.Y[j]);
+                mict.push(d.PAS.CellData[j].MicTime.Y[j]);
+                pd.push(d.PAS.CellData[index].PhotoDiode.Y[j]);
+
+
+            }
+
+            // Push the data in cell-wise
+            Data.pas.cell.micf.push(micf);
+            Data.pas.cell.mict.push(mict);
+            Data.pas.cell.pd.push(pd);
+        }
 
         return Data;
+
     }
 
     /**
@@ -932,6 +955,137 @@
 	}]);
 })();
 
+(function() {
+    angular.module('main')
+      .controller('mrAlicatConfigCtlr', ['$scope', function($scope) {
+          
+          
+          /* This will contain the template for the list of Alicat
+           * devices.
+           */
+          function ListEntry(addr, id){
+              this.address = addr;
+              this.id = id;
+          }
+          
+          $scope.entry = new ListEntry("A","default");
+          
+          /* Store devices here */
+          $scope.devices = [];
+          
+          $scope.addDevice = function(){
+              $scope.devices.push(new ListEntry($scope.entry.address, $scope.entry.id));
+              
+          };
+          
+          $scope.rmDevice = function(){
+              // Not implemented
+          };
+          
+      }]);
+})();
+(function() {
+    angular.module('main')
+      .controller('footerCtlr', ['$scope', 'Data', function($scope, Data) {
+
+          $scope.filter = true;
+          $scope.time = "Not connected";
+          $scope.connected = false;
+          $scope.o3On = false;
+          $scope.cabin = false;
+          $scope.pumpBlocked = false;
+          $scope.impBlocked = false;
+          $scope.interlock = false;
+
+          $scope.num_codes = [0, 0, 0];
+
+
+          // Initially time is not available
+          $scope.time = "Not Connected";
+
+
+          $scope.$on('dataAvailable', function() {
+
+            /* Populate the variables pertinent to the sidebar */
+            $scope.time = Data.tObj.toLocaleTimeString('en-US', {
+              hour12: false
+            });
+            $scope.filter = Data.filter;
+            $scope.cabin = Data.Cabin;
+
+            /* TODO: Have an issue with saving data - doesn't appear to be returning properly.
+             * The save variable should be in the CVT rather than in the data object.
+             *
+             */
+            //$scope.save = Data.save;
+            $scope.connected = true;
+          });
+
+          /* This is a broadcast from the data service.  If there is a new message,
+           * we will pop the message queue and log the fact that there was a
+           * message.
+           * TODO: Need place to put messages.
+           */
+          $scope.$on('msgAvailable', function() {
+
+              var x = Data.popMsgQueue();
+
+              for (i = 0; i < x.length; i++) {
+
+                if (x[i].search('ERROR') > 0) {
+                  $scope.num_codes[2] += 1;
+                } else if (x[i].search('WARNING') > 0) {
+                  $scope.num_codes[1] += 1;
+                } else {
+                  $scope.num_codes[0] += 1;
+                }
+              }
+            });
+
+
+            $scope.$on('dataNotAvailable', function() {
+              $scope.connected = false;
+            });
+
+
+          }]);
+      })();
+
+(function() {
+  angular.module('main').controller('power', ['$scope', 'cvt',
+    function($scope, cvt) {
+      $scope.power = cvt.power;
+
+
+
+      $scope.toggle = function(id) {
+        // Flip the bit
+        $scope.power[id] = !$scope.power[id];
+
+        //Sketch out space for the values used below
+        var index = 0;
+        var num = 0;
+        var val = 0;
+
+        /* Convert the array of booleans for the power to
+         * a decimal integer.  We will send this decimal
+         * integer back for the power.
+         */
+        for (var property in $scope.power) {
+          if ($scope.power.hasOwnProperty(property)) {
+            val = $scope.power[property] ? 1 : 0;
+            num += Math.pow(2, index) * val;
+            index += 1;
+          }
+
+        }
+        cvt.updatePS(num);
+
+      };
+    }
+  ]);
+})();
+
 (function () {
     angular.module('main')
         .controller('mrConfigCtlr', ['$scope', '$http', 'Data', 'net', function ($scope, $http, Data, net) {
@@ -947,206 +1101,6 @@
             };
 
 
-
-	}]);
-})();
-
-(function() {
-	angular.module('main').controller('startCal', ['$scope', '$http', 'net', 'cvt', 
-	function($scope, $http, net, cvt) {
-
-		$scope.cal = cvt.ozone;
-
-		/* This is the primary function of this controller.  When the button is hit,
-		 * flip the switch on the calibration button so that it indicates the user can 
-		 * Start a cal or that a cal is currently running.  We will also send the current cal
-		 * state for storage in the cvt AND send the request to the server.
-		 */
-		// TODO: Test this on the server side.
-		$scope.startCalibration = function() {
-			$scope.cal = !$scope.cal;
-			var calState = $scope.cal ? 1 : 0;
-			cvt.ozone = $scope.cal;
-			$http.get(net.address() + 'General/ozone?start=' + calState.toString());
-		};
-	}]);
-
-})();
-
-/* This service returns the current value of a selected portion
- * of the calibration building table.  This service is required 
- * by the O3Table controller.  Load this service first before 
- * loading the O3Table controller.
- */
-
-(function(){
-	angular.module('main')
-	.factory('tableService', ["$rootScope", function($rootScope){
-		var tabService = {
-			curTab: '',
-			getTab: function(){return this.curTab;},
-			setTab: function(tab){
-				this.curTab = tab;
-				$rootScope.$broadcast('handleBroadcast');
-				}
-		};
-		
-		return tabService;
-	}]);
-	
-})();
-
-/** This controller is placed on the O3 cal page and defines what will happen
- * 	when a user double clicks on a table element.
- *
- * 	When the element containing this controller is first displayed, the values
- * 	in the attribute table_vals will be used to populate the canned table for
- * 	sequence building using the ng-repeat directive.
- *
- * 	When the user double clicks on a row, the controller will call the tableService
- * 	setTab method.  This in turn updates the attributes of that service with the ID
- * 	of the row that was clicked.  That ID is then broadcast and picked up by the
- * 	tableInput-ctlr which populates the table for the sequence with a default value
- * 	for the selected element.
- */
-
-(function() {
-	angular.module('main')
-	.controller('O3Table', ['$scope', 'tableService', function($scope, tableService) {
-
-		/* Contains the entries that will go into the canned table. */
-		$scope.table_vals = [ {
-			"id": "Wait",
-			"step" : "Wait",
-			"descr" : "Set a wait time in the ozone cal in seconds"
-		},
-		{
-			"id": "Filter",
-			"step" : "Filter",
-			"descr" : "Boolean that sets the filter state."
-		},
-		{
-			"id": "Speaker",
-			"step" : "Speaker",
-			"descr" : "Boolean that sets the speaker state."
-		},
-		{
-			"id": "O2-Valve",
-			"step" : "O2 Valve",
-			"descr" : "Boolean that sets the O2 valve position."
-		},
-		{
-			"id": "O3-Valve",
-			"step" : "O3 Valve",
-			"descr" : "Boolean that sets the O3 valve state."
-		},
-		{
-			"id": "O3-Generator",
-			"step" : "O3 Generator",
-			"descr" : "Boolean that sets the O3 generator state."
-		},
-		{
-			"id": "QO2",
-			"step" : "QO2",
-			"descr" : "Numeric to set the oxygen flow rate"
-		}];
-
-		/* Handle row double clicks */
-		$scope.clickRow = function(row){
-
-			/* tableService will broadcast the the listeners the current ID */
-			tableService.setTab(row.id.toString());
-
-		};
-	}]);
-})();
-
-(function(){
-	angular.module('main')
-	.factory('SaveData', function(){
-		var savedData = {
-			data: [],
-			setData: function(d){
-				this.data = d;
-			},
-			getData:function(){
-				return this.data;
-			}
-		};
-		return savedData;
-	});
-})();
-
-/* This controller handles saving calibration data */
-
-(function() {
-	angular.module('main').controller('Save', ['$scope', 'SaveData', '$http','net',
-	function($scope, SaveData, $http, net) {
-
-		$scope.cal_file = "default";
-		$scope.save = function() {
-			var xml = '<?xml version="1.0" encoding="utf-8"?>\r\n<OZONE>\r\n';
-			SaveData.getData().forEach(function(entry) {
-				xml += "\t<" + entry.id + ">" + entry.val + '</' + entry.id + '>\r\n';
-			});
-
-			xml += "</OZONE>";
-
-			/* Send the calibration profile as XML data. */
-			$http({
-				method : 'POST',
-				url : net.address() + 'Calibration/saveCalFile?file_name=' + $scope.cal_file + ".xml",
-				data : xml,
-				headers : {
-					"Content-Type" : 'application/x-www-form-urlencoded'
-				}
-			});
-
-		};
-	}]);
-})();
-
-(function() {
-	angular.module('main')
-	.controller('InputTable', ['$scope', 'tableService', 'SaveData',
-	function($scope, tableService, SaveData) {
-
-		$scope.data = [];
-
-		/* Handle the broadcast from the buildCal-service */
-		$scope.$on('handleBroadcast', function() {
-
-			// The ID from the cal table
-			var tID = tableService.getTab();
-			// Value of the
-			var val = "";
-
-			/* The following switch statement defines the default values */
-			switch (tID) {
-			case "O3-Valve":
-			case"O2-Valve":
-			case"O3-Generator":
-			case "Filter":
-				val = 'FALSE';
-				break;
-			case "Wait":
-			case "Speaker":
-				val = "20";
-				break;
-
-			case "QO2":
-				val = "100";
-				break;
-			default:
-			}
-
-			// Push the data into an array
-			$scope.data.push({
-				"id" : tID,
-				"val" :val
-			});
-			SaveData.setData($scope.data);
-		});
 
 	}]);
 })();
@@ -1208,41 +1162,6 @@
       };
     });
 }]);
-})();
-
-(function() {
-  angular.module('main').controller('power', ['$scope', 'cvt',
-    function($scope, cvt) {
-      $scope.power = cvt.power;
-
-
-
-      $scope.toggle = function(id) {
-        // Flip the bit
-        $scope.power[id] = !$scope.power[id];
-
-        //Sketch out space for the values used below
-        var index = 0;
-        var num = 0;
-        var val = 0;
-
-        /* Convert the array of booleans for the power to
-         * a decimal integer.  We will send this decimal
-         * integer back for the power.
-         */
-        for (var property in $scope.power) {
-          if ($scope.power.hasOwnProperty(property)) {
-            val = $scope.power[property] ? 1 : 0;
-            num += Math.pow(2, index) * val;
-            index += 1;
-          }
-
-        }
-        cvt.updatePS(num);
-
-      };
-    }
-  ]);
 })();
 
 (function () {
@@ -1784,16 +1703,203 @@
 })();
 
 (function() {
-	angular.module('main').directive('msg', msgFunc);
+	angular.module('main').controller('startCal', ['$scope', '$http', 'net', 'cvt', 
+	function($scope, $http, net, cvt) {
 
-	function msgFunc() {
-		return {
-			restrict : 'E',
-			scope : {},
-			templateUrl : 'app/msg/msg.html'
+		$scope.cal = cvt.ozone;
+
+		/* This is the primary function of this controller.  When the button is hit,
+		 * flip the switch on the calibration button so that it indicates the user can 
+		 * Start a cal or that a cal is currently running.  We will also send the current cal
+		 * state for storage in the cvt AND send the request to the server.
+		 */
+		// TODO: Test this on the server side.
+		$scope.startCalibration = function() {
+			$scope.cal = !$scope.cal;
+			var calState = $scope.cal ? 1 : 0;
+			cvt.ozone = $scope.cal;
+			$http.get(net.address() + 'General/ozone?start=' + calState.toString());
 		};
-	}
+	}]);
 
+})();
+
+/** This controller is placed on the O3 cal page and defines what will happen
+ * 	when a user double clicks on a table element.
+ *
+ * 	When the element containing this controller is first displayed, the values
+ * 	in the attribute table_vals will be used to populate the canned table for
+ * 	sequence building using the ng-repeat directive.
+ *
+ * 	When the user double clicks on a row, the controller will call the tableService
+ * 	setTab method.  This in turn updates the attributes of that service with the ID
+ * 	of the row that was clicked.  That ID is then broadcast and picked up by the
+ * 	tableInput-ctlr which populates the table for the sequence with a default value
+ * 	for the selected element.
+ */
+
+(function() {
+	angular.module('main')
+	.controller('O3Table', ['$scope', 'tableService', function($scope, tableService) {
+
+		/* Contains the entries that will go into the canned table. */
+		$scope.table_vals = [ {
+			"id": "Wait",
+			"step" : "Wait",
+			"descr" : "Set a wait time in the ozone cal in seconds"
+		},
+		{
+			"id": "Filter",
+			"step" : "Filter",
+			"descr" : "Boolean that sets the filter state."
+		},
+		{
+			"id": "Speaker",
+			"step" : "Speaker",
+			"descr" : "Boolean that sets the speaker state."
+		},
+		{
+			"id": "O2-Valve",
+			"step" : "O2 Valve",
+			"descr" : "Boolean that sets the O2 valve position."
+		},
+		{
+			"id": "O3-Valve",
+			"step" : "O3 Valve",
+			"descr" : "Boolean that sets the O3 valve state."
+		},
+		{
+			"id": "O3-Generator",
+			"step" : "O3 Generator",
+			"descr" : "Boolean that sets the O3 generator state."
+		},
+		{
+			"id": "QO2",
+			"step" : "QO2",
+			"descr" : "Numeric to set the oxygen flow rate"
+		}];
+
+		/* Handle row double clicks */
+		$scope.clickRow = function(row){
+
+			/* tableService will broadcast the the listeners the current ID */
+			tableService.setTab(row.id.toString());
+
+		};
+	}]);
+})();
+
+/* This service returns the current value of a selected portion
+ * of the calibration building table.  This service is required 
+ * by the O3Table controller.  Load this service first before 
+ * loading the O3Table controller.
+ */
+
+(function(){
+	angular.module('main')
+	.factory('tableService', ["$rootScope", function($rootScope){
+		var tabService = {
+			curTab: '',
+			getTab: function(){return this.curTab;},
+			setTab: function(tab){
+				this.curTab = tab;
+				$rootScope.$broadcast('handleBroadcast');
+				}
+		};
+		
+		return tabService;
+	}]);
+	
+})();
+
+(function(){
+	angular.module('main')
+	.factory('SaveData', function(){
+		var savedData = {
+			data: [],
+			setData: function(d){
+				this.data = d;
+			},
+			getData:function(){
+				return this.data;
+			}
+		};
+		return savedData;
+	});
+})();
+
+/* This controller handles saving calibration data */
+
+(function() {
+	angular.module('main').controller('Save', ['$scope', 'SaveData', '$http','net',
+	function($scope, SaveData, $http, net) {
+
+		$scope.cal_file = "default";
+		$scope.save = function() {
+			var xml = '<?xml version="1.0" encoding="utf-8"?>\r\n<OZONE>\r\n';
+			SaveData.getData().forEach(function(entry) {
+				xml += "\t<" + entry.id + ">" + entry.val + '</' + entry.id + '>\r\n';
+			});
+
+			xml += "</OZONE>";
+
+			/* Send the calibration profile as XML data. */
+			$http({
+				method : 'POST',
+				url : net.address() + 'Calibration/saveCalFile?file_name=' + $scope.cal_file + ".xml",
+				data : xml,
+				headers : {
+					"Content-Type" : 'application/x-www-form-urlencoded'
+				}
+			});
+
+		};
+	}]);
+})();
+
+(function() {
+	angular.module('main')
+	.controller('InputTable', ['$scope', 'tableService', 'SaveData',
+	function($scope, tableService, SaveData) {
+
+		$scope.data = [];
+
+		/* Handle the broadcast from the buildCal-service */
+		$scope.$on('handleBroadcast', function() {
+
+			// The ID from the cal table
+			var tID = tableService.getTab();
+			// Value of the
+			var val = "";
+
+			/* The following switch statement defines the default values */
+			switch (tID) {
+			case "O3-Valve":
+			case"O2-Valve":
+			case"O3-Generator":
+			case "Filter":
+				val = 'FALSE';
+				break;
+			case "Wait":
+			case "Speaker":
+				val = "20";
+				break;
+
+			case "QO2":
+				val = "100";
+				break;
+			default:
+			}
+
+			// Push the data into an array
+			$scope.data.push({
+				"id" : tID,
+				"val" :val
+			});
+			SaveData.setData($scope.data);
+		});
+
+	}]);
 })();
 
 (function() {

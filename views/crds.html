@@ -7,32 +7,37 @@
                         <div class="panel-heading">
                             Laser Control
                         </div>
-                        <div class="row">
-                            <div ng-repeat="ctl in laser_ctl track by $index">
-                                <div class="col-md-6">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">{{ctl.id}}</div>
-                                        <div class="form-group">
-                                            <label for="rate_{{$index}}">f (Hz)</label>
-                                            <input type="number" id="rate_{{$index}}" class="form-control" ng-blur="setRate($index, ctl.rate)" ng-model="ctl.rate">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="dc_{{$index}}">DC (%)</label>
-                                            <input type="number" id="dc_{{$index}}" class="form-control" ng-model="ctl.DC">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="k_{{$index}}">Gain</label>
-                                            <input type="number" id="k_{{$index}}" class="form-control" ng-model="ctl.k">
-                                        </div>
-                                        <button ng-class="ctl.en ? 'btn btn-primary btn-block':'btn btn-warning btn-block'" ng-model="ctl.en" ng-click="setEnable($index)" ng-switch on="ctl.en">
-                                            <strong>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div ng-repeat="ctl in laser_ctl track by $index">
+                                    <div class="col-md-6">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">{{ctl.id}}</div>
+                                            <div class="panel-body">
+                                                <div class="form-group">
+                                                    <label for="rate_{{$index}}">f (Hz)</label>
+                                                    <input type="number" id="rate_{{$index}}" class="form-control" ng-blur="setRate($index, ctl.rate)" ng-model="ctl.rate">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="dc_{{$index}}">DC (%)</label>
+                                                    <input type="number" id="dc_{{$index}}" class="form-control" ng-model="ctl.DC">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="k_{{$index}}">Gain</label>
+                                                    <input type="number" id="k_{{$index}}" class="form-control" ng-model="ctl.k">
+                                                </div>
+                                                <button ng-class="ctl.en ? 'btn btn-primary btn-block':'btn btn-warning btn-block'" ng-model="ctl.en" ng-click="setEnable($index)" ng-switch on="ctl.en">
+                                                    <strong>
 												<div ng-switch-when=true>Enabled</div>
 												<div ng-switch-when=false>Disabled</div>
 											</strong>
-                                        </button>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -41,15 +46,30 @@
                         <div class="panel-heading">
                             PMT Gain
                         </div>
-                        <div ng-repeat="p in pmt track by $index">
-                            <label for="g{{$index}}">Cell {{$index+1}}</label>
-                            <input type="number" class="form-control" id="g{{$index}}" ng-model="p">
+                        <div class="panel-body">
+                            <div ng-repeat="p in pmt track by $index">
+                                <label for="g{{$index}}">Cell {{$index+1}}</label>
+                                <input type="number" class="form-control" id="g{{$index}}" ng-model="p">
+                            </div>
+
                         </div>
 
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <button class="btn btn-primary btn-block">WTF??</button>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Purge</div>
+                        <div class="panel-body">
+                            <label for="purge">Valve Position</label>
+                            <button id="purge" class="btn btn-primary btn-block" ng-switch on="purge.pos" ng-click="purge.setValve()">
+                                <div ng-switch-when=false>Orifice</div>
+                                <div ng-switch-when=true>Flow Controller</div>
+                            </button>
+                            <label for="pFlow">Flow</label>
+                            <input id="pFlow" class ="form-control" ng-model="purge.flow" ng-blur="purge.setFlow()">
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </accordion-group>

@@ -13,7 +13,7 @@
     <!-- Bootstrap core CSS -->
     <link href="assets/bootstrap-3.3.4-dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/bootstrap-3.3.4-dist/css/sticky-footer-navbar.css" rel="stylesheet">
-    <!-- <link href="app/shared/BootstrapXL.css" rel="stylesheet">
+    <link href="app/shared/BootstrapXL.css" rel="stylesheet">
     <!--<link href="app/shared/theme.css" rel="stylesheet">-->
     <link href="app/shared/app.css" rel="stylesheet">
     <style type="text/css">
@@ -67,7 +67,8 @@
     <script src="assets/cm/contextMenu.js"></script>
 
     <!-- Begin import of modules -->
-   <!-- <script src="app/shared/main.module.js"></script>
+    <script src="assets/contextMenu.js"></script>
+    <script src="app/shared/main.module.js"></script>
     <script src="app/shared/network-service.js"></script>
     <script src="app/shared/cvt-service.js"></script>
     <script src="app/shared/main-config.js"></script>
@@ -87,6 +88,7 @@
     <script src="views/view-ctl/pas-las-ctlr.js"></script>
     <script src="views/view-ctl/flow.ctlr.js"></script>
     <script src="views/view-ctl/humidifier-ctlr.js"></script>
+    <script src="views/view-ctl/power-ctlr.js"></script>
     <script src="views/cals/startCal-ctl.js"></script>
     <script src="views/cals/o3-table-ctl.js"></script>
     <script src="views/cals/buildCal-service.js"></script>
@@ -96,8 +98,8 @@
     <script src="app/sidebar/sidebar-directive.js"></script>
     <script src="app/navigation/nav.service.js"></script>
     <script src="app/navigation/nav.ctlr.js"></script>
-    <script src="app/navigation/nav-directive.js"></script>-->
-    <script src="dist/exscalabar.min.js"></script>
+    <script src="app/navigation/nav-directive.js"></script>
+    <!--<script src="assets/exscalabar.min.js"></script>-->
 
 </body>
 
