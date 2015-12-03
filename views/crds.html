@@ -26,12 +26,13 @@
                                                     <label for="k_{{$index}}">Gain</label>
                                                     <input type="number" id="k_{{$index}}" class="form-control" ng-model="ctl.k">
                                                 </div>
-                                                <button ng-class="ctl.en ? 'btn btn-primary btn-block':'btn btn-warning btn-block'" ng-model="ctl.en" ng-click="setEnable($index)" ng-switch on="ctl.en">
+                                                <cirrus-ibutton ival ="ctl.en" ng-model="ctl.en" ng-click="setEnable($index)" >Power</cirrus-ibutton>
+                                                <!--<button ng-class="ctl.en ? 'btn btn-primary btn-block':'btn btn-warning btn-block'" ng-model="ctl.en" ng-click="setEnable($index)" ng-switch on="ctl.en">
                                                     <strong>
 												<div ng-switch-when=true>Enabled</div>
 												<div ng-switch-when=false>Disabled</div>
 											</strong>
-                                                </button>
+                                                </button>-->
                                             </div>
                                         </div>
                                     </div>
@@ -60,11 +61,11 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">Purge</div>
                         <div class="panel-body">
-                            <label for="purge">Valve Position</label>
-                            <button id="purge" class="btn btn-primary btn-block" ng-switch on="purge.pos" ng-click="purge.setValve()">
+                            <cirrus-ibutton ival="purge.pos" ng-click="purge.setValve()">Flow Ctl</cirrus-ibutton>
+                            <!--<button id="purge" class="btn btn-primary btn-block" ng-switch on="purge.pos" ng-click="purge.setValve()">
                                 <div ng-switch-when=false>Orifice</div>
                                 <div ng-switch-when=true>Flow Controller</div>
-                            </button>
+                            </button>-->
                             <label for="pFlow">Flow</label>
                             <input id="pFlow" class ="form-control" ng-model="purge.flow" ng-blur="purge.setFlow()">
                         </div>

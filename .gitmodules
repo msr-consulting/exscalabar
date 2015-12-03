@@ -4,3 +4,6 @@
 [submodule "assets/cm"]
 	path = assets/cm
 	url = https://github.com/lo-co/ui.bootstrap.contextMenu
+[submodule "assets/cui"]
+	path = assets/cui
+	url = https://github.com/lo-co/cirrus.ui

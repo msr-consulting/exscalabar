@@ -1,87 +1,150 @@
 /* The logger applies to the display of the element in the message bar*/
+
 #logger {
-  font-size: 1rem;
-  line-height: 1;
-  color: red;
-  height: 10rem;
-  overflow-y: scroll;
-  width: 100%;
+    font-size: 1rem;
+    line-height: 1;
+    color: red;
+    height: 10rem;
+    overflow-y: scroll;
+    width: 100%;
 }
+
 .alert-msg {
-  padding-top: 5px;
-  padding-bottom: 5px;
-  margin: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 0;
 }
+
 
 /* This is for providing the badges indicating how many messages of each type
  * we have at the pottom of the page.
  */
+
 .label-as-badge {
-  border-radius: 1em;
+    border-radius: 1em;
 }
 
-.green{
-  color:green;
+.green {
+    color: green;
 }
-.red{color: red;}
+
+.red {
+    color: red;
+}
+
 .glyphicon {
     font-size: 25px;
 }
 
-.badge-notify{
-   background:red;
-   position:relative;
-   top: -10px;
-   left: -35px;
+.badge-notify {
+    background: red;
+    position: relative;
+    top: -10px;
+    left: -35px;
 }
-.form-control{
+
+.form-control {
     padding-left: 2px;
     padding-top: 0px;
     padding-bottom: 0px;
-    height:auto
+    height: auto
 }
-.panel-body{
-    padding:5px
+
+.panel-body {
+    padding: 5px
 }
-.panel-heading{
-    height:auto;
+
+.panel-heading {
+    height: auto;
     font-weight: 800;
     font-variant: small-caps;
     font-size: 125%;
-    
 }
-body{
+
+body {
     font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
 }
 
-label{
+label {
     font-weight: normal;
 }
 
-.panel-title{
-    font-size:125%
+.panel-title {
+    font-size: 125%
 }
-
-.alert, .btn{
+/*input[type=number]{
+    width:110px;
+}*/
+.alert,
+.btn {
     height: auto;
-    padding:5px;
+    padding: 5px;
+}
+body{
+    background-color: #777;
+border-}
+body > .container {
+    padding: 15px;
 }
 
-body > .container {
-    padding:15px;
+.badge .green {
+    background-color: yellowgreen;
+    border-radius: 0px;
+    height: 1em;
+    text-transform: uppercase
 }
-.col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, 
-.col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, 
-.col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, 
-.col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, 
-.col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, 
-.col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, 
-.col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, 
-.col-xs-7, .col-xs-8, .col-xs-9{
+
+.col-lg-1,
+.col-lg-10,
+.col-lg-11,
+.col-lg-12,
+.col-lg-2,
+.col-lg-3,
+.col-lg-4,
+.col-lg-5,
+.col-lg-6,
+.col-lg-7,
+.col-lg-8,
+.col-lg-9,
+.col-md-1,
+.col-md-10,
+.col-md-11,
+.col-md-12,
+.col-md-2,
+.col-md-3,
+.col-md-4,
+.col-md-5,
+.col-md-6,
+.col-md-7,
+.col-md-8,
+.col-md-9,
+.col-sm-1,
+.col-sm-10,
+.col-sm-11,
+.col-sm-12,
+.col-sm-2,
+.col-sm-3,
+.col-sm-4,
+.col-sm-5,
+.col-sm-6,
+.col-sm-7,
+.col-sm-8,
+.col-sm-9,
+.col-xs-1,
+.col-xs-10,
+.col-xs-11,
+.col-xs-12,
+.col-xs-2,
+.col-xs-3,
+.col-xs-4,
+.col-xs-5,
+.col-xs-6,
+.col-xs-7,
+.col-xs-8,
+.col-xs-9 {
     /*padding-left:15px;
     /padding-right:0px;
     margin-left:5px;*/
-    
 }
 
 
@@ -89,13 +152,15 @@ body > .container {
  * For screenwidths not concealing the nav, set the padding to 120px,
  * otherwise it should be 0.
  */
+
 @media(min-width:769px) {
-  body {
-    padding-top: 60px;
-  }
+    body {
+        padding-top: 50px;
+    }
 }
+
 @media(max-width:768px) {
-  body {
-    pading-top: 120px;
-  }
+    body {
+        padding-top: 42px;
+    }
 }
