@@ -3,7 +3,7 @@
     function ($scope, cvt, Data) {
 
             //$scope.rd = {};
-        $scope.someText = "hello";
+            $scope.someText = "hello";
 
             // Lasers have three inputs
             var laserInput = function (_rate, _DC, _k, enabled, ID) {
@@ -36,8 +36,8 @@
                     $scope.purge.pos = !$scope.purge.pos;
 
                 },
-                setFlow: function(){
-                    
+                setFlow: function () {
+
                 }
             };
 

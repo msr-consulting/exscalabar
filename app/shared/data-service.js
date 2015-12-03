@@ -32,12 +32,12 @@
             var shiftData = false;
 
             dataObj.pas = {};
-            dataObj.pas.cell = [new pasData()];
+            dataObj.pas.cell = new pasData();
             dataObj.pas.drive = true;
 
             dataObj.filter = {
                 "state": true,
-                "tremain": 0
+                "tremain": 0    
             };
 
             /** Clear out the message queue by first copying the msg arrays
@@ -225,11 +225,11 @@
     function handlePAS(d, Data, shift) {
         var t = Data.time[0];
 
-        var f0 = [d.tObj],
-            IA = [d.tObj],
-            Q = [d.tObj],
-            p = [d.tObj],
-            abs = [d.tObj];
+        var f0 = [Data.tObj],
+            IA = [Data.tObj],
+            Q = [Data.tObj],
+            p = [Data.tObj],
+            abs = [Data.tObjj];
 
         /* Pop all of the ordered arrays if the arrays are of the set length... */
         if (shift) {
@@ -246,14 +246,6 @@
             Q.push(d.PAS.CellData[index].derived.Q);
             p.push(d.PAS.CellData[index].derived.noiseLim);
             abs.push(d.PAS.CellData[index].derived.ext);
-
-
-
-            /* This is one off data and is not a function of time... */
-            Data.pas.cell[index].micf = d.PAS.CellData[index].MicFreq.Y;
-            Data.pas.cell[index].mict = d.PAS.CellData[index].MicTime.Y;
-            Data.pas.cell[index].pd = d.PAS.CellData[index].PhotoDiode.Y;
-
         }
 
         Data.pas.cell.f0.unshift(f0);
@@ -274,7 +266,7 @@
             mict = [];
 
         // point by point
-        for (k = 0; k < d.pas.CellData[0].MicFreq.Y.length; k++) {
+        for (k = 0; k < d.PAS.CellData[0].MicFreq.Y.length; k++) {
             micf = [k];
             mict = [k];
             pd = [k];

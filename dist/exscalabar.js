@@ -473,12 +473,12 @@
             var shiftData = false;
 
             dataObj.pas = {};
-            dataObj.pas.cell = [new pasData()];
+            dataObj.pas.cell = new pasData();
             dataObj.pas.drive = true;
 
             dataObj.filter = {
                 "state": true,
-                "tremain": 0
+                "tremain": 0    
             };
 
             /** Clear out the message queue by first copying the msg arrays
@@ -666,11 +666,11 @@
     function handlePAS(d, Data, shift) {
         var t = Data.time[0];
 
-        var f0 = [d.tObj],
-            IA = [d.tObj],
-            Q = [d.tObj],
-            p = [d.tObj],
-            abs = [d.tObj];
+        var f0 = [Data.tObj],
+            IA = [Data.tObj],
+            Q = [Data.tObj],
+            p = [Data.tObj],
+            abs = [Data.tObjj];
 
         /* Pop all of the ordered arrays if the arrays are of the set length... */
         if (shift) {
@@ -687,14 +687,6 @@
             Q.push(d.PAS.CellData[index].derived.Q);
             p.push(d.PAS.CellData[index].derived.noiseLim);
             abs.push(d.PAS.CellData[index].derived.ext);
-
-
-
-            /* This is one off data and is not a function of time... */
-            Data.pas.cell[index].micf = d.PAS.CellData[index].MicFreq.Y;
-            Data.pas.cell[index].mict = d.PAS.CellData[index].MicTime.Y;
-            Data.pas.cell[index].pd = d.PAS.CellData[index].PhotoDiode.Y;
-
         }
 
         Data.pas.cell.f0.unshift(f0);
@@ -715,7 +707,7 @@
             mict = [];
 
         // point by point
-        for (k = 0; k < d.pas.CellData[0].MicFreq.Y.length; k++) {
+        for (k = 0; k < d.PAS.CellData[0].MicFreq.Y.length; k++) {
             micf = [k];
             mict = [k];
             pd = [k];
@@ -1168,7 +1160,7 @@
     function ($scope, cvt, Data) {
 
             //$scope.rd = {};
-        $scope.someText = "hello";
+            $scope.someText = "hello";
 
             // Lasers have three inputs
             var laserInput = function (_rate, _DC, _k, enabled, ID) {
@@ -1201,8 +1193,8 @@
                     $scope.purge.pos = !$scope.purge.pos;
 
                 },
-                setFlow: function(){
-                    
+                setFlow: function () {
+
                 }
             };
 
@@ -1288,122 +1280,63 @@
 
     }
 })();
-(function() {
-  angular.module('main').controller('pas', ['$scope', 'net', '$http', 'cvt', 'Data', '$log',
-    function($scope, net, $http, cvt, Data, $log) {
+(function () {
+    angular.module('main').controller('pas', ['$scope', 'net', '$http', 'cvt', 'Data', '$log',
+    function ($scope, net, $http, cvt, Data, $log) {
 
-      $scope.data = Data.pas;
+            $scope.data = Data.pas;
 
-      var selPlot = 0;
+            var selPlot = 0;
 
-      $scope.menuOptions = [
-        ['IA', function($itemScope) {
-          selPlot = 0;
-          $scope.options.chart.yAxis.axisLabel = 'IA';
-        }],
-        ['f0', function($itemScope) {
-          selPlot = 1;
-          $scope.options.chart.yAxis.axisLabel = 'f0 (Hz)';
-        }],
-        ['Q', function($itemScope) {
-          selPlot = 2;
-          $scope.options.chart.yAxis.axisLabel = 'Q';
-        }],
-        ['p', function($itemScope) {
-          selPlot = 3;
-          $scope.options.chart.yAxis.axisLabel = 'p';
-        }],
-        ['abs', function($itemScope) {
-          selPlot = 4;
-          $scope.options.chart.yAxis.axisLabel = 'Absorption (Mm-1)';
-        }]
-      ];
+            $scope.pData = [[0, NaN, NaN, NaN, NaN, NaN]];
 
+            $scope.options = {
+                title:'PAS Data',
+                ylabel: "IA",
+                labels: ["t", "Cell 1", "Cell 2", "Cell 3", "Cell 4", "Cell 5"],
+                legend: 'always'
+            };
 
+            $scope.pDataCMOptions = [
+                ['IA', function () {
+                    $scope.options.ylabel = "IA";
+                    selPlot = 0;
 
-      /** Data that will be used for plotting. */
-      $scope.plotData = [{
-        values: [],
-        key: 'Cell 1'
-      }, {
-        values: [],
-        key: 'Cell 2'
-      }, {
-        values: [],
-        key: 'Cell 3'
-      }, {
-        values: [],
-        key: 'Cell 4'
-      }, {
-        values: [],
-        key: 'Cell 5'
-      }];
+            }],
+                ["f0",
+                 function () {
+                        $scope.options.ylabel = "f0 (Hz)";
+                        selPlot = 1;
+            }],
+                ['Q', function () {
+                    $scope.options.ylabel = "Q";
+                    selPlot = 2;
+                }]
+            ];
 
-      /** Options used for plotting. */
-      $scope.options = {
-        chart: {
-          type: 'lineChart',
-          height: 300,
-          margin: {
-            top: 20,
-            right: 10,
-            bottom: 60,
-            left: 75
-          },
-          x: function(d) {
-            return d.x;
-          },
-          y: function(d) {
-            return d.y;
-          },
-          useInteractiveGuideline: true,
-          yAxis: {
-            tickFormat: function(d) {
-              return d3.format('0.01f')(d);
-            },
-            axisLabel: 'Testing'
-          },
-          xAxis: {
-            tickFormat: function(d) {
-              return d3.time.format('%X')(new Date(d));
-            },
-            rotateLabels: -45
-          },
-          transitionDuration: 500,
-          showXAxis: true,
-          showYAxis: true
-        }
-      };
+            // Listen for data
+            $scope.$on('dataAvailable', function () {
 
-      // Listen for data
-      $scope.$on('dataAvailable', function() {
+                $scope.data = Data.pas;
 
-
-
-        $scope.data = Data.pas;
-
-        for (i = 0; i < 5; i++) {
-          switch (selPlot) {
-            case 0:
-              $scope.plotData[i].values = $scope.data.cell[i].IA;
-              break;
-            case 1:
-              $scope.plotData[i].values = $scope.data.cell[i].f0;
-              break;
-            case 2:
-              $scope.plotData[i].values = $scope.data.cell[i].Q;
-              break;
-            case 3:
-              $scope.plotData[i].values = $scope.data.cell[i].p;
-              break;
-            case 4:
-              $scope.plotData[i].values = $scope.data.cell[i].abs;
-              break;
-          }
-
-
-        }
-      });
+                switch (selPlot) {
+                case 0:
+                    $scope.pData = $scope.data.cell.IA;
+                    break;
+                case 1:
+                    $scope.pData = $scope.data.cell.f0;
+                    break;
+                case 2:
+                    $scope.pData = $scope.data.cell.Q;
+                    break;
+                case 3:
+                    $scope.pData = $scope.data.cell.p;
+                    break;
+                case 4:
+                    $scope.pData = $scope.data.cell.abs;
+                    break;
+                }
+            });
 
 
 
@@ -1411,7 +1344,6 @@
     }
   ]);
 })();
-
 (function() {
   angular.module('main').controller('pasSpk', ['$scope', 'cvt', 'Data',
     function($scope, cvt, Data) {
