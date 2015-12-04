@@ -29,6 +29,11 @@
 
             $scope.pmt = cvt.crd.kpmt;
 
+            $scope.resize = function () {
+                //$(window).trigger('resize');
+                window.dispatchEvent(new Event('resize'));
+            };
+
             $scope.purge = {
                 pos: false,
                 flow: 0.16,

@@ -67,10 +67,27 @@ input[type=number]::-webkit-outer-spin-button {
     padding-right: 2px;
     text-align:left
 }
+.panel-default > .panel-heading{
+    background-color:#777;
+    color:white;    
+    padding-bottom: 5px;
+    padding-top:5px;
+}
+.panel{
+    
+    background-color: #777;
+    border-color: whitesmoke;
+    border-style: inset;
+    border-width: 2px;
+}
 .panel-body {
-    padding: 5px
+    padding: 5px;
 }
 
+accordion{
+    
+    background-color:#777;
+}
 .panel-heading {
     height: auto;
     font-weight: 800;
@@ -78,6 +95,9 @@ input[type=number]::-webkit-outer-spin-button {
     font-size: 125%;
     padding-top:0px;
     padding-bottom:0px;
+}
+.dygraph-label, .dygraph-axis-label{
+    color:white;
 }
 
 body {
