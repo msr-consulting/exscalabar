@@ -147,15 +147,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="datum in data.cell track by $index">
+                                <tr ng-repeat="datum in data.cell.f0[0] track by $index" ng-if="$index>0">
                                     <td>
                                         {{$index+1}}
                                     </td>
-                                    <td>{{ datum.f0[0].y | number}}</td>
-                                    <td>{{ datum.IA[0].y | number:2}}</td>
-                                    <td>{{ datum.Q[0].y | number:2 }}</td>
-                                    <td>{{ datum.p[0].y | number:2 }}</td>
-                                    <td>{{ datum.abs[0].y | number:2 }}</td>
+                                    <td>{{ data.cell.f0[0][$index] | number}}</td>
+                                    <td>{{ data.cell.IA[0][$index] | number:2}}</td>
+                                    <td>{{ data.cell.Q[0][$index] | number:2 }}</td>
+                                    <td>{{ data.cell.p[0][$index] | number:2 }}</td>
+                                    <td>{{ data.cell.abs[0][$index] | number:2 }}</td>
                                 </tr>
                             </tbody>
                         </table>
