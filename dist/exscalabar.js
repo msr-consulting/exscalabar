@@ -1,6 +1,6 @@
 /* Start with an IIFE */
 (function(){
-	angular.module('main',['ngRoute', 'ui.bootstrap', 'ui.bootstrap.contextMenu', 'dygraph', 'cirrus.ui.ibutton']);
+	angular.module('main',['ngRoute', 'ui.bootstrap', 'ui.bootstrap.contextMenu', 'dygraph', 'cirrus.ui.ibutton', 'cirrus.ui.inumeric']);
 })();
 
 /** This service handles network settings that can be set in the sidebar.
@@ -1161,6 +1161,7 @@
 
             //$scope.rd = {};
             $scope.someText = "hello";
+            $scope.testnum = 2.55673e-12;
 
             // Lasers have three inputs
             var laserInput = function (_rate, _DC, _k, enabled, ID) {

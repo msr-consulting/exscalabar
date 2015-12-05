@@ -1,7 +1,129 @@
 <div ng-controller="crd">
-    <!--<accordion close-others="false">
-        <accordion-group heading="Controls" is-disabled=false is-open=true>-->
-    <tabset>
+    <div class="row">
+        <div class="col-md-3 col-lg-2">
+            <div ng-repeat="ctl in laser_ctl track by $index">
+                <div class="panel panel-default">
+                    <div class="panel-heading">{{ctl.id}}</div>
+                    <div class="panel-body">
+                        <div class="input-group" style="margin-top:2px;">
+                            <span class="input-group-addon" id="basic-addon1">f (Hz)</span>
+                            <input type="number" id="rate_{{$index}}" class="form-control" ng-blur="setRate($index, ctl.rate)" ng-model="ctl.rate">
+                        </div>
+                        <div class="input-group" style="margin-top:2px;">
+                            <span class="input-group-addon" id="basic-addon1">dc (%)</span>
+                            <input type="number" id="dc_{{$index}}" class="form-control" ng-model="ctl.DC">
+                        </div>
+                        <div class="input-group" style="margin-top:2px; margin-bottom:2px">
+                            <span class="input-group-addon" id="basic-addon1">k</span>
+                            <input type="number" id="k_{{$index}}" class="form-control" ng-model="ctl.k">
+                        </div>
+                        <cirrus-ibutton ival="ctl.en" ng-model="ctl.en" ng-click="setEnable($index)">Power</cirrus-ibutton>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default" data-toggle="tooltip" data-placement="right" title="PMT gains in volts.">
+                <div class="panel-heading">
+                    PMT Gain
+                </div>
+                <div class="panel-body">
+                    <div ng-repeat="p in pmt track by $index">
+                        <div class="input-group" style="margin-top:2px">
+                            <span class="input-group-addon" style="width:1em">{{$index+1}}</span>
+                            <input type="number" class="form-control" id="g{{$index}}" ng-model="p">
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Purge</div>
+                <div class="panel-body">
+                    <cirrus-ibutton ival="purge.pos" ng-click="purge.setValve()">Flow Ctl</cirrus-ibutton>
+                    <label for="pFlow">Flow</label>
+                    <input id="pFlow" class="form-control" ng-model="purge.flow" ng-blur="purge.setFlow()">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 col-lg-10">
+            <div class="row">
+                <dy-graph options="optPData" data="pData" context-menu="pDataCMOptions"></dy-graph>
+            </div>
+            <div class="row">
+                <dy-graph options="options" data="ringdownAvg"></dy-graph>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Test</div>
+                <div class="panel-body">
+                    <cui-numeric ng-model="testnum" readonly>t<sub>test</sub></cui-numeric>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-10">test</div>
+        <!--
+        <div class="panel panel-default" ng-repeat="cell in data.cell.tau[0] track by $index" ng-if="$index > 0">
+            <div class="panel-heading">Cell {{$index}}</div>
+            <div class="panel-body">
+                <div>{{ data.cell.tau[0][$index] | number}}</div>
+                <div>{{ data.cell.tau0[0][$index] | number:2}}</div>
+                <div>{{ data.cell.taucorr[0][$index] | number:2 }}</div>
+                <div>{{ data.cell.tau0corr[0][$index] | number:2 }}</div>
+                <div>{{ data.cell.ext[0][$index] | number:2 }}</div>
+            </div>
+        </div>-->
+    </div>
+</div>
+<!-- <tr ng-repeat="cell in data.cell.tau[0] track by $index" ng-if="$index > 0">
+            <td>
+                {{$index}}
+            </td>
+            <td>{{ data.cell.tau[0][$index] | number}}</td>
+            <td>{{ data.cell.tau0[0][$index] | number:2}}</td>
+            <td>{{ data.cell.taucorr[0][$index] | number:2 }}</td>
+            <td>{{ data.cell.tau0corr[0][$index] | number:2 }}</td>
+            <td>{{ data.cell.ext[0][$index] | number:2 }}</td>
+        </tr>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <colgroup>
+                    <col class="col-md-1"></col>
+                    <col class="col-md-2"></col>
+                    <col class="col-md-2"></col>
+                    <col class="col-md-2"></col>
+                    <col class="col-md-2"></col>
+                    <col class="col-md-2"></col>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>Cell</th>
+                        <th>&tau;</th>
+                        <th>&tau;<sub>0</sub></th>
+                        <th>&tau;_</th>
+                        <th>&tau;<sub>0</sub>_</th>
+                        <th>ext (Mm
+                            <sup>-1</sup>)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="cell in data.cell.tau[0] track by $index" ng-if="$index > 0">
+                        <td>
+                            {{$index}}
+                        </td>
+                        <td>{{ data.cell.tau[0][$index] | number}}</td>
+                        <td>{{ data.cell.tau0[0][$index] | number:2}}</td>
+                        <td>{{ data.cell.taucorr[0][$index] | number:2 }}</td>
+                        <td>{{ data.cell.tau0corr[0][$index] | number:2 }}</td>
+                        <td>{{ data.cell.ext[0][$index] | number:2 }}</td>
+                    </tr>
+                </tbody>
+            </table>
+    </div>
+</div>-->
+<!--<tabset>
         <tab heading="Controls">
             <div class="row">
                 <div class="col-md-6">
@@ -68,11 +190,7 @@
 
                 </div>
             </div>
-            <!--</accordion-group>-->
         </tab>
-
-
-        <!--<accordion-group heading="Indicators" is-disabled="false" is-open="false">-->
         <tab heading="Indicators">
             <div class="row">
                 <div class="col-md-8">
@@ -114,17 +232,11 @@
                 </div>
             </div>
         </tab>
-        <!--</accordion-group>
-        <accordion-group is-open=false is-disabled=false heading="Plots">-->
         <tab heading="Plots" select="resize()">
             <dy-graph options="optPData" data="pData" context-menu="pDataCMOptions"></dy-graph>
         </tab>
         <tab heading="Ringdowns" select="resize()">
-            <!--</accordion-group>
-        <accordion-group is-open=true is-disabled=false heading="Ringdown">-->
             <dy-graph options="options" data="ringdownAvg"></dy-graph>
         </tab>
     </tabset>
-    <!--</accordion-group>
-    </accordion>-->
-</div>
+</div>-->
