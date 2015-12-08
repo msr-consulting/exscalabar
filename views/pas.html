@@ -23,7 +23,7 @@
                                     <span class="input-group-addon" id="basic-addon1">&Delta;f (Hz)</span>
                                     <input class="form-control" id="df" max="1000" min="1" ng-blur="updateSpkF()" ng-model="speaker.df" placeholder="100" title="Speaker chirp bandwidth in Hz." type="number" />
                                 </div>
-                                <cirrus-ibutton ival="speaker.pos" ng-click="setPos()">Speaker</cirrus-ibutton>
+                                <cui-ibutton ival="speaker.pos" ng-click="setPos()">Speaker</cui-ibutton>
                             </div>
                         </div>
                     </div>
@@ -39,9 +39,9 @@
                                     <span class="input-group-addon" id="basic-addon1">len (s)</span>
                                     <input class="form-control" id="length" max="100" min="1" ng-change="updateCycle()" ng-model="speaker.length" placeholder="0" type="number" />
                                 </div>
-                                <cirrus-ibutton ival="speaker.auto">
+                                <cui-ibutton ival="speaker.auto">
                                     <div tooltip-placement="bottom" tooltip="Set system to cycle speaker automatically" tooltip-trigger="mouseenter" tooltip-append-to-body="true" ng-click="updateAuto()">Auto</div>
-                                </cirrus-ibutton>
+                                </cui-ibutton>
 
                             </div>
                         </div>

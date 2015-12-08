@@ -1,6 +1,9 @@
 /* Start with an IIFE */
 (function(){
-	angular.module('main',['ngRoute', 'ui.bootstrap', 'ui.bootstrap.contextMenu', 'dygraph', 'cirrus.ui.ibutton', 'cirrus.ui.inumeric']);
+	angular.module('main',['ngRoute', 'ui.bootstrap', 
+                           'ui.bootstrap.contextMenu', 'dygraph', 
+                           'cirrus.ui.ibutton', 'cirrus.ui.inumeric', 
+                           'cirrus.ui.string']);
 })();
 
 /** This service handles network settings that can be set in the sidebar.
@@ -1090,6 +1093,31 @@
             $scope.changePort = function () {
                 net.setPort($scope.network.port);
             };
+            
+            $scope.filter = {
+                pos:true,
+                auto:true,
+                len: 30,
+                per: 360,
+                updatePos: function(){
+                    this.pos = !this.pos;
+                    console.log("updating filter position");
+                },
+                updateAuto: function(){
+                    auto = !auto;
+                    console.log("update filter auto");
+                }
+            };
+            
+            $scope.file = {
+                folder: "exscalabar\\data",
+                main: "u:\\",
+                mirror: "v:\\",
+                prefix: "ex_",
+                ext: ".txt",
+                max:10,
+                save:true
+            }
 
 
 

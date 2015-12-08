@@ -1,38 +1,60 @@
 <div ng-controller="mrConfigCtlr">
-  <div class="row">
-    <div class="col-md-2">
-      <div class="panel panel-default">
-        <div class="panel-heading">Network Configuration</div>
-        <div class="panel-body">
-          <div class="form-group" id="address">
-            <label class="ctl-label small" for="ip">IP</label>
-            <label class="ctl-label small" for="port">Port</label>
-            <input ng-model="network.ip" ng-blur="changeIP()" type="text" class="form-control" id="ip" data-toggle="tooltip" data-placement="right" placeholder="127.0.0.1" tooltip="Server IP address" tooltip-trigger="mouseenter"/>
-            <input class="form-control" ng-model="network.port" ng-blur="changePort()" type="text" id="port" placeholder="8001" tooltip="Device address; A-Z" tooltip-trigger="mouseenter" tooltip="Server communication port" tooltip-trigger="mouseenter"/>
-          </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">Network</div>
+                <div class="panel-body">
+                    <cui-string ng-model="network.ip" evnt-func="changeIP()">IP</cui-string>
+                    <cui-string ng-model="network.port" evnt-func="changePort()">Port</cui-string>
+                </div>
+            </div>
         </div>
-      </div>
-
+        <div class="col-md-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Filter</div>
+                <div class="panel-body">
+                    <cui-numeric type="int" ng-model="filter.per">Per. (s)</cui-numeric>
+                    <cui-numeric type="int" ng-model="filter.len">Len. (s)</cui-numeric>
+                    <cui-ibutton ival="filter.pos" ng-model="filter.pos" evnt-func="filter.updatePos()">Position</cui-ibutton>
+                    <cui-ibutton ng-model="filter.auto">Auto</cui-ibutton>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">File</div>
+                <div class="panel-body">
+                    <cui-string width = "100" ng-model="file.folder">folder</cui-string>
+                    <cui-string width = "100" ng-model="file.main">Main Path</cui-string>
+                    <cui-string width = "100" ng-model="file.mirror">Mirror Path</cui-string>
+                    <cui-string width = "100" ng-model="file.prefix">File Prefix</cui-string>
+                    <cui-string width = "100" ng-model="file.ext">File Extension</cui-string>
+                    <cui-numeric ng-model="file.max">Max Size</cui-numeric>
+                    <cui-ibutton ival="file.save" ng-model="file.save">Save</cui-ibutton>
+                </div>
+            </div>
+        </div>
+        <input ng-model="file.folder"/>
     </div>
-  </div>
-  <div class="row">
-      <div class="panel panel-default" ng-controller="mrAlicatConfigCtlr">
-          <div class="panel-heading">Alicat</div>
-          <div class="panel-body">
-             <div class="form-group">
-                 <label for="acom">COM</label>
-                 <input type="text" id="acom" class="form-control" tooltip="Serial communication port" tooltip-trigger="mouseenter" placeholder="0">
-             </div>
-             <ul class="list-group">
-                 <li class="list-group-item" ng-repeat="device in devices"><input type="checkbox"><span><b>  {{device.id}}: {{device.address}}</span></li>
-             </ul>
-             <div class="form-group">
-                 <input type="text" ng-model="entry.address" id="address" placeholder="A" tooltip="Device address; A-Z" tooltip-trigger="mouseenter"/>
-                 <input type="text" ng-model="entry.id" id="ID" placeholder="device_name" tooltip="Device name" tooltip-trigger="mouseenter"/>
-                 <button class="btn btn-default" ng-click="addDevice()"><span class="glyphicon glyphicon-plus" style="font-size:10px"></span> Add</button>
-             </div>
-              
-          </div>
-      </div>
-  </div>
+    <div class="row">
+        <div class="panel panel-default" ng-controller="mrAlicatConfigCtlr">
+            <div class="panel-heading">Alicat</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="acom">COM</label>
+                    <input type="text" id="acom" class="form-control" tooltip="Serial communication port" tooltip-trigger="mouseenter" placeholder="0">
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="device in devices">
+                        <input type="checkbox"><span><b>  {{device.id}}: {{device.address}}</span></li>
+                </ul>
+                <div class="form-group">
+                    <input type="text" ng-model="entry.address" id="address" placeholder="A" tooltip="Device address; A-Z" tooltip-trigger="mouseenter" />
+                    <input type="text" ng-model="entry.id" id="ID" placeholder="device_name" tooltip="Device name" tooltip-trigger="mouseenter" />
+                    <button class="btn btn-default" ng-click="addDevice()"><span class="glyphicon glyphicon-plus" style="font-size:10px"></span> Add</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
