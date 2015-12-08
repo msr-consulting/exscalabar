@@ -3,7 +3,7 @@
     function($scope, cvt) {
       $scope.power = cvt.power;
 
-
+         cvt.first_call = 1;
 
       $scope.toggle = function(id) {
         // Flip the bit

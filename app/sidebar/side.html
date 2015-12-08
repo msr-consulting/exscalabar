@@ -3,11 +3,6 @@
         <ul class="nav bs-docs-sidenav">
             <li>
                 <cui-ibutton ival="filter" ng-click="setFilter()">Filter</cui-ibutton>
-                <!--<button class="btn btn-primary btn-block" type="button" ng-click="setFilter()" ng-class="{'active': filter}" ng-switch on="filter" ng-class="{'btn-primary':filter,'btn-info':!filter}">
-					<div ng-switch-when="true">Filter</div>
-					<div ng-switch-when="false">Sample</div>
-					<div ng-switch-default>Sample</div>
-				</button>-->
             </li>
             <!--<li>
 				<button class="btn btn-primary btn-block btn-sm" type="button" ng-switch on="cabin" ng-click ="setCabin()" ng-class="{'btn-primary':cabin,'btn-info':!cabin}">
@@ -17,26 +12,9 @@
 			</li>-->
             <li>
                <cui-ibutton ival="connected" ng-click="stop()">Stop</cui-ibutton>
-                <!--<button class="btn btn-primary btn-block" type="button" ng-click="stop()">
-                    Stop
-                </button>-->
             </li>
-           <!-- <li class ng-switch on="connected">
-                <div ng-switch-when="true" class="alert alert-success">
-                    Connected
-                </div>
-                <div ng-switch-when="false" class="alert alert-danger">
-                    Not Connected
-                </div>
-            </li>-->
             <li>
                 <cui-ibutton ival="cabin" ng-click="setCabin()">Inlet</cui-ibutton>
-                <!--<div ng-switch-when="true" class="alert alert-success">
-					Inlet
-				</div>
-				<div ng-switch-when="false" class="alert alert-info">
-					Cabin
-				</div>-->
             </li>
             <li class ng-switch on="o3On">
                 <!-- Show nothing when an ozone cal is not running -->

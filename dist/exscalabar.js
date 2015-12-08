@@ -83,321 +83,322 @@
 /* This service maintains a current value table of control values so that all are properly
  * controls will be properly populated.
  */
-(function() {
-  angular.module('main').factory('cvt', ['$http', 'net', '$rootScope',
-    function($http, net, $rootScope) {
+(function () {
+    angular.module('main').factory('cvt', ['$http', 'net', '$rootScope',
+    function ($http, net, $rootScope) {
 
-      var cvt = {
-        "save": true,
-        "ozone": false,
-        "filter_pos": true,
-        "fctl": [],
-        "power":{
-          "TEC": false,
-          "Laser": false,
-          "Pump": false,
-          "O3Gen": false,
-          "Denuder":false
-        }
-      };
-
-      /* Indicates whether this is the first time this is called.  If it is, the
-       * value is non-zero (TRUE).  On the first successful poll of the server,
-       * this value will be set to zero.
-       */
-      var first_Call = 1;
-
-      cvt.humidifier = {
-        high: new humidifier(0.75, 1, 0, 90, false),
-        med: new humidifier(0.75, 1, 0, 80, false)
-      };
-
-      cvt.pas = new pas($http, net);
-
-      cvt.crd = new crd($http, net);
-
-      cvt.filter_cycle = {
-        "period": 360,
-        "length": 20,
-        "auto": false
-      };
-
-      /* TODO: Implement server side CVT communication. */
-      /* Check the CVT on the server to make sure nothing has changed.  We will have multiple objects
-       * to check and will broadcast based on who has changed.
-       */
-      cvt.checkCvt = function() {
-
-        promise = $http.get(net.address() + 'General/cvt?force=' + first_Call).then(function(response) {
-
-          // After the first successful call, set this value to false (0).
-          first_Call = 0;
-
-          // If the CVT has not changed or this is not the first call, then the
-          // CVT object should be empty.
-          if (!isEmpty(response.data)) {
-
-            var crd = response.data.crd;
-            var pas = response.data.pas;
-
-            /*for (var p in crd){
-              if (crd.hasOwnProperty(p)){
-                if (cvt.crd[p] != crd[p]){
-                  cvt.crd[p] = crd[p];
+            var cvt = {
+                "save": true,
+                "ozone": false,
+                "filter_pos": true,
+                "first_call": 1,
+                "fctl": [],
+                "power": {
+                    "TEC": false,
+                    "Laser": false,
+                    "Pump": false,
+                    "O3Gen": false,
+                    "Denuder": false
                 }
-              }
-            }*/
-            /* Update the CRD controls */
-            cvt.crd.fred = crd.fred;
-            cvt.crd.fblue = crd.fblue;
-            cvt.crd.dcred = crd.dcred;
-            cvt.crd.dcblue = crd.dcblue;
-            cvt.crd.kpmt = crd.kpmt;
+            };
 
-            /* Update PAS laser controls */
-            cvt.pas.las.f0 = pas.las.f0;
-            cvt.pas.las.vrange = pas.las.vrange;
-            cvt.pas.las.voffset = pas.las.voffset;
-            cvt.pas.las.enable = pas.las.enabled;
+            /* Indicates whether this is the first time this is called.  If it is, the
+             * value is non-zero (TRUE).  On the first successful poll of the server,
+             * this value will be set to zero.
+             */
 
-            /* Update PAS speaker controls */
-            cvt.pas.spk.f0 = pas.spk.fcenter;
-            cvt.pas.spk.df = pas.spk.df;
-            cvt.pas.spk.vrange = pas.spk.vrange;
-            cvt.pas.spk.voffset = pas.spk.voffset;
-            cvt.pas.spk.auto = pas.spk.cycle;
-            cvt.pas.spk.length = pas.spk.length;
-            cvt.pas.spk.period = pas.spk.period;
-            cvt.pas.spk.pos = pas.spk.enabled;
+            cvt.humidifier = {
+                high: new humidifier(0.75, 1, 0, 90, false),
+                med: new humidifier(0.75, 1, 0, 80, false)
+            };
 
-            cvt.filter_cycle.period = response.data.filter.period;
-            cvt.filter_cycle.length = response.data.filter.length;
-            cvt.filter_cycle.auto = response.data.filter.auto;
+            cvt.pas = new pas($http, net);
 
-            var power = Number(response.data.general.power).toString(2);
+            cvt.crd = new crd($http, net);
 
-            while (power.length < 5){
-              power = "0" + power;
+            cvt.filter_cycle = {
+                "period": 360,
+                "length": 20,
+                "auto": false
+            };
 
-            }
+            /* TODO: Implement server side CVT communication. */
+            /* Check the CVT on the server to make sure nothing has changed.  We will have multiple objects
+             * to check and will broadcast based on who has changed.
+             */
+            cvt.checkCvt = function () {
 
-            cvt.power.Pump = power[0]=='1'?true:false;
-            cvt.power.O3Gen = power[1]=='1'?true:false;
-            cvt.power.Denuder = power[2]=='1'?true:false;
-            cvt.power.Laser = power[3]=='1'?true:false;
-            cvt.power.TEC = power[4]=='1'?true:false;
+                promise = $http.get(net.address() + 'General/cvt?force=' + cvt.first_call).then(function (response) {
 
-            /* Let interested parties know the CVT has been updated */
-            $rootScope.$broadcast('cvtUpdated');
-          }
+                    // After the first successful call, set this value to false (0).
+                    first_Call = 0;
 
-        });
+                    // If the CVT has not changed or this is not the first call, then the
+                    // CVT object should be empty.
+                    if (!isEmpty(response.data)) {
 
-      };
+                        var crd = response.data.crd;
+                        var pas = response.data.pas;
 
-      cvt.flows = {};
+                        /*for (var p in crd){
+                          if (crd.hasOwnProperty(p)){
+                            if (cvt.crd[p] != crd[p]){
+                              cvt.crd[p] = crd[p];
+                            }
+                          }
+                        }*/
+                        /* Update the CRD controls */
+                        cvt.crd.fred = crd.fred;
+                        cvt.crd.fblue = crd.fblue;
+                        cvt.crd.dcred = crd.dcred;
+                        cvt.crd.dcblue = crd.dcblue;
+                        cvt.crd.kpmt = crd.kpmt;
 
-      cvt.flows.updateSP = function(id, sp) {
-        cvt.flows[id] = sp;
-        $http.get(net.address() + 'General/DevSP?SP=' + sp + '&DevID=' + id);
+                        /* Update PAS laser controls */
+                        cvt.pas.las.f0 = pas.las.f0;
+                        cvt.pas.las.vrange = pas.las.vrange;
+                        cvt.pas.las.voffset = pas.las.voffset;
+                        cvt.pas.las.enable = pas.las.enabled;
 
-      };
+                        /* Update PAS speaker controls */
+                        cvt.pas.spk.f0 = pas.spk.fcenter;
+                        cvt.pas.spk.df = pas.spk.df;
+                        cvt.pas.spk.vrange = pas.spk.vrange;
+                        cvt.pas.spk.voffset = pas.spk.voffset;
+                        cvt.pas.spk.auto = pas.spk.cycle;
+                        cvt.pas.spk.length = pas.spk.length;
+                        cvt.pas.spk.period = pas.spk.period;
+                        cvt.pas.spk.pos = pas.spk.enabled;
 
-      cvt.updatePS = function(val){
-        $http.get(net.address() + 'General/PowerSupply?val=' + val);
-      };
+                        cvt.filter_cycle.period = response.data.filter.period;
+                        cvt.filter_cycle.length = response.data.filter.length;
+                        cvt.filter_cycle.auto = response.data.filter.auto;
+                        
+                        cvt.filter_pos = response.data.general.filter_pos;
 
-      return cvt;
+                        var power = Number(response.data.general.power).toString(2);
+
+                        while (power.length < 5) {
+                            power = "0" + power;
+
+                        }
+
+                        cvt.power.Pump = power[0] == '1' ? true : false;
+                        cvt.power.O3Gen = power[1] == '1' ? true : false;
+                        cvt.power.Denuder = power[2] == '1' ? true : false;
+                        cvt.power.Laser = power[3] == '1' ? true : false;
+                        cvt.power.TEC = power[4] == '1' ? true : false;
+
+                        /* Let interested parties know the CVT has been updated */
+                        $rootScope.$broadcast('cvtUpdated');
+                    }
+
+                });
+
+            };
+
+            cvt.flows = {};
+
+            cvt.flows.updateSP = function (id, sp) {
+                cvt.flows[id] = sp;
+                $http.get(net.address() + 'General/DevSP?SP=' + sp + '&DevID=' + id);
+
+            };
+
+            cvt.updatePS = function (val) {
+                $http.get(net.address() + 'General/PowerSupply?val=' + val);
+            };
+
+            return cvt;
 
     }
   ]);
 
-  /** Object that provides a humidifier interface.
-   * @param {float} p - proportional control input
-   * @param {float} i - integral control input
-   * @param {float} p - derivative control input
-   * @param {float} sp - setpoint
-   * @param {boolean} en - enable byte
-   */
-  function humidifier(p, i, d, sp, en) {
-    this.p = p;
-    this.i = i;
-    this.d = d;
-    this.sp = sp;
-    this.en = en;
-  }
-
-  /** This object defines the values associated with the
-   * the control of the CRD.
-   */
-  function crd(_http, _net) {
-    var http = _http;
-    var net = _net;
-
-    this.net = net;
-    // Red laser frequency in Hz
-    this.fred = 1000;
-    // Red laser duty cycle in %
-    this.dcred = 50;
-    // Blue laser frequencyu in Hz
-    this.fblue = 2000;
-    // Blue laser duty cycle in %
-    this.dcblue = 50;
-    // Red laser gain
-    this.kred = 1;
-    // Blue laser gain
-    this.kblue = 1;
-    // PMT gains
-    this.kpmt = [0, 0, 0, 0, 0];
-    // Blue enable state
-    this.eblue = true;
-    // Red enable state
-    this.ered = true;
-
-    this.setLaserRate = function(index, f) {
-
-      var cmd = 'CRDS_CMD/fblue?Rate=' + f;
-      if (index) {
-        cmd = 'CRDS_CMD/fred?Rate=' + f;
-      }
-
-      http.get(net.address() + cmd);
-
-    };
-    this.setEnable = function(index, val) {
-      //var cmd =
-    };
-  }
-
-  /** This object defines all of the functionality required for operating
-   * the PAS.  This is the current value table information that will be
-   * stored and manipulated during operation.
-   * @param $http (object) - this is the http service that is produced by
-   *                         angular.  This is used for communicating with the
-   *                         server.
-   * @param net (object) - local service for retrieving IP and port information.
-   */
-  function pas(_http, _net) {
-
-    var http = _http;
-
-    var net = _net;
-
-    this.spk = {
-      "vrange": 5,
-      "voffset": 0,
-      "f0": 1350,
-      "df": 100,
-      "pos": true,
-      "auto": false,
-      "period": 360,
-      "length": 30
-    };
-
-    this.las = {
-      "vr": [5, 5, 5, 5, 5],
-      "voffset": [1, 2, 3, 4, 5],
-      "f0": [1351, 1352, 1353, 1354, 1355],
-      "modulation": [false, false, false, false, false],
-      "enable": [false, false, false, false, false],
-    };
-
-    this.las.setf0 = function(f0) {
-      this.f0 = f0;
-
-      http.get(net.address() +
-        'PAS_CMD/UpdateFr?f0=' + f0.join(','));
-
-    };
-
-    /** Set the laser voltage range.
-     * @param {array} - array of voltages in Volts.
+    /** Object that provides a humidifier interface.
+     * @param {float} p - proportional control input
+     * @param {float} i - integral control input
+     * @param {float} p - derivative control input
+     * @param {float} sp - setpoint
+     * @param {boolean} en - enable byte
      */
-    this.las.setVr = function(vr) {
-      this.las.vr = vr;
-
-      this.http.get(this.net.address() +
-        'PAS_CMD/UpdateVrange?Vrange=' + vr.join(','));
-
-    };
-
-    /** Set the laser voltage offset.
-     * @param {array} - voltage offset in volts.
-     */
-    this.las.setVo = function(vo) {
-      this.las.vr = vr;
-
-      this.http.get(this.net.address() +
-        'PAS_CMD/UpdateVoffset?Voffset=' + vo.join(','));
-
-    };
-
-    // TODO: Update server side to make sure that the modulation is updated.
-    this.las.updateMod = function(mod) {
-      this.moduldation = mod;
-
-      var val = [];
-
-      for (i = 0; i < mod.length; i++) {
-        val.push(mod ? 1 : 0);
-      }
-
-      //$http.get(net.address() +
-      //  'PAS_CMD/UpdateVoffset?Voffset=' + val.join(','));
-
-    };
-
-    // TODO: Fix service to handle byte array not single number.
-    this.las.updateEnable = function(en) {
-      this.enable = en;
-    };
-
-    /** Store the current speaker control setting and send the settign to
-     * the server.
-     * @param {boolean} - false = laser; true = speaker.
-     */
-    this.spk.updateCtl = function(spk) {
-      //this = spk;
-      var val = spk.pos ? 1 : 0;
-
-      http.get(net.address() + 'PAS_CMD/SpkSw?SpkSw=' + val);
-      http.get(net.address() + 'PAS_CMD/Spk?df=' + this.df + '&f0=' + this.f0);
-      http.get(net.address() + 'PAS_CMD/UpdateSpkVparams?Voffset=' + this.voffset +
-        '&Vrange=' + this.vrange);
-
-    };
-
-    this.spk.updateCycle = function(auto, p, l) {
-      this.auto = auto;
-      this.length = l;
-      this.period = p;
-      var val = auto ? 1 : 0;
-
-      http.get(net.address() + 'PAS_CMD/UpdateSpkCycle?Length=' + l + '&Period=' + p + '&Cycle=' + val);
-
-    };
-  }
-
-  function isEmpty(obj) {
-    for (var prop in obj) {
-      if (obj.hasOwnProperty(prop))
-        return false;
+    function humidifier(p, i, d, sp, en) {
+        this.p = p;
+        this.i = i;
+        this.d = d;
+        this.sp = sp;
+        this.en = en;
     }
 
-    return true;
-  }
+    /** This object defines the values associated with the
+     * the control of the CRD.
+     */
+    function crd(_http, _net) {
+        var http = _http;
+        var net = _net;
 
-  function filter() {
-    this.cycle = {
-      "period": 360,
-      "length": 20,
-      "auto": false
-    };
-    this.position = true;
-  }
+        this.net = net;
+        // Red laser frequency in Hz
+        this.fred = 1000;
+        // Red laser duty cycle in %
+        this.dcred = 50;
+        // Blue laser frequencyu in Hz
+        this.fblue = 2000;
+        // Blue laser duty cycle in %
+        this.dcblue = 50;
+        // Red laser gain
+        this.kred = 1;
+        // Blue laser gain
+        this.kblue = 1;
+        // PMT gains
+        this.kpmt = [0, 0, 0, 0, 0];
+        // Blue enable state
+        this.eblue = true;
+        // Red enable state
+        this.ered = true;
+
+        this.setLaserRate = function (index, f) {
+
+            var cmd = 'CRDS_CMD/fblue?Rate=' + f;
+            if (index) {
+                cmd = 'CRDS_CMD/fred?Rate=' + f;
+            }
+
+            http.get(net.address() + cmd);
+
+        };
+        this.setEnable = function (index, val) {
+            //var cmd =
+        };
+    }
+
+    /** This object defines all of the functionality required for operating
+     * the PAS.  This is the current value table information that will be
+     * stored and manipulated during operation.
+     * @param $http (object) - this is the http service that is produced by
+     *                         angular.  This is used for communicating with the
+     *                         server.
+     * @param net (object) - local service for retrieving IP and port information.
+     */
+    function pas(_http, _net) {
+
+        var http = _http;
+
+        var net = _net;
+
+        this.spk = {
+            "vrange": 5,
+            "voffset": 0,
+            "f0": 1350,
+            "df": 100,
+            "pos": true,
+            "auto": false,
+            "period": 360,
+            "length": 30
+        };
+
+        this.las = {
+            "vr": [5, 5, 5, 5, 5],
+            "voffset": [1, 2, 3, 4, 5],
+            "f0": [1351, 1352, 1353, 1354, 1355],
+            "modulation": [false, false, false, false, false],
+            "enable": [false, false, false, false, false],
+        };
+
+        this.las.setf0 = function (f0) {
+            this.f0 = f0;
+
+            http.get(net.address() +
+                'PAS_CMD/UpdateFr?f0=' + f0.join(','));
+
+        };
+
+        /** Set the laser voltage range.
+         * @param {array} - array of voltages in Volts.
+         */
+        this.las.setVr = function (vr) {
+            this.las.vr = vr;
+
+            this.http.get(this.net.address() +
+                'PAS_CMD/UpdateVrange?Vrange=' + vr.join(','));
+
+        };
+
+        /** Set the laser voltage offset.
+         * @param {array} - voltage offset in volts.
+         */
+        this.las.setVo = function (vo) {
+            this.las.vr = vr;
+
+            this.http.get(this.net.address() +
+                'PAS_CMD/UpdateVoffset?Voffset=' + vo.join(','));
+
+        };
+
+        // TODO: Update server side to make sure that the modulation is updated.
+        this.las.updateMod = function (mod) {
+            this.moduldation = mod;
+
+            var val = [];
+
+            for (i = 0; i < mod.length; i++) {
+                val.push(mod ? 1 : 0);
+            }
+
+            //$http.get(net.address() +
+            //  'PAS_CMD/UpdateVoffset?Voffset=' + val.join(','));
+
+        };
+
+        // TODO: Fix service to handle byte array not single number.
+        this.las.updateEnable = function (en) {
+            this.enable = en;
+        };
+
+        /** Store the current speaker control setting and send the settign to
+         * the server.
+         * @param {boolean} - false = laser; true = speaker.
+         */
+        this.spk.updateCtl = function (spk) {
+            //this = spk;
+            var val = spk.pos ? 1 : 0;
+
+            http.get(net.address() + 'PAS_CMD/SpkSw?SpkSw=' + val);
+            http.get(net.address() + 'PAS_CMD/Spk?df=' + this.df + '&f0=' + this.f0);
+            http.get(net.address() + 'PAS_CMD/UpdateSpkVparams?Voffset=' + this.voffset +
+                '&Vrange=' + this.vrange);
+
+        };
+
+        this.spk.updateCycle = function (auto, p, l) {
+            this.auto = auto;
+            this.length = l;
+            this.period = p;
+            var val = auto ? 1 : 0;
+
+            http.get(net.address() + 'PAS_CMD/UpdateSpkCycle?Length=' + l + '&Period=' + p + '&Cycle=' + val);
+
+        };
+    }
+
+    function isEmpty(obj) {
+        for (var prop in obj) {
+            if (obj.hasOwnProperty(prop))
+                return false;
+        }
+
+        return true;
+    }
+
+    function filter() {
+        this.cycle = {
+            "period": 360,
+            "length": 20,
+            "auto": false
+        };
+        this.position = true;
+    }
 
 })();
-
 /** This file conigures the routing for the main page.  These are the views which
  * Will be displayed when the user clicks a heading in the navigation menu.
  *
@@ -880,10 +881,10 @@
 
 (function() {
 	angular.module('main')
-	.controller('Sidebar', ['$scope','$http', 'Data', 'net', function($scope, $http, Data, net) {
+	.controller('Sidebar', ['$scope','$http', 'Data', 'net','cvt', function($scope, $http, Data, net, cvt) {
 
 		$scope.save = 1;
-		$scope.filter = true;
+		$scope.filter = Data.filter.state;
 		$scope.time = "Not connected";
 		$scope.connected = false;
 		$scope.o3On = false;
@@ -901,7 +902,7 @@
 
 		$scope.$on('dataAvailable', function(){
 
-			$scope.filter = Data.filter;
+			$scope.filter = Data.filter.state;
 			$scope.cabin = Data.Cabin;
 
 			/* TODO: Have an issue with saving data - doesn't appear to be returning properly.
@@ -911,6 +912,10 @@
 			//$scope.save = Data.save;
 			$scope.connected = true;
 		});
+        
+        $scope.$on('cvtUpdated', function(){
+            //$scope.filter = cvt.filter_pos;
+        });
 
 		$scope.$on('dataNotAvailable', function(){
 			$scope.connected = false;
@@ -1050,7 +1055,7 @@
     function($scope, cvt) {
       $scope.power = cvt.power;
 
-
+         cvt.first_call = 1;
 
       $scope.toggle = function(id) {
         // Flip the bit
@@ -1082,8 +1087,10 @@
 
 (function () {
     angular.module('main')
-        .controller('mrConfigCtlr', ['$scope', '$http', 'Data', 'net', function ($scope, $http, Data, net) {
+        .controller('mrConfigCtlr', ['$scope', '$http', 'Data', 'net', 'cvt', function ($scope, $http, Data, net, cvt) {
 
+            cvt.first_call = 1;
+            
             $scope.network = {"ip": net.ip,
                          "port":net.port};
 
@@ -1188,6 +1195,8 @@
     function ($scope, cvt, Data) {
 
             //$scope.rd = {};
+        
+            cvt.firstcall = 1;
             $scope.someText = "hello";
             $scope.testnum = 2.55673e-12;
 
@@ -1322,10 +1331,12 @@
 
             var selPlot = 0;
 
+            cvt.first_call = 1;
+
             $scope.pData = [[0, NaN, NaN, NaN, NaN, NaN]];
 
             $scope.options = {
-                title:'PAS Data',
+                title: 'PAS Data',
                 ylabel: "IA",
                 labels: ["t", "Cell 1", "Cell 2", "Cell 3", "Cell 4", "Cell 5"],
                 legend: 'always'
@@ -1572,112 +1583,115 @@
 
 })();
 
-(function() {
-	angular.module('main').controller("flowCtlr", ['$scope', "Data", "cvt",
-	function($scope, Data, cvt) {
+(function () {
+    angular.module('main').controller("flowCtlr", ['$scope', "Data", "cvt",
+	function ($scope, Data, cvt) {
 
-		// Stores the position in the controller array
-		var i = -1;
+            // Stores the position in the controller array
+            var i = -1;
 
-		//Array that will hold the setpoints...
-		$scope.setpoints = [];
+            cvt.first_call = 1;
 
-		function mData(){
-			this.P = 0;
-			this.T = 0;
-			this.Q = 0;
-			this.Q0 = 0;
-			this.Q = 0;
-		}
+            //Array that will hold the setpoints...
+            $scope.setpoints = [];
 
-		function flowDevice(label, id, t, isCtl, sp){
-			this.label = label;
-			this.ID = id;
-			this.type = t;
-			this.isController = isCtl;
-			this.data = new mData();
+            function mData() {
+                this.P = 0;
+                this.T = 0;
+                this.Q = 0;
+                this.Q0 = 0;
+                this.Q = 0;
+            }
 
-			// TODO: This should be set by the CVT based on i
-			this.sp = sp;
+            function flowDevice(label, id, t, isCtl, sp) {
+                this.label = label;
+                this.ID = id;
+                this.type = t;
+                this.isController = isCtl;
+                this.data = new mData();
 
-			// If this device is not a controller, the index will be -1...
-			this.index = -1;
+                // TODO: This should be set by the CVT based on i
+                this.sp = sp;
 
-			/* If this device is a controller, push the new setpoint into the
-			 * setpoint array and update the index.
-			 * REALLY, THIS SHOULD BE PURELY A FUNCTION OF THE CVT AND SHOULD
-			 * NOT BE CONTROLLED BY THIS HERE - THIS IS TEMPORARY....
-			 */
+                // If this device is not a controller, the index will be -1...
+                this.index = -1;
 
-			// TESTED AND FUNCTIONAL
-			if (isCtl){
-				$scope.setpoints.push(sp);
-				// Update the global index
-				i += 1;
+                /* If this device is a controller, push the new setpoint into the
+                 * setpoint array and update the index.
+                 * REALLY, THIS SHOULD BE PURELY A FUNCTION OF THE CVT AND SHOULD
+                 * NOT BE CONTROLLED BY THIS HERE - THIS IS TEMPORARY....
+                 */
 
-				// Update the instance controller index...
-				this.index = i;
-			}
-		}
+                // TESTED AND FUNCTIONAL
+                if (isCtl) {
+                    $scope.setpoints.push(sp);
+                    // Update the global index
+                    i += 1;
 
-		/* TODO: This is hard coded now but should not be.  IDs should correspond to config
-		 * file IDs.
-		 */
+                    // Update the instance controller index...
+                    this.index = i;
+                }
+            }
 
-		$scope.Devices = [new flowDevice("Dry Red", "TestAlicat", "mflow", true,0),
-							new flowDevice("Dry Blue", "dryBlue","mflow", false,0),
-							new flowDevice("Denuded Blue", "deBlue","mflow", false,0),
-							new flowDevice("Denuded Red", "deRed","mflow", true,0),
-							new flowDevice("PAS Green", "pGreen","mflow", false,0),
-							new flowDevice("CRD High Humidified", "crdHighHum","mflow", false,0),
-							new flowDevice("CRD Low Humidified", "crdLowHum","mflow", false,0),
-							new flowDevice("Mirror Purge Flow", "crdMirror","mflow", false,0),
-							new flowDevice("Pressure Controller", "pCtl","pressure", false,0),
-							new flowDevice("O3 Bypass", "o3Bypass", "mflow", true,0),
+            /* TODO: This is hard coded now but should not be.  IDs should correspond to config
+             * file IDs.
+             */
+
+            $scope.Devices = [new flowDevice("Dry Red", "TestAlicat", "mflow", true, 0),
+							new flowDevice("Dry Blue", "dryBlue", "mflow", false, 0),
+							new flowDevice("Denuded Blue", "deBlue", "mflow", false, 0),
+							new flowDevice("Denuded Red", "deRed", "mflow", true, 0),
+							new flowDevice("PAS Green", "pGreen", "mflow", false, 0),
+							new flowDevice("CRD High Humidified", "crdHighHum", "mflow", false, 0),
+							new flowDevice("CRD Low Humidified", "crdLowHum", "mflow", false, 0),
+							new flowDevice("Mirror Purge Flow", "crdMirror", "mflow", false, 0),
+							new flowDevice("Pressure Controller", "pCtl", "pressure", false, 0),
+							new flowDevice("O3 Bypass", "o3Bypass", "mflow", true, 0),
 						 ];
 
-		/* Update the CVT - the CVT should call the server... */
-		$scope.updateSP = function(d){
-			cvt.flows.updateSP(d.ID, d.sp);
-		};
+            /* Update the CVT - the CVT should call the server... */
+            $scope.updateSP = function (d) {
+                cvt.flows.updateSP(d.ID, d.sp);
+            };
 
-		$scope.$on('dataAvailable', function(){
-			for (j = 0; j < $scope.Devices.length; j++){
-				// If the mass flow controller is present in the data...
-				if ($scope.Devices[j].ID in Data){
+            $scope.$on('dataAvailable', function () {
+                for (j = 0; j < $scope.Devices.length; j++) {
+                    // If the mass flow controller is present in the data...
+                    if ($scope.Devices[j].ID in Data) {
 
-					$scope.Devices[j].P = Data[$scope.Devices[j].ID].P;
-					$scope.Devices[j].T = Data[$scope.Devices[j].ID].T;
-					$scope.Devices[j].Q = Data[$scope.Devices[j].ID].Q;
-					$scope.Devices[j].Q0 = Data[$scope.Devices[j].ID].Q0;
-					$scope.Devices[j].Qsp = Data[$scope.Devices[j].ID].Qsp;
+                        $scope.Devices[j].P = Data[$scope.Devices[j].ID].P;
+                        $scope.Devices[j].T = Data[$scope.Devices[j].ID].T;
+                        $scope.Devices[j].Q = Data[$scope.Devices[j].ID].Q;
+                        $scope.Devices[j].Q0 = Data[$scope.Devices[j].ID].Q0;
+                        $scope.Devices[j].Qsp = Data[$scope.Devices[j].ID].Qsp;
 
-				}
-			}
-		});
+                    }
+                }
+            });
 	}]);
 })();
+(function () {
+    angular.module('main').controller('humidifier', ['$scope', 'cvt', 'Data',
+    function ($scope, cvt, Data) {
 
-(function() {
-  angular.module('main').controller('humidifier', ['$scope', 'cvt', 'Data',
-    function($scope, cvt, Data) {
 
-      $scope.high = cvt.humidifier.high;
-      $scope.med = cvt.humidifier.med;
+            cvt.first_call = 1;
 
-      $scope.updateMedEn = function(){
-        $scope.med.en = !$scope.med.en;
-        cvt.humidifier.med = $scope.med.en;
-      };
-      $scope.updateHighEn = function(){
-        $scope.high.en = !$scope.high.en;
-        cvt.humidifier.high = $scope.high.en;
-      };
+            $scope.high = cvt.humidifier.high;
+            $scope.med = cvt.humidifier.med;
+
+            $scope.updateMedEn = function () {
+                $scope.med.en = !$scope.med.en;
+                cvt.humidifier.med = $scope.med.en;
+            };
+            $scope.updateHighEn = function () {
+                $scope.high.en = !$scope.high.en;
+                cvt.humidifier.high = $scope.high.en;
+            };
 
     }
   ]);
 })();
-
 (function() {
 	angular.module('main').controller('startCal', ['$scope', '$http', 'net', 'cvt', 
 	function($scope, $http, net, cvt) {

@@ -6,10 +6,12 @@
 
             var selPlot = 0;
 
+            cvt.first_call = 1;
+
             $scope.pData = [[0, NaN, NaN, NaN, NaN, NaN]];
 
             $scope.options = {
-                title:'PAS Data',
+                title: 'PAS Data',
                 ylabel: "IA",
                 labels: ["t", "Cell 1", "Cell 2", "Cell 3", "Cell 4", "Cell 5"],
                 legend: 'always'

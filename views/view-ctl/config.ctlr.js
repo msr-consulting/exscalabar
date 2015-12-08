@@ -1,7 +1,9 @@
 (function () {
     angular.module('main')
-        .controller('mrConfigCtlr', ['$scope', '$http', 'Data', 'net', function ($scope, $http, Data, net) {
+        .controller('mrConfigCtlr', ['$scope', '$http', 'Data', 'net', 'cvt', function ($scope, $http, Data, net, cvt) {
 
+            cvt.first_call = 1;
+            
             $scope.network = {"ip": net.ip,
                          "port":net.port};
 

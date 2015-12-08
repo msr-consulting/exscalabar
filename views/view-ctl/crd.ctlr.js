@@ -3,6 +3,8 @@
     function ($scope, cvt, Data) {
 
             //$scope.rd = {};
+        
+            cvt.firstcall = 1;
             $scope.someText = "hello";
             $scope.testnum = 2.55673e-12;
 

@@ -1,9 +1,9 @@
 (function() {
 	angular.module('main')
-	.controller('Sidebar', ['$scope','$http', 'Data', 'net', function($scope, $http, Data, net) {
+	.controller('Sidebar', ['$scope','$http', 'Data', 'net','cvt', function($scope, $http, Data, net, cvt) {
 
 		$scope.save = 1;
-		$scope.filter = true;
+		$scope.filter = Data.filter.state;
 		$scope.time = "Not connected";
 		$scope.connected = false;
 		$scope.o3On = false;
@@ -21,7 +21,7 @@
 
 		$scope.$on('dataAvailable', function(){
 
-			$scope.filter = Data.filter;
+			$scope.filter = Data.filter.state;
 			$scope.cabin = Data.Cabin;
 
 			/* TODO: Have an issue with saving data - doesn't appear to be returning properly.
@@ -31,6 +31,10 @@
 			//$scope.save = Data.save;
 			$scope.connected = true;
 		});
+        
+        $scope.$on('cvtUpdated', function(){
+            //$scope.filter = cvt.filter_pos;
+        });
 
 		$scope.$on('dataNotAvailable', function(){
 			$scope.connected = false;

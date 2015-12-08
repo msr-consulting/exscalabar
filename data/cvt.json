@@ -1,55 +1,52 @@
 {
-  "crd": {
-    "blue": {
-      "f": 2000,
-      "dc": 0.500000
+    "pas": {
+        "spk": {
+            "fcenter": 1350,
+            "df": 100,
+            "cycle": true,
+            "length": 20,
+            "enabled": true,
+            "period": 300,
+            "vrange": 5.000000,
+            "voffset": 0.000000,
+            "ienabled": [true, true, true, true, true]
+        },
+        "las": {
+            "voffset": [2.50, 2.50, 2.50, 2.50, 2.50],
+            "f0": [1000.00, 1000.00, 1000.00, 1000.00, 1000.00],
+            "vrange": [5.00, 5.00, 5.00, 5.00, 5.00],
+            "enabled": [true, true, true, true, true]
+        }
     },
-    "red": {
-      "f": 1000,
-      "dc": 0.500000
+    "crd": {
+        "blue": {
+            "f": 2000,
+            "dc": 0.500000
+        },
+        "red": {
+            "f": 1000,
+            "dc": 0.500000
+        },
+        "kred": 1.000000,
+        "kblue0": 1.000000,
+        "kblue1": 1.000000,
+        "kpmt": [1.00, 1.00, 1.00, 1.00, 1.00]
     },
-    "kred": 1.000000,
-    "kblue0": 1.000000,
-    "kblue1": 1.000000,
-    "kpmt": [1.00, 1.00, 1.00, 1.00, 1.00]
-  },
-  "pas": {
-    "spk": {
-      "fcenter": 1350,
-      "df": 100,
-      "cycle": true,
-      "length": 20,
-      "enabled": true,
-      "period": 300,
-      "vrange": 5.000000,
-      "voffset": 0.000000,
-      "ienabled": [true, true, true, true, true]
+    "general": {
+        "filter": ["period", "length", "auto"],
+        "inlet": true,
+        "power": 26,
+        "purge": true
     },
-    "las": {
-      "voffset": [2.50, 2.50, 2.50, 2.50, 2.50],
-      "f0": [1000.00, 1000.00, 1000.00, 1000.00, 1000.00],
-      "vrange": [5.00, 5.00, 5.00, 5.00, 5.00],
-      "enabled": [true, true, true, true, true]
+    "filter": {
+        "period": 240,
+        "length": 60,
+        "auto": false
+    },
+    "testalicat": {
+        "setpoint": 0.000000
+    },
+    "htec": {
+        "setpoint": 0.000000
     }
-  },
-  "filter": {
-    "pos": false,
-    "period": 360,
-    "length": 20,
-    "auto": true
-  },
-  "general": {
-    "filter": false,
-    "inlet": true
-  },
-  "testalicat": {
-    "setpoint": 0.000000
-  },
-  "htec": {
-    "setpoint": 0.000000
-  },
-  "general": {
-    "power": 26,
-    "purge": true
-  }
 }
