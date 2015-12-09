@@ -10,6 +10,8 @@ var connect = require('gulp-connect');
 var open = require('gulp-open');
 var htmlmin = require('gulp-htmlmin');
 var sass = require('gulp-sass');
+var ngdocs = require('gulp-ngdocs');
+var serveStatic = require('serve-static');
 
 /* Since order matters, we can't just glob everything, but we must
  * make sure that the files are in the correct order. Since we have
@@ -81,6 +83,18 @@ gulp.task('styles', function () {
         .pipe(gulp.dest('./css/'));
 });
 
+gulp.task('ngdocs', function () {
+
+    var options = {
+        html5Mode: false,
+        title: 'EXSCALABAR UI'
+    }
+    return gulp.src("app/shared/cvt-service.js")
+        .pipe(ngdocs.process(options))
+        .pipe(gulp.dest('./docs'));
+
+});
+
 
 /* Make a connection on port 8080. */
 gulp.task('connect', function () {
@@ -89,9 +103,19 @@ gulp.task('connect', function () {
     });
 });
 
+/* Make a connection on port 8080. */
+gulp.task('connect2docs', function () {
+    connect.server({
+        root:'docs',
+        livereload: true,
+        port: 8000
+    });
+    console.log('Server started on http://localhost:8000');
+});
+
 // Watch Files For Changes
 gulp.task('watch', function () {
-    gulp.watch(watch_list, ['lint', 'scripts']);
+    gulp.watch(watch_list, ['lint', 'scripts', 'ngdocs']);
     gulp.watch('sass/**/*.scss', ['styles']);
 });
 
@@ -110,6 +134,6 @@ gulp.task('open', function () {
 });*/
 
 // Default Task
-gulp.task('default', ['lint', 'scripts', 'styles', 'connect', 'open', 'watch']);
+gulp.task('default', ['lint', 'scripts', 'styles', 'ngdocs', 'connect', 'connect2docs', 'open', 'watch']);
 
 // TODO: add different builds for distribution and development...

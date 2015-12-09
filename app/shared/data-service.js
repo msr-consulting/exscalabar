@@ -1,7 +1,10 @@
-/** This is the main service for retrieving data at regular intervals.
+/** 
+ * @ngdocs service 
+ * 
+ * @description 
+ * This is the main service for retrieving data at regular intervals.
  *
  */
-
 (function () {
     angular.module('main').factory('Data', ['$rootScope', '$http', '$log', 'net',
     'cvt',

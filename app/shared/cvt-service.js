@@ -1,9 +1,25 @@
-/* This service maintains a current value table of control values so that all are properly
- * controls will be properly populated.
- */
 (function () {
+
+    /**
+     * @ngdoc overview
+     * @name main
+     * @description
+     * Main module
+     */
     angular.module('main').factory('cvt', ['$http', 'net', '$rootScope',
     function ($http, net, $rootScope) {
+
+            /** 
+             * @ngdoc service
+             * @name main.cvt
+             * @description
+             * 
+             * The cvt service maintains a current value table of control values so that all controls will 
+             * be properly populated.  The cvt is updated at regular intervals using the checkCvt() method.
+             * This method is called in the 
+             * 
+             * @returns {Object} Returns a cvt object which contains all of the current values of the UI controls
+             */
 
             var cvt = {
                 "save": true,
@@ -25,13 +41,35 @@
              * this value will be set to zero.
              */
 
+            /**
+             * @ngdoc property
+             * @name main.cvt.humidifier
+             * @propertyOf main.cvt
+             * @description
+             * Defines the parameters for humidifier control.
+             */
             cvt.humidifier = {
                 high: new humidifier(0.75, 1, 0, 90, false),
                 med: new humidifier(0.75, 1, 0, 80, false)
             };
 
+            /** 
+             * @ngdoc property
+             * @name main.cvt.pas
+             * @propertyOf main.cvt
+             * @description
+             * Defines settings associated with the photoacoustic spectrometer.  These settings are associated with the speaker and the lasers.
+             */
             cvt.pas = new pas($http, net);
 
+
+            /** 
+             * @ngdoc property
+             * @name main.cvt.pas
+             * @propertyOf main.cvt
+             * @description
+             * Defines settings associated with the photoacoustic spectrometer.  These settings are associated with the speaker and the lasers.
+             */
             cvt.crd = new crd($http, net);
 
             cvt.filter_cycle = {
@@ -41,8 +79,17 @@
             };
 
             /* TODO: Implement server side CVT communication. */
-            /* Check the CVT on the server to make sure nothing has changed.  We will have multiple objects
-             * to check and will broadcast based on who has changed.
+
+            /**
+             * @ngdoc method
+             * @name main.cvt#checkCVT
+             * @methodOf main.cvt
+             * 
+             * @description
+             * Method provided for making calls to the server for CVT updates.  
+             * 
+             * If the call is successful and the object returned byt the server is not 
+             * empty, then this method will broadcast ``cvtUpdated`` to all callers.
              */
             cvt.checkCvt = function () {
 
@@ -58,13 +105,6 @@
                         var crd = response.data.crd;
                         var pas = response.data.pas;
 
-                        /*for (var p in crd){
-                          if (crd.hasOwnProperty(p)){
-                            if (cvt.crd[p] != crd[p]){
-                              cvt.crd[p] = crd[p];
-                            }
-                          }
-                        }*/
                         /* Update the CRD controls */
                         cvt.crd.fred = crd.red.f;
                         cvt.crd.fblue = crd.blue.f;
@@ -91,7 +131,7 @@
                         cvt.filter_cycle.period = response.data.filter.period;
                         cvt.filter_cycle.length = response.data.filter.length;
                         cvt.filter_cycle.auto = response.data.filter.auto;
-                        
+
                         cvt.filter_pos = response.data.general.filter_pos;
 
                         var power = Number(response.data.general.power).toString(2);
@@ -115,6 +155,12 @@
 
             };
 
+            /** @ngdoc object
+             *  @name main.cvt.flows
+             *  @module main
+             *  @description
+             *  Object containing the flow setpoint information.
+             */
             cvt.flows = {};
 
             cvt.flows.updateSP = function (id, sp) {
@@ -132,12 +178,12 @@
     }
   ]);
 
-    /** Object that provides a humidifier interface.
-     * @param {float} p - proportional control input
-     * @param {float} i - integral control input
-     * @param {float} p - derivative control input
-     * @param {float} sp - setpoint
-     * @param {boolean} en - enable byte
+    /**
+     * @ngdoc object
+     * @name main.humidifier
+     * @module main
+     * @description
+     * Object defining the methods and properties for modifying humidifier behavior.
      */
     function humidifier(p, i, d, sp, en) {
         this.p = p;
@@ -147,9 +193,6 @@
         this.en = en;
     }
 
-    /** This object defines the values associated with the
-     * the control of the CRD.
-     */
     function crd(_http, _net) {
         var http = _http;
         var net = _net;
@@ -180,12 +223,11 @@
             if (index) {
                 cmd = 'CRDS_CMD/fred?Rate=' + f;
                 this.fred = f;
-            }
-            else{
+            } else {
                 this.fblue = f;
             }
-            
-            
+
+
 
             http.get(net.address() + cmd);
 
@@ -195,14 +237,6 @@
         };
     }
 
-    /** This object defines all of the functionality required for operating
-     * the PAS.  This is the current value table information that will be
-     * stored and manipulated during operation.
-     * @param $http (object) - this is the http service that is produced by
-     *                         angular.  This is used for communicating with the
-     *                         server.
-     * @param net (object) - local service for retrieving IP and port information.
-     */
     function pas(_http, _net) {
 
         var http = _http;
@@ -247,9 +281,6 @@
 
         };
 
-        /** Set the laser voltage offset.
-         * @param {array} - voltage offset in volts.
-         */
         this.las.setVo = function (vo) {
             this.las.vr = vr;
 
@@ -258,7 +289,6 @@
 
         };
 
-        // TODO: Update server side to make sure that the modulation is updated.
         this.las.updateMod = function (mod) {
             this.moduldation = mod;
 
@@ -278,10 +308,6 @@
             this.enable = en;
         };
 
-        /** Store the current speaker control setting and send the settign to
-         * the server.
-         * @param {boolean} - false = laser; true = speaker.
-         */
         this.spk.updateCtl = function (spk) {
             //this = spk;
             var val = spk.pos ? 1 : 0;

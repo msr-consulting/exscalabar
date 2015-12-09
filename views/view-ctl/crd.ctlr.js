@@ -126,7 +126,7 @@
                 
                 //$scope.purge.pos = cvt.general.purge;
                 
-            })
+            });
         }
     ]);
 

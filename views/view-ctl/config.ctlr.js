@@ -37,7 +37,7 @@
                 ext: ".txt",
                 max:10,
                 save:true
-            }
+            };
 
 
 
