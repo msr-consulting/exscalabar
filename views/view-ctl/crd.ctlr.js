@@ -3,10 +3,8 @@
     function ($scope, cvt, Data) {
 
             //$scope.rd = {};
-        
+
             cvt.firstcall = 1;
-            $scope.someText = "hello";
-            $scope.testnum = 2.55673e-12;
 
             // Lasers have three inputs
             var laserInput = function (_rate, _DC, _k, enabled, ID) {
@@ -31,11 +29,6 @@
       ];
 
             $scope.pmt = cvt.crd.kpmt;
-
-            $scope.resize = function () {
-                //$(window).trigger('resize');
-                window.dispatchEvent(new Event('resize'));
-            };
 
             $scope.purge = {
                 pos: false,

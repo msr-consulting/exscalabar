@@ -148,10 +148,10 @@
                           }
                         }*/
                         /* Update the CRD controls */
-                        cvt.crd.fred = crd.fred;
-                        cvt.crd.fblue = crd.fblue;
-                        cvt.crd.dcred = crd.dcred;
-                        cvt.crd.dcblue = crd.dcblue;
+                        cvt.crd.fred = crd.red.f;
+                        cvt.crd.fblue = crd.blue.f;
+                        cvt.crd.dcred = crd.red.dc;
+                        cvt.crd.dcblue = crd.blue.dc;
                         cvt.crd.kpmt = crd.kpmt;
 
                         /* Update PAS laser controls */
@@ -1195,10 +1195,8 @@
     function ($scope, cvt, Data) {
 
             //$scope.rd = {};
-        
+
             cvt.firstcall = 1;
-            $scope.someText = "hello";
-            $scope.testnum = 2.55673e-12;
 
             // Lasers have three inputs
             var laserInput = function (_rate, _DC, _k, enabled, ID) {
@@ -1223,11 +1221,6 @@
       ];
 
             $scope.pmt = cvt.crd.kpmt;
-
-            $scope.resize = function () {
-                //$(window).trigger('resize');
-                window.dispatchEvent(new Event('resize'));
-            };
 
             $scope.purge = {
                 pos: false,

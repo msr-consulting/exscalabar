@@ -5,16 +5,19 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">{{ctl.id}}</div>
                     <div class="panel-body">
+                       <cui-numeric ng-model="ctl.rate" type = "int">f (Hz)</cui-numeric>
                         <div class="input-group" style="margin-top:2px;">
-                            <span class="input-group-addon" id="basic-addon1">f (Hz)</span>
+                            <span class="input-group-addon">f (Hz)</span>
                             <input type="number" id="rate_{{$index}}" class="form-control" ng-blur="setRate($index, ctl.rate)" ng-model="ctl.rate">
                         </div>
+                        <cui-numeric ng-model="ctl.DC" >DC (%)</cui-numeric>
                         <div class="input-group" style="margin-top:2px;">
-                            <span class="input-group-addon" id="basic-addon1">dc (%)</span>
+                            <span class="input-group-addon">dc (%)</span>
                             <input type="number" id="dc_{{$index}}" class="form-control" ng-model="ctl.DC">
                         </div>
+                        <cui-numeric ng-model="ctl.k" >k</cui-numeric>
                         <div class="input-group" style="margin-top:2px; margin-bottom:2px">
-                            <span class="input-group-addon" id="basic-addon1">k</span>
+                            <span class="input-group-addon">k</span>
                             <input type="number" id="k_{{$index}}" class="form-control" ng-model="ctl.k">
                         </div>
                         <cui-ibutton ival="ctl.en" ng-model="ctl.en" ng-click="setEnable($index)">Power</cui-ibutton>
@@ -55,22 +58,6 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Test</div>
-                <div class="panel-body">
-                    <cui-numeric ng-model="testnum" readonly>t<sub>test</sub></cui-numeric>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Test String</div>
-                <div class="panel-body">
-                    <cui-string ng-model="someText" readonly>t<sub>str</sub></cui-string>
-                </div>
-            </div>
-        </div>
         <div class="col-md-10">test</div>
         <!--
         <div class="panel panel-default" ng-repeat="cell in data.cell.tau[0] track by $index" ng-if="$index > 0">

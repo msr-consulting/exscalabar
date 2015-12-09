@@ -66,10 +66,10 @@
                           }
                         }*/
                         /* Update the CRD controls */
-                        cvt.crd.fred = crd.fred;
-                        cvt.crd.fblue = crd.fblue;
-                        cvt.crd.dcred = crd.dcred;
-                        cvt.crd.dcblue = crd.dcblue;
+                        cvt.crd.fred = crd.red.f;
+                        cvt.crd.fblue = crd.blue.f;
+                        cvt.crd.dcred = crd.red.dc;
+                        cvt.crd.dcblue = crd.blue.dc;
                         cvt.crd.kpmt = crd.kpmt;
 
                         /* Update PAS laser controls */
