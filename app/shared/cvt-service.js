@@ -179,7 +179,13 @@
             var cmd = 'CRDS_CMD/fblue?Rate=' + f;
             if (index) {
                 cmd = 'CRDS_CMD/fred?Rate=' + f;
+                this.fred = f;
             }
+            else{
+                this.fblue = f;
+            }
+            
+            
 
             http.get(net.address() + cmd);
 

@@ -15,8 +15,13 @@
                 this.id = ID;
             };
 
-            $scope.setRate = function (i, f) {
-                cvt.crd.setLaserRate(i, f);
+            /* Wrap the CVT function so that we force the CVT to update
+             * when the view changes.  
+             * argument[0] === index of laser 
+             * argument[1] === rate.
+             */
+            $scope.setRate = function () {
+                cvt.crd.setLaserRate(arguments[0], arguments[1]);
 
             };
 
@@ -105,8 +110,25 @@
                 $scope.pData = Data.crd.cell.max;
 
             });
-                    }
-                    ]);
+
+            $scope.$on('cvtUpdated', function () {
+                $scope.laser_ctl[0].rate = cvt.crd.fblue;
+                $scope.laser_ctl[0].DC = cvt.crd.dcblue;
+                $scope.laser_ctl[0].k = cvt.crd.kblue;
+                $scope.laser_ctl[0].enabled = cvt.crd.eblue;
+                
+                $scope.laser_ctl[1].rate = cvt.crd.fred;
+                $scope.laser_ctl[1].DC = cvt.crd.dcred;
+                $scope.laser_ctl[1].k = cvt.crd.kred;
+                $scope.laser_ctl[1].enabled = cvt.crd.ered;
+                
+                $scope.pmt = cvt.crd.kpmt;    
+                
+                //$scope.purge.pos = cvt.general.purge;
+                
+            })
+        }
+    ]);
 
     function updateCRD(d) {
         var dataOut = {
