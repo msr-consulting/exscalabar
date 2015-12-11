@@ -34,9 +34,23 @@
                 $scope.med.en = !$scope.med.en;
                 cvt.humidifier.med = $scope.med.en;
             };
+
             $scope.updateHighEn = function () {
                 $scope.high.en = !$scope.high.en;
                 cvt.humidifier.high = $scope.high.en;
+            };
+
+            $scope.ctlrOutData = [[0, NaN, NaN]];
+            $scope.RH = [[0, NaN, NaN]];
+            $scope.optCtlOut = {
+                ylabel: "Controller Output",
+                labels: ["t", "med", "high"],
+                legend: "always"
+            };
+            $scope.optRH = {
+                ylabel: "RH (%)",
+                labels: ["t", "med", "high"],
+                legend: "always"
             };
 
     }

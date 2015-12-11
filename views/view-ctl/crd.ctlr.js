@@ -15,6 +15,8 @@
                 this.id = ID;
             };
 
+            var objectData = "tau";
+
             /* Wrap the CVT function so that we force the CVT to update
              * when the view changes.  
              * argument[0] === index of laser 
@@ -82,8 +84,7 @@
             };
 
             $scope.optPData = {
-                title: "CRD Data",
-                ylabel: "data",
+                ylabel: "tau (us)",
                 labels: ["t", "Cell 1", "Cell 2", "Cell 3", "Cell 4", "Cell 5"],
                 legend: 'always'
             };
@@ -91,12 +92,23 @@
             $scope.pDataCMOptions = [
                 ['tau', function () {
                     $scope.optPData.ylabel = "tau (us)";
+                    objectData = "tau";
+
+
             }],
                 ["tau'",
                  function () {
                         $scope.optPData.ylabel = "tau' (us)";
-            }],
-                ['stdev', function () {}]
+                        objectData = "taucorr";
+                }],
+                ['stdev', function () {
+                    $scope.optPData.ylabel = "std. tau (us)";
+                    objectData = "stdevtau";
+                }],
+                ['max', function () {
+                    $scope.optPData.ylabel = "max";
+                    objectData = "max";
+                }]
             ];
 
             /* Listen for broadcasts from the DATA SERVICE */
@@ -107,7 +119,7 @@
                 var data = updateCRD(Data.crd);
 
                 $scope.ringdownAvg = data.rdAvg;
-                $scope.pData = Data.crd.cell.max;
+                $scope.pData = Data.crd.cell[objectData];
 
             });
 
@@ -116,16 +128,16 @@
                 $scope.laser_ctl[0].DC = cvt.crd.dcblue;
                 $scope.laser_ctl[0].k = cvt.crd.kblue;
                 $scope.laser_ctl[0].enabled = cvt.crd.eblue;
-                
+
                 $scope.laser_ctl[1].rate = cvt.crd.fred;
                 $scope.laser_ctl[1].DC = cvt.crd.dcred;
                 $scope.laser_ctl[1].k = cvt.crd.kred;
                 $scope.laser_ctl[1].enabled = cvt.crd.ered;
-                
-                $scope.pmt = cvt.crd.kpmt;    
-                
+
+                $scope.pmt = cvt.crd.kpmt;
+
                 //$scope.purge.pos = cvt.general.purge;
-                
+
             });
         }
     ]);
