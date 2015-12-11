@@ -2,7 +2,7 @@
     <nav class="bs-docs-sidebar hidden-print affix-top">
         <ul class="nav bs-docs-sidenav">
             <li>
-                <cui-ibutton ival="filter" ng-click="setFilter()">Filter</cui-ibutton>
+                <cui-button ival="filter" ng-click="setFilter()">Filter</cui-button>
             </li>
             <!--<li>
 				<button class="btn btn-primary btn-block btn-sm" type="button" ng-switch on="cabin" ng-click ="setCabin()" ng-class="{'btn-primary':cabin,'btn-info':!cabin}">
@@ -11,10 +11,10 @@
 				</button>
 			</li>-->
             <li>
-               <cui-ibutton ival="connected" ng-click="stop()">Stop</cui-ibutton>
+               <cui-button ival="connected" ng-click="stop()">Stop</cui-button>
             </li>
             <li>
-                <cui-ibutton ival="cabin" ng-click="setCabin()">Inlet</cui-ibutton>
+                <cui-button ival="cabin" ng-click="setCabin()">Inlet</cui-button>
             </li>
             <li class ng-switch on="o3On">
                 <!-- Show nothing when an ozone cal is not running -->

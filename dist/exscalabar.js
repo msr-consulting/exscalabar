@@ -1,104 +1,128 @@
-/* Start with an IIFE */
-(function(){
-	angular.module('main',['ngRoute', 'ui.bootstrap', 
-                           'ui.bootstrap.contextMenu', 'dygraph', 
-                           'cirrus.ui.ibutton', 'cirrus.ui.inumeric', 
+
+/**
+ * @ngdoc overview
+ * @name main
+ * @requires ngRoute
+ * @requires ui.bootstrap
+ * @requires ui.bootstrap.contextMenu
+ * @requires dygraph
+ * @requires cirrus.ui.button
+ * @requires cirrus.ui.numeric
+ * @requires cirrus.ui.string
+ * @description
+ * Angular module for the EXSCALABAR UI.
+ */
+(function () {
+    angular.module('main', ['ngRoute', 'ui.bootstrap',
+                           'ui.bootstrap.contextMenu', 'dygraph',
+                           'cirrus.ui.ibutton', 'cirrus.ui.inumeric',
                            'cirrus.ui.string']);
 })();
+(function () {
+    angular.module('main').factory('net', function () {
+        /** 
+         * @ngdoc service
+         * @name main.service:net
+         * @description
+         * This service handles network settings that can be set on the configuration page.
+         * This communicates the settings to the other portions of the application that require 
+         * the ip address and port.
+         *
+         * This service stores the settings in local storage so that they are
+         * restored on refresh.
+         */
 
-/** This service handles network settings that can be set in the sidebar.
- *  This communicates the settings in the sidebar to the other portions of
- *  the application that require the ip address and port.
- *
- *  This application stores the settings in local storage so that they are
- *  restored on refresh.
- */
 
-(function() {
-	angular.module('main').factory('net', function() {
+        /* On power up, check for the key 'ip' in the local cache.  If it does not
+         * exist, add the key and set it to the value below.
+         */
+        if (!localStorage.ip) {
+            localStorage.ip = "192.168.0.73";
+        }
 
-		/* On power up, check for the key 'ip' in the local cache.  If it does not
-		 * exist, add the key and set it to the value below.
-		 */
-		if (!localStorage.ip) {
-			localStorage.ip = "192.168.0.73";
-		}
+        /* On power up, check for the key 'port' in the local cache.  If it does not
+         * exist, add the key and set it to the value 8001 (the debug port).
+         */
+        if (!localStorage.port) {
+            localStorage.port = "8001";
+        }
 
-		/* On power up, check for the key 'port' in the local cache.  If it does not
-		 * exist, add the key and set it to the value 8001 (the debug port).
-		 */
-		if (!localStorage.port) {
-			localStorage.port = "8001";
-		}
+        return {
+            ip: localStorage.ip,
+            port: localStorage.port,
+            getNetworkParams: function () {
+                /** 
+                 * @ngdoc method
+                 * @name main.net.getNetworkParams
+                 * @methodOf main.service:net
+                 * @returns {object} Object containing two keys: ``ip`` and ``port``.  These values
+                 * are strings containing the IP address and the port that the server is listening on.
+                 */
+                return {
+                    "ip": this.ip,
+                    "port": this._port
+                };
+            },
+            setNetworkParams: function (ip, port) {
+                /** 
+                 * @ngdoc method
+                 * @name main.net.setNetworkParams
+                 * @methodOf main.service:net
+                 * @param {string} ip IP address of server
+                 * @param {string} port Port server is listening on.
+                 * @description
+                 * Sets the network settings for communicating with the server.  These values 
+                 * are cached using html5 ``localstorage``.
+                 */
+                this._ip = ip;
+                this.port = port;
+                localStorage.ip = ip;
+                localStorage.port = port;
+            },
 
-		return {
-			ip : localStorage.ip,
-			port : localStorage.port,
-			getNetworkParams : function() {
-				return {
-					"ip" : this.ip,
-					"port" : this._port
-				};
-			},
+            /** Set the IP address of the local server.  Cache the address using
+             * HTML5 localStorage.
+             * @param {string} - IP address in xxx.xxx.xxx.xxx form.
+             */
+            setIP: function (ip) {
+                this.ip = ip;
+                localStorage.ip = ip;
+            },
 
-			/** Setter for the IP Address and port of the server.  This function
-			  * will cache the data using an HTML5 localStorage call.
-				*/
-			setNetworkParams : function(ip, port) {
-				this._ip = ip;
-				this.port = port;
-				localStorage.ip = ip;
-				localStorage.port = port;
-			},
+            /** Set the port on which we are talking to the server.  Cache the port
+             * using HTML5 localStorage.
+             * @param {integer} - Value for port.
+             */
+            setPort: function (port) {
+                this.port = port;
+                localStorage.port = port;
+            },
 
-			/** Set the IP address of the local server.  Cache the address using
-			  * HTML5 localStorage.
-				* @param {string} - IP address in xxx.xxx.xxx.xxx form.
-				*/
-			setIP : function(ip) {
-				this.ip = ip;
-				localStorage.ip = ip;
-			},
-
-			/** Set the port on which we are talking to the server.  Cache the port
-			  * using HTML5 localStorage.
-				* @param {integer} - Value for port.
-				*/
-			setPort : function(port) {
-				this.port = port;
-				localStorage.port = port;
-			},
-
-			/** Use this function to return the address of the web service.
-			  * @return {string} - address in format 'http://[IP]:[Port]/xService/'
-				*/
-			address : function() {
-				return 'http://' + this.ip + ':' + this.port  + '/xService/';
-			}
-		};
-	});
+            /** Use this function to return the address of the web service.
+             * @return {string} - address in format 'http://[IP]:[Port]/xService/'
+             */
+            address: function () {
+                return 'http://' + this.ip + ':' + this.port + '/xService/';
+            }
+        };
+    });
 
 })();
-
 (function () {
 
-    /**
-     * @ngdoc overview
-     * @name main
-     * @description
-     * Main module
-     */
     angular.module('main').factory('cvt', ['$http', 'net', '$rootScope',
     function ($http, net, $rootScope) {
 
             /** 
              * @ngdoc service
-             * @name main.cvt
+             * @name main.service:cvt
+             * @requires $http
+             * @requires main.service:net
+             * @requires $rootScope
              * @description
-             * 
              * The cvt service maintains a current value table of control values so that all controls will 
              * be properly populated.  The cvt is updated at regular intervals using the checkCvt() method.
-             * This method is called in the 
+             * This method is called in the module main.mainCtrl
              * 
              * @returns {Object} Returns a cvt object which contains all of the current values of the UI controls
              */
@@ -126,19 +150,17 @@
             /**
              * @ngdoc property
              * @name main.cvt.humidifier
-             * @propertyOf main.cvt
+             * @propertyOf main.service:cvt
              * @description
              * Defines the parameters for humidifier control.
              */
-            cvt.humidifier = {
-                high: new humidifier(0.75, 1, 0, 90, false),
-                med: new humidifier(0.75, 1, 0, 80, false)
-            };
+            cvt.humidifier = [new humidifier(0.75, 1, 0, 90, false),
+                new humidifier(0.75, 1, 0, 80, false)];
 
             /** 
              * @ngdoc property
              * @name main.cvt.pas
-             * @propertyOf main.cvt
+             * @propertyOf main.service:cvt
              * @description
              * Defines settings associated with the photoacoustic spectrometer.  These settings are associated with the speaker and the lasers.
              */
@@ -147,8 +169,8 @@
 
             /** 
              * @ngdoc property
-             * @name main.cvt.pas
-             * @propertyOf main.cvt
+             * @name main.cvt.crd
+             * @propertyOf main.service:cvt
              * @description
              * Defines settings associated with the photoacoustic spectrometer.  These settings are associated with the speaker and the lasers.
              */
@@ -165,7 +187,7 @@
             /**
              * @ngdoc method
              * @name main.cvt#checkCVT
-             * @methodOf main.cvt
+             * @methodOf main.service:cvt
              * 
              * @description
              * Method provided for making calls to the server for CVT updates.  
@@ -273,8 +295,17 @@
         this.d = d;
         this.sp = sp;
         this.en = en;
+        this.updateEn =function(){};
+        this.updateParams = function(){};
     }
 
+    /** 
+     * @ngdoc object
+     * @name main.crd
+     * @module main
+     * @description
+     * Object defines the CRD related control inputs.
+     */
     function crd(_http, _net) {
         var http = _http;
         var net = _net;
@@ -431,7 +462,8 @@
     }
 
 })();
-/** This file conigures the routing for the main page.  These are the views which
+/** 
+ * This file conigures the routing for the main page.  These are the views which
  * Will be displayed when the user clicks a heading in the navigation menu.
  *
  * Routing requires the inclusion of 'angular-route.js' file and the module ngRoute.
@@ -454,43 +486,77 @@
 	}]);
 })();
 
-/** This is the main controller that is sucked into the entire program (this is placed
- * 	in the body tag).  The main thing that it will do is call the data service at regular
- * 	intervals which will broadcast the data when called.
- */
+(function () {
+    angular.module('main').controller('MainCtlr', ['Data', '$scope', '$interval', 'cvt',
+	function (Data, $scope, $interval, cvt) {
+            /** 
+             * @ngdoc controller
+             * @name main.controller:MainCtlr
+             * @requires Data
+             * @requires $scope
+             * @requires $interval
+             * @requires cvt
+             * This is the main controller that is sucked into the entire program (this is placed
+             * 	in the body tag).  The primary function is to make regular server calls using the 
+             * ``$interval``.
+             */
 
-(function() {
-	angular.module('main').controller('MainCtlr', ['Data', '$scope', '$interval', 'cvt',
-	function(Data, $scope, $interval, cvt) {
-
-		/* Call the data service at regular intervals; this will force a regular update of the
-		 * data object.
-		 */
-		$interval(function() {
-			Data.getData();
-			cvt.checkCvt();
-			//deviceCfg.checkCfg();
-		}, 1000);
+            /* Call the data service at regular intervals; this will force a regular update of the
+             * data object.
+             */
+            $interval(function () {
+                Data.getData();
+                cvt.checkCvt();
+                //deviceCfg.checkCfg();
+            }, 1000);
 
 	}]);
 })();
-
-/** 
- * @ngdocs service 
- * 
- * @description 
- * This is the main service for retrieving data at regular intervals.
- *
- */
 (function () {
     angular.module('main').factory('Data', ['$rootScope', '$http', '$log', 'net',
     'cvt',
     function ($rootScope, $http, $log, net, cvt) {
+            /** 
+             * @ngdoc service 
+             * @name main.service:Data
+             * @requires $rootscope
+             * @requires $http
+             * @requires $log
+             * @requires main.service:net
+             * @requires main.service:cvt
+             * @description 
+             * This is the main service for retrieving data at regular intervals.
+             *
+             */
 
             // Arrays of Devices
             // TODO: Make sure this is not hardcoded...
+
+            /** 
+             * @ngdoc property
+             * @name main.Data.alicats
+             * @propertyOf main.service:Data
+             * @description
+             * Defines a list of alicat names to ID data related to a specific alicat device.
+             */
             var alicats = ["TestAlicat"];
+
+            /** 
+             * @ngdoc property
+             * @name main.Data.ppts
+             * @propertyOf main.service:Data
+             * @description
+             * Defines a list of ppt names to ID data related to a specific ppt device.
+             */
             var ppts = ["pDryBlue"];
+
+            /** 
+             * @ngdoc property
+             * @name main.Data.vaisalas
+             * @propertyOf main.service:Data
+             * @description
+             * Defines a list of vaisala names to ID data related to a specific vaisala device.
+             */
             var vaisalas = ["vDryRed", "vDryBlue"];
             /* The full data object contains arrays of data as defined in the objects above.
              * This object is INTENDED to be static...
@@ -505,10 +571,24 @@
                 "msg": []
             };
 
-            // Defines array lengths - 100 == 100 seconds of data
+        
+            /** 
+             * @ngdoc property
+             * @name main.Data.maxLength
+             * @propertyOf main.service:Data
+             * @description
+             * Defines the max array length in seconds for displaying data. 
+             */
             var maxLength = 300;
 
-            /* Variable that indicates everyone needs to shift... */
+            /** 
+             * @ngdoc property
+             * @name main.Data.shiftData
+             * @propertyOf main.service:Data
+             * @description
+             * Determines how to shuffle array data (used in conjunction with ``maxLength``).  If the 
+             * value is true, the number of elements in the arrays is ``>= maxLength``. 
+             */
             var shiftData = false;
 
             dataObj.pas = {};
@@ -517,7 +597,7 @@
 
             dataObj.filter = {
                 "state": true,
-                "tremain": 0    
+                "tremain": 0
             };
 
             /** Clear out the message queue by first copying the msg arrays
@@ -548,7 +628,7 @@
             var busy = false;
 
 
-            /* Call this to poll the server for data */
+            
             dataObj.getData = function () {
                 if (busy) {
                     return;
@@ -637,9 +717,16 @@
     }
   ]);
 
-    /** Function to return current time.
-     * @param {Double} t - time in seconds since January 1, 1904.
-     * @return {Date} - date object with date from server.
+    /** 
+     * @ngdoc method
+     * @name main.Data.updateTime
+     * @methodOf main.service:Data
+     * @description
+     * Takes the time returned by the server (a LabVIEW time) and converts it to 
+     * a Javascript Date.
+     * 
+     * @param {number} t Time in seconds since January 1, 1904.
+     * @return {Date} Date object with date from server.
      */
     function updateTime(t) {
         /* The reference for LabVIEW time is 1 Jan 1904.  JS days
@@ -692,15 +779,19 @@
     }
 
     /**
+     * @ngdoc method
+     * @name main.Data.handlePAS
+     * @methodOf main.service:Data
+     * @description
      * This function handles allocation of the PAS data.  All data may be plotted
      * and as such the data is divided up into arrays of {x,y} pairs for use by
      * plotting libraries.  The length of the arrays is defined by the service
      * and the length is indicated by the input shift.
-     * @param {Object} d - this is the JSON data object returned by the server.
-     * @param {Object} Data - data object that will be broadcasted to controllers.
-     * @param {boolean} shift - indicates whether we have the correct number of
+     * @param {Object} d The JSON data object returned by the server.
+     * @param {Object} Data Data object that will be broadcasted to controllers.
+     * @param {boolean} shift Indicates whether we have the correct number of
      * points in the array and need to start shifting the data.
-     * @return {Object} - returns the Data object defined in the inputs.
+     * @return {Object} Data object defined in the inputs.
      */
     function handlePAS(d, Data, shift) {
         var t = Data.time[0];
@@ -769,15 +860,19 @@
     }
 
     /**
+     * @ngdoc method
+     * @name main.Data.handleCRD
+     * @methodOf main.service:Data
+     * @description
      * This function handles allocation of the CRD data.  All data may be plotted
      * and as such the data is divided up into arrays of {x,y} pairs for use by
      * plotting libraries.  The length of the arrays is defined by the service
      * and the length is indicated by the input shift.
-     * @param {Object} d - this is the JSON data object returned by the server.
-     * @param {Object} Data - data object that will be broadcasted to controllers.
-     * @param {boolean} shift - indicates whether we have the correct number of
+     * @param {Object} d The JSON data object returned by the server.
+     * @param {Object} Data Data object that will be broadcasted to controllers.
+     * @param {boolean} shift Indicates whether we have the correct number of
      * points in the array and need to start shifting the data.
-     * @return {Object} - returns the Data object defined in the inputs.
+     * @return {Object} Data object defined in the inputs.
      */
     function handleCRD(d, Data, shift) {
 
@@ -860,6 +955,15 @@
 })();
 (function() {
 	angular.module('main').directive('msg', msg_);
+    /**
+     * @ngdoc directive
+     * @name main.directive:msg
+     * @restrict E
+     * @scope
+     * @description
+     * Provides a template for displaying messages.
+     * @deprecated
+     */
 
 	function msg_() {
 		return {
@@ -1724,11 +1828,33 @@
     angular.module('main').controller('humidifier', ['$scope', 'cvt', 'Data',
     function ($scope, cvt, Data) {
 
+            /** 
+             * @ngdoc controller
+             * @name main.controller:humidifier
+             * @requires $scope
+             * @requires main.service:cvt
+             * @requires main.service:Data
+             *
+             * @description
+             * Provides functionality for the humidifier data page.
+             */
+
 
             cvt.first_call = 1;
 
+            /**
+             * @ngdoc property
+             * @name main.humidifier.high
+             * @propertyOf main.controller:humidifier
+             * @description
+             * Object defining the properties of the high value humidifier - 
+             * pid values and enable.  These values are initialized with the 
+             * appropriate cvt controls.
+             */
             $scope.high = cvt.humidifier.high;
             $scope.med = cvt.humidifier.med;
+
+            $scope.h = [cvt.humidifier.med, cvt.humidifier.high];
 
             $scope.updateMedEn = function () {
                 $scope.med.en = !$scope.med.en;
@@ -1987,21 +2113,45 @@
 	}
 
 })(); 
-(function() {
-  angular.module('main').controller('navctlr', ['$scope', 'navservice',
-    function($scope, navservice) {
+(function () {
+    /**
+     * @ngdoc controller
+     * @name main.controller:navctlr
+     * @requires $scope
+     * @requires navservice
+     * @description
+     * Defines the controller the encompases the navigation meny at the top of the page. 
+     */
+    angular.module('main').controller('navctlr', ['$scope', 'navservice',
+    function ($scope, navservice) {
 
-      $scope.save = true;
+            /** 
+             * @ngdoc property
+             * @name main.navctlr.save
+             * @propertyOf main.controller:navctlr
+             * @description
+             * Boolean representing the current state of the save button element.
+             */
+            $scope.save = true;
 
-      $scope.updateSave = function() {
-        $scope.save = !$scope.save;
+            /**
+             * @ngdoc method
+             * @name main.navctlr.updateSave
+             * @methodOf main.controller:navctlr
+             * @description 
+             * Switches the save state based on the current save state and makes a 
+             * call to the ``navservice.save()`` to update the value.
+             */
 
-        navservice.save($scope.save);
-      };
+            $scope.updateSave = function () {
+                $scope.save = !$scope.save;
 
-      $scope.stop = function() {
-        navservice.stop();
-      };
+                navservice.save($scope.save);
+            };
+
+            $scope.stop = function () {
+                navservice.stop();
+            };
 
     }
   ]);

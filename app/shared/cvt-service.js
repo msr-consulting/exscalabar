@@ -1,22 +1,18 @@
 (function () {
 
-    /**
-     * @ngdoc overview
-     * @name main
-     * @description
-     * Main module
-     */
     angular.module('main').factory('cvt', ['$http', 'net', '$rootScope',
     function ($http, net, $rootScope) {
 
             /** 
              * @ngdoc service
-             * @name main.cvt
+             * @name main.service:cvt
+             * @requires $http
+             * @requires main.service:net
+             * @requires $rootScope
              * @description
-             * 
              * The cvt service maintains a current value table of control values so that all controls will 
              * be properly populated.  The cvt is updated at regular intervals using the checkCvt() method.
-             * This method is called in the 
+             * This method is called in the module main.mainCtrl
              * 
              * @returns {Object} Returns a cvt object which contains all of the current values of the UI controls
              */
@@ -44,19 +40,17 @@
             /**
              * @ngdoc property
              * @name main.cvt.humidifier
-             * @propertyOf main.cvt
+             * @propertyOf main.service:cvt
              * @description
              * Defines the parameters for humidifier control.
              */
-            cvt.humidifier = {
-                high: new humidifier(0.75, 1, 0, 90, false),
-                med: new humidifier(0.75, 1, 0, 80, false)
-            };
+            cvt.humidifier = [new humidifier(0.75, 1, 0, 90, false),
+                new humidifier(0.75, 1, 0, 80, false)];
 
             /** 
              * @ngdoc property
              * @name main.cvt.pas
-             * @propertyOf main.cvt
+             * @propertyOf main.service:cvt
              * @description
              * Defines settings associated with the photoacoustic spectrometer.  These settings are associated with the speaker and the lasers.
              */
@@ -65,8 +59,8 @@
 
             /** 
              * @ngdoc property
-             * @name main.cvt.pas
-             * @propertyOf main.cvt
+             * @name main.cvt.crd
+             * @propertyOf main.service:cvt
              * @description
              * Defines settings associated with the photoacoustic spectrometer.  These settings are associated with the speaker and the lasers.
              */
@@ -83,7 +77,7 @@
             /**
              * @ngdoc method
              * @name main.cvt#checkCVT
-             * @methodOf main.cvt
+             * @methodOf main.service:cvt
              * 
              * @description
              * Method provided for making calls to the server for CVT updates.  
@@ -191,8 +185,17 @@
         this.d = d;
         this.sp = sp;
         this.en = en;
+        this.updateEn =function(){};
+        this.updateParams = function(){};
     }
 
+    /** 
+     * @ngdoc object
+     * @name main.crd
+     * @module main
+     * @description
+     * Object defines the CRD related control inputs.
+     */
     function crd(_http, _net) {
         var http = _http;
         var net = _net;

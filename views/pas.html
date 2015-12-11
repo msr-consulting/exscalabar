@@ -3,52 +3,34 @@
         <accordion-group heading="Controls" is-disabled=false is-open=true>
             <div class="row">
                 <div ng-controller="pasSpk">
-                    <div class="col-md-2">
+                    <div class="col-lg-2 col-md-3">
                         <div class="panel panel-default">
                             <div class="panel-heading">Speaker Control</div>
                             <div class="panel-body">
-                                <div class="input-group" style="margin-top:2px; margin-bottom:2px">
-                                    <span class="input-group-addon" id="basic-addon1">V<sub>range</sub></span>
-                                    <input class="form-control" id="svrange" ng-blur="updateSpkV()" ng-model="speaker.vrange" type="number" />
-                                </div>
-                                <div class="input-group" style="margin-top:2px; margin-bottom:2px">
-                                    <span class="input-group-addon" id="basic-addon1">V<sub>offset</sub></span>
-                                    <input class="form-control" id="svoffset" ng-blur="updateSpkV()" ng-model="speaker.voffset" type="number" />
-                                </div>
-                                <div class="input-group" style="margin-top:2px; margin-bottom:2px">
-                                    <span class="input-group-addon" id="basic-addon1">f<sub>c</sub> (Hz)</span>
-                                    <input class="form-control" id="fcenter" max="5000" min="100" ng-blur="updateSpkF()" ng-model="speaker.f0" placeholder="1300" type="number" />
-                                </div>
-                                <div class="input-group" style="margin-top:2px; margin-bottom:2px">
-                                    <span class="input-group-addon" id="basic-addon1">&Delta;f (Hz)</span>
-                                    <input class="form-control" id="df" max="1000" min="1" ng-blur="updateSpkF()" ng-model="speaker.df" placeholder="100" title="Speaker chirp bandwidth in Hz." type="number" />
-                                </div>
-                                <cui-ibutton ival="speaker.pos" ng-click="setPos()">Speaker</cui-ibutton>
+                                <cui-numeric ng-model="speaker.vrange" width="50" evnt-func="updateSpkV()">V<sub>range</sub></cui-numeric>
+                                <cui-numeric ng-model="speaker.voffset" width="50" evnt-func="updateSpkV()">V<sub>offset</sub></cui-numeric>
+                                <cui-numeric ng-model="speaker.f0" width="50" evnt-func="updateSpkF()" type="int">f<sub>c</sub> (Hz)</cui-numeric>
+                                <cui-numeric ng-model="speaker.pos" width="50" evnt-func="updateSpkF()">&Delta;f (Hz)</cui-numeric>
+                                <cui-button ival="speaker.pos" ng-click="setPos()">Speaker</cui-button>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3 col-lg-2">
                         <div class="panel panel-default">
                             <div class="panel-heading">Speaker Cycle</div>
                             <div class="panel-body">
-                                <div class="input-group" style="margin-top:2px; margin-bottom:2px">
-                                    <span class="input-group-addon" id="basic-addon1">per (s)</span>
-                                    <input class="form-control" id="period" max="5000" min="1" ng-blur="updateCycle()" ng-model="speaker.period" placeholder="360" type="number" />
-                                </div>
-                                <div class="input-group" style="margin-top:2px; margin-bottom:2px">
-                                    <span class="input-group-addon" id="basic-addon1">len (s)</span>
-                                    <input class="form-control" id="length" max="100" min="1" ng-change="updateCycle()" ng-model="speaker.length" placeholder="0" type="number" />
-                                </div>
-                                <cui-ibutton ival="speaker.auto">
+                               <cui-numeric ng-model="speaker.period" width="45" evnt-func="updateCycle()">per (s)</cui-numeric>
+                                <cui-numeric ng-model="speaker.length" width="45" evnt-func="updateCycle()">V<sub>offset</sub></cui-numeric>
+                                <cui-button ival="speaker.auto">
                                     <div tooltip-placement="bottom" tooltip="Set system to cycle speaker automatically" tooltip-trigger="mouseenter" tooltip-append-to-body="true" ng-click="updateAuto()">Auto</div>
-                                </cui-ibutton>
+                                </cui-button>
 
                             </div>
                         </div>
                     </div>
                 </div>
                 <div ng-controller="pasLas">
-                    <div class="col-md-8">
+                    <div class="col-md-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 Laser Control

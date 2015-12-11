@@ -1,4 +1,5 @@
-/** This file conigures the routing for the main page.  These are the views which
+/** 
+ * This file conigures the routing for the main page.  These are the views which
  * Will be displayed when the user clicks a heading in the navigation menu.
  *
  * Routing requires the inclusion of 'angular-route.js' file and the module ngRoute.

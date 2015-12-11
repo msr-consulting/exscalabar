@@ -11,7 +11,6 @@ var open = require('gulp-open');
 var htmlmin = require('gulp-htmlmin');
 var sass = require('gulp-sass');
 var ngdocs = require('gulp-ngdocs');
-var serveStatic = require('serve-static');
 
 /* Since order matters, we can't just glob everything, but we must
  * make sure that the files are in the correct order. Since we have
@@ -58,6 +57,15 @@ var watch_list = ["app/shared/main.module.js",
 "app/navigation/nav-directive.js",
 "app/navigation/nav.ctlr.js"];
 
+var docList = ["app/shared/main.module.js",
+"app/shared/main-config.js",
+"app/shared/main-controller.js",
+"app/shared/data-service.js",
+"app/Messages/msg-directive.js",
+"app/shared/network-service.js",
+               "app/shared/cvt-service.js",
+               "app/navigation/nav.ctlr.js"];
+
 
 /* Lint Task - check for errors in the js code... */
 gulp.task('lint', function () {
@@ -89,7 +97,7 @@ gulp.task('ngdocs', function () {
         html5Mode: false,
         title: 'EXSCALABAR UI'
     }
-    return gulp.src("app/shared/cvt-service.js")
+    return gulp.src(docList)
         .pipe(ngdocs.process(options))
         .pipe(gulp.dest('./docs'));
 
@@ -106,7 +114,7 @@ gulp.task('connect', function () {
 /* Make a connection on port 8080. */
 gulp.task('connect2docs', function () {
     connect.server({
-        root:'docs',
+        root: 'docs',
         livereload: true,
         port: 8000
     });
@@ -116,7 +124,7 @@ gulp.task('connect2docs', function () {
 // Watch Files For Changes
 gulp.task('watch', function () {
     gulp.watch(watch_list, ['lint', 'scripts', 'ngdocs']);
-    gulp.watch('sass/**/*.scss', ['styles']);
+    //gulp.watch('sass/**/*.scss', ['styles']);
 });
 
 /* This will open the UI in the default browser. */

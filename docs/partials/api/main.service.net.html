@@ -1,0 +1,28 @@
+<h1><code ng:non-bindable="">net</code>
+<div><span class="hint">service in module <code ng:non-bindable="">main</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="main-service-page main-service-net-page"><p>This service handles network settings that can be set on the configuration page.
+This communicates the settings to the other portions of the application that require 
+the ip address and port.</p>
+<p>This service stores the settings in local storage so that they are
+restored on refresh.</p>
+</div></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><h3 id="methods_getnetworkparams">getNetworkParams()</h3>
+<div class="getnetworkparams"><h5 id="methods_getnetworkparams_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="main-net-getnetworkparams-page"><p>Object containing two keys: <code>ip</code> and <code>port</code>.  These values
+are strings containing the IP address and the port that the server is listening on.</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_setnetworkparams">setNetworkParams(ip, port)</h3>
+<div class="setnetworkparams"><div class="main-net-setnetworkparams-page"><p>Sets the network settings for communicating with the server.  These values 
+are cached using html5 <code>localstorage</code>.</p>
+</div><h5 id="methods_setnetworkparams_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>ip</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="main-net-setnetworkparams-page"><p>IP address of server</p>
+</div></td></tr><tr><td>port</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="main-net-setnetworkparams-page"><p>Port server is listening on.</p>
+</div></td></tr></tbody></table></div>
+</li>
+</ul>
+</div>
+</div>

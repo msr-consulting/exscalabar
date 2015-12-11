@@ -1,19 +1,48 @@
-/** 
- * @ngdocs service 
- * 
- * @description 
- * This is the main service for retrieving data at regular intervals.
- *
- */
 (function () {
     angular.module('main').factory('Data', ['$rootScope', '$http', '$log', 'net',
     'cvt',
     function ($rootScope, $http, $log, net, cvt) {
+            /** 
+             * @ngdoc service 
+             * @name main.service:Data
+             * @requires $rootscope
+             * @requires $http
+             * @requires $log
+             * @requires main.service:net
+             * @requires main.service:cvt
+             * @description 
+             * This is the main service for retrieving data at regular intervals.
+             *
+             */
 
             // Arrays of Devices
             // TODO: Make sure this is not hardcoded...
+
+            /** 
+             * @ngdoc property
+             * @name main.Data.alicats
+             * @propertyOf main.service:Data
+             * @description
+             * Defines a list of alicat names to ID data related to a specific alicat device.
+             */
             var alicats = ["TestAlicat"];
+
+            /** 
+             * @ngdoc property
+             * @name main.Data.ppts
+             * @propertyOf main.service:Data
+             * @description
+             * Defines a list of ppt names to ID data related to a specific ppt device.
+             */
             var ppts = ["pDryBlue"];
+
+            /** 
+             * @ngdoc property
+             * @name main.Data.vaisalas
+             * @propertyOf main.service:Data
+             * @description
+             * Defines a list of vaisala names to ID data related to a specific vaisala device.
+             */
             var vaisalas = ["vDryRed", "vDryBlue"];
             /* The full data object contains arrays of data as defined in the objects above.
              * This object is INTENDED to be static...
@@ -28,10 +57,24 @@
                 "msg": []
             };
 
-            // Defines array lengths - 100 == 100 seconds of data
+        
+            /** 
+             * @ngdoc property
+             * @name main.Data.maxLength
+             * @propertyOf main.service:Data
+             * @description
+             * Defines the max array length in seconds for displaying data. 
+             */
             var maxLength = 300;
 
-            /* Variable that indicates everyone needs to shift... */
+            /** 
+             * @ngdoc property
+             * @name main.Data.shiftData
+             * @propertyOf main.service:Data
+             * @description
+             * Determines how to shuffle array data (used in conjunction with ``maxLength``).  If the 
+             * value is true, the number of elements in the arrays is ``>= maxLength``. 
+             */
             var shiftData = false;
 
             dataObj.pas = {};
@@ -40,7 +83,7 @@
 
             dataObj.filter = {
                 "state": true,
-                "tremain": 0    
+                "tremain": 0
             };
 
             /** Clear out the message queue by first copying the msg arrays
@@ -71,7 +114,7 @@
             var busy = false;
 
 
-            /* Call this to poll the server for data */
+            
             dataObj.getData = function () {
                 if (busy) {
                     return;
@@ -160,9 +203,16 @@
     }
   ]);
 
-    /** Function to return current time.
-     * @param {Double} t - time in seconds since January 1, 1904.
-     * @return {Date} - date object with date from server.
+    /** 
+     * @ngdoc method
+     * @name main.Data.updateTime
+     * @methodOf main.service:Data
+     * @description
+     * Takes the time returned by the server (a LabVIEW time) and converts it to 
+     * a Javascript Date.
+     * 
+     * @param {number} t Time in seconds since January 1, 1904.
+     * @return {Date} Date object with date from server.
      */
     function updateTime(t) {
         /* The reference for LabVIEW time is 1 Jan 1904.  JS days
@@ -215,15 +265,19 @@
     }
 
     /**
+     * @ngdoc method
+     * @name main.Data.handlePAS
+     * @methodOf main.service:Data
+     * @description
      * This function handles allocation of the PAS data.  All data may be plotted
      * and as such the data is divided up into arrays of {x,y} pairs for use by
      * plotting libraries.  The length of the arrays is defined by the service
      * and the length is indicated by the input shift.
-     * @param {Object} d - this is the JSON data object returned by the server.
-     * @param {Object} Data - data object that will be broadcasted to controllers.
-     * @param {boolean} shift - indicates whether we have the correct number of
+     * @param {Object} d The JSON data object returned by the server.
+     * @param {Object} Data Data object that will be broadcasted to controllers.
+     * @param {boolean} shift Indicates whether we have the correct number of
      * points in the array and need to start shifting the data.
-     * @return {Object} - returns the Data object defined in the inputs.
+     * @return {Object} Data object defined in the inputs.
      */
     function handlePAS(d, Data, shift) {
         var t = Data.time[0];
@@ -292,15 +346,19 @@
     }
 
     /**
+     * @ngdoc method
+     * @name main.Data.handleCRD
+     * @methodOf main.service:Data
+     * @description
      * This function handles allocation of the CRD data.  All data may be plotted
      * and as such the data is divided up into arrays of {x,y} pairs for use by
      * plotting libraries.  The length of the arrays is defined by the service
      * and the length is indicated by the input shift.
-     * @param {Object} d - this is the JSON data object returned by the server.
-     * @param {Object} Data - data object that will be broadcasted to controllers.
-     * @param {boolean} shift - indicates whether we have the correct number of
+     * @param {Object} d The JSON data object returned by the server.
+     * @param {Object} Data Data object that will be broadcasted to controllers.
+     * @param {boolean} shift Indicates whether we have the correct number of
      * points in the array and need to start shifting the data.
-     * @return {Object} - returns the Data object defined in the inputs.
+     * @return {Object} Data object defined in the inputs.
      */
     function handleCRD(d, Data, shift) {
 
