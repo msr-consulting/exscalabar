@@ -36,6 +36,14 @@
     font-size: 25px;
 }
 
+.cui-msg-error{
+    color:red;
+}
+
+.cui-msg-info{
+    color:green;
+}
+
 .badge-notify {
     background: red;
     position: relative;

@@ -18,6 +18,7 @@
 		.when('/Temperature', {templateUrl:'views/temperature.html'})
 		.when('/Humidifier', {templateUrl:'views/humidifier.html'})
 		.when('/Common', {templateUrl:'views/common.html'})
-		.when('/Config', {templateUrl:'views/config.html'});
+		.when('/Config', {templateUrl:'views/config.html'})
+		.when('/msg', {templateUrl:'app/Messages/msg.html'});
 	}]);
 })();

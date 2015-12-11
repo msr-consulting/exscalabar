@@ -16,7 +16,8 @@
     angular.module('main', ['ngRoute', 'ui.bootstrap',
                            'ui.bootstrap.contextMenu', 'dygraph',
                            'cirrus.ui.ibutton', 'cirrus.ui.inumeric',
-                           'cirrus.ui.string']);
+                           'cirrus.ui.string',
+                           'ngSanitize']);
 })();
 (function () {
     angular.module('main').factory('net', function () {
@@ -482,7 +483,8 @@
 		.when('/Temperature', {templateUrl:'views/temperature.html'})
 		.when('/Humidifier', {templateUrl:'views/humidifier.html'})
 		.when('/Common', {templateUrl:'views/common.html'})
-		.when('/Config', {templateUrl:'views/config.html'});
+		.when('/Config', {templateUrl:'views/config.html'})
+		.when('/msg', {templateUrl:'app/Messages/msg.html'});
 	}]);
 })();
 
@@ -975,49 +977,54 @@
 
 })(); 
 
-(function() {
-	angular.module('main').controller('msgCtlr', ['Data', '$scope',
-	function(Data, $scope) {
+(function () {
+    angular.module('main').controller('msgCtlr', ['Data', '$scope',
+	function (Data, $scope) {
+            /**
+             * @ngdoc controller
+             * @name main.msgCtlr
+             * @requires main.service:Data
+             * @requires $scope
+             * @description
+             * Controller for displaying messages from the server. 
+             */
 
-    $scope.msgs = [];
-		$scope.error_code = [];
+            /** 
+             * @ngdoc property
+             * @name main.msgCtlr#msgs
+             * @propertyOf main.controller:msgCtlr
+             * @scope
+             * @description
+             * Scope variable that holds the html based text stream.
+             */
+            $scope.msgs = '<span class="cui-msg-error">This is just a test of the system messages.</span><br /><span class="cui-msg-info">Here is some more text.</span>';
+            $scope.test = true;
+            $scope.$on('msgAvailable', function () {
 
-		$scope.num_codes = [0,0,0];
+                var x = Data.popMsgQueue();
 
-    $scope.$on('msgAvailable', function(){
-
-			var x = Data.popMsgQueue();
-
-			for (i =0; i < x.length; i++){
-				$scope.msgs.push(x[i]);
-
-				if (x[i].search('ERROR') > 0){
-					$scope.error_code.push(2);
-					$scope.num_codes[2] += 1;
-				}
-				else if (x[i].search('WARNING') > 0) {
-					$scope.error_code.push(1);
-					$scope.num_codes[1] += 1;
-				}
-				else{
-					$scope.error_code.push(0);
-					$scope.num_codes[0] += 1;
-				}
-			}
-
-			$scope.clrMsgs = function(){
-				$scope.num_codes = [0,0,0];
-				$scope.msgs = [];
-			};
+                // Color the error based on the message information
+                var m = "<span>";
+                for (i = 0; i < x.length; i++) {
+                    if (x[i].search('ERROR') > 0) {
+                        m = '<span class="cui-msg-error">';
+                    } else if (x[i].search('WARNING') > 0) {
+                        m = '<span class="cui-msg-info">';
+                    } else {
+                        m = '<span class="cui-msg-info">';
+                    }
+                    $scope.msgs.concat(m + x[i] + "</span><br>");
+                }
+            });
 
 
-
-    });
+            $scope.clrMsgs = function () {
+                $scope.msgs = "";
+            };
 
 
 	}]);
 })();
-
 (function() {
 	angular.module('main')
 	.controller('Sidebar', ['$scope','$http', 'Data', 'net','cvt', function($scope, $http, Data, net, cvt) {
