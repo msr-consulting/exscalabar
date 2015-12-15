@@ -1,8 +1,6 @@
 (function () {
-    angular.module('main').controller('crd', ['$scope', 'cvt', 'Data',
+    angular.module('main').controller('ExCrdCtl', ['$scope', 'cvt', 'Data',
     function ($scope, cvt, Data) {
-
-            //$scope.rd = {};
 
             cvt.firstcall = 1;
 

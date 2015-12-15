@@ -1,30 +1,23 @@
-<div ng-controller="humidifier">
+<div ng-controller="ExHumidityCtl">
     <div class="row">
         <div class="col-md-3 col-lg-2">
             <div class="row">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Med Humidity</div>
-                    <div class="panel-body">
-                        <cui-numeric ng-model="med.p" width="45">P</cui-numeric>
-                        <cui-numeric ng-model="med.i" width="45">I</cui-numeric>
-                        <cui-numeric ng-model="med.d" width="45">D</cui-numeric>
-                        <cui-numeric ng-model="med.sp" width="45">RH<sub>sp</sub></cui-numeric>
-                        <cui-button ival="med.en" ng-model="med.en" ng-click="updateMedEn()">Power</cui-button>
+                <div ng-repeat="ctl in h track by $index">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">{{ctl.name}}</div>
+                            <div class="panel-body">
+                                <cui-numeric ng-model="ctl.p" width="45" evnt-func="updateHum($index)">P</cui-numeric>
+                                <cui-numeric ng-model="ctl.i" width="45" evnt-func="updateHum($index)">I</cui-numeric>
+                                <cui-numeric ng-model="ctl.d" width="45" evnt-func="updateHum($index)">D</cui-numeric>
+                                <cui-numeric ng-model="ctl.sp" width="45" evnt-func="updateHum($index)">RH<sub>sp</sub></cui-numeric>
+                                <cui-button ival="ctl.en" ng-model="med.en" ng-click="setEnable($index)">Power</cui-button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="panel panel-default">
-                    <div class="panel-heading">High Humidity</div>
-                    <div class="panel-body">
-                        <cui-numeric ng-model="high.p" width="45">P</cui-numeric>
-                        <cui-numeric ng-model="high.i" width="45">I</cui-numeric>
-                        <cui-numeric ng-model="high.d" width="45">D</cui-numeric>
-                        <cui-numeric ng-model="high.sp" width="45">RH<sub>sp</sub></cui-numeric>
-                        <cui-button ival="high.en" ng-model="high.en" ng-click="updateHighEn()">Power</cui-button>
-                    </div>
-                </div>
-            </div>
+
         </div>
         <div class="col-md-9 col-lg-10">
             <div class="row">

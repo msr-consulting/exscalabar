@@ -25,19 +25,19 @@
              * pid values and enable.  These values are initialized with the 
              * appropriate cvt controls.
              */
-            $scope.high = cvt.humidifier.high;
-            $scope.med = cvt.humidifier.med;
 
-            $scope.h = [cvt.humidifier.med, cvt.humidifier.high];
 
-            $scope.updateMedEn = function () {
-                $scope.med.en = !$scope.med.en;
-                cvt.humidifier.med = $scope.med.en;
-            };
+            $scope.h = cvt.humidifier;
 
-            $scope.updateHighEn = function () {
-                $scope.high.en = !$scope.high.en;
-                cvt.humidifier.high = $scope.high.en;
+            $scope.setEnable = function (i) {
+                $scope.h[i].en = !$scope.h[i].en;
+                $scope.updateHum(i);
+
+            }
+
+            $scope.updateHum = function () {
+                var i = arguments[0];
+                cvt.humidifier[i].updateParams($scope.h);
             };
 
             $scope.ctlrOutData = [[0, NaN, NaN]];

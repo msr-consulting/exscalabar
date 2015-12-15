@@ -1,40 +1,8 @@
-<div class="row">
+<div class="row" ng-controller="ExMainCtl">
     <div class="col-lg-4">
         <div class="well">This is the data acquisition system for the UK Met Service EXSCALABAR instrument.</div>
     </div>
+    <div class="col-lg-8">
+         <dy-graph options="optPData" data="pData"></dy-graph>
+    </div>
 </div>
-<!-- <div ng-controller="main2">
-  <div class="row" >
-      <nvd3 options="plot1Options" data="plot1Data" config="{refreshDataOnly:true}"></nvd3>
-  </div>
-  <div class="row" >
-    <div class="col-sm-6" >
-      <nvd3 options="plot2Options" data="plot2Data" config="{refreshDataOnly:true}"></nvd3>
-    </div>
-    <div class="col-sm-6" >
-      <nvd3 options="plot3Options" data="plot3Data" config="{refreshDataOnly:true}"></nvd3>
-    </div>
-  </div>
-  <div class="row" >
-    <div class="col-sm-6" >
-      <nvd3 options="plot4Options" data="plot4Data" config="{refreshDataOnly:true}"></nvd3>
-    </div>
-    <div class="col-sm-6" >
-      <nvd3 options="plot5Options" data="plot5Data" config="{refreshDataOnly:true}"></nvd3>
-    </div>
-  </div>
-</div>
-<p>
-	This is the Main page.  Likely will have:
-
-	<ul>
-		<li>Items connected with:</li>
-		<ul>
-			<li>Device name</li>
-			<li>Connection status</li>
-			<li>Serial Number</li>
-			<li>Type</li>
-		</ul>
-		<li></li>
-	</ul>
-</p> -->

@@ -44,8 +44,8 @@
              * @description
              * Defines the parameters for humidifier control.
              */
-            cvt.humidifier = [new humidifier(0.75, 1, 0, 90, false),
-                new humidifier(0.75, 1, 0, 80, false)];
+            cvt.humidifier = [new humidifier(0.75, 1, 0, 90, false, "Medium"),
+                new humidifier(0.75, 1, 0, 80, false, "High")];
 
             /** 
              * @ngdoc property
@@ -179,14 +179,15 @@
      * @description
      * Object defining the methods and properties for modifying humidifier behavior.
      */
-    function humidifier(p, i, d, sp, en) {
+    function humidifier(p, i, d, sp, en, name) {
         this.p = p;
         this.i = i;
         this.d = d;
         this.sp = sp;
         this.en = en;
         this.updateEn =function(){};
-        this.updateParams = function(){};
+        this.updateParams = function(h){};
+        this.name = name;
     }
 
     /** 

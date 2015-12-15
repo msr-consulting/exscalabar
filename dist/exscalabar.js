@@ -155,8 +155,8 @@
              * @description
              * Defines the parameters for humidifier control.
              */
-            cvt.humidifier = [new humidifier(0.75, 1, 0, 90, false),
-                new humidifier(0.75, 1, 0, 80, false)];
+            cvt.humidifier = [new humidifier(0.75, 1, 0, 90, false, "Medium"),
+                new humidifier(0.75, 1, 0, 80, false, "High")];
 
             /** 
              * @ngdoc property
@@ -290,14 +290,15 @@
      * @description
      * Object defining the methods and properties for modifying humidifier behavior.
      */
-    function humidifier(p, i, d, sp, en) {
+    function humidifier(p, i, d, sp, en, name) {
         this.p = p;
         this.i = i;
         this.d = d;
         this.sp = sp;
         this.en = en;
         this.updateEn =function(){};
-        this.updateParams = function(){};
+        this.updateParams = function(h){};
+        this.name = name;
     }
 
     /** 
@@ -1100,6 +1101,47 @@
 	}]);
 })();
 
+(function () {
+    angular.
+    module('main').
+    controller('ExMainCtl', controller);
+
+    function controller($scope, Data) {
+        
+         $scope.optPData = {
+                ylabel: "tau (us)",
+                labels: ["t", "Cell 1", "Cell 2", "Cell 3", "Cell 4", "Cell 5"],
+                legend: 'always'
+            };
+
+            $scope.pDataCMOptions = [
+                ['tau', function () {
+                    $scope.optPData.ylabel = "tau (us)";
+                    objectData = "tau";
+
+
+            }],
+                ["tau'",
+                 function () {
+                        $scope.optPData.ylabel = "tau' (us)";
+                        objectData = "taucorr";
+                }],
+                ['stdev', function () {
+                    $scope.optPData.ylabel = "std. tau (us)";
+                    objectData = "stdevtau";
+                }],
+                ['max', function () {
+                    $scope.optPData.ylabel = "max";
+                    objectData = "max";
+                }]
+            ];
+        
+            $scope.pData = [[0, NaN, NaN, NaN, NaN, NaN]];
+
+    }
+    controller.$inject = ['$scope', 'Data']
+
+})();
 (function() {
     angular.module('main')
       .controller('mrAlicatConfigCtlr', ['$scope', function($scope) {
@@ -1337,10 +1379,8 @@
 })();
 
 (function () {
-    angular.module('main').controller('crd', ['$scope', 'cvt', 'Data',
+    angular.module('main').controller('ExCrdCtl', ['$scope', 'cvt', 'Data',
     function ($scope, cvt, Data) {
-
-            //$scope.rd = {};
 
             cvt.firstcall = 1;
 
@@ -1870,19 +1910,19 @@
              * pid values and enable.  These values are initialized with the 
              * appropriate cvt controls.
              */
-            $scope.high = cvt.humidifier.high;
-            $scope.med = cvt.humidifier.med;
 
-            $scope.h = [cvt.humidifier.med, cvt.humidifier.high];
 
-            $scope.updateMedEn = function () {
-                $scope.med.en = !$scope.med.en;
-                cvt.humidifier.med = $scope.med.en;
-            };
+            $scope.h = cvt.humidifier;
 
-            $scope.updateHighEn = function () {
-                $scope.high.en = !$scope.high.en;
-                cvt.humidifier.high = $scope.high.en;
+            $scope.setEnable = function (i) {
+                $scope.h[i].en = !$scope.h[i].en;
+                $scope.updateHum(i);
+
+            }
+
+            $scope.updateHum = function () {
+                var i = arguments[0];
+                cvt.humidifier[i].updateParams($scope.h);
             };
 
             $scope.ctlrOutData = [[0, NaN, NaN]];
