@@ -1,5 +1,5 @@
 (function() {
-	angular.module('main').directive('msg', msg_);
+	angular.module('main').directive('exMsgDirective', msg_);
     /**
      * @ngdoc directive
      * @name main.directive:msg

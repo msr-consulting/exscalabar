@@ -36,6 +36,6 @@
             $scope.pData = [[0, NaN, NaN, NaN, NaN, NaN]];
 
     }
-    controller.$inject = ['$scope', 'Data']
+    controller.$inject = ['$scope', 'Data'];
 
 })();

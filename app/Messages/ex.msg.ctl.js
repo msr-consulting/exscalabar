@@ -1,6 +1,6 @@
 (function () {
-    angular.module('main').controller('msgCtlr', ['Data', '$scope',
-	function (Data, $scope) {
+    angular.module('main').controller('ExMsgCtl', ['$scope', 'ExMsgSvc',
+	function ($scope, ExMsgSvc) {
             /**
              * @ngdoc controller
              * @name main.msgCtlr
@@ -18,11 +18,10 @@
              * @description
              * Scope variable that holds the html based text stream.
              */
-            $scope.msgs = '<span class="cui-msg-error">This is just a test of the system messages.</span><br /><span class="cui-msg-info">Here is some more text.</span>';
-            $scope.test = true;
+            $scope.msgs = "";
             $scope.$on('msgAvailable', function () {
 
-                var x = Data.popMsgQueue();
+                var x = ExMsgSvc.clearMsgArray();
 
                 // Color the error based on the message information
                 var m = "<span>";

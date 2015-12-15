@@ -1,5 +1,5 @@
 (function() {
-	angular.module('main').directive('msg', msgFunc);
+	angular.module('main').directive('ExMsgDirective', msgFunc);
 
 	function msgFunc() {
 		return {

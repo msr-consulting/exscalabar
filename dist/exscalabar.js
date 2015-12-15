@@ -516,15 +516,14 @@
 	}]);
 })();
 (function () {
-    angular.module('main').factory('Data', ['$rootScope', '$http', '$log', 'net',
+    angular.module('main').factory('Data', ['$rootScope', '$http', 'net',
     'cvt',
-    function ($rootScope, $http, $log, net, cvt) {
+    function ($rootScope, $http, net, cvt) {
             /** 
              * @ngdoc service 
              * @name main.service:Data
              * @requires $rootscope
              * @requires $http
-             * @requires $log
              * @requires main.service:net
              * @requires main.service:cvt
              * @description 
@@ -574,7 +573,7 @@
                 "msg": []
             };
 
-        
+
             /** 
              * @ngdoc property
              * @name main.Data.maxLength
@@ -631,7 +630,7 @@
             var busy = false;
 
 
-            
+
             dataObj.getData = function () {
                 if (busy) {
                     return;
@@ -693,6 +692,7 @@
                         dataObj = handlePAS(response.data, dataObj, shiftData);
                         dataObj = handleCRD(response.data, dataObj, shiftData);
                         dataObj.Cabin = response.data.Cabin;
+                        dataObj.msg = response.data.Msg;
 
                         $rootScope.$broadcast('dataAvailable');
 
@@ -706,8 +706,9 @@
                             }
 
                             $rootScope.$broadcast('msgAvailable');
-                            busy = false;
                         }
+
+                        busy = false;
                     }, function (response) {
                         $rootScope.$broadcast('dataNotAvailable');
                     }).finally(function () {
@@ -956,8 +957,62 @@
         return Data;
     }
 })();
+(function () {
+    angular.module('main').factory('ExMsgSvc', MsgService);
+
+    /**
+     * @ngdoc service
+     * @name main.service:ExMsgSvc
+     * @requires $scope
+     * @requires main.service:Data
+     * @ description
+     * Handles maintaining data for the message related views.
+     */
+    MsgService.$inject = ['$rootscope', 'Data'];
+    function MsgService($rootscope, Data) {
+
+        /** Object returned by the message service. */
+        var msg = {
+            numType: [0, 0, 0],
+            msgs: [],
+            clearMsgArray: clearMsgs,
+            resetCount: function(){this.numType = [0,0,0];}
+        };
+        
+        $rootscope.$on('dataAvailable', handle_data);
+
+        function handle_data() {
+
+            if (Data.msg.length > 0) {
+                msg.msgs.push(Data.msg);
+                for (i = 0; i < Data.msg.length; i++) {
+                    if (Data.msg[i].search('ERROR') > 0) {
+                        msg.numType[2] += 1;
+                    } else if (Data.msg[i].search('WARNING') > 0) {
+                        msg.numType[1] += 1;
+                    } else {
+                        msg.numType[0] += 1;
+                    }
+                }
+                $rootScope.$broadcast('msgAvailable');
+            }
+        }
+
+        function clearMsgs() {
+            // Create a shallow copy of the msgs array
+            var m = msg.msgs.slice(0);
+
+            // Clear the msgs array
+            msg.msgs = [];
+
+            return m;
+        }
+
+        return msg;
+    }
+})();
 (function() {
-	angular.module('main').directive('msg', msg_);
+	angular.module('main').directive('exMsgDirective', msg_);
     /**
      * @ngdoc directive
      * @name main.directive:msg
@@ -979,8 +1034,8 @@
 })(); 
 
 (function () {
-    angular.module('main').controller('msgCtlr', ['Data', '$scope',
-	function (Data, $scope) {
+    angular.module('main').controller('ExMsgCtl', ['$scope', 'ExMsgSvc',
+	function ($scope, ExMsgSvc) {
             /**
              * @ngdoc controller
              * @name main.msgCtlr
@@ -998,11 +1053,10 @@
              * @description
              * Scope variable that holds the html based text stream.
              */
-            $scope.msgs = '<span class="cui-msg-error">This is just a test of the system messages.</span><br /><span class="cui-msg-info">Here is some more text.</span>';
-            $scope.test = true;
+            $scope.msgs = "";
             $scope.$on('msgAvailable', function () {
 
-                var x = Data.popMsgQueue();
+                var x = ExMsgSvc.clearMsgArray();
 
                 // Color the error based on the message information
                 var m = "<span>";
@@ -1139,7 +1193,7 @@
             $scope.pData = [[0, NaN, NaN, NaN, NaN, NaN]];
 
     }
-    controller.$inject = ['$scope', 'Data']
+    controller.$inject = ['$scope', 'Data'];
 
 })();
 (function() {
@@ -1884,7 +1938,7 @@
 	}]);
 })();
 (function () {
-    angular.module('main').controller('humidifier', ['$scope', 'cvt', 'Data',
+    angular.module('main').controller('ExHumidityCtl', ['$scope', 'cvt', 'Data',
     function ($scope, cvt, Data) {
 
             /** 
@@ -1918,7 +1972,7 @@
                 $scope.h[i].en = !$scope.h[i].en;
                 $scope.updateHum(i);
 
-            }
+            };
 
             $scope.updateHum = function () {
                 var i = arguments[0];

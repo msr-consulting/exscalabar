@@ -40,15 +40,6 @@ NG_DOCS={
     },
     {
       "section": "api",
-      "id": "main.directive:msg",
-      "shortName": "msg",
-      "type": "directive",
-      "moduleName": "main",
-      "shortDescription": "Provides a template for displaying messages.",
-      "keywords": "api directive displaying main messages template"
-    },
-    {
-      "section": "api",
       "id": "main.humidifier",
       "shortName": "main.humidifier",
       "type": "object",
@@ -72,7 +63,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "main",
       "shortDescription": "This is the main service for retrieving data at regular intervals.",
-      "keywords": "$http $log $rootscope alicat alicats allocation api array arrays broadcasted conjunction controllers converts correct crd data defined defines determines device displaying divided elements function handlecrd handlepas handles indicated indicates input inputs intervals january javascript json labview length libraries list main max maxlength method names number object pairs pas plotted plotting points ppt ppts property regular retrieving returned seconds server service shift shiftdata shifting shuffle specific start takes time true updatetime vaisala vaisalas"
+      "keywords": "$http $rootscope alicat alicats allocation api array arrays broadcasted conjunction controllers converts correct crd data defined defines determines device displaying divided elements function handlecrd handlepas handles indicated indicates input inputs intervals january javascript json labview length libraries list main max maxlength method names number object pairs pas plotted plotting points ppt ppts property regular retrieving returned seconds server service shift shiftdata shifting shuffle specific start takes time true updatetime vaisala vaisalas"
     },
     {
       "section": "api",

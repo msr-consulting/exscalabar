@@ -1,13 +1,12 @@
 (function () {
-    angular.module('main').factory('Data', ['$rootScope', '$http', '$log', 'net',
+    angular.module('main').factory('Data', ['$rootScope', '$http', 'net',
     'cvt',
-    function ($rootScope, $http, $log, net, cvt) {
+    function ($rootScope, $http, net, cvt) {
             /** 
              * @ngdoc service 
              * @name main.service:Data
              * @requires $rootscope
              * @requires $http
-             * @requires $log
              * @requires main.service:net
              * @requires main.service:cvt
              * @description 
@@ -57,7 +56,7 @@
                 "msg": []
             };
 
-        
+
             /** 
              * @ngdoc property
              * @name main.Data.maxLength
@@ -114,7 +113,7 @@
             var busy = false;
 
 
-            
+
             dataObj.getData = function () {
                 if (busy) {
                     return;
@@ -176,6 +175,7 @@
                         dataObj = handlePAS(response.data, dataObj, shiftData);
                         dataObj = handleCRD(response.data, dataObj, shiftData);
                         dataObj.Cabin = response.data.Cabin;
+                        dataObj.msg = response.data.Msg;
 
                         $rootScope.$broadcast('dataAvailable');
 
@@ -189,8 +189,9 @@
                             }
 
                             $rootScope.$broadcast('msgAvailable');
-                            busy = false;
                         }
+
+                        busy = false;
                     }, function (response) {
                         $rootScope.$broadcast('dataNotAvailable');
                     }).finally(function () {

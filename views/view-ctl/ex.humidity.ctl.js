@@ -33,7 +33,7 @@
                 $scope.h[i].en = !$scope.h[i].en;
                 $scope.updateHum(i);
 
-            }
+            };
 
             $scope.updateHum = function () {
                 var i = arguments[0];
