@@ -1,5 +1,5 @@
 (function () {
-    angular.module('main').controller('humidifier', ['$scope', 'cvt', 'Data',
+    angular.module('main').controller('ExHumidityCtl', ['$scope', 'cvt', 'Data',
     function ($scope, cvt, Data) {
 
             /** 
