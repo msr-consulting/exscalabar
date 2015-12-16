@@ -21,8 +21,17 @@
              * argument[1] === rate.
              */
             $scope.setRate = function () {
-                cvt.crd.setLaserRate(arguments[0], arguments[1]);
+                var index = arguments[0];
+                var rate = arguments[1];
+                cvt.crd.setLaserRate(index, rate);
 
+            };
+
+            $scope.setEn = function () {
+                var index = arguments[0];
+                $scope.laser_ctl[index].en = !$scope.laser_ctl[index].en;
+
+                cvt.crd.setEnable([$scope.laser_ctl[0].en, $scope.laser_ctl[1].en]);
             };
 
             /* Variable for laser control binding; first element is related to blue,
@@ -35,11 +44,20 @@
 
             $scope.pmt = cvt.crd.kpmt;
 
+            $scope.setGain = function () {
+                cvt.crd.setGain($scope.pmt);
+            };
+
+            $scope.setLaserGain = function () {
+                cvt.crd.setLaserGain([$scope.laser_ctl[0].k, $scope.laser_ctl[1].k]);
+            };
+
             $scope.purge = {
                 pos: false,
                 flow: 0.16,
                 setValve: function () {
-                    $scope.purge.pos = !$scope.purge.pos;
+                    this.pos = !this.pos;
+                    cvt.purge.setSw(this.pos);
 
                 },
                 setFlow: function () {

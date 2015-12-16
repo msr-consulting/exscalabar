@@ -85,22 +85,6 @@
                 "tremain": 0
             };
 
-            /** Clear out the message queue by first copying the msg arrays
-             * to a new variable x and then setting the msg array to an
-             * empty array.
-             * @return {String array} - by value copy of msg queue.
-             */
-            dataObj.popMsgQueue = function () {
-
-                // Retrieve a copy of the array
-                var x = dataObj.msg.slice();
-
-                // Clean out the message array in the dataObj
-                dataObj.msg = [];
-                return x;
-
-            };
-
             dataObj.flowData = [new fdevice()];
 
             // Currently, the CRD data strictly consists of cell data.
@@ -111,8 +95,6 @@
 
             var f0 = [];
             var busy = false;
-
-
 
             dataObj.getData = function () {
                 if (busy) {

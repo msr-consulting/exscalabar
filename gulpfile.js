@@ -38,15 +38,15 @@ var watch_list = ["app/shared/main.module.js",
 "app/sidebar/sidebar-controller.js",
 "views/view-ctl/ex.main.ctl.js",
 "views/view-ctl/alicat.config.ctlr.js",
-"views/view-ctl/footer.ctlr.js",
-"views/view-ctl/power-ctlr.js",
+"views/view-ctl/ex.footer.ctl.js",
+"views/view-ctl/ex.power.ctl.js",
 "views/view-ctl/config.ctlr.js",
-"views/view-ctl/filter-ctlr.js",
+"views/view-ctl/ex.filter.ctl.js",
 "views/view-ctl/ex.crd.ctl.js",
 "views/view-ctl/pas-ctlr.js",
 "views/view-ctl/pas-spk-ctlr.js",
 "views/view-ctl/pas-las-ctlr.js",
-"views/view-ctl/flow.ctlr.js",
+"views/view-ctl/ex.flow.ctl.js",
 "views/view-ctl/ex.humidity.ctl.js",
 "views/cals/startCal-ctl.js",
 "views/cals/o3-table-ctl.js",
@@ -59,14 +59,40 @@ var watch_list = ["app/shared/main.module.js",
 "app/navigation/nav-directive.js",
 "app/navigation/nav.ctlr.js"];
 
-var docList = ["app/shared/main.module.js",
-"app/shared/main-config.js",
-"app/shared/main-controller.js",
-"app/shared/data-service.js",
-"app/Messages/msg-directive.js",
-"app/shared/network-service.js",
-               "app/shared/cvt-service.js",
-               "app/navigation/nav.ctlr.js"];
+// List of external assets required by the GUI
+// These are not expected to change.
+var assets = ["assets/jquery/jquery-2.1.4.js",
+            "assets/angular.js",
+            "assets/angular-route.js",
+            "assets/ui-bootstrap-0.9.0.js",
+            "assets/ui-bootstrap-tpls-0.9.0.js",
+            "assets/cm/contextMenu.js",
+            "assets/angular/angular-sanitize.js"];
+
+// Angular Dygraph assets
+var adJS = ["assets/ad/js/cirrus-dygraphs-dev.js",
+            "assets/ad/js/angular-dygraph.js"];
+
+// Cirrus GUI elements
+var cuiJS = ["assets/cui/ibutton/ibutton.js",
+            "assets/cui/inumeric/inumeric.js",
+            "assets/cui/istring/istring.js"];
+
+// Tested list of dygraph
+var docList = [//"assets/angular.js",
+                //"assets/angular-route.js",
+                "assets/ui-bootstrap-0.9.0.js",
+                "assets/ui-bootstrap-tpls-0.9.0.js",
+                "assets/cm/contextMenu.js",
+                //"assets/angular/angular-sanitize.js",
+                "app/shared/main.module.js",
+                "app/shared/main-config.js",
+                "app/shared/main-controller.js",
+                "app/shared/data-service.js",
+                "app/Messages/msg-directive.js",
+                "app/shared/network-service.js",
+                "app/shared/cvt-service.js",
+                "app/navigation/nav.ctlr.js"];
 
 
 /* Lint Task - check for errors in the js code... */
@@ -82,6 +108,21 @@ gulp.task('scripts', function () {
         .pipe(concat('exscalabar.js'))
         .pipe(gulp.dest('dist'))
         .pipe(rename('exscalabar.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('dist'))
+        .pipe(concat('ad.js'))
+        .pipe(gulp.dest('dist'))
+        .pipe(rename('ad.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('dist'))
+        .pipe(concat('cui.js'))
+        .pipe(gulp.dest('dist'))
+        .pipe(rename('cui.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('dist'))
+        .pipe(concat('assets.js'))
+        .pipe(gulp.dest('dist'))
+        .pipe(rename('assets.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest('dist'));
 });

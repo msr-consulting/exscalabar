@@ -9,23 +9,39 @@
      * @ description
      * Handles maintaining data for the message related views.
      */
-    MsgService.$inject = ['$rootscope', 'Data'];
-    function MsgService($rootscope, Data) {
+    MsgService.$inject = ['$rootScope', 'Data'];
+
+    function MsgService($rootScope, Data) {
 
         /** Object returned by the message service. */
         var msg = {
             numType: [0, 0, 0],
-            msgs: [],
-            clearMsgArray: clearMsgs,
-            resetCount: function(){this.numType = [0,0,0];}
+            msgs: "",
+            clearMsgArray: function(){this.msgs = "";},
+            resetCount: function () {
+                this.numType = [0, 0, 0];
+            }
         };
-        
-        $rootscope.$on('dataAvailable', handle_data);
+
+        $rootScope.$on('dataAvailable', handle_data);
 
         function handle_data() {
 
+            /* Concatenate only if there is already messages in the queue.
+             * Otherwise, set the incoming messages to the current message object.
+             */
             if (Data.msg.length > 0) {
-                msg.msgs.push(Data.msg);
+                var m = "<span>";
+                for (i = 0; i < Data.msg.length; i++) {
+                    if (Data.msg[i].search('ERROR') > 0) {
+                        m = '<span class="cui-msg-error">';
+                    } else if (Data.msg[i].search('WARNING') > 0) {
+                        m = '<span class="cui-msg-info">';
+                    } else {
+                        m = '<span class="cui-msg-info">';
+                    }
+                    msg.msgs += m + Data.msg[i] + "</span><br>";
+                }
                 for (i = 0; i < Data.msg.length; i++) {
                     if (Data.msg[i].search('ERROR') > 0) {
                         msg.numType[2] += 1;
@@ -37,16 +53,6 @@
                 }
                 $rootScope.$broadcast('msgAvailable');
             }
-        }
-
-        function clearMsgs() {
-            // Create a shallow copy of the msgs array
-            var m = msg.msgs.slice(0);
-
-            // Clear the msgs array
-            msg.msgs = [];
-
-            return m;
         }
 
         return msg;

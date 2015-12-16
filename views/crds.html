@@ -7,8 +7,8 @@
                     <div class="panel-body">
                         <cui-numeric ng-model="ctl.rate" width="45" dtype="int" evnt-func="setRate($index, ctl.rate)">f (Hz)</cui-numeric>
                         <cui-numeric ng-model="ctl.DC" width="45">DC (%)</cui-numeric>
-                        <cui-numeric width="45" ng-model="ctl.k">k</cui-numeric>
-                        <cui-button ival="ctl.en" ng-model="ctl.en" ng-click="setEnable($index)">Power</cui-button>
+                        <cui-numeric width="45" ng-model="ctl.k" evnt-func="setLaserGain()">k</cui-numeric>
+                        <cui-button ival="ctl.en" ng-model="ctl.en" ng-click="setEn($index)">Power</cui-button>
                     </div>
                 </div>
             </div>
@@ -18,10 +18,7 @@
                 </div>
                 <div class="panel-body">
                     <div ng-repeat="p in pmt track by $index">
-                        <div class="input-group" style="margin-top:2px">
-                            <span class="input-group-addon" style="width:1em">{{$index+1}}</span>
-                            <input type="number" class="form-control" id="g{{$index}}" ng-model="p">
-                        </div>
+                      <cui-numeric ng-model="pmt[$index]" width =10 evnt-func="setGain($index)">{{$index}}</cui-numeric>
                     </div>
 
                 </div>

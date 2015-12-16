@@ -73,6 +73,132 @@ NG_DOCS={
       "moduleName": "main",
       "shortDescription": "This service handles network settings that can be set on the configuration page.",
       "keywords": "address api application cached communicates communicating configuration getnetworkparams handles html5 ip listening local localstorage main method net network object port portions refresh require restored server service set setnetworkparams sets settings storage stores strings values"
+    },
+    {
+      "section": "api",
+      "id": "ui.bootstrap.carousel",
+      "shortName": "ui.bootstrap.carousel",
+      "type": "overview",
+      "moduleName": "ui.bootstrap.carousel",
+      "shortDescription": "AngularJS version of an image carousel.",
+      "keywords": "angularjs api bootstrap carousel image overview ui version"
+    },
+    {
+      "section": "api",
+      "id": "ui.bootstrap.carousel",
+      "shortName": "ui.bootstrap.carousel",
+      "type": "overview",
+      "moduleName": "ui.bootstrap.carousel",
+      "shortDescription": "AngularJS version of an image carousel.",
+      "keywords": "angularjs api bootstrap carousel image overview ui version"
+    },
+    {
+      "section": "api",
+      "id": "ui.bootstrap.carousel.directive:carousel",
+      "shortName": "carousel",
+      "type": "directive",
+      "moduleName": "ui.bootstrap.carousel",
+      "shortDescription": "Carousel is the outer container for a set of image &#39;slides&#39; to showcase.",
+      "keywords": "api auto aww bootstrap bottom carousel carousel-caption carousel-indicators class container css default demo directive disable ea hover html http image interval margin milliseconds module nopause notransition outer pauses pausing set showcase slide slides src style time top transitions ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.bootstrap.carousel.directive:carousel",
+      "shortName": "carousel",
+      "type": "directive",
+      "moduleName": "ui.bootstrap.carousel",
+      "shortDescription": "Carousel is the outer container for a set of image &#39;slides&#39; to showcase.",
+      "keywords": "api auto aww bootstrap bottom carousel carousel-caption carousel-indicators class container css default demo directive disable ea hover html http image interval margin milliseconds module nopause notransition outer pauses pausing set showcase slide slides src style time top transitions ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.bootstrap.carousel.directive:slide",
+      "shortName": "slide",
+      "type": "directive",
+      "moduleName": "ui.bootstrap.carousel",
+      "shortDescription": "Creates a slide inside a carousel.  Must be placed as a child of a carousel element.",
+      "keywords": "$scope active addslide api auto binding bootstrap bottom btn btn-info btn-mini btn-success carousel carousel-caption carousel-indicators carouseldemoctrl cats child class creates css currently cutes demo directive ea element extra felines function html http image inside interval js kittys length lots margin milliseconds model module myinterval negative newwidth ng-class ng-click ng-controller ng-disabled ng-model ng-repeat ng-src number push row-fluid script slide slides span6 style surplus text top true type ui var"
+    },
+    {
+      "section": "api",
+      "id": "ui.bootstrap.carousel.directive:slide",
+      "shortName": "slide",
+      "type": "directive",
+      "moduleName": "ui.bootstrap.carousel",
+      "shortDescription": "Creates a slide inside a carousel.  Must be placed as a child of a carousel element.",
+      "keywords": "$scope active addslide api auto binding bootstrap bottom btn btn-info btn-mini btn-success carousel carousel-caption carousel-indicators carouseldemoctrl cats child class creates css currently cutes demo directive ea element extra felines function html http image inside interval js kittys length lots margin milliseconds model module myinterval negative newwidth ng-class ng-click ng-controller ng-disabled ng-model ng-repeat ng-src number push row-fluid script slide slides span6 style surplus text top true type ui var"
+    },
+    {
+      "section": "api",
+      "id": "ui.bootstrap.tabs",
+      "shortName": "ui.bootstrap.tabs",
+      "type": "overview",
+      "moduleName": "ui.bootstrap.tabs",
+      "shortDescription": "AngularJS version of the tabs directive.",
+      "keywords": "angularjs api bootstrap directive overview tabs ui version"
+    },
+    {
+      "section": "api",
+      "id": "ui.bootstrap.tabs",
+      "shortName": "ui.bootstrap.tabs",
+      "type": "overview",
+      "moduleName": "ui.bootstrap.tabs",
+      "shortDescription": "AngularJS version of the tabs directive.",
+      "keywords": "angularjs api bootstrap directive overview tabs ui version"
+    },
+    {
+      "section": "api",
+      "id": "ui.bootstrap.tabs.directive:tab",
+      "shortName": "tab",
+      "type": "directive",
+      "moduleName": "ui.bootstrap.tabs",
+      "shortDescription": "Creates a tab with a heading and content. Must be placed within a tabset.",
+      "keywords": "$scope active alert alertme api binding bootstrap btn btn-small callback class content creates directive disabled dynamic ea enable evaluate expression function heading headings html icon-bell item items js module ng-click ng-controller ng-repeat script second select selected set settimeout tab tabheading tabs tabsdemoctrl tabset telling title true ui ve visible"
+    },
+    {
+      "section": "api",
+      "id": "ui.bootstrap.tabs.directive:tab",
+      "shortName": "tab",
+      "type": "directive",
+      "moduleName": "ui.bootstrap.tabs",
+      "shortDescription": "Creates a tab with a heading and content. Must be placed within a tabset.",
+      "keywords": "$scope active alert alertme api binding bootstrap btn btn-small callback class content creates directive disabled dynamic ea enable evaluate expression function heading headings html icon-bell item items js module ng-click ng-controller ng-repeat script second select selected set settimeout tab tabheading tabs tabsdemoctrl tabset telling title true ui ve visible"
+    },
+    {
+      "section": "api",
+      "id": "ui.bootstrap.tabs.directive:tabHeading",
+      "shortName": "tabHeading",
+      "type": "directive",
+      "moduleName": "ui.bootstrap.tabs",
+      "shortDescription": "Creates an HTML heading for a tab. Must be placed as a child of a tab element.",
+      "keywords": "api bootstrap child class content creates directive ea element heading html icon icon-heart module tab tabs titles ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.bootstrap.tabs.directive:tabHeading",
+      "shortName": "tabHeading",
+      "type": "directive",
+      "moduleName": "ui.bootstrap.tabs",
+      "shortDescription": "Creates an HTML heading for a tab. Must be placed as a child of a tab element.",
+      "keywords": "api bootstrap child class content creates directive ea element heading html icon icon-heart module tab tabs titles ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.bootstrap.tabs.directive:tabset",
+      "shortName": "tabset",
+      "type": "directive",
+      "moduleName": "ui.bootstrap.tabs",
+      "shortDescription": "Tabset is the outer container for the tabs directive",
+      "keywords": "api bootstrap container content directive ea heading html justified module outer styling tab tabs tabset true ui vertical"
+    },
+    {
+      "section": "api",
+      "id": "ui.bootstrap.tabs.directive:tabset",
+      "shortName": "tabset",
+      "type": "directive",
+      "moduleName": "ui.bootstrap.tabs",
+      "shortDescription": "Tabset is the outer container for the tabs directive",
+      "keywords": "api bootstrap container content directive ea heading html justified module outer styling tab tabs tabset true ui vertical"
     }
   ],
   "apis": {

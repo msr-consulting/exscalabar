@@ -1,14 +1,12 @@
 <div class="row">
     <div class="col-md-2">
-        <div ng-controller="filter">
+        <div ng-controller="ExFilterCtl">
             <div class="panel-default panel">
                 <div class="panel-heading">Filter Input</div>
                 <div class="panel-body">
-
-                    <cui-numeric ng-model="cycle.period" width="50" evnt-func="updateCycle()">Per. (s)</cui-numeric>
-                    <cui-numeric ng-model="cycle.length" width="50" evnt-func="updateCycle()">l (s)</cui-numeric>
-                    <cui-numeric ng-model="speaker.f0" width="50" evnt-func="updateSpkF()" type="int">Auto</cui-numeric>
-                    <cui-button ival="cycle.auto" ng-click="updateAuto()">Speaker</cui-button>
+                    <cui-numeric ng-model="filter.cycle.period" width="50" evnt-func="filter.updateCycle()">Per. (s)</cui-numeric>
+                    <cui-numeric ng-model="filter.cycle.length" width="50" evnt-func="filter.updateCycle()">l (s)</cui-numeric>
+                    <cui-button ival="filter.cycle.auto" ng-model="filter.cycle.auto" width="50" evnt-func="filter.updateAuto()">Auto</cui-button>
                     <cui-numeric ng-model="tremain" width="50" type="int" readonly>t<sub>r</sub> (s)</cui-numeric>
 
                 </div>
@@ -16,12 +14,12 @@
         </div>
     </div>
     <div class="col-md-2">
-        <div ng-controller="power">
+        <div ng-controller="ExPowerCtl">
             <div class="panel panel-default">
                 <div class="panel-heading">Power</div>
                 <div class="panel-body">
-                    <div ng-repeat="(key,value) in power">
-                        <cui-button ival="power[key]" ng-click="toggle(key)">{{key}}</cui-button>
+                    <div ng-repeat="o in order track by $index">
+                        <cui-button ival="power[o]" ng-click="toggle(o)">{{o}}</cui-button>
                     </div>
                 </div>
             </div>

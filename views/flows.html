@@ -1,51 +1,26 @@
-<div ng-controller="flowCtlr">
-  <div class="row">
-    <div class="col-md-2">
-      <div class="panel panel-default">
-        <div class="panel-heading">Control</div>
-        <div class="panel-body">
-          <div ng-repeat="device in Devices track by $index">
-            <div class="form-group" ng-if="device.isController">
-              <label for="fc_{{device.index}}">{{device.label}}</label>
-              <input  ="fc_{{device.index}}" class="form-control" ng-blur="updateSP(device)" ng-model="device.sp" type="number" value="{{device.sp}}"/>
+<div ng-controller="ExFlowCtl">
+   <div class="row">
+       <div class="col-md-12">
+           
+       </div>
+   </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div ng-repeat="device in Devices track by $index">
+                <div class="col-md-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">{{device.label}}</div>
+                        <div class="panel-body">
+                            <cui-numeric ng-model="device.Q" readonly>Q</cui-numeric>
+                            <cui-numeric ng-model="device.Q0" readonly>Q<sub>0</sub></cui-numeric>
+                            <cui-numeric ng-model="device.T" readonly>T</cui-numeric>
+                            <cui-numeric ng-model="device.P" readonly>P</cui-numeric>
+                            <cui-numeric ng-model="device.Qsp" readonly ng-if="device.isController">Q<sub>sp,a</sub></cui-numeric>
+                            <cui-numeric ng-model="device.sp" ng-if="device.isController" evnt-func="updateSP(device)">Q<sub>sp</sub></cui-numeric>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-    <div class="col-md-10">
-      <accordion close-others=false>
-        <accordion-group heading="Flow Data" is-disabled=false is-open=true>
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <tr>
-                <th class="col-md-2">ID</th>
-                <th class="col-md-2">Q</th>
-                <th class="col-md-2">Q0</th>
-                <th class="col-md-2">T</th>
-                <th class="col-md-2">P</th>
-                <th class="col-md-2">Q
-                  <sub>sp</sub>
-                </th>
-              </tr>
-              <tr ng-repeat="device in Devices">
-                <td>{{device.label}}</td>
-                <td>{{device.Q}}</td>
-                <td>{{device.Q0}}</td>
-                <td>{{device.T}}</td>
-                <td>{{device.P}}</td>
-                <td>{{device.Qsp}}</td>
-              </tr>
-
-            </table>
-          </div>
-        </accordion-group>
-        <accordion-group heading="Flow Graphs" is-disabled=false is-open=false>
-          <p>
-            Display graphs here.
-          </p>
-        </accordion-group>
-      </accordion>
-    </div>
-  </div>
 </div>

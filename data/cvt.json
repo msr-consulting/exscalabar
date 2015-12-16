@@ -33,7 +33,7 @@
         "kpmt": [1.00, 1.00, 1.00, 1.00, 1.00]
     },
     "general": {
-        "filter": ["period", "length", "auto"],
+        "filter_pos": true,
         "inlet": true,
         "power": 26,
         "purge": true

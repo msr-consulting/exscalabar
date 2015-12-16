@@ -1,5 +1,5 @@
 (function () {
-    angular.module('main').controller("flowCtlr", ['$scope', "Data", "cvt",
+    angular.module('main').controller("ExFlowCtl", ['$scope', "Data", "cvt",
 	function ($scope, Data, cvt) {
 
             // Stores the position in the controller array
@@ -65,7 +65,8 @@
 						 ];
 
             /* Update the CVT - the CVT should call the server... */
-            $scope.updateSP = function (d) {
+            $scope.updateSP = function () {
+                var d = arguments[0];
                 cvt.flows.updateSP(d.ID, d.sp);
             };
 
@@ -83,5 +84,7 @@
                     }
                 }
             });
+        
+        
 	}]);
 })();

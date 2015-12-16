@@ -1,6 +1,6 @@
 (function() {
     angular.module('main')
-      .controller('footerCtlr', ['$scope', 'Data', function($scope, Data) {
+      .controller('ExFooterCtl', ['$scope', 'ExMsgSvc','Data',function($scope, ExMsgSvc, Data) {
 
           $scope.filter = true;
           $scope.time = "Not connected";
@@ -34,26 +34,9 @@
             //$scope.save = Data.save;
             $scope.connected = true;
           });
-
-          /* This is a broadcast from the data service.  If there is a new message,
-           * we will pop the message queue and log the fact that there was a
-           * message.
-           * TODO: Need place to put messages.
-           */
+          
           $scope.$on('msgAvailable', function() {
-
-              var x = Data.popMsgQueue();
-
-              for (i = 0; i < x.length; i++) {
-
-                if (x[i].search('ERROR') > 0) {
-                  $scope.num_codes[2] += 1;
-                } else if (x[i].search('WARNING') > 0) {
-                  $scope.num_codes[1] += 1;
-                } else {
-                  $scope.num_codes[0] += 1;
-                }
-              }
+                  $scope.num_codes =ExMsgSvc.numType;
             });
 
 
