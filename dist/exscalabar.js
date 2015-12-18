@@ -282,7 +282,15 @@
                                     cvt.power.Laser = power[1] == '1' ? true : false;
                                     cvt.power.TEC = power[0] == '1' ? true : false;
 
-                                    /* Let interested parties know the CVT has been updated */
+                                    /**
+                                     * @ngdoc event
+                                     * @name cvtUpdated
+                                     * @eventOf main.service:cvt
+                                     * @eventType broadcast
+                                     * @description
+                                     * Event to let observers know that the CVT has been refreshed.
+                                     * 
+                                     */
                                     $rootScope.$broadcast('cvtUpdated');
                                 }
 
@@ -527,16 +535,16 @@
 	.config(['$routeProvider',
 	function($routeProvider){
 		$routeProvider
-		.when('/CRDS',{templateUrl:'views/crds.html'})
-		.when('/PAS',{templateUrl:'views/pas.html'})
-		.when('/O3',{templateUrl:'views/cals/ozone.html'})
-		.when('/', {templateUrl:'views/main.html'})
-		.when('/Flows', {templateUrl:'views/flows.html'})
+		.when('/CRDS',{templateUrl:'crd/crds.html'})
+		.when('/PAS',{templateUrl:'pas/pas.html'})
+		.when('/O3',{templateUrl:'o3/ozone.html'})
+		.when('/', {templateUrl:'main/main.html'})
+		.when('/Flows', {templateUrl:'alicat/flows.html'})
 		.when('/Temperature', {templateUrl:'views/temperature.html'})
-		.when('/Humidifier', {templateUrl:'views/humidifier.html'})
+		.when('/Humidifier', {templateUrl:'humidity/humidifier.html'})
 		.when('/Common', {templateUrl:'views/common.html'})
-		.when('/Config', {templateUrl:'views/config.html'})
-		.when('/msg', {templateUrl:'app/Messages/msg.html'});
+		.when('/Config', {templateUrl:'config/config.html'})
+		.when('/msg', {templateUrl:'msgs/msg.html'});
 	}]);
 })();
 
@@ -621,7 +629,8 @@
                 "o3cal": false,
                 "Cabin": false,
                 "time": [],
-                "msg": []
+                "msg": [],
+                "date": {}
             };
 
 
@@ -717,6 +726,7 @@
 
 
                         dataObj.tObj = updateTime(Number(response.data.Time));
+                    
 
                         var t = dataObj.tObj.getTime();
                         dataObj.time.unshift(t);
@@ -727,19 +737,12 @@
                         dataObj.Cabin = response.data.Cabin;
                         dataObj.msg = response.data.Msg;
 
+
+                        // TODO: We actually just want to pass on the data so that 
+                        // others can grab it.  For now, putting it in this key (data)
+                        dataObj.data = response.data;
+
                         $rootScope.$broadcast('dataAvailable');
-
-
-                        if (response.data.Msg.length > 0) {
-
-                            if (dataObj.msg.length > 0) {
-                                dataObj.msg.concat(response.data.Msg);
-                            } else {
-                                dataObj.msg = response.data.Msg.slice();
-                            }
-
-                            $rootScope.$broadcast('msgAvailable');
-                        }
 
                         busy = false;
                     }, function (response) {
@@ -998,7 +1001,7 @@
      * @name main.service:ExMsgSvc
      * @requires $scope
      * @requires main.service:Data
-     * @ description
+     * @description
      * Handles maintaining data for the message related views.
      */
     MsgService.$inject = ['$rootScope', 'Data'];
@@ -1043,6 +1046,17 @@
                         msg.numType[0] += 1;
                     }
                 }
+                
+                /**
+                 * @ngdoc event
+                 * @name msgAvailable
+                 * @eventOf main.service:ExMsgSvc
+                 * @eventType broadcast
+                 *
+                 * @description
+                 * Event to let observers know that message data is available.
+                 * Fires only if there are messages in the stream.
+                 */
                 $rootScope.$broadcast('msgAvailable');
             }
         }
@@ -1251,6 +1265,173 @@
           };
           
       }]);
+})();
+(function () {
+
+    angular.module('main').
+    factory('ExFlowSvc', flowSvc);
+
+    /**
+     * @ngdoc service
+     * @name main.service:ExFlowSvc
+     * @requires $rootScope
+     * @requires main.service:Data
+     *
+     * @description
+     * Service handling the ordering of the data returned by flow controllers
+     * and meters.
+     */
+
+    flowSvc.$inject = ['$rootScope', 'Data'];
+
+    function flowSvc($rootScope, Data) {
+
+        /**
+         * @ngdoc property
+         * @name main.service:ExFlowSvc#flow
+         * @propertyOf main.service:ExFlowSvc
+         *
+         * @description
+         * This is the object that will be returned by the service.  This object contains
+         * 
+         * * IDs - string array containg the IDs of the devices
+         * * Q - Array of arrays of volumetric flow values for plotting
+         * * P - Array of arrays of pressure values for plotting
+         * * T - Array of arrays of temperature values for plotting
+         * * Q0 - Array of arrays of mass flow values for plotting
+         * * data - object containing single point flow data
+         */
+        var flow = {
+            IDs: [],
+            Q: [],
+            P: [],
+            T: [],
+            Q0: [],
+            data: {}
+
+        };
+
+        var maxi = 300;
+
+        var shift = false;
+        var index = 0;
+
+        function fData() {
+            this.Q = 0;
+            this.P = 0;
+            this.T = 0;
+            this.Q0 = 0;
+            this.isController = false;
+            this.Qsp = 0;
+            this.label = "";
+        }
+
+
+
+        // Temporary variables for storing array data.
+        var P, T, Q, Q0;
+
+        var alicats = ["TestAlicat"];
+
+        /** 
+         * @ngdoc method
+         * @name main.service:ExFlowSvc#populate_arrays
+         * @methodOf main.service:ExFlowSvc
+         * @param {object} e Element in array
+         * @param {number} i Index in array
+         * @param {Array} arr Array we are looping through
+         * 
+         * @description
+         * Populate the arrays for the plots.
+         */
+        function populate_arrays(e, i, arr) {
+
+            if (!i) {
+                P = [Data.tObj, flow.data[e].P];
+                T = [Data.tObj, flow.data[e].T];
+                Q = [Data.tObj, flow.data[e].Q];
+                Q0 = [Data.tObj, flow.data[e].Q0];
+            } else {
+                P.push(flow.data[e].P);
+                T.push(flow.data[e].T);
+                Q.push(flow.data[e].Q);
+                Q0.push(flow.data[e].Q0);
+            }
+        }
+
+        $rootScope.$on('dataAvailable', getData);
+
+        /** 
+         * @ngdoc method
+         * @name main.service:ExFlowSvc#getData
+         * @methodOf main.service:ExFlowSvc
+         * 
+         * @description
+         * Get the data concerning the Alicats via the Data object returned
+         * from the Data service.  Stuff teh data into the flow property of this
+         * service.  The first time data is returned, we will check for the 
+         * presence of the actual object.  If it is not there, check to see if
+         *
+         * 1. it is a controller, and
+         * 2. it is a mass flow device
+         */
+        function getData() {
+
+            // Store the ID as key
+            var key = "";
+
+            for (i = 0; i < alicats.length; i++) {
+                // Check to see if the current ID is in the Data Object
+                if (alicats[i] in Data.data) {
+
+                    key = alicats[i];
+
+                    if (!(key in flow.data)) {
+                        flow.data[key] = new fData();
+                        if (flow.IDs.length === 0) {
+                            flow.IDs = [key];
+                        } else {
+                            flow.IDs.push(key);
+                        }
+
+                        // Check to see if this is a controller
+                        if (Data.data[key].Type.search("C") >= 0) {
+                            flow.data[key].isController = true;
+                            flow.data[key].Qsp = Data.data[key].Qsp;
+                        }
+                    }
+
+                    flow.data[key].P = Data.data[key].P;
+                    flow.data[key].T = Data.data[key].T;
+                    flow.data[key].Q = Data.data[key].Q;
+                }
+            }
+
+            alicats.forEach(populate_arrays);
+
+            if (shift) {
+                flow.P.shift();
+                flow.T.shift();
+                flow.Q.shift();
+                flow.Q0.shift();
+            }
+            else{
+                index += 1;
+            }
+            flow.P.unshift(P);
+            flow.T.unshift(T);
+            flow.Q.unshift(Q);
+            flow.Q0.unshift(Q0);
+            
+            shift = index >= maxi ? true : false;
+
+
+
+            $rootScope.$broadcast('FlowDataAvailable');
+        }
+
+        return flow;
+    }
 })();
 (function() {
     angular.module('main')
@@ -1871,8 +2052,8 @@
 })();
 
 (function () {
-    angular.module('main').controller("ExFlowCtl", ['$scope', "Data", "cvt",
-	function ($scope, Data, cvt) {
+    angular.module('main').controller("ExFlowCtl", ['$scope', "Data", "cvt", "ExFlowSvc",
+	function ($scope, Data, cvt, ExFlowSvc) {
 
             // Stores the position in the controller array
             var i = -1;
@@ -1959,6 +2140,94 @@
         
         
 	}]);
+})();
+(function () {
+    angular.module('main').
+    directive('exFlowplot', flowPlotDir);
+
+    function flowPlotDir() {
+
+        /** 
+         * @ngdoc directive
+         * @name main.directive:exFlowplot
+         * @scope
+         * @restrict E
+         *
+         * @description
+         * Directive for wrapping the flow plot data up. To allow for reuse.
+         * 
+         */
+
+        // TODO: Add scope variable for specifying the subsystem so we 
+        // don't have to place every variable on the graph...
+        // Suggested:
+        // * PAS
+        // * CRD
+        // * System/General
+
+        var flowPlotCtl = function ($rootScope, ExFlowSvc) {
+
+
+            var vm = this;
+
+            var data_set = "P";
+
+
+            vm.cm = [['P', function () {
+                    data_set = "P";
+                    console.log("Select P.");
+                    vm.options.ylabel = 'P (mb)';
+                }],
+                     ['T',
+            function () {
+                        data_set = "T";
+                        console.log("Select T.");
+                    vm.options.ylabel = 'T (degC)';
+                }],
+                     ['Q',
+            function () {
+                        data_set = "Q";
+                        console.log("Select Q.");
+                    vm.options.ylabel = 'Q (lpm)';
+                }],
+                     ['Q0',
+            function () {
+                        data_set = "Q0";
+                        console.log("Select Q0.");
+                    vm.options.ylabel = 'T (degC)';
+                    vm.options.ylabel = 'Q0 (slpm)';
+                }]
+                    ];
+
+            vm.options = {
+                ylabel: 'Q (lpm)',
+                labels: ['t', 'Alicat0'],
+                legend: 'always'
+            };
+            vm.data = [[0, NaN]];
+
+            $rootScope.$on('FlowDataAvailable', updatePlot);
+
+            function updatePlot() {
+                vm.data = ExFlowSvc[data_set];
+            }
+
+            console.log('Load controller for flow plot director.');
+
+
+        };
+
+        flowPlotCtl.$inject = ['$rootScope', 'ExFlowSvc'];
+
+        return {
+            restrict: 'E',
+            scope: {},
+            controller: flowPlotCtl,
+            controllerAs: 'vm',
+            bindToController: true,
+            template: '<dy-graph options="vm.options" data="vm.data" context-menu="vm.cm"></dy-graph>'
+        };
+    }
 })();
 (function () {
     angular.module('main').controller('ExHumidityCtl', ['$scope', 'cvt', 'Data',
@@ -2225,7 +2494,7 @@
 		return {
 			restrict : 'E',
 			scope : {},
-			templateUrl : 'app/sidebar/side.html'
+			templateUrl : 'sidebar/side.html'
 		};
 	}
 
@@ -2258,7 +2527,7 @@
 		return {
 			restrict : 'E',
 			scope : {},
-			templateUrl : 'app/navigation/navi.html'
+			templateUrl : 'nav/navi.html'
 		};
 	}
 

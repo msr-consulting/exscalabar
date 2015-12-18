@@ -1,0 +1,40 @@
+<div ng-controller="ExFlowCtl">
+    <div class="row">
+        <div class="col-md-12">
+            <ex-flowplot></ex-flowplot>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive" style="color:white" ng-controller="InputTable">
+                <table class="table" id="cal-table">
+                    <!--<colgroup>
+					<col class="col-md-4" />
+					<col class="col-md-8" />
+				</colgroup>-->
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Q (lpm)</th>
+                            <th>T (&deg;C)</th>
+                            <th>P (mb)</th>
+                            <th>Q0 (slpm)</th>
+                            <th>Qsp (lpm)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="device in Devices track by $index">
+                            <td>{{device.label}}</td>
+                            <td>{{device.Q}}</td>
+                            <td>{{device.T}}</td>
+                            <td>{{device.P}}</td>
+                            <td>{{device.Q0}}</td>
+                            <td>{{device.Qsp}}</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

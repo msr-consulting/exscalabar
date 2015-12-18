@@ -1,0 +1,52 @@
+<h1><code ng:non-bindable="">ExFlowSvc</code>
+<div><span class="hint">service in module <code ng:non-bindable="">main</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="main-service-page main-service-exflowsvc-page"><p>Service handling the ordering of the data returned by flow controllers
+and meters.</p>
+</div></div>
+<h2 id="dependencies">Dependencies</h2>
+<ul class="dependencies"><li><code ng:non-bindable=""><a href="#/api/ng.$rootScope">$rootScope</a></code>
+</li>
+<li><code ng:non-bindable=""><a href="#/api/main.service:Data">Data</a></code>
+</li>
+</ul>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><h3 id="methods_getdata">getData()</h3>
+<div class="getdata"><div class="main-service-page main-service-exflowsvc-getdata-page"><p>Get the data concerning the Alicats via the Data object returned
+from the Data service.  Stuff teh data into the flow property of this
+service.  The first time data is returned, we will check for the 
+presence of the actual object.  If it is not there, check to see if</p>
+<ol>
+<li>it is a controller, and</li>
+<li>it is a mass flow device</li>
+</ol>
+</div></div>
+</li>
+<li><h3 id="methods_populate_arrays">populate_arrays(e, i, arr)</h3>
+<div class="populate_arrays"><div class="main-service-page main-service-exflowsvc-populate-arrays-page"><p>Populate the arrays for the plots.</p>
+</div><h5 id="methods_populate_arrays_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>e</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="main-service-page main-service-exflowsvc-populate-arrays-page"><p>Element in array</p>
+</div></td></tr><tr><td>i</td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="main-service-page main-service-exflowsvc-populate-arrays-page"><p>Index in array</p>
+</div></td></tr><tr><td>arr</td><td><a href="" class="label type-hint type-hint-array">Array</a></td><td><div class="main-service-page main-service-exflowsvc-populate-arrays-page"><p>Array we are looping through</p>
+</div></td></tr></tbody></table></div>
+</li>
+</ul>
+</div>
+<div class="member property"><h2 id="properties">Properties</h2>
+<ul class="properties"><li><h3 id="properties_flow">flow</h3>
+<div class="flow"><div class="main-service-page main-service-exflowsvc-flow-page"><p>This is the object that will be returned by the service.  This object contains</p>
+<ul>
+<li>IDs - string array containg the IDs of the devices</li>
+<li>Q - Array of arrays of volumetric flow values for plotting</li>
+<li>P - Array of arrays of pressure values for plotting</li>
+<li>T - Array of arrays of temperature values for plotting</li>
+<li>Q0 - Array of arrays of mass flow values for plotting</li>
+<li>data - object containing single point flow data</li>
+</ul>
+</div></div>
+</li>
+</ul>
+</div>
+</div>

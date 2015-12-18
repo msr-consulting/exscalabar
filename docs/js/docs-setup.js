@@ -67,6 +67,24 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "main.service:ExFlowSvc",
+      "shortName": "ExFlowSvc",
+      "type": "service",
+      "moduleName": "main",
+      "shortDescription": "Service handling the ordering of the data returned by flow controllers",
+      "keywords": "$rootscope actual alicats api arr array arrays check concerning containg controller controllers data device devices element flow getdata handling ids looping main mass meters method object ordering plots plotting point populate populate_arrays presence pressure property q0 returned service single string stuff teh temperature time values volumetric"
+    },
+    {
+      "section": "api",
+      "id": "main.service:ExMsgSvc",
+      "shortName": "ExMsgSvc",
+      "type": "service",
+      "moduleName": "main",
+      "shortDescription": "Handles maintaining data for the message related views.",
+      "keywords": "$scope api data handles main maintaining message service views"
+    },
+    {
+      "section": "api",
       "id": "main.service:net",
       "shortName": "net",
       "type": "service",
