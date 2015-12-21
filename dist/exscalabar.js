@@ -726,7 +726,7 @@
 
 
                         dataObj.tObj = updateTime(Number(response.data.Time));
-                    
+
 
                         var t = dataObj.tObj.getTime();
                         dataObj.time.unshift(t);
@@ -1300,6 +1300,8 @@
          * * T - Array of arrays of temperature values for plotting
          * * Q0 - Array of arrays of mass flow values for plotting
          * * data - object containing single point flow data
+         * * ``Qsp`` - an associative array that contains a key and value for each 
+         * element.  The key is the device ID while the value is the setpoint.
          */
         var flow = {
             IDs: [],
@@ -1307,9 +1309,12 @@
             P: [],
             T: [],
             Q0: [],
-            data: {}
+            data: {},
+            Qsp:[]
 
         };
+        
+        
 
         var maxi = 300;
 
@@ -1404,29 +1409,40 @@
                     flow.data[key].P = Data.data[key].P;
                     flow.data[key].T = Data.data[key].T;
                     flow.data[key].Q = Data.data[key].Q;
+                    
+                    // TODO: provide real label...
+                    flow.data[key].label = key;
+                    
                 }
             }
 
             alicats.forEach(populate_arrays);
 
             if (shift) {
-                flow.P.shift();
-                flow.T.shift();
-                flow.Q.shift();
-                flow.Q0.shift();
+                flow.P.pop();
+                flow.T.pop();
+                flow.Q.pop();
+                flow.Q0.pop();
             }
             else{
                 index += 1;
             }
-            flow.P.unshift(P);
-            flow.T.unshift(T);
-            flow.Q.unshift(Q);
-            flow.Q0.unshift(Q0);
+            flow.P.push(P);
+            flow.T.push(T);
+            flow.Q.push(Q);
+            flow.Q0.push(Q0);
             
             shift = index >= maxi ? true : false;
 
-
-
+            /**
+             * @ngdoc event
+             * @name FlowDataAvailable
+             * @eventType broadcast
+             * @eventOf main.service:ExFlowSvc
+             * 
+             * @description
+             * Announce to observers that flow data is available.
+             */
             $rootScope.$broadcast('FlowDataAvailable');
         }
 
@@ -2052,94 +2068,41 @@
 })();
 
 (function () {
-    angular.module('main').controller("ExFlowCtl", ['$scope', "Data", "cvt", "ExFlowSvc",
-	function ($scope, Data, cvt, ExFlowSvc) {
+    angular.module('main').controller("ExFlowCtl", FlowCtl);
 
-            // Stores the position in the controller array
-            var i = -1;
+    FlowCtl.$inject = ['$scope', "Data", "cvt", "ExFlowSvc", ];
 
-            cvt.first_call = 1;
-
-            //Array that will hold the setpoints...
-            $scope.setpoints = [];
-
-            function mData() {
-                this.P = 0;
-                this.T = 0;
-                this.Q = 0;
-                this.Q0 = 0;
-                this.Q = 0;
-            }
-
-            function flowDevice(label, id, t, isCtl, sp) {
-                this.label = label;
-                this.ID = id;
-                this.type = t;
-                this.isController = isCtl;
-                this.data = new mData();
-
-                // TODO: This should be set by the CVT based on i
-                this.sp = sp;
-
-                // If this device is not a controller, the index will be -1...
-                this.index = -1;
-
-                /* If this device is a controller, push the new setpoint into the
-                 * setpoint array and update the index.
-                 * REALLY, THIS SHOULD BE PURELY A FUNCTION OF THE CVT AND SHOULD
-                 * NOT BE CONTROLLED BY THIS HERE - THIS IS TEMPORARY....
-                 */
-
-                // TESTED AND FUNCTIONAL
-                if (isCtl) {
-                    $scope.setpoints.push(sp);
-                    // Update the global index
-                    i += 1;
-
-                    // Update the instance controller index...
-                    this.index = i;
-                }
-            }
-
-            /* TODO: This is hard coded now but should not be.  IDs should correspond to config
-             * file IDs.
-             */
-
-            $scope.Devices = [new flowDevice("Dry Red", "TestAlicat", "mflow", true, 0),
-							new flowDevice("Dry Blue", "dryBlue", "mflow", false, 0),
-							new flowDevice("Denuded Blue", "deBlue", "mflow", false, 0),
-							new flowDevice("Denuded Red", "deRed", "mflow", true, 0),
-							new flowDevice("PAS Green", "pGreen", "mflow", false, 0),
-							new flowDevice("CRD High Humidified", "crdHighHum", "mflow", false, 0),
-							new flowDevice("CRD Low Humidified", "crdLowHum", "mflow", false, 0),
-							new flowDevice("Mirror Purge Flow", "crdMirror", "mflow", false, 0),
-							new flowDevice("Pressure Controller", "pCtl", "pressure", false, 0),
-							new flowDevice("O3 Bypass", "o3Bypass", "mflow", true, 0),
-						 ];
-
-            /* Update the CVT - the CVT should call the server... */
-            $scope.updateSP = function () {
-                var d = arguments[0];
-                cvt.flows.updateSP(d.ID, d.sp);
-            };
-
-            $scope.$on('dataAvailable', function () {
-                for (j = 0; j < $scope.Devices.length; j++) {
-                    // If the mass flow controller is present in the data...
-                    if ($scope.Devices[j].ID in Data) {
-
-                        $scope.Devices[j].P = Data[$scope.Devices[j].ID].P;
-                        $scope.Devices[j].T = Data[$scope.Devices[j].ID].T;
-                        $scope.Devices[j].Q = Data[$scope.Devices[j].ID].Q;
-                        $scope.Devices[j].Q0 = Data[$scope.Devices[j].ID].Q0;
-                        $scope.Devices[j].Qsp = Data[$scope.Devices[j].ID].Qsp;
-
-                    }
-                }
-            });
+    
+    /** 
+     * @ngdoc controller
+     * @name main.controller:ExFlowCtl
+     * @requires $scope
+     * @requires main.service:Data
+     * @requires main.service:cvt
+     * @requires main.service:ExFlowSvc
+     *
+     * @description
+     * Controller for the flow control and visualization page.
+     */
+    function FlowCtl($scope, cvt, ExFlowSvc) {
         
+        $scope.Devices ={};
+
+        /* Update the CVT - the CVT should call the server... */
+        $scope.updateSP = function () {
+            var d = arguments[0];
+            cvt.flows.updateSP(d.ID, d.sp);
+        };
+
+        $scope.$on('dataAvailable', function () {
+            $scope.Devices = ExFlowSvc.data;
+           
+        });
         
-	}]);
+        $scope.$on()
+
+
+    }
 })();
 (function () {
     angular.module('main').
@@ -2154,7 +2117,8 @@
          * @restrict E
          *
          * @description
-         * Directive for wrapping the flow plot data up. To allow for reuse.
+         * This directive wraps a plot specifically for the purpose of providing 
+         * a reusable means to display flow data returned by the server.  
          * 
          */
 
@@ -2165,7 +2129,17 @@
         // * CRD
         // * System/General
 
-        var flowPlotCtl = function ($rootScope, ExFlowSvc) {
+        /** 
+         * @ngdoc controller
+         * @name main.controller:FlowPlotCtl
+         * @requires $rootScope
+         * @requires main.service:ExFlowSvc
+         * 
+         * @description
+         * This controller is used specifically for handling data returned by
+         * the flow device service to plot the data.
+         */
+        var FlowPlotCtl = function ($rootScope, ExFlowSvc) {
 
 
             var vm = this;
@@ -2173,6 +2147,30 @@
             var data_set = "P";
 
 
+            /** 
+             * @ngdoc property
+             * @name main.controller:FlowPlotCtl#cm
+             * @propertyOf main.controller:FlowPlotCtl
+             * 
+             * @description
+             * Provides an array of arrays for defining the context menu on the plot.
+             * Each array within the array consists of 
+             *
+             * 1. ``string`` - name displayed in the context menu.
+             * 2. ``function`` - function that is exectuted when the context meny selection 
+             * is made.
+             * 
+             * The context meny for this plot is defined as follows:
+             * 
+             * * ``P`` - pressure in mb .
+             * * ``T`` - temperature in degrees Celsius.
+             * * ``Q`` - volumetric flow rate in lpm.
+             * * ``Q0`` - mass flow rate in slpm.
+             *
+             * Not all values are measured by every device.  In every case, the function executed
+             * will set the axis label to the correct value. 
+             * 
+             */
             vm.cm = [['P', function () {
                     data_set = "P";
                     console.log("Select P.");
@@ -2182,47 +2180,113 @@
             function () {
                         data_set = "T";
                         console.log("Select T.");
-                    vm.options.ylabel = 'T (degC)';
+                        vm.options.ylabel = 'T (degC)';
                 }],
                      ['Q',
             function () {
                         data_set = "Q";
                         console.log("Select Q.");
-                    vm.options.ylabel = 'Q (lpm)';
+                        vm.options.ylabel = 'Q (lpm)';
                 }],
                      ['Q0',
             function () {
                         data_set = "Q0";
                         console.log("Select Q0.");
-                    vm.options.ylabel = 'T (degC)';
-                    vm.options.ylabel = 'Q0 (slpm)';
+                        vm.options.ylabel = 'T (degC)';
+                        vm.options.ylabel = 'Q0 (slpm)';
                 }]
                     ];
 
+            /** 
+             * @ngdoc property
+             * @name main.controller:FlowPlotCtl#options
+             * @propertyOf main.controller:FlowPlotCtl
+             * 
+             * @description
+             * Object defining the options for the definition of the dygraph plot.
+             * The options defined below set the 
+             *
+             * * ``ylabel`` - set it based on the initial variable plotted (pressure)
+             * * ``labels`` - just a default so that the plot is displayed 
+             * * ``legend`` - always show the legend
+             *
+             * The options are updated as necessary by the values returned from the 
+             * data service as well as the selection chosen in the context meny.
+             */
             vm.options = {
-                ylabel: 'Q (lpm)',
+                ylabel: 'P (mb)',
                 labels: ['t', 'Alicat0'],
-                legend: 'always'
+                legend: 'always',
+                //yAxisLabelWidth: 70,
+                //xAxisLabelWidth:100,
+                axes: {
+                    y: {
+                        axisLabelWidth: 70
+                    },
+                    x: {
+                        drawAxis: true,
+                        axisLabelFormatter: function (d) {
+                            return Dygraph.zeropad(d.getHours()) + ":" + Dygraph.zeropad(d.getMinutes()) + ":" + Dygraph.zeropad(d.getSeconds());
+                        },
+                        ticker:Dygraph.dateTicker
+                    }
+                },
+                xlabel: "time",
+                labelsUTC:true,
+                //sigFigs:2
             };
+
+            if (vm.title !== undefined) {
+                vm.options.title = vm.title;
+            }
+
+            /** 
+             * @ngdoc property
+             * @name main.controller:FlowPlotCtl#data
+             * @propertyOf main.controller:FlowPlotCtl
+             *
+             * @description
+             * The data to be plotted in the dygraph plot.  This is updated with the selection 
+             * of the cotnext menu.  The initial value is just a single array that sets the 
+             * time variable to 0 and the data value to NaN.  This allows the visualization of 
+             * plot when there is no data available.
+             */
             vm.data = [[0, NaN]];
 
             $rootScope.$on('FlowDataAvailable', updatePlot);
 
+            /** 
+             * @ngdoc method
+             * @name main.controller:FlowPlotCtl#updatePlot
+             * @methodOf main.controller:FlowPlotCtl
+             *
+             * @description
+             * Function to be executed when data is made available via the service. 
+             * This function will update the data object with data stored in the service
+             * and (if necessary) update the ``labels`` property in the ``options`` object.
+             * 
+             */
             function updatePlot() {
+                var l = ['t'].concat(ExFlowSvc.IDs);
+
+                if (l !== vm.options.labels) {
+                    // If the labels have changed (usually the first time the data
+                    // service is called), then copy the new labels into the options
+                    vm.options.labels = l.slice();
+                }
+
                 vm.data = ExFlowSvc[data_set];
             }
-
-            console.log('Load controller for flow plot director.');
-
-
         };
 
-        flowPlotCtl.$inject = ['$rootScope', 'ExFlowSvc'];
+        FlowPlotCtl.$inject = ['$rootScope', 'ExFlowSvc'];
 
         return {
             restrict: 'E',
-            scope: {},
-            controller: flowPlotCtl,
+            scope: {
+                title: "@?"
+            },
+            controller: FlowPlotCtl,
             controllerAs: 'vm',
             bindToController: true,
             template: '<dy-graph options="vm.options" data="vm.data" context-menu="vm.cm"></dy-graph>'

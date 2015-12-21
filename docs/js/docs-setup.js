@@ -14,6 +14,24 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "main.controller:ExFlowCtl",
+      "shortName": "ExFlowCtl",
+      "type": "controller",
+      "moduleName": "main",
+      "shortDescription": "Controller for the flow control and visualization page.",
+      "keywords": "$scope api control controller flow main service visualization"
+    },
+    {
+      "section": "api",
+      "id": "main.controller:FlowPlotCtl",
+      "shortName": "FlowPlotCtl",
+      "type": "controller",
+      "moduleName": "main",
+      "shortDescription": "This controller is used specifically for handling data returned by",
+      "keywords": "$rootscope allows api array arrays axis based case celsius chosen cm consists context controller correct cotnext data default defined defining definition degrees device displayed dygraph exectuted executed flow function handling initial label labels legend lpm main mass mb measured menu meny method nan object options plot plotted pressure property q0 rate returned selection service set sets single slpm stored string temperature time update updated updateplot values variable visualization volumetric ylabel"
+    },
+    {
+      "section": "api",
       "id": "main.controller:MainCtlr",
       "shortName": "MainCtlr",
       "type": "controller",
@@ -37,6 +55,15 @@ NG_DOCS={
       "moduleName": "main",
       "shortDescription": "Object defines the CRD related control inputs.",
       "keywords": "api control crd defines inputs main object"
+    },
+    {
+      "section": "api",
+      "id": "main.directive:exFlowplot",
+      "shortName": "exFlowplot",
+      "type": "directive",
+      "moduleName": "main",
+      "shortDescription": "This directive wraps a plot specifically for the purpose of providing ",
+      "keywords": "api data directive display flow main plot providing purpose returned reusable server wraps"
     },
     {
       "section": "api",
@@ -72,7 +99,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "main",
       "shortDescription": "Service handling the ordering of the data returned by flow controllers",
-      "keywords": "$rootscope actual alicats api arr array arrays check concerning containg controller controllers data device devices element flow getdata handling ids looping main mass meters method object ordering plots plotting point populate populate_arrays presence pressure property q0 returned service single string stuff teh temperature time values volumetric"
+      "keywords": "$rootscope actual alicats api arr array arrays associative check concerning containg controller controllers data device devices element flow getdata handling ids key looping main mass meters method object ordering plots plotting point populate populate_arrays presence pressure property q0 qsp returned service setpoint single string stuff teh temperature time values volumetric"
     },
     {
       "section": "api",

@@ -1,0 +1,66 @@
+<h1><code ng:non-bindable="">FlowPlotCtl</code>
+<div><span class="hint">controller in module <code ng:non-bindable="">main</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="main-controller-page main-controller-flowplotctl-page"><p>This controller is used specifically for handling data returned by
+the flow device service to plot the data.</p>
+</div></div>
+<h2 id="dependencies">Dependencies</h2>
+<ul class="dependencies"><li><code ng:non-bindable=""><a href="#/api/ng.$rootScope">$rootScope</a></code>
+</li>
+<li><code ng:non-bindable=""><a href="#/api/main.service:ExFlowSvc">ExFlowSvc</a></code>
+</li>
+</ul>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><h3 id="methods_updateplot">updatePlot()</h3>
+<div class="updateplot"><div class="main-controller-page main-controller-flowplotctl-updateplot-page"><p>Function to be executed when data is made available via the service. 
+This function will update the data object with data stored in the service
+and (if necessary) update the <code>labels</code> property in the <code>options</code> object.</p>
+</div></div>
+</li>
+</ul>
+</div>
+<div class="member property"><h2 id="properties">Properties</h2>
+<ul class="properties"><li><h3 id="properties_cm">cm</h3>
+<div class="cm"><div class="main-controller-page main-controller-flowplotctl-cm-page"><p>Provides an array of arrays for defining the context menu on the plot.
+Each array within the array consists of </p>
+<ol>
+<li><code>string</code> - name displayed in the context menu.</li>
+<li><code>function</code> - function that is exectuted when the context meny selection 
+is made.</li>
+</ol>
+<p>The context meny for this plot is defined as follows:</p>
+<ul>
+<li><code>P</code> - pressure in mb .</li>
+<li><code>T</code> - temperature in degrees Celsius.</li>
+<li><code>Q</code> - volumetric flow rate in lpm.</li>
+<li><code>Q0</code> - mass flow rate in slpm.</li>
+</ul>
+<p>Not all values are measured by every device.  In every case, the function executed
+will set the axis label to the correct value. </p>
+</div></div>
+</li>
+<li><h3 id="properties_data">data</h3>
+<div class="data"><div class="main-controller-page main-controller-flowplotctl-data-page"><p>The data to be plotted in the dygraph plot.  This is updated with the selection 
+of the cotnext menu.  The initial value is just a single array that sets the 
+time variable to 0 and the data value to NaN.  This allows the visualization of 
+plot when there is no data available.</p>
+</div></div>
+</li>
+<li><h3 id="properties_options">options</h3>
+<div class="options"><div class="main-controller-page main-controller-flowplotctl-options-page"><p>Object defining the options for the definition of the dygraph plot.
+The options defined below set the </p>
+<ul>
+<li><code>ylabel</code> - set it based on the initial variable plotted (pressure)</li>
+<li><code>labels</code> - just a default so that the plot is displayed </li>
+<li><code>legend</code> - always show the legend</li>
+</ul>
+<p>The options are updated as necessary by the values returned from the 
+data service as well as the selection chosen in the context meny.</p>
+</div></div>
+</li>
+</ul>
+</div>
+</div>

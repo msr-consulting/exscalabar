@@ -150,7 +150,7 @@
 
 
                         dataObj.tObj = updateTime(Number(response.data.Time));
-                    
+
 
                         var t = dataObj.tObj.getTime();
                         dataObj.time.unshift(t);

@@ -97,6 +97,7 @@ var docList = [//"assets/angular.js",
                 "nav/nav.ctlr.js",
                 "alicat/ex.flow.svc.js",
                 "alicat/ex.flow.ctl.js",
+                "alicat/ex.flowplot.dir.js",
                 "msgs/ex.msg.svc.js",];
 
 

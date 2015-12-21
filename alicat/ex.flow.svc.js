@@ -32,6 +32,8 @@
          * * T - Array of arrays of temperature values for plotting
          * * Q0 - Array of arrays of mass flow values for plotting
          * * data - object containing single point flow data
+         * * ``Qsp`` - an associative array that contains a key and value for each 
+         * element.  The key is the device ID while the value is the setpoint.
          */
         var flow = {
             IDs: [],
@@ -39,9 +41,12 @@
             P: [],
             T: [],
             Q0: [],
-            data: {}
+            data: {},
+            Qsp:[]
 
         };
+        
+        
 
         var maxi = 300;
 
@@ -136,29 +141,40 @@
                     flow.data[key].P = Data.data[key].P;
                     flow.data[key].T = Data.data[key].T;
                     flow.data[key].Q = Data.data[key].Q;
+                    
+                    // TODO: provide real label...
+                    flow.data[key].label = key;
+                    
                 }
             }
 
             alicats.forEach(populate_arrays);
 
             if (shift) {
-                flow.P.shift();
-                flow.T.shift();
-                flow.Q.shift();
-                flow.Q0.shift();
+                flow.P.pop();
+                flow.T.pop();
+                flow.Q.pop();
+                flow.Q0.pop();
             }
             else{
                 index += 1;
             }
-            flow.P.unshift(P);
-            flow.T.unshift(T);
-            flow.Q.unshift(Q);
-            flow.Q0.unshift(Q0);
+            flow.P.push(P);
+            flow.T.push(T);
+            flow.Q.push(Q);
+            flow.Q0.push(Q0);
             
             shift = index >= maxi ? true : false;
 
-
-
+            /**
+             * @ngdoc event
+             * @name FlowDataAvailable
+             * @eventType broadcast
+             * @eventOf main.service:ExFlowSvc
+             * 
+             * @description
+             * Announce to observers that flow data is available.
+             */
             $rootScope.$broadcast('FlowDataAvailable');
         }
 
