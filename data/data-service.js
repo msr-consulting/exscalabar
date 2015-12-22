@@ -268,11 +268,11 @@
 
         /* Pop all of the ordered arrays if the arrays are of the set length... */
         if (shift) {
-            Data.pas.cell.f0.shift();
-            Data.pas.cell.IA.shift();
-            Data.pas.cell.Q.shift();
-            Data.pas.cell.p.shift();
-            Data.pas.cell.abs.shift();
+            Data.pas.cell.f0.pop();
+            Data.pas.cell.IA.pop();
+            Data.pas.cell.Q.pop();
+            Data.pas.cell.p.pop();
+            Data.pas.cell.abs.pop();
         }
 
         for (var index in d.PAS.CellData) {
@@ -283,11 +283,11 @@
             abs.push(d.PAS.CellData[index].derived.ext);
         }
 
-        Data.pas.cell.f0.unshift(f0);
-        Data.pas.cell.IA.unshift(IA);
-        Data.pas.cell.Q.unshift(Q);
-        Data.pas.cell.p.unshift(p);
-        Data.pas.cell.abs.unshift(abs);
+        Data.pas.cell.f0.push(f0);
+        Data.pas.cell.IA.push(IA);
+        Data.pas.cell.Q.push(Q);
+        Data.pas.cell.p.push(p);
+        Data.pas.cell.abs.push(abs);
 
 
         Data.pas.drive = d.PAS.Drive;

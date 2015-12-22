@@ -17,7 +17,7 @@
                            'ui.bootstrap.contextMenu', 'dygraph',
                            'cirrus.ui.ibutton', 'cirrus.ui.inumeric',
                            'cirrus.ui.string',
-                           'ngSanitize']);
+                           'ngSanitize', 'ui.bootstrap.dropdownToggle']);
 })();
 (function () {
     angular.module('main').factory('net', function () {
@@ -844,11 +844,11 @@
 
         /* Pop all of the ordered arrays if the arrays are of the set length... */
         if (shift) {
-            Data.pas.cell.f0.shift();
-            Data.pas.cell.IA.shift();
-            Data.pas.cell.Q.shift();
-            Data.pas.cell.p.shift();
-            Data.pas.cell.abs.shift();
+            Data.pas.cell.f0.pop();
+            Data.pas.cell.IA.pop();
+            Data.pas.cell.Q.pop();
+            Data.pas.cell.p.pop();
+            Data.pas.cell.abs.pop();
         }
 
         for (var index in d.PAS.CellData) {
@@ -859,11 +859,11 @@
             abs.push(d.PAS.CellData[index].derived.ext);
         }
 
-        Data.pas.cell.f0.unshift(f0);
-        Data.pas.cell.IA.unshift(IA);
-        Data.pas.cell.Q.unshift(Q);
-        Data.pas.cell.p.unshift(p);
-        Data.pas.cell.abs.unshift(abs);
+        Data.pas.cell.f0.push(f0);
+        Data.pas.cell.IA.push(IA);
+        Data.pas.cell.Q.push(Q);
+        Data.pas.cell.p.push(p);
+        Data.pas.cell.abs.push(abs);
 
 
         Data.pas.drive = d.PAS.Drive;
@@ -1820,7 +1820,6 @@
             $scope.pData = [[0, NaN, NaN, NaN, NaN, NaN]];
 
             $scope.options = {
-                title: 'PAS Data',
                 ylabel: "IA",
                 labels: ["t", "Cell 1", "Cell 2", "Cell 3", "Cell 4", "Cell 5"],
                 legend: 'always'
@@ -1954,6 +1953,8 @@
     function($scope, cvt, Data) {
 
       $scope.lasCtl = [];
+        
+        $scope.testVal = "hello";
 
       /** NOTE: This loop initializes the laser controls based on what is
        * in the CVT.  If the initial speaker setting is TRUE, then

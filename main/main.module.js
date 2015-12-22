@@ -17,5 +17,5 @@
                            'ui.bootstrap.contextMenu', 'dygraph',
                            'cirrus.ui.ibutton', 'cirrus.ui.inumeric',
                            'cirrus.ui.string',
-                           'ngSanitize']);
+                           'ngSanitize', 'ui.bootstrap.dropdownToggle']);
 })();
