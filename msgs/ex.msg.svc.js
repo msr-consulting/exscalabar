@@ -17,7 +17,21 @@
         var msg = {
             numType: [0, 0, 0],
             msgs: "",
-            clearMsgArray: function(){this.msgs = "";},
+            clearMsgArray: function () {
+                this.msgs = "";
+                this.numType = [0, 0, 0];
+                /**
+                 * @ngdoc event
+                 * @name countCleared
+                 * @eventOf main.service:ExMsgSvc
+                 * @eventType broadcast
+                 *
+                 * @description
+                 * This message is fired when we call the ``clearMsgArray`` function.
+                 * Let's listeners know that the property ``numType`` has changed.
+                 */
+                $rootScope.$broadcast('countCleared');
+            },
             resetCount: function () {
                 this.numType = [0, 0, 0];
             }
@@ -51,7 +65,7 @@
                         msg.numType[0] += 1;
                     }
                 }
-                
+
                 /**
                  * @ngdoc event
                  * @name msgAvailable

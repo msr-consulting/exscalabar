@@ -38,6 +38,10 @@
           $scope.$on('msgAvailable', function() {
                   $scope.num_codes =ExMsgSvc.numType;
             });
+          
+          $scope.$on('countCleared', function() {
+                  $scope.num_codes =ExMsgSvc.numType;
+            });
 
 
             $scope.$on('dataNotAvailable', function() {

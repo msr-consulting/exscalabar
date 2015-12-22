@@ -1012,7 +1012,21 @@
         var msg = {
             numType: [0, 0, 0],
             msgs: "",
-            clearMsgArray: function(){this.msgs = "";},
+            clearMsgArray: function () {
+                this.msgs = "";
+                this.numType = [0, 0, 0];
+                /**
+                 * @ngdoc event
+                 * @name countCleared
+                 * @eventOf main.service:ExMsgSvc
+                 * @eventType broadcast
+                 *
+                 * @description
+                 * This message is fired when we call the ``clearMsgArray`` function.
+                 * Let's listeners know that the property ``numType`` has changed.
+                 */
+                $rootScope.$broadcast('countCleared');
+            },
             resetCount: function () {
                 this.numType = [0, 0, 0];
             }
@@ -1046,7 +1060,7 @@
                         msg.numType[0] += 1;
                     }
                 }
-                
+
                 /**
                  * @ngdoc event
                  * @name msgAvailable
@@ -1487,6 +1501,10 @@
           });
           
           $scope.$on('msgAvailable', function() {
+                  $scope.num_codes =ExMsgSvc.numType;
+            });
+          
+          $scope.$on('countCleared', function() {
                   $scope.num_codes =ExMsgSvc.numType;
             });
 
@@ -1948,126 +1966,125 @@
   ]);
 })();
 
-(function() {
-  angular.module('main').controller('pasLas', ['$scope', 'cvt', 'Data',
-    function($scope, cvt, Data) {
+(function () {
+    angular.module('main').controller('pasLas', ['$scope', 'cvt', 'Data',
+    function ($scope, cvt, Data) {
 
-      $scope.lasCtl = [];
-        
-        $scope.testVal = "hello";
+            $scope.lasCtl = [];
 
-      /** NOTE: This loop initializes the laser controls based on what is
-       * in the CVT.  If the initial speaker setting is TRUE, then
-       * the value of f0 will be overrun IMMEDIATELY.
-       */
-      for (i = 0; i < cvt.pas.las.vr.length; i++) {
+            $scope.testVal = "hello";
 
-        $scope.lasCtl.push(new lasSet(cvt.pas.las.vr[i],
-          cvt.pas.las.voffset[i],
-          cvt.pas.las.f0[i],
-          cvt.pas.las.modulation[i],
-          cvt.pas.las.enable[i]));
+            /** NOTE: This loop initializes the laser controls based on what is
+             * in the CVT.  If the initial speaker setting is TRUE, then
+             * the value of f0 will be overrun IMMEDIATELY.
+             */
+            for (i = 0; i < cvt.pas.las.vr.length; i++) {
 
-      }
+                $scope.lasCtl.push(new lasSet(cvt.pas.las.vr[i],
+                    cvt.pas.las.voffset[i],
+                    cvt.pas.las.f0[i],
+                    cvt.pas.las.modulation[i],
+                    cvt.pas.las.enable[i]));
 
-      // Listen for data
-      $scope.$on('dataAvailable', function() {
+            }
 
-        /* If the current position of the speaker is TRUE (speaker is on),
-         * populate the modulation frequencies in the laser controls with
-         * the current resonant frequency measured by the microphone.
-         */
-        if (Data.pas.drive) {
-          for (i = 0; i < Data.pas.cell.length; i++) {
-            $scope.lasCtl[i].f0 = $scope.data.cell[i].f0[0].y;
-          }
-        }
-      });
+            // Listen for data
+            $scope.$on('dataAvailable', function () {
 
-      $scope.$on('cvtUpdated', function(){
+                /* If the current position of the speaker is TRUE (speaker is on),
+                 * populate the modulation frequencies in the laser controls with
+                 * the current resonant frequency measured by the microphone.
+                 */
+                if (Data.pas.drive) {
+                    for (i = 0; i < Data.pas.cell.length; i++) {
+                        $scope.lasCtl[i].f0 = $scope.data.cell[i].f0[0].y;
+                    }
+                }
+            });
 
-        // Update the laser controls if something has set them on the
-        // server-side.
-        for (i = 0; i < cvt.pas.las.vr.length; i++) {
+            $scope.$on('cvtUpdated', function () {
 
-          $scope.lasCtl[i].vr = cvt.pas.las.vr[i];
-          $scope.lasCtl[i].vo = cvt.pas.las.voffset[i];
-          $scope.lasCtl[i].f0 =   cvt.pas.las.f0[i];
-          $scope.lasCtl[i].mod =   cvt.pas.las.modulation[i];
-          $scope.lasCtl[i].en =   cvt.pas.las.enable[i];
+                // Update the laser controls if something has set them on the
+                // server-side.
+                for (i = 0; i < cvt.pas.las.vr.length; i++) {
 
-        }
+                    $scope.lasCtl[i].vr = cvt.pas.las.vr[i];
+                    $scope.lasCtl[i].vo = cvt.pas.las.voffset[i];
+                    $scope.lasCtl[i].f0 = cvt.pas.las.f0[i];
+                    $scope.lasCtl[i].mod = cvt.pas.las.modulation[i];
+                    $scope.lasCtl[i].en = cvt.pas.las.enable[i];
 
-      });
+                }
 
-      $scope.updateMod = function(i) {
-        $scope.lasCtl[i].modulation = !$scope.lasCtl[i].modulation;
+            });
 
-        var x = [];
-        for (j = 0; j < $scope.lasCtl.length; j++) {
-          x.push($scope.lasCtl[j].modulation);
-        }
-        cvt.pas.las.updateMod(x);
-      };
+            $scope.updateMod = function (i) {
+                $scope.lasCtl[i].modulation = !$scope.lasCtl[i].modulation;
 
-      /* Update the laser voltage range for the lasers in the current value
-       * table.
-       */
-      $scope.updateVr = function() {
-        var x = [];
-        for (i = 0; i < $scope.lasCtl.length; i++) {
-          x.push($scope.lasCtl[i].Vrange);
-        }
-        cvt.pas.las.setVr(x);
-      };
+                var x = [];
+                for (j = 0; j < $scope.lasCtl.length; j++) {
+                    x.push($scope.lasCtl[j].modulation);
+                }
+                cvt.pas.las.updateMod(x);
+            };
 
-      /* Update the voltage offset in the current value table. */
-      $scope.updateVo = function() {
-        var x = [];
-        for (i = 0; i < $scope.lasCtl.length; i++) {
-          x.push($scope.lasCtl[i].Voffset);
-        }
-        cvt.pas.las.setVo(x);
-      };
+            /* Update the laser voltage range for the lasers in the current value
+             * table.
+             */
+            $scope.updateVr = function () {
+                var x = [];
+                for (i = 0; i < $scope.lasCtl.length; i++) {
+                    x.push($scope.lasCtl[i].Vrange);
+                }
+                cvt.pas.las.setVr(x);
+            };
 
-      $scope.updatef0 = function() {
-        var x = [];
-        for (i = 0; i < $scope.lasCtl.length; i++) {
-          x.push($scope.lasCtl[i].f0);
-        }
-        cvt.pas.las.setf0(x);
-      };
+            /* Update the voltage offset in the current value table. */
+            $scope.updateVo = function () {
+                var x = [];
+                for (i = 0; i < $scope.lasCtl.length; i++) {
+                    x.push($scope.lasCtl[i].Voffset);
+                }
+                cvt.pas.las.setVo(x);
+            };
 
-      $scope.updateEnable = function(i) {
+            $scope.updatef0 = function () {
+                var x = [];
+                for (i = 0; i < $scope.lasCtl.length; i++) {
+                    x.push($scope.lasCtl[i].f0);
+                }
+                cvt.pas.las.setf0(x);
+            };
 
-        $scope.lasCtl[i].lasEn = !$scope.lasCtl[i].lasEn;
-        var x = [];
-        for (i = 0; i < $scope.lasCtl.length; i++) {
-          x.push($scope.lasCtl[i].lasEn);
-        }
-        cvt.pas.las.updateEnable(x);
+            $scope.updateEnable = function (i) {
 
-      };
+                $scope.lasCtl[i].lasEn = !$scope.lasCtl[i].lasEn;
+                var x = [];
+                for (i = 0; i < $scope.lasCtl.length; i++) {
+                    x.push($scope.lasCtl[i].lasEn);
+                }
+                cvt.pas.las.updateEnable(x);
+
+            };
 
     }
   ]);
 
-  /** PAS Laser settings object.  The settings are
-   * * Vrange = voltage range in volts of laser modulation
-   * * Voffset = voltage offset in volts for laser modulation.
-   * * f0 = modulation frequency in Hz
-   * * modulation = boolean representing sine (false) or square (true)
-   */
-  function lasSet(vr, vo, f0, mod, en) {
-    this.Vrange = vr;
-    this.Voffset = vo;
-    this.f0 = f0;
-    this.modulation = mod;
-    this.lasEn = false;
-  }
+    /** PAS Laser settings object.  The settings are
+     * * Vrange = voltage range in volts of laser modulation
+     * * Voffset = voltage offset in volts for laser modulation.
+     * * f0 = modulation frequency in Hz
+     * * modulation = boolean representing sine (false) or square (true)
+     */
+    function lasSet(vr, vo, f0, mod, en) {
+        this.Vrange = vr;
+        this.Voffset = vo;
+        this.f0 = f0;
+        this.modulation = mod;
+        this.lasEn = false;
+    }
 
 })();
-
 (function () {
     angular.module('main').controller("ExFlowCtl", FlowCtl);
 
