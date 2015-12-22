@@ -5,3 +5,7 @@ node_modules/
 
 # Trying out some D3 stuff here.  No repo...
 test/test/
+
+# This is the docs file that is generated.  We don't need to stash it.
+
+docs/
