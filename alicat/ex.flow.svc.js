@@ -151,10 +151,10 @@
             alicats.forEach(populate_arrays);
 
             if (shift) {
-                flow.P.pop();
-                flow.T.pop();
-                flow.Q.pop();
-                flow.Q0.pop();
+                flow.P.shift();
+                flow.T.shift();
+                flow.Q.shift();
+                flow.Q0.shift();
             }
             else{
                 index += 1;

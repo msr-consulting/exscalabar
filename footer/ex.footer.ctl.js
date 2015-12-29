@@ -1,6 +1,6 @@
 (function() {
     angular.module('main')
-      .controller('ExFooterCtl', ['$scope', 'ExMsgSvc','Data',function($scope, ExMsgSvc, Data) {
+      .controller('ExFooterCtl', ['$scope', 'ExMsgSvc','Data', 'ExCrdSvc', function($scope, ExMsgSvc, Data, ExCrdSvc) {
 
           $scope.filter = true;
           $scope.time = "Not connected";

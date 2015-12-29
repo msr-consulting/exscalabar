@@ -1,6 +1,6 @@
 (function () {
-    angular.module('main').controller('ExCrdCtl', ['$scope', 'cvt', 'Data',
-    function ($scope, cvt, Data) {
+    angular.module('main').controller('ExCrdCtl', ['$scope', 'cvt', 'ExCrdSvc',
+        function ($scope, cvt, ExCrdSvc) {
 
             cvt.firstcall = 1;
 
@@ -38,9 +38,9 @@
              * second to red.
              */
             $scope.laser_ctl = [
-        new laserInput(cvt.crd.fblue, cvt.crd.dcblue, cvt.crd.kblue, cvt.crd.eblue, "Blue Laser"),
-        new laserInput(cvt.crd.fred, cvt.crd.dcred, cvt.crd.kred, cvt.crd.ered, "Red Laser")
-      ];
+                new laserInput(cvt.crd.fblue, cvt.crd.dcblue, cvt.crd.kblue, cvt.crd.eblue, "Blue Laser"),
+                new laserInput(cvt.crd.fred, cvt.crd.dcred, cvt.crd.kred, cvt.crd.ered, "Red Laser")
+            ];
 
             $scope.pmt = cvt.crd.kpmt;
 
@@ -65,7 +65,7 @@
                 }
             };
 
-            $scope.data = Data.crd;
+            $scope.data = ExCrdSvc;
 
             // TODO: Implement enabled functionality
             $scope.setEnable = function (index) {
@@ -73,13 +73,13 @@
                 $scope.laser_ctl[index].en = !$scope.laser_ctl[index].en;
                 var enabled = $scope.laser_ctl[index].en;
                 switch (index) {
-                case 0:
-                    cvt.crd.eblue = enabled;
-                    break;
-                case 1:
-                    cvt.crd.ered = enabled;
-                    break;
-                default:
+                    case 0:
+                        cvt.crd.eblue = enabled;
+                        break;
+                    case 1:
+                        cvt.crd.ered = enabled;
+                        break;
+                    default:
 
                 }
 
@@ -106,36 +106,37 @@
             };
 
             $scope.pDataCMOptions = [
-                ['tau', function () {
+                ['Tau', function () {
                     $scope.optPData.ylabel = "tau (us)";
                     objectData = "tau";
 
 
-            }],
-                ["tau'",
-                 function () {
+                }],
+                ["Tau'",
+                    function () {
                         $scope.optPData.ylabel = "tau' (us)";
                         objectData = "taucorr";
-                }],
-                ['stdev', function () {
+                    }],
+                ['Standard Deviation', function () {
                     $scope.optPData.ylabel = "std. tau (us)";
                     objectData = "stdevtau";
                 }],
-                ['max', function () {
+                ['Max', function () {
                     $scope.optPData.ylabel = "max";
                     objectData = "max";
+                }],
+                null, // Creates a divider
+                ['Clear Data', function () {
                 }]
             ];
 
             /* Listen for broadcasts from the DATA SERVICE */
-            $scope.$on('dataAvailable', function () {
+            $scope.$on('crdDataAvaliable', function () {
 
-                $scope.data = Data.crd;
+                $scope.data = ExCrdSvc;
 
-                var data = updateCRD(Data.crd);
-
-                $scope.ringdownAvg = data.rdAvg;
-                $scope.pData = Data.crd.cell[objectData];
+                $scope.ringdownAvg = ExCrdSvc.avg_rd;
+                $scope.pData = ExCrdSvc[objectData];
 
             });
 
@@ -157,20 +158,4 @@
             });
         }
     ]);
-
-    function updateCRD(d) {
-        var dataOut = {
-            "tauData": [],
-            "rdFit": [],
-            "rdAvg": []
-        };
-
-        for (i = 1; i < d.cell.tau[0].length; i++) {
-            dataOut.tauData.push([d.cell.tau[0][i], d.cell.tau0[0][i], d.cell.taucorr[0][i], d.cell.tau0corr[0][i], d.cell.ext[0][i]]);
-        }
-        dataOut.rdAvg = d.cell.avg_rd;
-
-        return dataOut;
-
-    }
 })();

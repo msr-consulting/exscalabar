@@ -62,7 +62,7 @@ NG_DOCS={
       "shortName": "exFlowplot",
       "type": "directive",
       "moduleName": "main",
-      "shortDescription": "This directive wraps a plot specifically for the purpose of providing ",
+      "shortDescription": "This directive wraps a plot specifically for the purpose of providing",
       "keywords": "api data directive display flow main plot providing purpose returned reusable server wraps"
     },
     {
@@ -90,7 +90,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "main",
       "shortDescription": "This is the main service for retrieving data at regular intervals.",
-      "keywords": "$http $rootscope alicat alicats allocation api array arrays broadcasted conjunction controllers converts correct crd data defined defines determines device displaying divided elements function handlecrd handlepas handles indicated indicates input inputs intervals january javascript json labview length libraries list main max maxlength method names number object pairs pas plotted plotting points ppt ppts property regular retrieving returned seconds server service shift shiftdata shifting shuffle specific start takes time true updatetime vaisala vaisalas"
+      "keywords": "$http $rootscope alicat alicats allocation api array arrays broadcasted conjunction controllers converts correct data defined defines determines device displaying divided elements function handlepas handles indicated indicates input inputs intervals january javascript json labview length libraries list main max maxlength method names number object pairs pas plotted plotting points ppt ppts property regular retrieving returned seconds server service shift shiftdata shifting shuffle specific start takes time true updatetime vaisala vaisalas"
     },
     {
       "section": "api",

@@ -663,14 +663,6 @@
             };
 
             dataObj.flowData = [new fdevice()];
-
-            // Currently, the CRD data strictly consists of cell data.
-            dataObj.crd = {};
-
-            // Add a single cell to allocate space for the cell array.
-            dataObj.crd.cell = new crdObject();
-
-            var f0 = [];
             var busy = false;
 
             dataObj.getData = function () {
@@ -733,7 +725,6 @@
 
 
                         dataObj = handlePAS(response.data, dataObj, shiftData);
-                        dataObj = handleCRD(response.data, dataObj, shiftData);
                         dataObj.Cabin = response.data.Cabin;
                         dataObj.msg = response.data.Msg;
 
@@ -798,24 +789,6 @@
         this.micf = [];
         this.mict = [];
         this.pd = [];
-    }
-
-    /**
-     * This object is used to store {x,y} pairs of data for plotting of the CRD
-     * data.  The x value is time and the y is the value indicated by the property.
-     */
-    function crdObject() {
-        this.tau = [];
-        this.tau0 = [];
-        this.taucorr = [];
-        this.tau0corr = [];
-        this.ext = [];
-        this.extcorr = [];
-        this.stdevtau = [];
-        this.etau = [];
-        this.max = [];
-        this.avg_rd = [];
-        this.fit_rd = [];
     }
 
     /**
@@ -897,100 +870,6 @@
 
         return Data;
 
-    }
-
-    /**
-     * @ngdoc method
-     * @name main.Data.handleCRD
-     * @methodOf main.service:Data
-     * @description
-     * This function handles allocation of the CRD data.  All data may be plotted
-     * and as such the data is divided up into arrays of {x,y} pairs for use by
-     * plotting libraries.  The length of the arrays is defined by the service
-     * and the length is indicated by the input shift.
-     * @param {Object} d The JSON data object returned by the server.
-     * @param {Object} Data Data object that will be broadcasted to controllers.
-     * @param {boolean} shift Indicates whether we have the correct number of
-     * points in the array and need to start shifting the data.
-     * @return {Object} Data object defined in the inputs.
-     */
-    function handleCRD(d, Data, shift) {
-
-        /* Alot space for storing the data that will be plugged into the dygraph plots.
-         * The data will look like 
-         * 
-         *      ``[time, val1, val2, ...]``
-         *
-         * where ``time`` is a ``Date`` object with the value of ``Data.tObj`` above and ``vali`` represents the value of the data 
-         * for cell i.  This data will be plugged into an array that will be used for graphing.
-         */
-        var tau = [Data.tObj],
-            tau0 = [Data.tObj],
-            stdevtau = [Data.tObj],
-            taucorr = [Data.tObj],
-            tau0corr = [Data.tObj],
-            ext = [Data.tObj],
-            extcorr = [Data.tObj],
-            etau = [Data.tObj],
-            max = [Data.tObj];
-
-        /* We will collect ``shift`` data points before we actually pop the array.
-         * Popping the array allows us to stop remove the oldest point so that we can
-         * push more data onto the stack in the newest position using ``unshift()``.
-         */
-        if (shift) {
-            Data.crd.cell.tau.shift();
-            Data.crd.cell.tau0.shift();
-            Data.crd.cell.taucorr.shift();
-            Data.crd.cell.tau0corr.shift();
-            Data.crd.cell.ext.shift();
-            Data.crd.cell.extcorr.shift();
-            Data.crd.cell.stdevtau.shift();
-            Data.crd.cell.etau.shift();
-            Data.crd.cell.max.shift();
-
-        }
-
-        // Store all of the cell data in the temporary variables defined above.
-        // TODO: THERE HAS TO BE A FASTER WAY (ITERATOR?)
-        for (var index in d.CellData) {
-
-            // These parameters are discrete points
-            tau.push(d.CellData[index].extParam.Tau);
-            tau0.push(d.CellData[index].extParam.Tau0);
-            tau0corr.push(d.CellData[index].extParam.Tau0cor);
-            taucorr.push(d.CellData[index].extParam.taucorr);
-            ext.push(d.CellData[index].extParam.ext);
-            extcorr.push(d.CellData[index].extParam.extCorr);
-            stdevtau.push(d.CellData[index].extParam.stdevTau);
-            etau.push(d.CellData[index].extParam.eTau);
-            max.push(d.CellData[index].extParam.max);
-
-        }
-
-        Data.crd.cell.avg_rd = [];
-        // Handle the ringdown data
-        for (k = 0; k < d.CellData[0].Ringdowns[0].length; k++) {
-            var aRD = [k];
-            for (j = 0; j < d.CellData.length; j++) {
-                aRD.push(d.CellData[j].Ringdowns[0][k]);
-
-            }
-            Data.crd.cell.avg_rd.push(aRD);
-        }
-
-        Data.crd.cell.tau.unshift(tau);
-        Data.crd.cell.tau0.unshift(tau0);
-        Data.crd.cell.tau0corr.unshift(tau0corr);
-        Data.crd.cell.taucorr.unshift(taucorr);
-        Data.crd.cell.extcorr.unshift(extcorr);
-        Data.crd.cell.ext.unshift(ext);
-        Data.crd.cell.stdevtau.unshift(stdevtau);
-        Data.crd.cell.etau.unshift(etau);
-        Data.crd.cell.max.push(max);
-
-
-        return Data;
     }
 })();
 (function () {
@@ -1433,10 +1312,10 @@
             alicats.forEach(populate_arrays);
 
             if (shift) {
-                flow.P.pop();
-                flow.T.pop();
-                flow.Q.pop();
-                flow.Q0.pop();
+                flow.P.shift();
+                flow.T.shift();
+                flow.Q.shift();
+                flow.Q0.shift();
             }
             else{
                 index += 1;
@@ -1465,7 +1344,7 @@
 })();
 (function() {
     angular.module('main')
-      .controller('ExFooterCtl', ['$scope', 'ExMsgSvc','Data',function($scope, ExMsgSvc, Data) {
+      .controller('ExFooterCtl', ['$scope', 'ExMsgSvc','Data', 'ExCrdSvc', function($scope, ExMsgSvc, Data, ExCrdSvc) {
 
           $scope.filter = true;
           $scope.time = "Not connected";
@@ -1649,9 +1528,173 @@
             });
 }]);
 })();
+/** This service is used for defining how device data is displayed.
+ *  Several devices can be controlled (mass flow controller and temperature
+ *    controllers), but most are just display purposes.  This service will
+ *    regularly check to see if the configuration has been updated and notify
+ *  all users of updates.
+ */
+
 (function () {
-    angular.module('main').controller('ExCrdCtl', ['$scope', 'cvt', 'Data',
-    function ($scope, cvt, Data) {
+    angular.module('main').factory('ExCrdSvc', crdSvc);
+
+    var shift = false;
+
+    /* Annotate for minification. */
+    crdSvc.$inject = ['$rootScope', 'Data'];
+
+    /**
+     * @ngdoc service
+     * @name main.service:crdSvc
+     * @requires $rootScope
+     * @requires main.service:Data
+     *
+     * @description
+     * Service that handles the CRD Data returned by the main Data service.
+     *
+     */
+    function crdSvc($rootScope, Data) {
+
+        var CrdData = new CrdObject();
+
+        $rootScope.$on('dataAvailable', get_data);
+
+        function get_data() {
+
+            CrdData = handleCRD(Data, CrdData);
+
+            /**
+             * @ngdoc event
+             * @name crdDataAvailable
+             * @eventType broadcast
+             *
+             * @description
+             * Event that broadcasts the CRD Data has been processed
+             * and is available.
+             */
+            $rootScope.$broadcast('crdDataAvaliable');
+
+        }
+
+        return CrdData;
+    }
+
+
+    /**
+     * This object is used to store {x,y} pairs of data for plotting of the CRD
+     * data.  The x value is time and the y is the value indicated by the property.
+     */
+    function CrdObject() {
+        this.tau = [];
+        this.tau0 = [];
+        this.taucorr = [];
+        this.tau0corr = [];
+        this.ext = [];
+        this.extcorr = [];
+        this.stdevtau = [];
+        this.etau = [];
+        this.max = [];
+        this.avg_rd = [];
+        this.fit_rd = [];
+    }
+
+    /**
+     * @ngdoc method
+     * @name main.Data.handleCRD
+     * @methodOf main.service:Data
+     * @description
+     * This function handles allocation of the CRD data.  All data may be plotted
+     * and as such the data is divided up into arrays of {x,y} pairs for use by
+     * plotting libraries.  The length of the arrays is defined by the service
+     * and the length is indicated by the input shift.
+     * @param {Object} d The JSON data object returned by the server.
+     * @param {Object} Data Data object that will be broadcasted to controllers.
+     * @param {boolean} shift Indicates whether we have the correct number of
+     * points in the array and need to start shifting the data.
+     * @return {Object} Data object defined in the inputs.
+     */
+    function handleCRD(d, crd) {
+
+        /* Alot space for storing the data that will be plugged into the dygraph plots.
+         * The data will look like 
+         * 
+         *      ``[time, val1, val2, ...]``
+         *
+         * where ``time`` is a ``Date`` object with the value of ``Data.tObj`` above and ``vali`` represents the value of the data 
+         * for cell i.  This data will be plugged into an array that will be used for graphing.
+         */
+        var tau = [d.tObj],
+            tau0 = [d.tObj],
+            stdevtau = [d.tObj],
+            taucorr = [d.tObj],
+            tau0corr = [d.tObj],
+            ext = [d.tObj],
+            extcorr = [d.tObj],
+            etau = [d.tObj],
+            max = [d.tObj];
+
+        /* We will collect ``shift`` data points before we actually pop the array.
+         * Popping the array allows us to stop remove the oldest point so that we can
+         * push more data onto the stack in the newest position using ``unshift()``.
+         */
+        if (shift) {
+            crd.tau.shift();
+            crd.tau0.shift();
+            crd.taucorr.shift();
+            crd.tau0corr.shift();
+            crd.ext.shift();
+            crd.extcorr.shift();
+            crd.stdevtau.shift();
+            crd.etau.shift();
+            crd.max.shift();
+
+        }
+
+        // Store all of the cell data in the temporary variables defined above.
+        // TODO: THERE HAS TO BE A FASTER WAY (ITERATOR?)
+        for (var index in d.data.CellData) {
+
+            // These parameters are discrete points
+            tau.push(d.data.CellData[index].extParam.Tau);
+            tau0.push(d.data.CellData[index].extParam.Tau0);
+            tau0corr.push(d.data.CellData[index].extParam.Tau0cor);
+            taucorr.push(d.data.CellData[index].extParam.taucorr);
+            ext.push(d.data.CellData[index].extParam.ext);
+            extcorr.push(d.data.CellData[index].extParam.extCorr);
+            stdevtau.push(d.data.CellData[index].extParam.stdevTau);
+            etau.push(d.data.CellData[index].extParam.eTau);
+            max.push(d.data.CellData[index].extParam.max);
+
+        }
+
+        crd.avg_rd = [];
+        // Handle the ringdown data
+        for (k = 0; k < d.data.CellData[0].Ringdowns[0].length; k++) {
+            var aRD = [k];
+            for (j = 0; j < d.data.CellData.length; j++) {
+                aRD.push(d.data.CellData[j].Ringdowns[0][k]);
+
+            }
+            crd.avg_rd.push(aRD);
+        }
+
+        crd.tau.push(tau);
+        crd.tau0.push(tau0);
+        crd.tau0corr.push(tau0corr);
+        crd.taucorr.push(taucorr);
+        crd.extcorr.push(extcorr);
+        crd.ext.push(ext);
+        crd.stdevtau.push(stdevtau);
+        crd.etau.push(etau);
+        crd.max.push(max);
+
+
+        return crd;
+    }
+})();
+(function () {
+    angular.module('main').controller('ExCrdCtl', ['$scope', 'cvt', 'ExCrdSvc',
+        function ($scope, cvt, ExCrdSvc) {
 
             cvt.firstcall = 1;
 
@@ -1689,9 +1732,9 @@
              * second to red.
              */
             $scope.laser_ctl = [
-        new laserInput(cvt.crd.fblue, cvt.crd.dcblue, cvt.crd.kblue, cvt.crd.eblue, "Blue Laser"),
-        new laserInput(cvt.crd.fred, cvt.crd.dcred, cvt.crd.kred, cvt.crd.ered, "Red Laser")
-      ];
+                new laserInput(cvt.crd.fblue, cvt.crd.dcblue, cvt.crd.kblue, cvt.crd.eblue, "Blue Laser"),
+                new laserInput(cvt.crd.fred, cvt.crd.dcred, cvt.crd.kred, cvt.crd.ered, "Red Laser")
+            ];
 
             $scope.pmt = cvt.crd.kpmt;
 
@@ -1716,7 +1759,7 @@
                 }
             };
 
-            $scope.data = Data.crd;
+            $scope.data = ExCrdSvc;
 
             // TODO: Implement enabled functionality
             $scope.setEnable = function (index) {
@@ -1724,13 +1767,13 @@
                 $scope.laser_ctl[index].en = !$scope.laser_ctl[index].en;
                 var enabled = $scope.laser_ctl[index].en;
                 switch (index) {
-                case 0:
-                    cvt.crd.eblue = enabled;
-                    break;
-                case 1:
-                    cvt.crd.ered = enabled;
-                    break;
-                default:
+                    case 0:
+                        cvt.crd.eblue = enabled;
+                        break;
+                    case 1:
+                        cvt.crd.ered = enabled;
+                        break;
+                    default:
 
                 }
 
@@ -1757,36 +1800,37 @@
             };
 
             $scope.pDataCMOptions = [
-                ['tau', function () {
+                ['Tau', function () {
                     $scope.optPData.ylabel = "tau (us)";
                     objectData = "tau";
 
 
-            }],
-                ["tau'",
-                 function () {
+                }],
+                ["Tau'",
+                    function () {
                         $scope.optPData.ylabel = "tau' (us)";
                         objectData = "taucorr";
-                }],
-                ['stdev', function () {
+                    }],
+                ['Standard Deviation', function () {
                     $scope.optPData.ylabel = "std. tau (us)";
                     objectData = "stdevtau";
                 }],
-                ['max', function () {
+                ['Max', function () {
                     $scope.optPData.ylabel = "max";
                     objectData = "max";
+                }],
+                null, // Creates a divider
+                ['Clear Data', function () {
                 }]
             ];
 
             /* Listen for broadcasts from the DATA SERVICE */
-            $scope.$on('dataAvailable', function () {
+            $scope.$on('crdDataAvaliable', function () {
 
-                $scope.data = Data.crd;
+                $scope.data = ExCrdSvc;
 
-                var data = updateCRD(Data.crd);
-
-                $scope.ringdownAvg = data.rdAvg;
-                $scope.pData = Data.crd.cell[objectData];
+                $scope.ringdownAvg = ExCrdSvc.avg_rd;
+                $scope.pData = ExCrdSvc[objectData];
 
             });
 
@@ -1808,22 +1852,6 @@
             });
         }
     ]);
-
-    function updateCRD(d) {
-        var dataOut = {
-            "tauData": [],
-            "rdFit": [],
-            "rdAvg": []
-        };
-
-        for (i = 1; i < d.cell.tau[0].length; i++) {
-            dataOut.tauData.push([d.cell.tau[0][i], d.cell.tau0[0][i], d.cell.taucorr[0][i], d.cell.tau0corr[0][i], d.cell.ext[0][i]]);
-        }
-        dataOut.rdAvg = d.cell.avg_rd;
-
-        return dataOut;
-
-    }
 })();
 (function () {
     angular.module('main').controller('pas', ['$scope', 'net', '$http', 'cvt', 'Data', '$log',
@@ -2123,21 +2151,20 @@
     }
 })();
 (function () {
-    angular.module('main').
-    directive('exFlowplot', flowPlotDir);
+    angular.module('main').directive('exFlowplot', flowPlotDir);
 
     function flowPlotDir() {
 
-        /** 
+        /**
          * @ngdoc directive
          * @name main.directive:exFlowplot
          * @scope
          * @restrict E
          *
          * @description
-         * This directive wraps a plot specifically for the purpose of providing 
-         * a reusable means to display flow data returned by the server.  
-         * 
+         * This directive wraps a plot specifically for the purpose of providing
+         * a reusable means to display flow data returned by the server.
+         *
          */
 
         // TODO: Add scope variable for specifying the subsystem so we 
@@ -2147,12 +2174,12 @@
         // * CRD
         // * System/General
 
-        /** 
+        /**
          * @ngdoc controller
          * @name main.controller:FlowPlotCtl
          * @requires $rootScope
          * @requires main.service:ExFlowSvc
-         * 
+         *
          * @description
          * This controller is used specifically for handling data returned by
          * the flow device service to plot the data.
@@ -2165,70 +2192,79 @@
             var data_set = "P";
 
 
-            /** 
+            /**
              * @ngdoc property
              * @name main.controller:FlowPlotCtl#cm
              * @propertyOf main.controller:FlowPlotCtl
-             * 
+             *
              * @description
              * Provides an array of arrays for defining the context menu on the plot.
-             * Each array within the array consists of 
+             * Each array within the array consists of
              *
              * 1. ``string`` - name displayed in the context menu.
-             * 2. ``function`` - function that is exectuted when the context meny selection 
+             * 2. ``function`` - function that is exectuted when the context meny selection
              * is made.
-             * 
+             *
              * The context meny for this plot is defined as follows:
-             * 
+             *
              * * ``P`` - pressure in mb .
              * * ``T`` - temperature in degrees Celsius.
              * * ``Q`` - volumetric flow rate in lpm.
              * * ``Q0`` - mass flow rate in slpm.
              *
              * Not all values are measured by every device.  In every case, the function executed
-             * will set the axis label to the correct value. 
-             * 
+             * will set the axis label to the correct value.
+             *
              */
-            vm.cm = [['P', function () {
+            vm.cm = [
+                ['P', function () {
                     data_set = "P";
                     console.log("Select P.");
                     vm.options.ylabel = 'P (mb)';
-                }],
-                     ['T',
-            function () {
+                }
+                ],
+                ['T',
+                    function () {
                         data_set = "T";
                         console.log("Select T.");
                         vm.options.ylabel = 'T (degC)';
-                }],
-                     ['Q',
-            function () {
+                    }
+                ],
+                ['Q',
+                    function () {
                         data_set = "Q";
                         console.log("Select Q.");
                         vm.options.ylabel = 'Q (lpm)';
-                }],
-                     ['Q0',
-            function () {
+                    }
+                ],
+                ['Q0',
+                    function () {
                         data_set = "Q0";
                         console.log("Select Q0.");
                         vm.options.ylabel = 'T (degC)';
                         vm.options.ylabel = 'Q0 (slpm)';
-                }]
-                    ];
+                    }
+                ],
+                null,
+                ['Clear Data', function(){}],
+                ['Autoscale', function(){}],
+                ['Autoscale 1x', function(){}]
+            ];
 
-            /** 
+            /**
              * @ngdoc property
              * @name main.controller:FlowPlotCtl#options
              * @propertyOf main.controller:FlowPlotCtl
-             * 
+             *
              * @description
              * Object defining the options for the definition of the dygraph plot.
-             * The options defined below set the 
+             * The options defined below set the
              *
              * * ``ylabel`` - set it based on the initial variable plotted (pressure)
-             * * ``labels`` - just a default so that the plot is displayed 
+             * * ``labels`` - just a default so that the plot is displayed
              * * ``legend`` - always show the legend
              *
-             * The options are updated as necessary by the values returned from the 
+             * The options are updated as necessary by the values returned from the
              * data service as well as the selection chosen in the context meny.
              */
             vm.options = {
@@ -2246,11 +2282,10 @@
                         axisLabelFormatter: function (d) {
                             return Dygraph.zeropad(d.getHours()) + ":" + Dygraph.zeropad(d.getMinutes()) + ":" + Dygraph.zeropad(d.getSeconds());
                         },
-                        ticker:Dygraph.dateTicker
+                        ticker: Dygraph.dateTicker
                     }
                 },
-                xlabel: "time",
-                labelsUTC:true,
+                labelsUTC: true,
                 //sigFigs:2
             };
 
@@ -2258,31 +2293,31 @@
                 vm.options.title = vm.title;
             }
 
-            /** 
+            /**
              * @ngdoc property
              * @name main.controller:FlowPlotCtl#data
              * @propertyOf main.controller:FlowPlotCtl
              *
              * @description
-             * The data to be plotted in the dygraph plot.  This is updated with the selection 
-             * of the cotnext menu.  The initial value is just a single array that sets the 
-             * time variable to 0 and the data value to NaN.  This allows the visualization of 
+             * The data to be plotted in the dygraph plot.  This is updated with the selection
+             * of the cotnext menu.  The initial value is just a single array that sets the
+             * time variable to 0 and the data value to NaN.  This allows the visualization of
              * plot when there is no data available.
              */
             vm.data = [[0, NaN]];
 
             $rootScope.$on('FlowDataAvailable', updatePlot);
 
-            /** 
+            /**
              * @ngdoc method
              * @name main.controller:FlowPlotCtl#updatePlot
              * @methodOf main.controller:FlowPlotCtl
              *
              * @description
-             * Function to be executed when data is made available via the service. 
+             * Function to be executed when data is made available via the service.
              * This function will update the data object with data stored in the service
              * and (if necessary) update the ``labels`` property in the ``options`` object.
-             * 
+             *
              */
             function updatePlot() {
                 var l = ['t'].concat(ExFlowSvc.IDs);
