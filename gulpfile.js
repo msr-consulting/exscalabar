@@ -46,9 +46,10 @@ var watch_list = ["main/main.module.js",
     "crd/ex.crd.svc.js",
     "crd/ex.crd.ctl.js",
     "crd/ex.crdplot.dir.js",
-    "pas/pas-ctlr.js",
-    "pas/pas-spk-ctlr.js",
-    "pas/pas-las-ctlr.js",
+    "pas/ex.pas.ctl.js",
+    "pas/ex.pas.svc.js",
+    "pas/ex.passpk.ctl.js",
+    "pas/ex.paslas.ctl.js",
     "alicat/ex.flow.ctl.js",
     "alicat/ex.flowplot.dir.js",
     "humidity/ex.humidity.ctl.js",
@@ -83,7 +84,8 @@ var cuiJS = ["assets/cui/ibutton/ibutton.js",
     "assets/cui/istring/istring.js"];
 
 // Tested list of dygraph
-var docList = [//"assets/angular.js",
+var docList = [
+//"assets/angular.js",
     //"assets/angular-route.js",
     "assets/ui-bootstrap-0.9.0.js",
     "assets/ui-bootstrap-tpls-0.9.0.js",
@@ -100,7 +102,10 @@ var docList = [//"assets/angular.js",
     "alicat/ex.flow.svc.js",
     "alicat/ex.flow.ctl.js",
     "alicat/ex.flowplot.dir.js",
-    "msgs/ex.msg.svc.js",];
+    "msgs/ex.msg.svc.js",
+    "crd/ex.crd.svc.js",
+    "pas/ex.pas.svc.js"
+];
 
 
 /* Lint Task - check for errors in the js code... */
@@ -195,4 +200,5 @@ gulp.task('open', function () {
 // Default Task
 gulp.task('default', ['lint', 'scripts', 'styles', 'ngdocs', 'connect', 'connect2docs', 'open', 'watch']);
 
+gulp.task('no-browse', ['lint', 'scripts', 'styles', 'ngdocs', 'watch', 'connect2docs']);
 // TODO: add different builds for distribution and development...

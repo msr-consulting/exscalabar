@@ -94,6 +94,15 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "main.service:ExCrdSvc",
+      "shortName": "ExCrdSvc",
+      "type": "service",
+      "moduleName": "main",
+      "shortDescription": "Service that handles the CRD Data returned by the main Data service.",
+      "keywords": "$rootscope allocation api arrays broadcasted controllers crd data defined divided function get_data graphing handlecrd handles indicated input inputs json length libraries main method object pairs plotted plotting returned server service shift sort"
+    },
+    {
+      "section": "api",
       "id": "main.service:ExFlowSvc",
       "shortName": "ExFlowSvc",
       "type": "service",
@@ -109,6 +118,15 @@ NG_DOCS={
       "moduleName": "main",
       "shortDescription": "Handles maintaining data for the message related views.",
       "keywords": "$scope api data handles main maintaining message service views"
+    },
+    {
+      "section": "api",
+      "id": "main.service:ExPasSvc",
+      "shortName": "ExPasSvc",
+      "type": "service",
+      "moduleName": "main",
+      "shortDescription": "",
+      "keywords": "$rootscope allocation api array arrays broadcasted controllers correct data defined divided function handlepas handles indicated indicates input inputs json length libraries main method number object pairs pas plotted plotting points returned server service shift shifting start"
     },
     {
       "section": "api",

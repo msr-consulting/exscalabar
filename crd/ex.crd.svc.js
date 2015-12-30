@@ -1,10 +1,3 @@
-/** This service is used for defining how device data is displayed.
- *  Several devices can be controlled (mass flow controller and temperature
- *    controllers), but most are just display purposes.  This service will
- *    regularly check to see if the configuration has been updated and notify
- *  all users of updates.
- */
-
 (function () {
     angular.module('main').factory('ExCrdSvc', crdSvc);
 
@@ -16,7 +9,7 @@
 
     /**
      * @ngdoc service
-     * @name main.service:crdSvc
+     * @name main.service:ExCrdSvc
      * @requires $rootScope
      * @requires main.service:Data
      *
@@ -33,7 +26,8 @@
         /**
          * @ngdoc method
          * @ngdoc main.service:ExCrdSvc#get_data
-         * @methodof main.service:ExCrdSvc
+         * @methodOf main.service:ExCrdSvc
+         * @returns {Object} CRD data object
          * @description
          * Sort data for graphing.
          */
@@ -45,6 +39,7 @@
              * @ngdoc event
              * @name crdDataAvailable
              * @eventType broadcast
+             * @eventOf main.service:ExCrdSvc
              *
              * @description
              * Event that broadcasts the CRD Data has been processed
@@ -56,11 +51,6 @@
         return CrdData;
     }
 
-
-    /**
-     * This object is used to store {x,y} pairs of data for plotting of the CRD
-     * data.  The x value is time and the y is the value indicated by the property.
-     */
     function CrdObject() {
         this.tau = [];
         this.tau0 = [];
@@ -99,7 +89,7 @@
 
             // Reset the length of the history
             history = n;
-        }
+        };
 
         this.clear_history = function () {
 
@@ -116,7 +106,7 @@
             this.stdevtau = [];
             this.etau = [];
             this.max = [];
-        }
+        };
     }
 
     /**

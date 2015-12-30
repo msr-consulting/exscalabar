@@ -1,10 +1,10 @@
 (function () {
     angular.module('main').controller("ExFlowCtl", FlowCtl);
 
-    FlowCtl.$inject = ['$scope', "Data", "cvt", "ExFlowSvc", ];
+    FlowCtl.$inject = ['$scope', "Data", "cvt", "ExFlowSvc",];
 
-    
-    /** 
+
+    /**
      * @ngdoc controller
      * @name main.controller:ExFlowCtl
      * @requires $scope
@@ -16,8 +16,8 @@
      * Controller for the flow control and visualization page.
      */
     function FlowCtl($scope, cvt, ExFlowSvc) {
-        
-        $scope.Devices ={};
+
+        $scope.Devices = {};
 
         /* Update the CVT - the CVT should call the server... */
         $scope.updateSP = function () {
@@ -27,11 +27,7 @@
 
         $scope.$on('dataAvailable', function () {
             $scope.Devices = ExFlowSvc.data;
-           
+
         });
-        
-        $scope.$on()
-
-
     }
 })();

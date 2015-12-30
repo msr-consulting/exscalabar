@@ -129,7 +129,7 @@
 
             }
 
-        }
+        };
 
         // Provide annotation for angular minification
         CrdPlotCtl.$inject = ['$rootScope', 'ExCrdSvc'];
