@@ -13,8 +13,6 @@
                 this.id = ID;
             };
 
-            var objectData = "tau";
-
             /* Wrap the CVT function so that we force the CVT to update
              * when the view changes.  
              * argument[0] === index of laser 
@@ -87,8 +85,6 @@
 
             // Space data - allows us to display the dygraph plot with no data if not connected
             $scope.ringdownAvg = [[0, NaN, NaN, NaN, NaN, NaN]];
-            $scope.pData = [[0, NaN, NaN, NaN, NaN, NaN]];
-            // $scope.ringdownFit = [];
 
             // dygraph options object
             $scope.options = {
@@ -99,44 +95,12 @@
 
             };
 
-            $scope.optPData = {
-                ylabel: "tau (us)",
-                labels: ["t", "Cell 1", "Cell 2", "Cell 3", "Cell 4", "Cell 5"],
-                legend: 'always'
-            };
-
-            $scope.pDataCMOptions = [
-                ['Tau', function () {
-                    $scope.optPData.ylabel = "tau (us)";
-                    objectData = "tau";
-
-
-                }],
-                ["Tau'",
-                    function () {
-                        $scope.optPData.ylabel = "tau' (us)";
-                        objectData = "taucorr";
-                    }],
-                ['Standard Deviation', function () {
-                    $scope.optPData.ylabel = "std. tau (us)";
-                    objectData = "stdevtau";
-                }],
-                ['Max', function () {
-                    $scope.optPData.ylabel = "max";
-                    objectData = "max";
-                }],
-                null, // Creates a divider
-                ['Clear Data', function () {
-                }]
-            ];
-
             /* Listen for broadcasts from the DATA SERVICE */
             $scope.$on('crdDataAvaliable', function () {
 
                 $scope.data = ExCrdSvc;
 
                 $scope.ringdownAvg = ExCrdSvc.avg_rd;
-                $scope.pData = ExCrdSvc[objectData];
 
             });
 

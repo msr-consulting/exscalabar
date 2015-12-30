@@ -2,14 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b17b5e2a-9baf-466e-8338-3602342ae81a" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crd/cirrus.crd.svc.js" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/ad" afterPath="$PROJECT_DIR$/assets/ad" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/cm" afterPath="$PROJECT_DIR$/assets/cm" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/alicat/ex.flow.svc.js" afterPath="$PROJECT_DIR$/alicat/ex.flow.svc.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/cui" afterPath="$PROJECT_DIR$/assets/cui" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/alicat/ex.flowplot.dir.js" afterPath="$PROJECT_DIR$/alicat/ex.flowplot.dir.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/crd/crds.html" afterPath="$PROJECT_DIR$/crd/crds.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/crd/ex.crd.ctl.js" afterPath="$PROJECT_DIR$/crd/ex.crd.ctl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/data-service.js" afterPath="$PROJECT_DIR$/data/data-service.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/crd/ex.crd.svc.js" afterPath="$PROJECT_DIR$/crd/ex.crd.svc.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/ad.js" afterPath="$PROJECT_DIR$/dist/ad.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/ad.min.js" afterPath="$PROJECT_DIR$/dist/ad.min.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/assets.js" afterPath="$PROJECT_DIR$/dist/assets.js" />
@@ -18,17 +17,13 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/cui.min.js" afterPath="$PROJECT_DIR$/dist/cui.min.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/exscalabar.js" afterPath="$PROJECT_DIR$/dist/exscalabar.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/exscalabar.min.js" afterPath="$PROJECT_DIR$/dist/exscalabar.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/js/docs-setup.js" afterPath="$PROJECT_DIR$/docs/js/docs-setup.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/main.controller.FlowPlotCtl.html" afterPath="$PROJECT_DIR$/docs/partials/api/main.controller.FlowPlotCtl.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/main.directive.exFlowplot.html" afterPath="$PROJECT_DIR$/docs/partials/api/main.directive.exFlowplot.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/main.service.Data.html" afterPath="$PROJECT_DIR$/docs/partials/api/main.service.Data.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.carousel.directive.carousel.html" afterPath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.carousel.directive.carousel.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.carousel.directive.slide.html" afterPath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.carousel.directive.slide.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tab.html" afterPath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tab.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tabHeading.html" afterPath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tabHeading.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tabset.html" afterPath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tabset.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/footer/ex.footer.ctl.js" afterPath="$PROJECT_DIR$/footer/ex.footer.ctl.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gulpfile.js" afterPath="$PROJECT_DIR$/gulpfile.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main/main.html" afterPath="$PROJECT_DIR$/main/main.html" />
     </list>
     <ignored path="exscalabar.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -48,33 +43,37 @@
     <favorites_list name="exscalabar" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.47737226">
+    <splitter split-orientation="horizontal" split-proportion="0.65997565">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
           <file leaf-file-name="cirrus-dygraphs-dev.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/assets/ad/js/cirrus-dygraphs-dev.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="4341" column="22" selection-start-line="4341" selection-start-column="22" selection-end-line="4341" selection-end-column="22" />
+                <state vertical-scroll-proportion="-9.379311">
+                  <caret line="2268" column="30" selection-start-line="2268" selection-start-column="12" selection-end-line="2268" selection-end-column="30" />
                   <folding>
                     <element signature="n#!!doc" expanded="true" />
-                    <marker date="1449208062714" expanded="true" signature="368329:368376" placeholder="..." />
-                    <marker date="1449208062714" expanded="true" signature="368536:368605" placeholder="..." />
-                    <marker date="1449208062714" expanded="true" signature="370197:370225" placeholder="..." />
-                    <marker date="1449208062714" expanded="true" signature="371230:371400" placeholder="..." />
-                    <marker date="1449208062714" expanded="true" signature="373472:373720" placeholder="..." />
-                    <marker date="1449208062714" expanded="true" signature="425264:425280" placeholder="..." />
+                    <marker date="1451433673740" expanded="true" signature="368896:368943" placeholder="..." />
+                    <marker date="1451433673740" expanded="true" signature="369126:369195" placeholder="..." />
+                    <marker date="1451433673740" expanded="true" signature="370787:370815" placeholder="..." />
+                    <marker date="1451433673740" expanded="true" signature="371820:371990" placeholder="..." />
+                    <marker date="1451433673740" expanded="true" signature="374062:374310" placeholder="..." />
+                    <marker date="1451433673740" expanded="true" signature="425098:425114" placeholder="..." />
                   </folding>
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="ex.flowplot.dir.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/alicat/ex.flowplot.dir.js">
+          <file leaf-file-name="angular-dygraph.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/assets/ad/js/angular-dygraph.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="134" column="18" selection-start-line="134" selection-start-column="18" selection-end-line="134" selection-end-column="18" />
-                  <folding />
+                  <caret line="102" column="81" selection-start-line="102" selection-start-column="81" selection-end-line="102" selection-end-column="81" />
+                  <folding>
+                    <marker date="1451432839587" expanded="true" signature="4155:4192" placeholder="..." />
+                    <marker date="1451432839587" expanded="true" signature="4247:4333" placeholder="..." />
+                    <marker date="1451432839587" expanded="true" signature="4396:4496" placeholder="..." />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -89,11 +88,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="crds.html" pinned="false" current-in-tab="true">
+          <file leaf-file-name="crds.html" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/crd/crds.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="1.416499">
-                  <caret line="64" column="10" selection-start-line="64" selection-start-column="10" selection-end-line="64" selection-end-column="10" />
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="38" column="40" selection-start-line="38" selection-start-column="40" selection-end-line="38" selection-end-column="40" />
                   <folding />
                 </state>
               </provider>
@@ -103,7 +102,17 @@
             <entry file="file://$PROJECT_DIR$/crd/ex.crd.svc.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="66" column="19" selection-start-line="66" selection-start-column="13" selection-end-line="66" selection-end-column="19" />
+                  <caret line="102" column="0" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="ex.crdplot.dir.js" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/crd/ex.crdplot.dir.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="-0.30106258">
+                  <caret line="87" column="55" selection-start-line="87" selection-start-column="55" selection-end-line="87" selection-end-column="55" />
                   <folding />
                 </state>
               </provider>
@@ -112,22 +121,52 @@
         </leaf>
       </split-first>
       <split-second>
-        <leaf>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="data-service.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/data/data-service.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-9.472222">
-                  <caret line="100" column="36" selection-start-line="100" selection-start-column="34" selection-end-line="100" selection-end-column="36" />
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="91" column="27" selection-start-line="91" selection-start-column="27" selection-end-line="91" selection-end-column="27" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="ex.crd.ctl.js" pinned="false" current-in-tab="true">
+          <file leaf-file-name="ex.crd.ctl.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/crd/ex.crd.ctl.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-0.15024391">
-                  <caret line="11" column="34" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="102" column="53" selection-start-line="102" selection-start-column="53" selection-end-line="102" selection-end-column="53" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="main.html" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/main/main.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="5" column="30" selection-start-line="5" selection-start-column="30" selection-end-line="5" selection-end-column="30" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="ex.flowplot.dir.js" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/alicat/ex.flowplot.dir.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.48170012">
+                  <caret line="133" column="27" selection-start-line="133" selection-start-column="27" selection-end-line="133" selection-end-column="27" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="gulpfile.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/gulpfile.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="16" column="8" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="8" />
                   <folding />
                 </state>
               </provider>
@@ -143,14 +182,18 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/assets/ad/js/angular-dygraph.js" />
         <option value="$PROJECT_DIR$/alicat/ex.flow.svc.js" />
-        <option value="$PROJECT_DIR$/alicat/ex.flowplot.dir.js" />
         <option value="$PROJECT_DIR$/assets/cm/contextMenu.js" />
-        <option value="$PROJECT_DIR$/crd/ex.crd.svc.js" />
+        <option value="$PROJECT_DIR$/data/data-service.js" />
+        <option value="$PROJECT_DIR$/gulpfile.js" />
         <option value="$PROJECT_DIR$/crd/crds.html" />
         <option value="$PROJECT_DIR$/crd/ex.crd.ctl.js" />
-        <option value="$PROJECT_DIR$/data/data-service.js" />
+        <option value="$PROJECT_DIR$/main/main.html" />
+        <option value="$PROJECT_DIR$/crd/ex.crd.svc.js" />
+        <option value="$PROJECT_DIR$/assets/ad/js/angular-dygraph.js" />
+        <option value="$PROJECT_DIR$/alicat/ex.flowplot.dir.js" />
+        <option value="$PROJECT_DIR$/assets/ad/js/cirrus-dygraphs-dev.js" />
+        <option value="$PROJECT_DIR$/crd/ex.crdplot.dir.js" />
       </list>
     </option>
   </component>
@@ -216,10 +259,10 @@
     </layout>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-9" />
-    <option name="y" value="-9" />
-    <option name="width" value="2418" />
-    <option name="height" value="1318" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -246,6 +289,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -278,10 +323,90 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="exscalabar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="exscalabar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crd" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="exscalabar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="exscalabar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="exscalabar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="exscalabar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ad" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="exscalabar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="exscalabar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ad" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="exscalabar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="exscalabar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="alicat" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -354,27 +479,27 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="2418" height="1318" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.076793246" sideWeight="0.495" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14375" sideWeight="0.6628571" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.6827021" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14375" sideWeight="0.6855576" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.07602957" sideWeight="0.509375" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14375" sideWeight="0.31444243" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.076793246" sideWeight="0.505" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.184375" sideWeight="0.67085713" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.07602957" sideWeight="0.490625" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14375" sideWeight="0.33714285" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -404,15 +529,179 @@
     <entry file="file://$PROJECT_DIR$/assets/ad/js/cirrus-dygraphs-dev.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
+          <caret line="9696" column="55" selection-start-line="9696" selection-start-column="55" selection-end-line="9696" selection-end-column="55" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1451433673740" expanded="true" signature="368896:368943" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="369126:369195" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="370787:370815" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="371820:371990" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="374062:374310" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="425098:425114" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/ad/js/angular-dygraph.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="109" column="52" selection-start-line="109" selection-start-column="52" selection-end-line="109" selection-end-column="52" />
+          <folding>
+            <marker date="1451432839587" expanded="true" signature="4155:4192" placeholder="..." />
+            <marker date="1451432839587" expanded="true" signature="4247:4333" placeholder="..." />
+            <marker date="1451432839587" expanded="true" signature="4396:4496" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alicat/ex.flow.svc.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="83" column="42" selection-start-line="83" selection-start-column="42" selection-end-line="83" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crd/crds.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="38" column="40" selection-start-line="38" selection-start-column="40" selection-end-line="38" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crd/ex.crd.svc.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="102" column="0" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crd/ex.crdplot.dir.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="77" column="0" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/data-service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="91" column="27" selection-start-line="91" selection-start-column="27" selection-end-line="91" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crd/ex.crd.ctl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="102" column="53" selection-start-line="102" selection-start-column="53" selection-end-line="102" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/main.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="30" selection-start-line="5" selection-start-column="30" selection-end-line="5" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alicat/ex.flowplot.dir.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gulpfile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="16" column="8" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/ad/js/cirrus-dygraphs-dev.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4341" column="22" selection-start-line="4341" selection-start-column="22" selection-end-line="4341" selection-end-column="22" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1451433673740" expanded="true" signature="368896:368943" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="369126:369195" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="370787:370815" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="371820:371990" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="374062:374310" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="425098:425114" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alicat/ex.flowplot.dir.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="134" column="13" selection-start-line="134" selection-start-column="13" selection-end-line="134" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alicat/ex.flow.svc.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="83" column="42" selection-start-line="83" selection-start-column="42" selection-end-line="83" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crd/crds.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="58" column="6" selection-start-line="58" selection-start-column="6" selection-end-line="58" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crd/ex.crd.svc.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="66" column="19" selection-start-line="66" selection-start-column="13" selection-end-line="66" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/data-service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="100" column="27" selection-start-line="100" selection-start-column="27" selection-end-line="100" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crd/ex.crd.ctl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/ad/js/cirrus-dygraphs-dev.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
           <caret line="66" column="4" selection-start-line="66" selection-start-column="4" selection-end-line="66" selection-end-column="4" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <marker date="1449208062714" expanded="true" signature="368329:368376" placeholder="..." />
-            <marker date="1449208062714" expanded="true" signature="368536:368605" placeholder="..." />
-            <marker date="1449208062714" expanded="true" signature="370197:370225" placeholder="..." />
-            <marker date="1449208062714" expanded="true" signature="371230:371400" placeholder="..." />
-            <marker date="1449208062714" expanded="true" signature="373472:373720" placeholder="..." />
-            <marker date="1449208062714" expanded="true" signature="425264:425280" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="368896:368943" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="369126:369195" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="370787:370815" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="371820:371990" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="374062:374310" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="425098:425114" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -422,9 +711,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="62" column="18" selection-start-line="62" selection-start-column="18" selection-end-line="62" selection-end-column="18" />
           <folding>
-            <marker date="1451360840673" expanded="true" signature="5561:5598" placeholder="..." />
-            <marker date="1451360840673" expanded="true" signature="5633:5718" placeholder="..." />
-            <marker date="1451360840673" expanded="true" signature="5782:5892" placeholder="..." />
+            <marker date="1451432839587" expanded="true" signature="4155:4192" placeholder="..." />
+            <marker date="1451432839587" expanded="true" signature="4247:4333" placeholder="..." />
+            <marker date="1451432839587" expanded="true" signature="4396:4496" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -451,12 +740,12 @@
           <caret line="66" column="4" selection-start-line="66" selection-start-column="4" selection-end-line="66" selection-end-column="4" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <marker date="1449208062714" expanded="true" signature="368329:368376" placeholder="..." />
-            <marker date="1449208062714" expanded="true" signature="368536:368605" placeholder="..." />
-            <marker date="1449208062714" expanded="true" signature="370197:370225" placeholder="..." />
-            <marker date="1449208062714" expanded="true" signature="371230:371400" placeholder="..." />
-            <marker date="1449208062714" expanded="true" signature="373472:373720" placeholder="..." />
-            <marker date="1449208062714" expanded="true" signature="425264:425280" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="368896:368943" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="369126:369195" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="370787:370815" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="371820:371990" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="374062:374310" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="425098:425114" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -466,9 +755,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="62" column="18" selection-start-line="62" selection-start-column="18" selection-end-line="62" selection-end-column="18" />
           <folding>
-            <marker date="1451360840673" expanded="true" signature="5561:5598" placeholder="..." />
-            <marker date="1451360840673" expanded="true" signature="5633:5718" placeholder="..." />
-            <marker date="1451360840673" expanded="true" signature="5782:5892" placeholder="..." />
+            <marker date="1451432839587" expanded="true" signature="4155:4192" placeholder="..." />
+            <marker date="1451432839587" expanded="true" signature="4247:4333" placeholder="..." />
+            <marker date="1451432839587" expanded="true" signature="4396:4496" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -495,12 +784,12 @@
           <caret line="66" column="4" selection-start-line="66" selection-start-column="4" selection-end-line="66" selection-end-column="4" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <marker date="1449208062714" expanded="true" signature="368329:368376" placeholder="..." />
-            <marker date="1449208062714" expanded="true" signature="368536:368605" placeholder="..." />
-            <marker date="1449208062714" expanded="true" signature="370197:370225" placeholder="..." />
-            <marker date="1449208062714" expanded="true" signature="371230:371400" placeholder="..." />
-            <marker date="1449208062714" expanded="true" signature="373472:373720" placeholder="..." />
-            <marker date="1449208062714" expanded="true" signature="425264:425280" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="368896:368943" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="369126:369195" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="370787:370815" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="371820:371990" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="374062:374310" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="425098:425114" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -510,9 +799,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="62" column="18" selection-start-line="62" selection-start-column="18" selection-end-line="62" selection-end-column="18" />
           <folding>
-            <marker date="1451360840673" expanded="true" signature="5561:5598" placeholder="..." />
-            <marker date="1451360840673" expanded="true" signature="5633:5718" placeholder="..." />
-            <marker date="1451360840673" expanded="true" signature="5782:5892" placeholder="..." />
+            <marker date="1451432839587" expanded="true" signature="4155:4192" placeholder="..." />
+            <marker date="1451432839587" expanded="true" signature="4247:4333" placeholder="..." />
+            <marker date="1451432839587" expanded="true" signature="4396:4496" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -539,24 +828,12 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <marker date="1449208062714" expanded="true" signature="368329:368376" placeholder="..." />
-            <marker date="1449208062714" expanded="true" signature="368536:368605" placeholder="..." />
-            <marker date="1449208062714" expanded="true" signature="370197:370225" placeholder="..." />
-            <marker date="1449208062714" expanded="true" signature="371230:371400" placeholder="..." />
-            <marker date="1449208062714" expanded="true" signature="373472:373720" placeholder="..." />
-            <marker date="1449208062714" expanded="true" signature="425264:425280" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/ad/js/angular-dygraph.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-          <folding>
-            <marker date="1451360840673" expanded="true" signature="5561:5598" placeholder="..." />
-            <marker date="1451360840673" expanded="true" signature="5633:5718" placeholder="..." />
-            <marker date="1451360840673" expanded="true" signature="5782:5892" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="368896:368943" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="369126:369195" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="370787:370815" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="371820:371990" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="374062:374310" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="425098:425114" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -565,7 +842,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.41098902">
           <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -573,7 +849,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-9.705882">
           <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -581,31 +856,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.2118644">
           <caret line="76" column="7" selection-start-line="76" selection-start-column="7" selection-end-line="76" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/ad/js/cirrus-dygraphs-dev.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4341" column="22" selection-start-line="4341" selection-start-column="22" selection-end-line="4341" selection-end-column="22" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <marker date="1449208062714" expanded="true" signature="368329:368376" placeholder="..." />
-            <marker date="1449208062714" expanded="true" signature="368536:368605" placeholder="..." />
-            <marker date="1449208062714" expanded="true" signature="370197:370225" placeholder="..." />
-            <marker date="1449208062714" expanded="true" signature="371230:371400" placeholder="..." />
-            <marker date="1449208062714" expanded="true" signature="373472:373720" placeholder="..." />
-            <marker date="1449208062714" expanded="true" signature="425264:425280" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/alicat/ex.flowplot.dir.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="134" column="18" selection-start-line="134" selection-start-column="18" selection-end-line="134" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -613,7 +863,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-11.444445">
           <caret line="40" column="35" selection-start-line="40" selection-start-column="35" selection-end-line="40" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -625,34 +874,94 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/crd/ex.crd.svc.js">
+    <entry file="file://$PROJECT_DIR$/data/data-service.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="66" column="19" selection-start-line="66" selection-start-column="13" selection-end-line="66" selection-end-column="19" />
+          <caret line="91" column="27" selection-start-line="91" selection-start-column="27" selection-end-line="91" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gulpfile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="16" column="8" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="8" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/crd/crds.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.416499">
-          <caret line="64" column="10" selection-start-line="64" selection-start-column="10" selection-end-line="64" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/data-service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.472222">
-          <caret line="100" column="36" selection-start-line="100" selection-start-column="34" selection-end-line="100" selection-end-column="36" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="38" column="40" selection-start-line="38" selection-start-column="40" selection-end-line="38" selection-end-column="40" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/crd/ex.crd.ctl.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.15024391">
-          <caret line="11" column="34" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="102" column="53" selection-start-line="102" selection-start-column="53" selection-end-line="102" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/main.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="30" selection-start-line="5" selection-start-column="30" selection-end-line="5" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crd/ex.crd.svc.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="102" column="0" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/ad/js/angular-dygraph.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="102" column="81" selection-start-line="102" selection-start-column="81" selection-end-line="102" selection-end-column="81" />
+          <folding>
+            <marker date="1451432839587" expanded="true" signature="4155:4192" placeholder="..." />
+            <marker date="1451432839587" expanded="true" signature="4247:4333" placeholder="..." />
+            <marker date="1451432839587" expanded="true" signature="4396:4496" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alicat/ex.flowplot.dir.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.48170012">
+          <caret line="133" column="27" selection-start-line="133" selection-start-column="27" selection-end-line="133" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/ad/js/cirrus-dygraphs-dev.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.379311">
+          <caret line="2268" column="30" selection-start-line="2268" selection-start-column="12" selection-end-line="2268" selection-end-column="30" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1451433673740" expanded="true" signature="368896:368943" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="369126:369195" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="370787:370815" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="371820:371990" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="374062:374310" placeholder="..." />
+            <marker date="1451433673740" expanded="true" signature="425098:425114" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crd/ex.crdplot.dir.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.30106258">
+          <caret line="87" column="55" selection-start-line="87" selection-start-column="55" selection-end-line="87" selection-end-column="55" />
           <folding />
         </state>
       </provider>

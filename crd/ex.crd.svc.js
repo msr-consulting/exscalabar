@@ -9,6 +9,7 @@
     angular.module('main').factory('ExCrdSvc', crdSvc);
 
     var shift = false;
+    var history = 300;
 
     /* Annotate for minification. */
     crdSvc.$inject = ['$rootScope', 'Data'];
@@ -29,6 +30,13 @@
 
         $rootScope.$on('dataAvailable', get_data);
 
+        /**
+         * @ngdoc method
+         * @ngdoc main.service:ExCrdSvc#get_data
+         * @methodof main.service:ExCrdSvc
+         * @description
+         * Sort data for graphing.
+         */
         function get_data() {
 
             CrdData = handleCRD(Data, CrdData);
@@ -43,7 +51,6 @@
              * and is available.
              */
             $rootScope.$broadcast('crdDataAvaliable');
-
         }
 
         return CrdData;
@@ -66,21 +73,63 @@
         this.max = [];
         this.avg_rd = [];
         this.fit_rd = [];
+
+        this.set_history = function (n) {
+
+            if (this.tau.length > n) {
+
+                // Remove the difference
+                var x = this.tau.length - n;
+
+                this.tau.splice(0, x);
+                this.tau.splice(0, x);
+                this.tau0.splice(0, x);
+                this.taucorr.splice(0, x);
+                this.tau0corr.splice(0, x);
+                this.ext.splice(0, x);
+                this.extcorr.splice(0, x);
+                this.stdevtau.splice(0, x);
+                this.etau.splice(0, x);
+                this.max.splice(0, x);
+                shift = true;
+            }
+            else{
+                shift = false;
+            }
+
+            // Reset the length of the history
+            history = n;
+        }
+
+        this.clear_history = function () {
+
+            // Reset the boolean that tells us to shift the data
+            shift = false;
+
+            // Clear all of the arrays
+            this.tau = [];
+            this.tau0 = [];
+            this.taucorr = [];
+            this.tau0corr = [];
+            this.ext = [];
+            this.extcorr = [];
+            this.stdevtau = [];
+            this.etau = [];
+            this.max = [];
+        }
     }
 
     /**
      * @ngdoc method
-     * @name main.Data.handleCRD
-     * @methodOf main.service:Data
+     * @name main.service:ExCrdSvc#handleCRD
+     * @methodOf main.service:ExCrdSvc
      * @description
      * This function handles allocation of the CRD data.  All data may be plotted
      * and as such the data is divided up into arrays of {x,y} pairs for use by
      * plotting libraries.  The length of the arrays is defined by the service
      * and the length is indicated by the input shift.
      * @param {Object} d The JSON data object returned by the server.
-     * @param {Object} Data Data object that will be broadcasted to controllers.
-     * @param {boolean} shift Indicates whether we have the correct number of
-     * points in the array and need to start shifting the data.
+     * @param {Object} crd Data object that will be broadcasted to controllers.
      * @return {Object} Data object defined in the inputs.
      */
     function handleCRD(d, crd) {
@@ -117,7 +166,12 @@
             crd.stdevtau.shift();
             crd.etau.shift();
             crd.max.shift();
+        }
+        else {
 
+            // Check to make sure we haven't gone past the length of data
+            // requested by the user.
+            shift = crd.tau.length >= history ? true : false;
         }
 
         // Store all of the cell data in the temporary variables defined above.
@@ -139,9 +193,9 @@
 
         crd.avg_rd = [];
         // Handle the ringdown data
-        for (k = 0; k < d.data.CellData[0].Ringdowns[0].length; k++) {
+        for (var k = 0; k < d.data.CellData[0].Ringdowns[0].length; k++) {
             var aRD = [k];
-            for (j = 0; j < d.data.CellData.length; j++) {
+            for (var j = 0; j < d.data.CellData.length; j++) {
                 aRD.push(d.data.CellData[j].Ringdowns[0][k]);
 
             }

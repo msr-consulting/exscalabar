@@ -1539,6 +1539,7 @@
     angular.module('main').factory('ExCrdSvc', crdSvc);
 
     var shift = false;
+    var history = 300;
 
     /* Annotate for minification. */
     crdSvc.$inject = ['$rootScope', 'Data'];
@@ -1559,6 +1560,13 @@
 
         $rootScope.$on('dataAvailable', get_data);
 
+        /**
+         * @ngdoc method
+         * @ngdoc main.service:ExCrdSvc#get_data
+         * @methodof main.service:ExCrdSvc
+         * @description
+         * Sort data for graphing.
+         */
         function get_data() {
 
             CrdData = handleCRD(Data, CrdData);
@@ -1573,7 +1581,6 @@
              * and is available.
              */
             $rootScope.$broadcast('crdDataAvaliable');
-
         }
 
         return CrdData;
@@ -1596,21 +1603,63 @@
         this.max = [];
         this.avg_rd = [];
         this.fit_rd = [];
+
+        this.set_history = function (n) {
+
+            if (this.tau.length > n) {
+
+                // Remove the difference
+                var x = this.tau.length - n;
+
+                this.tau.splice(0, x);
+                this.tau.splice(0, x);
+                this.tau0.splice(0, x);
+                this.taucorr.splice(0, x);
+                this.tau0corr.splice(0, x);
+                this.ext.splice(0, x);
+                this.extcorr.splice(0, x);
+                this.stdevtau.splice(0, x);
+                this.etau.splice(0, x);
+                this.max.splice(0, x);
+                shift = true;
+            }
+            else{
+                shift = false;
+            }
+
+            // Reset the length of the history
+            history = n;
+        }
+
+        this.clear_history = function () {
+
+            // Reset the boolean that tells us to shift the data
+            shift = false;
+
+            // Clear all of the arrays
+            this.tau = [];
+            this.tau0 = [];
+            this.taucorr = [];
+            this.tau0corr = [];
+            this.ext = [];
+            this.extcorr = [];
+            this.stdevtau = [];
+            this.etau = [];
+            this.max = [];
+        }
     }
 
     /**
      * @ngdoc method
-     * @name main.Data.handleCRD
-     * @methodOf main.service:Data
+     * @name main.service:ExCrdSvc#handleCRD
+     * @methodOf main.service:ExCrdSvc
      * @description
      * This function handles allocation of the CRD data.  All data may be plotted
      * and as such the data is divided up into arrays of {x,y} pairs for use by
      * plotting libraries.  The length of the arrays is defined by the service
      * and the length is indicated by the input shift.
      * @param {Object} d The JSON data object returned by the server.
-     * @param {Object} Data Data object that will be broadcasted to controllers.
-     * @param {boolean} shift Indicates whether we have the correct number of
-     * points in the array and need to start shifting the data.
+     * @param {Object} crd Data object that will be broadcasted to controllers.
      * @return {Object} Data object defined in the inputs.
      */
     function handleCRD(d, crd) {
@@ -1647,7 +1696,12 @@
             crd.stdevtau.shift();
             crd.etau.shift();
             crd.max.shift();
+        }
+        else {
 
+            // Check to make sure we haven't gone past the length of data
+            // requested by the user.
+            shift = crd.tau.length >= history ? true : false;
         }
 
         // Store all of the cell data in the temporary variables defined above.
@@ -1669,9 +1723,9 @@
 
         crd.avg_rd = [];
         // Handle the ringdown data
-        for (k = 0; k < d.data.CellData[0].Ringdowns[0].length; k++) {
+        for (var k = 0; k < d.data.CellData[0].Ringdowns[0].length; k++) {
             var aRD = [k];
-            for (j = 0; j < d.data.CellData.length; j++) {
+            for (var j = 0; j < d.data.CellData.length; j++) {
                 aRD.push(d.data.CellData[j].Ringdowns[0][k]);
 
             }
@@ -1706,8 +1760,6 @@
                 this.en = enabled;
                 this.id = ID;
             };
-
-            var objectData = "tau";
 
             /* Wrap the CVT function so that we force the CVT to update
              * when the view changes.  
@@ -1781,8 +1833,6 @@
 
             // Space data - allows us to display the dygraph plot with no data if not connected
             $scope.ringdownAvg = [[0, NaN, NaN, NaN, NaN, NaN]];
-            $scope.pData = [[0, NaN, NaN, NaN, NaN, NaN]];
-            // $scope.ringdownFit = [];
 
             // dygraph options object
             $scope.options = {
@@ -1793,44 +1843,12 @@
 
             };
 
-            $scope.optPData = {
-                ylabel: "tau (us)",
-                labels: ["t", "Cell 1", "Cell 2", "Cell 3", "Cell 4", "Cell 5"],
-                legend: 'always'
-            };
-
-            $scope.pDataCMOptions = [
-                ['Tau', function () {
-                    $scope.optPData.ylabel = "tau (us)";
-                    objectData = "tau";
-
-
-                }],
-                ["Tau'",
-                    function () {
-                        $scope.optPData.ylabel = "tau' (us)";
-                        objectData = "taucorr";
-                    }],
-                ['Standard Deviation', function () {
-                    $scope.optPData.ylabel = "std. tau (us)";
-                    objectData = "stdevtau";
-                }],
-                ['Max', function () {
-                    $scope.optPData.ylabel = "max";
-                    objectData = "max";
-                }],
-                null, // Creates a divider
-                ['Clear Data', function () {
-                }]
-            ];
-
             /* Listen for broadcasts from the DATA SERVICE */
             $scope.$on('crdDataAvaliable', function () {
 
                 $scope.data = ExCrdSvc;
 
                 $scope.ringdownAvg = ExCrdSvc.avg_rd;
-                $scope.pData = ExCrdSvc[objectData];
 
             });
 
@@ -1852,6 +1870,155 @@
             });
         }
     ]);
+})();
+(function () {
+    angular.module('main').directive('exCrdplot', crdPlotDir);
+
+    /**
+     * @ngdoc directive
+     * @name main.directive:exCrdplot
+     *
+     * @description
+     *
+     *
+     */
+    function crdPlotDir() {
+
+        /**
+         * @ngdoc controller
+         * @name main.controller:CrdPlotCtl
+         * @requires $rootScope
+         * @requires main.service:ExCrdSvc
+         * @description
+         *
+         */
+        var CrdPlotCtl = function ($rootScope, ExCrdSvc) {
+
+            var vm = this;
+
+            // Put
+            var objectData = 'tau';
+
+            /**
+             * @ngdoc property
+             * @name main.controller:CrdPlotCtl#cm
+             * @propertyOf main.controller:CrdPlotCtl
+             * @description
+             * Provide a context menu for the CRD graph.  The elements are
+             *
+             *  * tau
+             *  * tau'
+             *  * standard deviation
+             *  * max
+             *
+             * Also provides some functionality for clearing the plots and changing the lengths...
+             */
+            vm.cm = [
+                ['Tau', function () {
+                    $scope.optPData.ylabel = "tau (us)";
+                    objectData = "tau";
+                    vm.options.ylabel = "Tau (us)";
+                }],
+                ["Tau'",
+                    function () {
+                        $scope.optPData.ylabel = "tau' (us)";
+                        objectData = "taucorr";
+                        vm.options.ylabel = "Tau' (us)";
+                    }],
+                ['Standard Deviation', function () {
+                    $scope.optPData.ylabel = "std. tau (us)";
+                    objectData = "stdevtau";
+                    vm.options.ylabel = "Stand. Dev. (us)";
+                }],
+                ['Max', function () {
+                    $scope.optPData.ylabel = "max";
+                    objectData = "max";
+                    vm.options.ylabel = "Max (a.u.)";
+                }],
+                null, // Creates a divider
+                ['Clear Data', function () {
+                    ExCrdSvc.clear_history();
+                }],
+                ['30', function () {
+                    ExCrdSvc.set_history(30);
+                }],
+                ['60', function () {
+                    ExCrdSvc.set_history(60);
+                }],
+                ['120', function () {
+                    ExCrdSvc.set_history(120);
+                }],
+                ['150', function () {
+                    ExCrdSvc.set_history(150);
+                }],
+                ['300', function () {
+                    ExCrdSvc.set_history(300);
+                }]
+            ];
+
+            /**
+             * @ngdoc property
+             * @name main.controller:CrdPlotCtl#optoins
+             * @propertyOf main.controller:CrdPlotCtl
+             * @description
+             * Options for the CRD graph. The options are based on teh ``dygraph`` plot options.  The ones
+             * that are explicit at invocation are
+             *
+             * * ``ylabel`` - set for the initial plotting of tau
+             * * ``labels`` - the initial labels are for time and cells 1-5
+             * * ``legend`` - set to always be shown
+             * * ``axes``   - set parameters for the axes such as width of the axes
+             */
+            vm.options = {
+                ylabel: "Tau (us)",
+                labels: ["t", "Cell 1", "Cell 2", "Cell 3", "Cell 4", "Cell 5"],
+                legend: 'always',
+                axes: {
+                    y: {
+                        axisLabelWidth: 70
+                    },
+                    x: {
+                        drawAxis: true,
+                        axisLabelFormatter: function (d) {
+                            return Dygraph.zeropad(d.getHours()) + ":" + Dygraph.zeropad(d.getMinutes()) + ":" + Dygraph.zeropad(d.getSeconds());
+                        }
+                    }
+                }
+            };
+
+            // If the user specifies a title, put it up there...
+            if (vm.title !== undefined) {
+                vm.options.title = vm.title;
+            }
+
+            // Some default data so that you can see the actual graph
+            vm.data = [[0, NaN, NaN, NaN, NaN, NaN]];
+
+            $rootScope.$on('crdDataAvaliable', update_plot);
+
+            function update_plot() {
+
+                vm.data = ExCrdSvc[objectData];
+
+            }
+
+        }
+
+        // Provide annotation for angular minification
+        CrdPlotCtl.$inject = ['$rootScope', 'ExCrdSvc'];
+
+        return {
+            restrict: 'E',
+            scope: {
+                title: "@?"
+            },
+            controller: CrdPlotCtl,
+            controllerAs: 'vm',
+            bindToController: true,
+            template: '<dy-graph options="vm.options" data="vm.data" context-menu="vm.cm"></dy-graph>'
+
+        };
+    }
 })();
 (function () {
     angular.module('main').controller('pas', ['$scope', 'net', '$http', 'cvt', 'Data', '$log',
@@ -2271,8 +2438,6 @@
                 ylabel: 'P (mb)',
                 labels: ['t', 'Alicat0'],
                 legend: 'always',
-                //yAxisLabelWidth: 70,
-                //xAxisLabelWidth:100,
                 axes: {
                     y: {
                         axisLabelWidth: 70
@@ -2281,11 +2446,10 @@
                         drawAxis: true,
                         axisLabelFormatter: function (d) {
                             return Dygraph.zeropad(d.getHours()) + ":" + Dygraph.zeropad(d.getMinutes()) + ":" + Dygraph.zeropad(d.getSeconds());
-                        },
-                        ticker: Dygraph.dateTicker
+                        }
                     }
                 },
-                labelsUTC: true,
+                labelsUTC: true
                 //sigFigs:2
             };
 

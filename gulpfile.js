@@ -27,79 +27,80 @@ var ngdocs = require('gulp-ngdocs');
 //var ngannotate = require('gulp-ng-annotate');
 
 var watch_list = ["main/main.module.js",
-"network/network-service.js",
-"cvt/cvt-service.js",
-"main/main-config.js",
-"main/main-controller.js",
-"data/data-service.js",
-"msgs/ex.msg.svc.js",
-"msgs/ex.msg.directive.js",
-"msgs/ex.msg.ctl.js",
-"sidebar/sidebar-controller.js",
-"main/ex.main.ctl.js",
-"alicat/alicat.config.ctlr.js",
-"alicat/ex.flow.svc.js",
-"footer/ex.footer.ctl.js",
-"power/ex.power.ctl.js",
-"config/config.ctlr.js",
-"filter/ex.filter.ctl.js",
-"crd/ex.crd.svc.js",
-"crd/ex.crd.ctl.js",
-"pas/pas-ctlr.js",
-"pas/pas-spk-ctlr.js",
-"pas/pas-las-ctlr.js",
-"alicat/ex.flow.ctl.js",
-"alicat/ex.flowplot.dir.js",
-"humidity/ex.humidity.ctl.js",
-"o3/startCal-ctl.js",
-"o3/o3-table-ctl.js",
-"o3/buildCal-service.js",
-"o3/saveProfile-service.js",
-"o3/saveData-ctrl.js",
-"o3/tableInput-ctlr.js",
-"sidebar/sidebar-directive.js",
-"nav/nav.service.js",
-"nav/nav-directive.js",
-"nav/nav.ctlr.js"];
+    "network/network-service.js",
+    "cvt/cvt-service.js",
+    "main/main-config.js",
+    "main/main-controller.js",
+    "data/data-service.js",
+    "msgs/ex.msg.svc.js",
+    "msgs/ex.msg.directive.js",
+    "msgs/ex.msg.ctl.js",
+    "sidebar/sidebar-controller.js",
+    "main/ex.main.ctl.js",
+    "alicat/alicat.config.ctlr.js",
+    "alicat/ex.flow.svc.js",
+    "footer/ex.footer.ctl.js",
+    "power/ex.power.ctl.js",
+    "config/config.ctlr.js",
+    "filter/ex.filter.ctl.js",
+    "crd/ex.crd.svc.js",
+    "crd/ex.crd.ctl.js",
+    "crd/ex.crdplot.dir.js",
+    "pas/pas-ctlr.js",
+    "pas/pas-spk-ctlr.js",
+    "pas/pas-las-ctlr.js",
+    "alicat/ex.flow.ctl.js",
+    "alicat/ex.flowplot.dir.js",
+    "humidity/ex.humidity.ctl.js",
+    "o3/startCal-ctl.js",
+    "o3/o3-table-ctl.js",
+    "o3/buildCal-service.js",
+    "o3/saveProfile-service.js",
+    "o3/saveData-ctrl.js",
+    "o3/tableInput-ctlr.js",
+    "sidebar/sidebar-directive.js",
+    "nav/nav.service.js",
+    "nav/nav-directive.js",
+    "nav/nav.ctlr.js"];
 
 // List of external assets required by the GUI
 // These are not expected to change.
 var assets = ["assets/jquery/jquery-2.1.4.js",
-            "assets/angular.js",
-            "assets/angular-route.js",
-            "assets/ui-bootstrap-0.9.0.js",
-            "assets/ui-bootstrap-tpls-0.9.0.js",
-            "assets/cm/contextMenu.js",
-            "assets/angular/angular-sanitize.js"];
+    "assets/angular.js",
+    "assets/angular-route.js",
+    "assets/ui-bootstrap-0.9.0.js",
+    "assets/ui-bootstrap-tpls-0.9.0.js",
+    "assets/cm/contextMenu.js",
+    "assets/angular/angular-sanitize.js"];
 
 // Angular Dygraph assets
 var adJS = ["assets/ad/js/cirrus-dygraphs-dev.js",
-            "assets/ad/js/angular-dygraph.js"];
+    "assets/ad/js/angular-dygraph.js"];
 
 // Cirrus GUI elements
 var cuiJS = ["assets/cui/ibutton/ibutton.js",
-            "assets/cui/inumeric/inumeric.js",
-            "assets/cui/istring/istring.js"];
+    "assets/cui/inumeric/inumeric.js",
+    "assets/cui/istring/istring.js"];
 
 // Tested list of dygraph
 var docList = [//"assets/angular.js",
-                //"assets/angular-route.js",
-                "assets/ui-bootstrap-0.9.0.js",
-                "assets/ui-bootstrap-tpls-0.9.0.js",
-                "assets/cm/contextMenu.js",
-                //"assets/angular/angular-sanitize.js",
-                "main/main.module.js",
-                "main/main-config.js",
-                "main/main-controller.js",
-                "data/data-service.js",
-                "msgs/msg-directive.js",
-                "network/network-service.js",
-                "cvt/cvt-service.js",
-                "nav/nav.ctlr.js",
-                "alicat/ex.flow.svc.js",
-                "alicat/ex.flow.ctl.js",
-                "alicat/ex.flowplot.dir.js",
-                "msgs/ex.msg.svc.js",];
+    //"assets/angular-route.js",
+    "assets/ui-bootstrap-0.9.0.js",
+    "assets/ui-bootstrap-tpls-0.9.0.js",
+    "assets/cm/contextMenu.js",
+    //"assets/angular/angular-sanitize.js",
+    "main/main.module.js",
+    "main/main-config.js",
+    "main/main-controller.js",
+    "data/data-service.js",
+    "msgs/msg-directive.js",
+    "network/network-service.js",
+    "cvt/cvt-service.js",
+    "nav/nav.ctlr.js",
+    "alicat/ex.flow.svc.js",
+    "alicat/ex.flow.ctl.js",
+    "alicat/ex.flowplot.dir.js",
+    "msgs/ex.msg.svc.js",];
 
 
 /* Lint Task - check for errors in the js code... */
@@ -186,10 +187,10 @@ gulp.task('open', function () {
 });
 
 /*gulp.task('minify', function() {
-  return gulp.src('views/*.html')
-    .pipe(htmlmin({collapseWhitespace: true}))
-    .pipe(gulp.dest('dist'))
-});*/
+ return gulp.src('views/*.html')
+ .pipe(htmlmin({collapseWhitespace: true}))
+ .pipe(gulp.dest('dist'))
+ });*/
 
 // Default Task
 gulp.task('default', ['lint', 'scripts', 'styles', 'ngdocs', 'connect', 'connect2docs', 'open', 'watch']);

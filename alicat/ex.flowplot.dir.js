@@ -119,8 +119,6 @@
                 ylabel: 'P (mb)',
                 labels: ['t', 'Alicat0'],
                 legend: 'always',
-                //yAxisLabelWidth: 70,
-                //xAxisLabelWidth:100,
                 axes: {
                     y: {
                         axisLabelWidth: 70
@@ -129,11 +127,10 @@
                         drawAxis: true,
                         axisLabelFormatter: function (d) {
                             return Dygraph.zeropad(d.getHours()) + ":" + Dygraph.zeropad(d.getMinutes()) + ":" + Dygraph.zeropad(d.getSeconds());
-                        },
-                        ticker: Dygraph.dateTicker
+                        }
                     }
                 },
-                labelsUTC: true,
+                labelsUTC: true
                 //sigFigs:2
             };
 
