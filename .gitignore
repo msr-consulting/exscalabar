@@ -9,3 +9,7 @@ test/test/
 # This is the docs file that is generated.  We don't need to stash it.
 
 docs/
+
+.idea/
+
+*~
