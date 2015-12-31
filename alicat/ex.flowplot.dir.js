@@ -93,10 +93,19 @@
                         vm.options.ylabel = 'Q0 (slpm)';
                     }
                 ],
+
+                ['>', 'Controller'],
+                ['Controller 1', function(){console.log('testing 1');}],
+                ['Controller 2', function(){}],
+                ['Enable All', function(){}],
+                ['Disable All', function(){}],
+                ['<'],
                 null,
                 ['Clear Data', function(){}],
+                ['>', 'Autoscale'],
                 ['Autoscale', function(){}],
-                ['Autoscale 1x', function(){}]
+                ['Autoscale 1x', function(){}],
+                ['<']
             ];
 
             /**
