@@ -3,24 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b17b5e2a-9baf-466e-8338-3602342ae81a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/cm" afterPath="$PROJECT_DIR$/assets/cm" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/cui" afterPath="$PROJECT_DIR$/assets/cui" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/alicat/ex.flowplot.dir.js" afterPath="$PROJECT_DIR$/alicat/ex.flowplot.dir.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/app.css" afterPath="$PROJECT_DIR$/css/app.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/ad.js" afterPath="$PROJECT_DIR$/dist/ad.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/ad.min.js" afterPath="$PROJECT_DIR$/dist/ad.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/assets.js" afterPath="$PROJECT_DIR$/dist/assets.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/assets.min.js" afterPath="$PROJECT_DIR$/dist/assets.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/cui.js" afterPath="$PROJECT_DIR$/dist/cui.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/cui.min.js" afterPath="$PROJECT_DIR$/dist/cui.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/exscalabar.js" afterPath="$PROJECT_DIR$/dist/exscalabar.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/exscalabar.min.js" afterPath="$PROJECT_DIR$/dist/exscalabar.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.carousel.directive.carousel.html" afterPath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.carousel.directive.carousel.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.carousel.directive.slide.html" afterPath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.carousel.directive.slide.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tab.html" afterPath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tab.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tabHeading.html" afterPath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tabHeading.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tabset.html" afterPath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tabset.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
     </list>
     <ignored path="exscalabar.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -46,7 +28,7 @@
           <file leaf-file-name="ex.pas.svc.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/pas/ex.pas.svc.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.81832296">
+                <state vertical-scroll-proportion="0.6761905">
                   <caret line="31" column="27" selection-start-line="31" selection-start-column="27" selection-end-line="31" selection-end-column="27" />
                   <folding />
                 </state>
@@ -59,42 +41,7 @@
                 <state vertical-scroll-proportion="0.0">
                   <caret line="120" column="0" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="0" />
                   <folding>
-                    <marker date="1451508268093" expanded="true" signature="83:197" placeholder="/** @ngdoc directive ...*/" />
-                    <marker date="1451508268093" expanded="true" signature="224:4906" placeholder="{...}" />
-                    <marker date="1451508268093" expanded="true" signature="235:433" placeholder="/** @ngdoc controller ...*/" />
                     <marker date="1451508268093" expanded="true" signature="491:4459" placeholder="{...}" />
-                    <marker date="1451508268093" expanded="true" signature="590:1081" placeholder="/** @ngdoc property ...*/" />
-                    <marker date="1451508268093" expanded="true" signature="1102:2692" placeholder="[...]" />
-                    <marker date="1451508268093" expanded="true" signature="1120:1309" placeholder="[...]" />
-                    <marker date="1451508268093" expanded="true" signature="1140:1308" placeholder="{...}" />
-                    <marker date="1451508268093" expanded="true" signature="1327:1559" placeholder="[...]" />
-                    <marker date="1451508268093" expanded="true" signature="1368:1558" placeholder="{...}" />
-                    <marker date="1451508268093" expanded="true" signature="1577:1799" placeholder="[...]" />
-                    <marker date="1451508268093" expanded="true" signature="1612:1798" placeholder="{...}" />
-                    <marker date="1451508268093" expanded="true" signature="1817:2003" placeholder="[...]" />
-                    <marker date="1451508268093" expanded="true" signature="1837:2002" placeholder="{...}" />
-                    <marker date="1451508268093" expanded="true" signature="2064:2157" placeholder="[...]" />
-                    <marker date="1451508268093" expanded="true" signature="2091:2156" placeholder="{...}" />
-                    <marker date="1451508268093" expanded="true" signature="2175:2260" placeholder="[...]" />
-                    <marker date="1451508268093" expanded="true" signature="2194:2259" placeholder="{...}" />
-                    <marker date="1451508268093" expanded="true" signature="2278:2363" placeholder="[...]" />
-                    <marker date="1451508268093" expanded="true" signature="2297:2362" placeholder="{...}" />
-                    <marker date="1451508268093" expanded="true" signature="2381:2468" placeholder="[...]" />
-                    <marker date="1451508268093" expanded="true" signature="2401:2467" placeholder="{...}" />
-                    <marker date="1451508268093" expanded="true" signature="2486:2573" placeholder="[...]" />
-                    <marker date="1451508268093" expanded="true" signature="2506:2572" placeholder="{...}" />
-                    <marker date="1451508268093" expanded="true" signature="2591:2678" placeholder="[...]" />
-                    <marker date="1451508268093" expanded="true" signature="2611:2677" placeholder="{...}" />
-                    <marker date="1451508268093" expanded="true" signature="2707:3347" placeholder="/** @ngdoc property ...*/" />
-                    <marker date="1451508268093" expanded="true" signature="3373:3990" placeholder="{&quot;ylabel&quot;: &quot;Tau (us)&quot;...}" />
-                    <marker date="1451508268093" expanded="true" signature="3548:3976" placeholder="{...}" />
-                    <marker date="1451508268093" expanded="true" signature="3573:3639" placeholder="{&quot;axisLabelWidth&quot;: 70...}" />
-                    <marker date="1451508268093" expanded="true" signature="3664:3958" placeholder="{&quot;drawAxis&quot;: true...}" />
-                    <marker date="1451508268093" expanded="true" signature="3763:3936" placeholder="{...}" />
-                    <marker date="1451508268093" expanded="true" signature="4098:4158" placeholder="{...}" />
-                    <marker date="1451508268093" expanded="true" signature="4382:4447" placeholder="{...}" />
-                    <marker date="1451508268093" expanded="true" signature="4589:4899" placeholder="{&quot;restrict&quot;: 'E'...}" />
-                    <marker date="1451508268093" expanded="true" signature="4637:4680" placeholder="{&quot;title&quot;: &quot;@?&quot;...}" />
                   </folding>
                 </state>
               </provider>
@@ -137,8 +84,8 @@
           <file leaf-file-name="contextMenu.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/assets/cm/contextMenu.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.6832298">
-                  <caret line="96" column="41" selection-start-line="36" selection-start-column="16" selection-end-line="96" selection-end-column="41" />
+                <state vertical-scroll-proportion="0.5292517">
+                  <caret line="38" column="50" selection-start-line="38" selection-start-column="50" selection-end-line="38" selection-end-column="50" />
                   <folding />
                 </state>
               </provider>
@@ -147,7 +94,7 @@
           <file leaf-file-name="app.css" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/css/app.css">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-22.461538">
+                <state vertical-scroll-proportion="0.0">
                   <caret line="203" column="1" selection-start-line="203" selection-start-column="1" selection-end-line="203" selection-end-column="1" />
                   <folding />
                 </state>
@@ -296,7 +243,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -345,6 +291,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -421,23 +368,23 @@
     <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14322917" sideWeight="0.6443452" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1015625" sideWeight="0.63826996" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2903907" sideWeight="0.29635417" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19429778" sideWeight="0.29895833" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.184375" sideWeight="0.67085713" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2903907" sideWeight="0.7036458" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14322917" sideWeight="0.35565478" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19429778" sideWeight="0.70104164" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1015625" sideWeight="0.36173" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.4921875" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -513,42 +460,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="77" column="0" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
           <folding>
-            <marker date="1451508268093" expanded="true" signature="83:197" placeholder="/** @ngdoc directive ...*/" />
-            <marker date="1451508268093" expanded="true" signature="224:4906" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="235:433" placeholder="/** @ngdoc controller ...*/" />
             <marker date="1451508268093" expanded="true" signature="491:4459" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="590:1081" placeholder="/** @ngdoc property ...*/" />
-            <marker date="1451508268093" expanded="true" signature="1102:2692" placeholder="[...]" />
-            <marker date="1451508268093" expanded="true" signature="1120:1309" placeholder="[...]" />
-            <marker date="1451508268093" expanded="true" signature="1140:1308" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="1327:1559" placeholder="[...]" />
-            <marker date="1451508268093" expanded="true" signature="1368:1558" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="1577:1799" placeholder="[...]" />
-            <marker date="1451508268093" expanded="true" signature="1612:1798" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="1817:2003" placeholder="[...]" />
-            <marker date="1451508268093" expanded="true" signature="1837:2002" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="2064:2157" placeholder="[...]" />
-            <marker date="1451508268093" expanded="true" signature="2091:2156" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="2175:2260" placeholder="[...]" />
-            <marker date="1451508268093" expanded="true" signature="2194:2259" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="2278:2363" placeholder="[...]" />
-            <marker date="1451508268093" expanded="true" signature="2297:2362" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="2381:2468" placeholder="[...]" />
-            <marker date="1451508268093" expanded="true" signature="2401:2467" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="2486:2573" placeholder="[...]" />
-            <marker date="1451508268093" expanded="true" signature="2506:2572" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="2591:2678" placeholder="[...]" />
-            <marker date="1451508268093" expanded="true" signature="2611:2677" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="2707:3347" placeholder="/** @ngdoc property ...*/" />
-            <marker date="1451508268093" expanded="true" signature="3373:3990" placeholder="{&quot;ylabel&quot;: &quot;Tau (us)&quot;...}" />
-            <marker date="1451508268093" expanded="true" signature="3548:3976" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="3573:3639" placeholder="{&quot;axisLabelWidth&quot;: 70...}" />
-            <marker date="1451508268093" expanded="true" signature="3664:3958" placeholder="{&quot;drawAxis&quot;: true...}" />
-            <marker date="1451508268093" expanded="true" signature="3763:3936" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="4098:4158" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="4382:4447" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="4589:4899" placeholder="{&quot;restrict&quot;: 'E'...}" />
-            <marker date="1451508268093" expanded="true" signature="4637:4680" placeholder="{&quot;title&quot;: &quot;@?&quot;...}" />
           </folding>
         </state>
       </provider>
@@ -783,42 +695,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="120" column="0" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="0" />
           <folding>
-            <marker date="1451508268093" expanded="true" signature="83:197" placeholder="/** @ngdoc directive ...*/" />
-            <marker date="1451508268093" expanded="true" signature="224:4906" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="235:433" placeholder="/** @ngdoc controller ...*/" />
             <marker date="1451508268093" expanded="true" signature="491:4459" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="590:1081" placeholder="/** @ngdoc property ...*/" />
-            <marker date="1451508268093" expanded="true" signature="1102:2692" placeholder="[...]" />
-            <marker date="1451508268093" expanded="true" signature="1120:1309" placeholder="[...]" />
-            <marker date="1451508268093" expanded="true" signature="1140:1308" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="1327:1559" placeholder="[...]" />
-            <marker date="1451508268093" expanded="true" signature="1368:1558" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="1577:1799" placeholder="[...]" />
-            <marker date="1451508268093" expanded="true" signature="1612:1798" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="1817:2003" placeholder="[...]" />
-            <marker date="1451508268093" expanded="true" signature="1837:2002" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="2064:2157" placeholder="[...]" />
-            <marker date="1451508268093" expanded="true" signature="2091:2156" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="2175:2260" placeholder="[...]" />
-            <marker date="1451508268093" expanded="true" signature="2194:2259" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="2278:2363" placeholder="[...]" />
-            <marker date="1451508268093" expanded="true" signature="2297:2362" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="2381:2468" placeholder="[...]" />
-            <marker date="1451508268093" expanded="true" signature="2401:2467" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="2486:2573" placeholder="[...]" />
-            <marker date="1451508268093" expanded="true" signature="2506:2572" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="2591:2678" placeholder="[...]" />
-            <marker date="1451508268093" expanded="true" signature="2611:2677" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="2707:3347" placeholder="/** @ngdoc property ...*/" />
-            <marker date="1451508268093" expanded="true" signature="3373:3990" placeholder="{&quot;ylabel&quot;: &quot;Tau (us)&quot;...}" />
-            <marker date="1451508268093" expanded="true" signature="3548:3976" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="3573:3639" placeholder="{&quot;axisLabelWidth&quot;: 70...}" />
-            <marker date="1451508268093" expanded="true" signature="3664:3958" placeholder="{&quot;drawAxis&quot;: true...}" />
-            <marker date="1451508268093" expanded="true" signature="3763:3936" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="4098:4158" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="4382:4447" placeholder="{...}" />
-            <marker date="1451508268093" expanded="true" signature="4589:4899" placeholder="{&quot;restrict&quot;: 'E'...}" />
-            <marker date="1451508268093" expanded="true" signature="4637:4680" placeholder="{&quot;title&quot;: &quot;@?&quot;...}" />
           </folding>
         </state>
       </provider>
@@ -869,7 +746,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pas/ex.pas.svc.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.81832296">
+        <state vertical-scroll-proportion="0.6761905">
           <caret line="31" column="27" selection-start-line="31" selection-start-column="27" selection-end-line="31" selection-end-column="27" />
           <folding />
         </state>
@@ -893,7 +770,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/css/app.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-22.461538">
+        <state vertical-scroll-proportion="0.0">
           <caret line="203" column="1" selection-start-line="203" selection-start-column="1" selection-end-line="203" selection-end-column="1" />
           <folding />
         </state>
@@ -909,8 +786,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/assets/cm/contextMenu.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6832298">
-          <caret line="96" column="41" selection-start-line="36" selection-start-column="16" selection-end-line="96" selection-end-column="41" />
+        <state vertical-scroll-proportion="0.5292517">
+          <caret line="38" column="50" selection-start-line="38" selection-start-column="50" selection-end-line="38" selection-end-column="50" />
           <folding />
         </state>
       </provider>
