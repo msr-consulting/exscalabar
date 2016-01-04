@@ -24,7 +24,7 @@
 
         var PasData = new PasObject();
 
-        $scope.$on('dataAvailable', function () {
+        $rootScope.$on('dataAvailable', function () {
 
             PasData = handle_pas(Data, PasData);
 
@@ -42,7 +42,7 @@
 
         });
 
-        return CrdData;
+        return PasData;
     }
 
     // Annotations for angular minification
@@ -65,6 +65,13 @@
         this.set_history = function (n) {
         };
         this.clear = function () {
+            this.f0 = [];
+            this.IA = [];
+            this.Q = [];
+            this.p = [];
+            this.abs = [];
+
+            shift = false;
         };
     }
 
@@ -84,7 +91,6 @@
      * @return {Object} Data object defined in the inputs.
      */
     function handle_pas(d, pas) {
-        var t = Data.time[0];
 
         var f0 = [d.tObj],
             IA = [d.tObj],
@@ -104,7 +110,7 @@
             shift = pas.f0.length >= history ? true : false;
         }
 
-        for (var index in d.PAS.CellData) {
+        for (var index in d.data.PAS.CellData) {
             f0.push(d.data.PAS.CellData[index].derived.f0);
             IA.push(d.data.PAS.CellData[index].derived.IA);
             Q.push(d.data.PAS.CellData[index].derived.Q);
@@ -125,7 +131,7 @@
         pas.wvfm.pd = [];
 
         // point by point
-        for (k = 0; k < d.PAS.CellData[0].MicFreq.Y.length; k++) {
+        for (k = 0; k < d.data.PAS.CellData[0].MicFreq.Y.length; k++) {
             var micf = [k], mict = [k], pd = [k];
             for (j = 0; j < d.pas.CellData.length; j++) {
                 micf.push(d.data.PAS.CellData[j].MicFreq.Y[j]);
@@ -138,7 +144,7 @@
             pas.wvfm.mict.push(mict);
             pas.wvfm.pd.push(pd);
         }
-        return Data;
+        return pas;
     }
 
 

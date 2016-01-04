@@ -50,6 +50,7 @@ var watch_list = ["main/main.module.js",
     "pas/ex.pas.svc.js",
     "pas/ex.passpk.ctl.js",
     "pas/ex.paslas.ctl.js",
+    "pas/ex.pasplot.dir.js",
     "alicat/ex.flow.ctl.js",
     "alicat/ex.flowplot.dir.js",
     "humidity/ex.humidity.ctl.js",
@@ -104,7 +105,8 @@ var docList = [
     "alicat/ex.flowplot.dir.js",
     "msgs/ex.msg.svc.js",
     "crd/ex.crd.svc.js",
-    "pas/ex.pas.svc.js"
+    "pas/ex.pas.svc.js",
+    "pas/ex.pasplot.dir.js"
 ];
 
 

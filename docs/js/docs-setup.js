@@ -49,6 +49,15 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "main.controller:PasPlotCtl",
+      "shortName": "PasPlotCtl",
+      "type": "controller",
+      "moduleName": "main",
+      "shortDescription": "",
+      "keywords": "$rootscope api axes based cells changing clearing cm context controller deviation dygraph elements explicit functionality graph initial invocation labels legend lengths main max menu options optoins parameters pas plot plots plotting property provide service set standard tau teh time width ylabel"
+    },
+    {
+      "section": "api",
       "id": "main.crd",
       "shortName": "main.crd",
       "type": "object",
@@ -64,6 +73,15 @@ NG_DOCS={
       "moduleName": "main",
       "shortDescription": "This directive wraps a plot specifically for the purpose of providing",
       "keywords": "api data directive display flow main plot providing purpose returned reusable server wraps"
+    },
+    {
+      "section": "api",
+      "id": "main.directive:exPasPlot",
+      "shortName": "exPasPlot",
+      "type": "directive",
+      "moduleName": "main",
+      "shortDescription": "",
+      "keywords": "api directive main"
     },
     {
       "section": "api",
@@ -90,7 +108,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "main",
       "shortDescription": "This is the main service for retrieving data at regular intervals.",
-      "keywords": "$http $rootscope alicat alicats allocation api array arrays broadcasted conjunction controllers converts correct data defined defines determines device displaying divided elements function handlepas handles indicated indicates input inputs intervals january javascript json labview length libraries list main max maxlength method names number object pairs pas plotted plotting points ppt ppts property regular retrieving returned seconds server service shift shiftdata shifting shuffle specific start takes time true updatetime vaisala vaisalas"
+      "keywords": "$http $rootscope api array arrays conjunction converts data defines determines device displaying elements intervals january javascript labview length list main max maxlength method names number object ppt ppts property regular retrieving returned seconds server service shiftdata shuffle specific takes time true updatetime vaisala vaisalas"
     },
     {
       "section": "api",
@@ -108,7 +126,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "main",
       "shortDescription": "Service handling the ordering of the data returned by flow controllers",
-      "keywords": "$rootscope actual alicats api arr array arrays associative check concerning containg controller controllers data device devices element flow getdata handling ids key looping main mass meters method object ordering plots plotting point populate populate_arrays presence pressure property q0 qsp returned service setpoint single string stuff teh temperature time values volumetric"
+      "keywords": "$rootscope actual alicats api array arrays associative check concerning containg controller controllers data device devices element flow getdata handling ids key main mass meters method object ordering plots plotting point populate populate_arrays presence pressure property q0 qsp returned service setpoint single string stuff teh temperature time values volumetric"
     },
     {
       "section": "api",

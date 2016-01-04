@@ -39,6 +39,7 @@
 
             var data_set = "P";
 
+            vm.ref = {};
 
             /**
              * @ngdoc property
@@ -67,35 +68,36 @@
             vm.cm = [
                 ['P', function () {
                     data_set = "P";
-                    console.log("Select P.");
                     vm.options.ylabel = 'P (mb)';
+                    vm.options.axes.y.valueRange = [null,null];
                 }
                 ],
                 ['T',
                     function () {
                         data_set = "T";
-                        console.log("Select T.");
                         vm.options.ylabel = 'T (degC)';
+                        vm.options.axes.y.valueRange = [null,null];
                     }
                 ],
                 ['Q',
                     function () {
                         data_set = "Q";
-                        console.log("Select Q.");
                         vm.options.ylabel = 'Q (lpm)';
+                        vm.options.axes.y.valueRange = [null,null];
                     }
                 ],
                 ['Q0',
                     function () {
                         data_set = "Q0";
-                        console.log("Select Q0.");
-                        vm.options.ylabel = 'T (degC)';
                         vm.options.ylabel = 'Q0 (slpm)';
+                        vm.options.axes.y.valueRange = [null,null];
                     }
                 ],
 
                 ['>', 'Controller'],
-                ['Controller 1', function(){console.log('testing 1');}],
+                ['Controller 1', function(){
+
+                }],
                 ['Controller 2', function(){}],
                 ['Enable All', function(){}],
                 ['Disable All', function(){}],
@@ -103,8 +105,11 @@
                 null,
                 ['Clear Data', function(){}],
                 ['>', 'Autoscale'],
-                ['Autoscale', function(){}],
-                ['Autoscale 1x', function(){}],
+                ['Autoscale', function(){
+                    vm.options.axes.y.valueRange = [null,null];
+                }],
+                ['Autoscale 1x', function(){
+                        vm.options.axes.y.valueRange = vm.ref.yAxisRange();}],
                 ['<']
             ];
 
@@ -196,7 +201,7 @@
             controller: FlowPlotCtl,
             controllerAs: 'vm',
             bindToController: true,
-            template: '<dy-graph options="vm.options" data="vm.data" context-menu="vm.cm"></dy-graph>'
+            template: '<dy-graph options="vm.options" ref= "vm.ref" data="vm.data" context-menu="vm.cm"></dy-graph>'
         };
     }
 })();

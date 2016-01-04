@@ -17,7 +17,7 @@ and meters.</p>
 <ul class="methods"><li><h3 id="methods_getdata">getData()</h3>
 <div class="getdata"><div class="main-service-page main-service-exflowsvc-getdata-page"><p>Get the data concerning the Alicats via the Data object returned
 from the Data service.  Stuff teh data into the flow property of this
-service.  The first time data is returned, we will check for the 
+service.  The first time data is returned, we will check for the
 presence of the actual object.  If it is not there, check to see if</p>
 <ol>
 <li>it is a controller, and</li>
@@ -25,11 +25,10 @@ presence of the actual object.  If it is not there, check to see if</p>
 </ol>
 </div></div>
 </li>
-<li><h3 id="methods_populate_arrays">populate_arrays(e, i, arr)</h3>
+<li><h3 id="methods_populate_arrays">populate_arrays(e, i)</h3>
 <div class="populate_arrays"><div class="main-service-page main-service-exflowsvc-populate-arrays-page"><p>Populate the arrays for the plots.</p>
 </div><h5 id="methods_populate_arrays_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>e</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="main-service-page main-service-exflowsvc-populate-arrays-page"><p>Element in array</p>
 </div></td></tr><tr><td>i</td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="main-service-page main-service-exflowsvc-populate-arrays-page"><p>Index in array</p>
-</div></td></tr><tr><td>arr</td><td><a href="" class="label type-hint type-hint-array">Array</a></td><td><div class="main-service-page main-service-exflowsvc-populate-arrays-page"><p>Array we are looping through</p>
 </div></td></tr></tbody></table></div>
 </li>
 </ul>
@@ -44,7 +43,7 @@ presence of the actual object.  If it is not there, check to see if</p>
 <li>T - Array of arrays of temperature values for plotting</li>
 <li>Q0 - Array of arrays of mass flow values for plotting</li>
 <li>data - object containing single point flow data</li>
-<li><code>Qsp</code> - an associative array that contains a key and value for each 
+<li><code>Qsp</code> - an associative array that contains a key and value for each
 element.  The key is the device ID while the value is the setpoint.</li>
 </ul>
 </div></div>
@@ -53,7 +52,7 @@ element.  The key is the device ID while the value is the setpoint.</li>
 </div>
 <div class="member event"><h2 id="events">Events</h2>
 <ul class="events"><li><h3 id="events_flowdataavailable">FlowDataAvailable</h3>
-<div class="flowdataavailable"><div class="flowdataavailable-page"><p>Announce to observers that flow data is available.</p>
+<div class="flowdataavailable"><div class="main-service-page main-service-exflowsvc-flowdataavailable-page"><p>Announce to observers that flow data is available.</p>
 </div><div class="inline"><h4 id="events_flowdataavailable_type">Type:</h4>
 <div class="type">broadcast</div>
 </div>

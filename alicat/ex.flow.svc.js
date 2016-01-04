@@ -1,7 +1,6 @@
 (function () {
 
-    angular.module('main').
-    factory('ExFlowSvc', flowSvc);
+    angular.module('main').factory('ExFlowSvc', flowSvc);
 
     /**
      * @ngdoc service
@@ -25,28 +24,30 @@
          *
          * @description
          * This is the object that will be returned by the service.  This object contains
-         * 
+         *
          * * IDs - string array containg the IDs of the devices
          * * Q - Array of arrays of volumetric flow values for plotting
          * * P - Array of arrays of pressure values for plotting
          * * T - Array of arrays of temperature values for plotting
          * * Q0 - Array of arrays of mass flow values for plotting
          * * data - object containing single point flow data
-         * * ``Qsp`` - an associative array that contains a key and value for each 
+         * * ``Qsp`` - an associative array that contains a key and value for each
          * element.  The key is the device ID while the value is the setpoint.
          */
-        var flow = {
-            IDs: [],
-            Q: [],
-            P: [],
-            T: [],
-            Q0: [],
-            data: {},
-            Qsp:[]
 
-        };
-        
-        
+        function FlowObj() {
+            this.IDs = [];
+            this.Q = [];
+            this.P = [];
+            this.T = [];
+            this.Q0 = [];
+            this.data = {};
+            this.Qsp = [];
+
+        }
+
+        var flow = new FlowObj();
+
 
         var maxi = 300;
 
@@ -64,24 +65,22 @@
         }
 
 
-
         // Temporary variables for storing array data.
         var P, T, Q, Q0;
 
         var alicats = ["TestAlicat"];
 
-        /** 
+        /**
          * @ngdoc method
          * @name main.service:ExFlowSvc#populate_arrays
          * @methodOf main.service:ExFlowSvc
          * @param {object} e Element in array
          * @param {number} i Index in array
-         * @param {Array} arr Array we are looping through
-         * 
+         *
          * @description
          * Populate the arrays for the plots.
          */
-        function populate_arrays(e, i, arr) {
+        function populate_arrays(e, i) {
 
             if (!i) {
                 P = [Data.tObj, flow.data[e].P];
@@ -98,15 +97,15 @@
 
         $rootScope.$on('dataAvailable', getData);
 
-        /** 
+        /**
          * @ngdoc method
          * @name main.service:ExFlowSvc#getData
          * @methodOf main.service:ExFlowSvc
-         * 
+         *
          * @description
          * Get the data concerning the Alicats via the Data object returned
          * from the Data service.  Stuff teh data into the flow property of this
-         * service.  The first time data is returned, we will check for the 
+         * service.  The first time data is returned, we will check for the
          * presence of the actual object.  If it is not there, check to see if
          *
          * 1. it is a controller, and
@@ -141,10 +140,10 @@
                     flow.data[key].P = Data.data[key].P;
                     flow.data[key].T = Data.data[key].T;
                     flow.data[key].Q = Data.data[key].Q;
-                    
+
                     // TODO: provide real label...
                     flow.data[key].label = key;
-                    
+
                 }
             }
 
@@ -156,22 +155,22 @@
                 flow.Q.shift();
                 flow.Q0.shift();
             }
-            else{
+            else {
                 index += 1;
             }
             flow.P.push(P);
             flow.T.push(T);
             flow.Q.push(Q);
             flow.Q0.push(Q0);
-            
-            shift = index >= maxi ? true : false;
+
+            shift = index >= maxi;
 
             /**
              * @ngdoc event
-             * @name FlowDataAvailable
+             * @name main.service:ExFlowSvc#FlowDataAvailable
              * @eventType broadcast
              * @eventOf main.service:ExFlowSvc
-             * 
+             *
              * @description
              * Announce to observers that flow data is available.
              */
