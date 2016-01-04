@@ -1,7 +1,7 @@
 (function () {
     angular.module('main').controller("ExFlowCtl", FlowCtl);
 
-    FlowCtl.$inject = ['$scope', "Data", "cvt", "ExFlowSvc",];
+    FlowCtl.$inject = ['$scope', "Data", "cvt", "ExFlowSvc"];
 
 
     /**

@@ -1,37 +1,37 @@
+
 (function () {
-    angular.module('main').directive('exCrdplot', crdPlotDir);
+    angular.module('main').directive('exPasplot', pas_plot);
 
     /**
      * @ngdoc directive
-     * @name main.directive:exCrdplot
+     * @name main.directive:exPasPlot
      *
      * @description
      *
      *
      */
-    function crdPlotDir() {
+    function pas_plot() {
 
         /**
          * @ngdoc controller
-         * @name main.controller:CrdPlotCtl
+         * @name main.controller:PasPlotCtl
          * @requires $rootScope
-         * @requires main.service:ExCrdSvc
+         * @requires main.service:ExPasSvc
          * @description
          *
          */
-        var CrdPlotCtl = function ($rootScope, ExCrdSvc) {
+        var PasPlotCtl = function ($rootScope, ExPasSvc) {
 
             var vm = this;
 
-            // Put
-            var objectData = 'tau';
+            var objectData = 'IA';
 
             /**
              * @ngdoc property
-             * @name main.controller:CrdPlotCtl#cm
-             * @propertyOf main.controller:CrdPlotCtl
+             * @name main.controller:PasPlotCtl#cm
+             * @propertyOf main.controller:PasPlotCtl
              * @description
-             * Provide a context menu for the CRD graph.  The elements are
+             * Provide a context menu for the Pas graph.  The elements are
              *
              *  * tau
              *  * tau'
@@ -41,50 +41,56 @@
              * Also provides some functionality for clearing the plots and changing the lengths...
              */
             vm.cm = [
-                ['Tau', function () {
-                    objectData = "tau";
-                    vm.options.ylabel = "Tau (us)";
+                ['IA', function () {
+                    objectData = "IA";
+                    vm.options.ylabel = "IA (a.u.)";
                 }],
-                ["Tau'",
+                ["f0",
                     function () {
-                        objectData = "taucorr";
-                        vm.options.ylabel = "Tau' (us)";
+                        objectData = "f0";
+                        vm.options.ylabel = "f0 (Hz)";
                     }],
-                ['Standard Deviation', function () {
-                    objectData = "stdevtau";
-                    vm.options.ylabel = "Stand. Dev. (us)";
+                ['Quality', function () {
+                    objectData = "Q";
+                    vm.options.ylabel = "Quality (a.u.)";
                 }],
-                ['Max', function () {
-                    objectData = "max";
-                    vm.options.ylabel = "Max (a.u.)";
+                ['Noise Floor', function () {
+                    objectData = "p";
+                    vm.options.ylabel = "Noise (a.u.)";
+                }],
+                ['Absorption', function () {
+                    objectData = "abs";
+                    vm.options.ylabel = "Absorption (Mm-1)";
                 }],
                 null, // Creates a divider
                 ['Clear Data', function () {
-                    ExCrdSvc.clear_history();
+                    ExPasSvc.clear();
                 }],
+                ['>', 'History'],
                 ['30', function () {
-                    ExCrdSvc.set_history(30);
+                    ExPasSvc.set_history(30);
                 }],
                 ['60', function () {
-                    ExCrdSvc.set_history(60);
+                    ExPasSvc.set_history(60);
                 }],
                 ['120', function () {
-                    ExCrdSvc.set_history(120);
+                    ExPasSvc.set_history(120);
                 }],
                 ['150', function () {
-                    ExCrdSvc.set_history(150);
+                    ExPasSvc.set_history(150);
                 }],
                 ['300', function () {
-                    ExCrdSvc.set_history(300);
-                }]
+                    ExPasSvc.set_history(300);
+                }],
+                ['<']
             ];
 
             /**
              * @ngdoc property
-             * @name main.controller:CrdPlotCtl#optoins
-             * @propertyOf main.controller:CrdPlotCtl
+             * @name main.controller:PasPlotCtl#optoins
+             * @propertyOf main.controller:PasPlotCtl
              * @description
-             * Options for the CRD graph. The options are based on teh ``dygraph`` plot options.  The ones
+             * Options for the Pas graph. The options are based on teh ``dygraph`` plot options.  The ones
              * that are explicit at invocation are
              *
              * * ``ylabel`` - set for the initial plotting of tau
@@ -93,7 +99,7 @@
              * * ``axes``   - set parameters for the axes such as width of the axes
              */
             vm.options = {
-                ylabel: "Tau (us)",
+                ylabel: "IA (a.u.)",
                 labels: ["t", "Cell 1", "Cell 2", "Cell 3", "Cell 4", "Cell 5"],
                 legend: 'always',
                 axes: {
@@ -117,25 +123,25 @@
             // Some default data so that you can see the actual graph
             vm.data = [[0, NaN, NaN, NaN, NaN, NaN]];
 
-            $rootScope.$on('crdDataAvaliable', update_plot);
+            $rootScope.$on('pasDataAvaliable', update_plot);
 
             function update_plot() {
 
-                vm.data = ExCrdSvc[objectData];
+                vm.data = ExPasSvc[objectData];
 
             }
 
         };
 
         // Provide annotation for angular minification
-        CrdPlotCtl.$inject = ['$rootScope', 'ExCrdSvc'];
+        PasPlotCtl.$inject = ['$rootScope', 'ExPasSvc'];
 
         return {
             restrict: 'E',
             scope: {
                 title: "@?"
             },
-            controller: CrdPlotCtl,
+            controller: PasPlotCtl,
             controllerAs: 'vm',
             bindToController: true,
             template: '<dy-graph options="vm.options" data="vm.data" context-menu="vm.cm"></dy-graph>'

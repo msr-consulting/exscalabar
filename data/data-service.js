@@ -1,43 +1,30 @@
 (function () {
     angular.module('main').factory('Data', ['$rootScope', '$http', 'net',
-    'cvt',
-    function ($rootScope, $http, net, cvt) {
-            /** 
-             * @ngdoc service 
+        'cvt',
+        function ($rootScope, $http, net) {
+            /**
+             * @ngdoc service
              * @name main.service:Data
-             * @requires $rootscope
+             * @requires $rootScope
              * @requires $http
              * @requires main.service:net
-             * @requires main.service:cvt
-             * @description 
+             * @description
              * This is the main service for retrieving data at regular intervals.
              *
              */
 
-            // Arrays of Devices
-            // TODO: Make sure this is not hardcoded...
-
-            /** 
+            /**
              * @ngdoc property
-             * @name main.Data.alicats
-             * @propertyOf main.service:Data
-             * @description
-             * Defines a list of alicat names to ID data related to a specific alicat device.
-             */
-            var alicats = ["TestAlicat"];
-
-            /** 
-             * @ngdoc property
-             * @name main.Data.ppts
+             * @name main.service:Data#ppts
              * @propertyOf main.service:Data
              * @description
              * Defines a list of ppt names to ID data related to a specific ppt device.
              */
             var ppts = ["pDryBlue"];
 
-            /** 
+            /**
              * @ngdoc property
-             * @name main.Data.vaisalas
+             * @name main.service:Data#vaisalas
              * @propertyOf main.service:Data
              * @description
              * Defines a list of vaisala names to ID data related to a specific vaisala device.
@@ -58,35 +45,30 @@
             };
 
 
-            /** 
+            /**
              * @ngdoc property
-             * @name main.Data.maxLength
+             * @name main.service:Data#maxLength
              * @propertyOf main.service:Data
              * @description
-             * Defines the max array length in seconds for displaying data. 
+             * Defines the max array length in seconds for displaying data.
              */
             var maxLength = 300;
 
-            /** 
+            /**
              * @ngdoc property
-             * @name main.Data.shiftData
+             * @name main.service:Data#shiftData
              * @propertyOf main.service:Data
              * @description
-             * Determines how to shuffle array data (used in conjunction with ``maxLength``).  If the 
-             * value is true, the number of elements in the arrays is ``>= maxLength``. 
+             * Determines how to shuffle array data (used in conjunction with ``maxLength``).  If the
+             * value is true, the number of elements in the arrays is ``>= maxLength``.
              */
             var shiftData = false;
-
-            dataObj.pas = {};
-            dataObj.pas.cell = new pasData();
-            dataObj.pas.drive = true;
 
             dataObj.filter = {
                 "state": true,
                 "tremain": 0
             };
 
-            dataObj.flowData = [new fdevice()];
             var busy = false;
 
             dataObj.getData = function () {
@@ -96,15 +78,6 @@
                 busy = true;
                 promise = $http.get(net.address() + 'General/Data')
                     .then(function (response) {
-
-
-                        // Object creation for devices
-                        for (i = 0; i < alicats.length; i++) {
-                            if (alicats[i] in response.data) {
-                                dataObj[alicats[i]] = response.data[alicats[i]];
-                            }
-
-                        }
 
                         // Handle filter infomration
                         dataObj.filter.state = response.data.Filter;
@@ -136,19 +109,11 @@
                          */
                         // TODO: Get rid of this array - it is not used!
                         if (dataObj.time.length - 1 >= maxLength) {
-                            dataObj.time.pop();
                             shiftData = true;
                         }
 
-
                         dataObj.tObj = updateTime(Number(response.data.Time));
 
-
-                        var t = dataObj.tObj.getTime();
-                        dataObj.time.unshift(t);
-
-
-                        dataObj = handlePAS(response.data, dataObj, shiftData);
                         dataObj.Cabin = response.data.Cabin;
                         dataObj.msg = response.data.Msg;
 
@@ -160,7 +125,7 @@
                         $rootScope.$broadcast('dataAvailable');
 
                         busy = false;
-                    }, function (response) {
+                    }, function () {
                         $rootScope.$broadcast('dataNotAvailable');
                     }).finally(function () {
                         busy = false;
@@ -169,17 +134,17 @@
 
             return dataObj;
 
-    }
-  ]);
+        }
+    ]);
 
-    /** 
+    /**
      * @ngdoc method
-     * @name main.Data.updateTime
+     * @name main.service:Data#updateTime
      * @methodOf main.service:Data
      * @description
-     * Takes the time returned by the server (a LabVIEW time) and converts it to 
+     * Takes the time returned by the server (a LabVIEW time) and converts it to
      * a Javascript Date.
-     * 
+     *
      * @param {number} t Time in seconds since January 1, 1904.
      * @return {Date} Date object with date from server.
      */
@@ -191,108 +156,5 @@
         var lvDate = new Date(1904, 0, 1);
         lvDate.setSeconds(t);
         return lvDate;
-    }
-
-    /** This is the structure for the flow device data */
-    function fdevice() {
-        this.ID = "";
-        this.Q = 0; // Volumetric flow rate
-        this.Q0 = 0; // Mass flow rate
-        this.P = 0; // Pressure in mb
-        this.T = 0; // Temperature in degrees C
-        this.Qsp = 0; // Flow setpoint
-    }
-
-    /** Contains data specific to the PAS */
-    function pasData() {
-        this.f0 = [];
-        this.IA = [];
-        this.Q = [];
-        this.p = [];
-        this.abs = [];
-        this.micf = [];
-        this.mict = [];
-        this.pd = [];
-    }
-
-    /**
-     * @ngdoc method
-     * @name main.Data.handlePAS
-     * @methodOf main.service:Data
-     * @description
-     * This function handles allocation of the PAS data.  All data may be plotted
-     * and as such the data is divided up into arrays of {x,y} pairs for use by
-     * plotting libraries.  The length of the arrays is defined by the service
-     * and the length is indicated by the input shift.
-     * @param {Object} d The JSON data object returned by the server.
-     * @param {Object} Data Data object that will be broadcasted to controllers.
-     * @param {boolean} shift Indicates whether we have the correct number of
-     * points in the array and need to start shifting the data.
-     * @return {Object} Data object defined in the inputs.
-     */
-    function handlePAS(d, Data, shift) {
-        var t = Data.time[0];
-
-        var f0 = [Data.tObj],
-            IA = [Data.tObj],
-            Q = [Data.tObj],
-            p = [Data.tObj],
-            abs = [Data.tObjj];
-
-        /* Pop all of the ordered arrays if the arrays are of the set length... */
-        if (shift) {
-            Data.pas.cell.f0.pop();
-            Data.pas.cell.IA.pop();
-            Data.pas.cell.Q.pop();
-            Data.pas.cell.p.pop();
-            Data.pas.cell.abs.pop();
-        }
-
-        for (var index in d.PAS.CellData) {
-            f0.push(d.PAS.CellData[index].derived.f0);
-            IA.push(d.PAS.CellData[index].derived.IA);
-            Q.push(d.PAS.CellData[index].derived.Q);
-            p.push(d.PAS.CellData[index].derived.noiseLim);
-            abs.push(d.PAS.CellData[index].derived.ext);
-        }
-
-        Data.pas.cell.f0.push(f0);
-        Data.pas.cell.IA.push(IA);
-        Data.pas.cell.Q.push(Q);
-        Data.pas.cell.p.push(p);
-        Data.pas.cell.abs.push(abs);
-
-
-        Data.pas.drive = d.PAS.Drive;
-        Data.pas.cell.micf = [];
-        Data.pas.cell.mict = [];
-        Data.pas.cell.pd = [];
-
-        // Alot space for the waveform data...
-        var pd = [],
-            micf = [],
-            mict = [];
-
-        // point by point
-        for (k = 0; k < d.PAS.CellData[0].MicFreq.Y.length; k++) {
-            micf = [k];
-            mict = [k];
-            pd = [k];
-            for (j = 0; j < d.pas.CellData.length; j++) {
-                micf.push(d.PAS.CellData[j].MicFreq.Y[j]);
-                mict.push(d.PAS.CellData[j].MicTime.Y[j]);
-                pd.push(d.PAS.CellData[index].PhotoDiode.Y[j]);
-
-
-            }
-
-            // Push the data in cell-wise
-            Data.pas.cell.micf.push(micf);
-            Data.pas.cell.mict.push(mict);
-            Data.pas.cell.pd.push(pd);
-        }
-
-        return Data;
-
     }
 })();

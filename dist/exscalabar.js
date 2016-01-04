@@ -576,44 +576,31 @@
 })();
 (function () {
     angular.module('main').factory('Data', ['$rootScope', '$http', 'net',
-    'cvt',
-    function ($rootScope, $http, net, cvt) {
-            /** 
-             * @ngdoc service 
+        'cvt',
+        function ($rootScope, $http, net) {
+            /**
+             * @ngdoc service
              * @name main.service:Data
-             * @requires $rootscope
+             * @requires $rootScope
              * @requires $http
              * @requires main.service:net
-             * @requires main.service:cvt
-             * @description 
+             * @description
              * This is the main service for retrieving data at regular intervals.
              *
              */
 
-            // Arrays of Devices
-            // TODO: Make sure this is not hardcoded...
-
-            /** 
+            /**
              * @ngdoc property
-             * @name main.Data.alicats
-             * @propertyOf main.service:Data
-             * @description
-             * Defines a list of alicat names to ID data related to a specific alicat device.
-             */
-            var alicats = ["TestAlicat"];
-
-            /** 
-             * @ngdoc property
-             * @name main.Data.ppts
+             * @name main.service:Data#ppts
              * @propertyOf main.service:Data
              * @description
              * Defines a list of ppt names to ID data related to a specific ppt device.
              */
             var ppts = ["pDryBlue"];
 
-            /** 
+            /**
              * @ngdoc property
-             * @name main.Data.vaisalas
+             * @name main.service:Data#vaisalas
              * @propertyOf main.service:Data
              * @description
              * Defines a list of vaisala names to ID data related to a specific vaisala device.
@@ -634,35 +621,30 @@
             };
 
 
-            /** 
+            /**
              * @ngdoc property
-             * @name main.Data.maxLength
+             * @name main.service:Data#maxLength
              * @propertyOf main.service:Data
              * @description
-             * Defines the max array length in seconds for displaying data. 
+             * Defines the max array length in seconds for displaying data.
              */
             var maxLength = 300;
 
-            /** 
+            /**
              * @ngdoc property
-             * @name main.Data.shiftData
+             * @name main.service:Data#shiftData
              * @propertyOf main.service:Data
              * @description
-             * Determines how to shuffle array data (used in conjunction with ``maxLength``).  If the 
-             * value is true, the number of elements in the arrays is ``>= maxLength``. 
+             * Determines how to shuffle array data (used in conjunction with ``maxLength``).  If the
+             * value is true, the number of elements in the arrays is ``>= maxLength``.
              */
             var shiftData = false;
-
-            dataObj.pas = {};
-            dataObj.pas.cell = new pasData();
-            dataObj.pas.drive = true;
 
             dataObj.filter = {
                 "state": true,
                 "tremain": 0
             };
 
-            dataObj.flowData = [new fdevice()];
             var busy = false;
 
             dataObj.getData = function () {
@@ -672,15 +654,6 @@
                 busy = true;
                 promise = $http.get(net.address() + 'General/Data')
                     .then(function (response) {
-
-
-                        // Object creation for devices
-                        for (i = 0; i < alicats.length; i++) {
-                            if (alicats[i] in response.data) {
-                                dataObj[alicats[i]] = response.data[alicats[i]];
-                            }
-
-                        }
 
                         // Handle filter infomration
                         dataObj.filter.state = response.data.Filter;
@@ -712,19 +685,11 @@
                          */
                         // TODO: Get rid of this array - it is not used!
                         if (dataObj.time.length - 1 >= maxLength) {
-                            dataObj.time.pop();
                             shiftData = true;
                         }
 
-
                         dataObj.tObj = updateTime(Number(response.data.Time));
 
-
-                        var t = dataObj.tObj.getTime();
-                        dataObj.time.unshift(t);
-
-
-                        dataObj = handlePAS(response.data, dataObj, shiftData);
                         dataObj.Cabin = response.data.Cabin;
                         dataObj.msg = response.data.Msg;
 
@@ -736,7 +701,7 @@
                         $rootScope.$broadcast('dataAvailable');
 
                         busy = false;
-                    }, function (response) {
+                    }, function () {
                         $rootScope.$broadcast('dataNotAvailable');
                     }).finally(function () {
                         busy = false;
@@ -745,17 +710,17 @@
 
             return dataObj;
 
-    }
-  ]);
+        }
+    ]);
 
-    /** 
+    /**
      * @ngdoc method
-     * @name main.Data.updateTime
+     * @name main.service:Data#updateTime
      * @methodOf main.service:Data
      * @description
-     * Takes the time returned by the server (a LabVIEW time) and converts it to 
+     * Takes the time returned by the server (a LabVIEW time) and converts it to
      * a Javascript Date.
-     * 
+     *
      * @param {number} t Time in seconds since January 1, 1904.
      * @return {Date} Date object with date from server.
      */
@@ -767,109 +732,6 @@
         var lvDate = new Date(1904, 0, 1);
         lvDate.setSeconds(t);
         return lvDate;
-    }
-
-    /** This is the structure for the flow device data */
-    function fdevice() {
-        this.ID = "";
-        this.Q = 0; // Volumetric flow rate
-        this.Q0 = 0; // Mass flow rate
-        this.P = 0; // Pressure in mb
-        this.T = 0; // Temperature in degrees C
-        this.Qsp = 0; // Flow setpoint
-    }
-
-    /** Contains data specific to the PAS */
-    function pasData() {
-        this.f0 = [];
-        this.IA = [];
-        this.Q = [];
-        this.p = [];
-        this.abs = [];
-        this.micf = [];
-        this.mict = [];
-        this.pd = [];
-    }
-
-    /**
-     * @ngdoc method
-     * @name main.Data.handlePAS
-     * @methodOf main.service:Data
-     * @description
-     * This function handles allocation of the PAS data.  All data may be plotted
-     * and as such the data is divided up into arrays of {x,y} pairs for use by
-     * plotting libraries.  The length of the arrays is defined by the service
-     * and the length is indicated by the input shift.
-     * @param {Object} d The JSON data object returned by the server.
-     * @param {Object} Data Data object that will be broadcasted to controllers.
-     * @param {boolean} shift Indicates whether we have the correct number of
-     * points in the array and need to start shifting the data.
-     * @return {Object} Data object defined in the inputs.
-     */
-    function handlePAS(d, Data, shift) {
-        var t = Data.time[0];
-
-        var f0 = [Data.tObj],
-            IA = [Data.tObj],
-            Q = [Data.tObj],
-            p = [Data.tObj],
-            abs = [Data.tObjj];
-
-        /* Pop all of the ordered arrays if the arrays are of the set length... */
-        if (shift) {
-            Data.pas.cell.f0.pop();
-            Data.pas.cell.IA.pop();
-            Data.pas.cell.Q.pop();
-            Data.pas.cell.p.pop();
-            Data.pas.cell.abs.pop();
-        }
-
-        for (var index in d.PAS.CellData) {
-            f0.push(d.PAS.CellData[index].derived.f0);
-            IA.push(d.PAS.CellData[index].derived.IA);
-            Q.push(d.PAS.CellData[index].derived.Q);
-            p.push(d.PAS.CellData[index].derived.noiseLim);
-            abs.push(d.PAS.CellData[index].derived.ext);
-        }
-
-        Data.pas.cell.f0.push(f0);
-        Data.pas.cell.IA.push(IA);
-        Data.pas.cell.Q.push(Q);
-        Data.pas.cell.p.push(p);
-        Data.pas.cell.abs.push(abs);
-
-
-        Data.pas.drive = d.PAS.Drive;
-        Data.pas.cell.micf = [];
-        Data.pas.cell.mict = [];
-        Data.pas.cell.pd = [];
-
-        // Alot space for the waveform data...
-        var pd = [],
-            micf = [],
-            mict = [];
-
-        // point by point
-        for (k = 0; k < d.PAS.CellData[0].MicFreq.Y.length; k++) {
-            micf = [k];
-            mict = [k];
-            pd = [k];
-            for (j = 0; j < d.pas.CellData.length; j++) {
-                micf.push(d.PAS.CellData[j].MicFreq.Y[j]);
-                mict.push(d.PAS.CellData[j].MicTime.Y[j]);
-                pd.push(d.PAS.CellData[index].PhotoDiode.Y[j]);
-
-
-            }
-
-            // Push the data in cell-wise
-            Data.pas.cell.micf.push(micf);
-            Data.pas.cell.mict.push(mict);
-            Data.pas.cell.pd.push(pd);
-        }
-
-        return Data;
-
     }
 })();
 (function () {
@@ -1161,8 +1023,7 @@
 })();
 (function () {
 
-    angular.module('main').
-    factory('ExFlowSvc', flowSvc);
+    angular.module('main').factory('ExFlowSvc', flowSvc);
 
     /**
      * @ngdoc service
@@ -1186,28 +1047,30 @@
          *
          * @description
          * This is the object that will be returned by the service.  This object contains
-         * 
+         *
          * * IDs - string array containg the IDs of the devices
          * * Q - Array of arrays of volumetric flow values for plotting
          * * P - Array of arrays of pressure values for plotting
          * * T - Array of arrays of temperature values for plotting
          * * Q0 - Array of arrays of mass flow values for plotting
          * * data - object containing single point flow data
-         * * ``Qsp`` - an associative array that contains a key and value for each 
+         * * ``Qsp`` - an associative array that contains a key and value for each
          * element.  The key is the device ID while the value is the setpoint.
          */
-        var flow = {
-            IDs: [],
-            Q: [],
-            P: [],
-            T: [],
-            Q0: [],
-            data: {},
-            Qsp:[]
 
-        };
-        
-        
+        function FlowObj() {
+            this.IDs = [];
+            this.Q = [];
+            this.P = [];
+            this.T = [];
+            this.Q0 = [];
+            this.data = {};
+            this.Qsp = [];
+
+        }
+
+        var flow = new FlowObj();
+
 
         var maxi = 300;
 
@@ -1225,24 +1088,22 @@
         }
 
 
-
         // Temporary variables for storing array data.
         var P, T, Q, Q0;
 
         var alicats = ["TestAlicat"];
 
-        /** 
+        /**
          * @ngdoc method
          * @name main.service:ExFlowSvc#populate_arrays
          * @methodOf main.service:ExFlowSvc
          * @param {object} e Element in array
          * @param {number} i Index in array
-         * @param {Array} arr Array we are looping through
-         * 
+         *
          * @description
          * Populate the arrays for the plots.
          */
-        function populate_arrays(e, i, arr) {
+        function populate_arrays(e, i) {
 
             if (!i) {
                 P = [Data.tObj, flow.data[e].P];
@@ -1259,15 +1120,15 @@
 
         $rootScope.$on('dataAvailable', getData);
 
-        /** 
+        /**
          * @ngdoc method
          * @name main.service:ExFlowSvc#getData
          * @methodOf main.service:ExFlowSvc
-         * 
+         *
          * @description
          * Get the data concerning the Alicats via the Data object returned
          * from the Data service.  Stuff teh data into the flow property of this
-         * service.  The first time data is returned, we will check for the 
+         * service.  The first time data is returned, we will check for the
          * presence of the actual object.  If it is not there, check to see if
          *
          * 1. it is a controller, and
@@ -1302,10 +1163,10 @@
                     flow.data[key].P = Data.data[key].P;
                     flow.data[key].T = Data.data[key].T;
                     flow.data[key].Q = Data.data[key].Q;
-                    
+
                     // TODO: provide real label...
                     flow.data[key].label = key;
-                    
+
                 }
             }
 
@@ -1317,22 +1178,22 @@
                 flow.Q.shift();
                 flow.Q0.shift();
             }
-            else{
+            else {
                 index += 1;
             }
             flow.P.push(P);
             flow.T.push(T);
             flow.Q.push(Q);
             flow.Q0.push(Q0);
-            
-            shift = index >= maxi ? true : false;
+
+            shift = index >= maxi;
 
             /**
              * @ngdoc event
-             * @name FlowDataAvailable
+             * @name main.service:ExFlowSvc#FlowDataAvailable
              * @eventType broadcast
              * @eventOf main.service:ExFlowSvc
-             * 
+             *
              * @description
              * Announce to observers that flow data is available.
              */
@@ -1905,23 +1766,19 @@
              */
             vm.cm = [
                 ['Tau', function () {
-                    $scope.optPData.ylabel = "tau (us)";
                     objectData = "tau";
                     vm.options.ylabel = "Tau (us)";
                 }],
                 ["Tau'",
                     function () {
-                        $scope.optPData.ylabel = "tau' (us)";
                         objectData = "taucorr";
                         vm.options.ylabel = "Tau' (us)";
                     }],
                 ['Standard Deviation', function () {
-                    $scope.optPData.ylabel = "std. tau (us)";
                     objectData = "stdevtau";
                     vm.options.ylabel = "Stand. Dev. (us)";
                 }],
                 ['Max', function () {
-                    $scope.optPData.ylabel = "max";
                     objectData = "max";
                     vm.options.ylabel = "Max (a.u.)";
                 }],
@@ -2006,15 +1863,16 @@
             controllerAs: 'vm',
             bindToController: true,
             template: '<dy-graph options="vm.options" data="vm.data" context-menu="vm.cm"></dy-graph>'
-
         };
     }
 })();
 (function () {
     angular.module('main').controller('ExPasCtl', pas_ctl);
 
-    pas_ctl.$inject = ['$scope', 'Data', 'ExPasSvc'];
-    function pas_ctl($scope, Data, ExPasSvc) {
+    pas_ctl.$inject = ['$scope', 'cvt', 'ExPasSvc'];
+
+
+    function pas_ctl($scope, cvt,ExPasSvc) {
 
         /**
          * @ngdoc controller
@@ -2023,66 +1881,15 @@
          * Controller for PAS functionality.
          */
 
-        $scope.data = Data.pas;
+        $scope.data = ExPasSvc;
 
-        $scope.on('pasDataAvailable', display_data);
+        $scope.$on('pasDataAvailable', display_data);
 
-        function display_data(){}
-
-        var selPlot = 0;
+        function display_data(){
+            $scope.data = ExPasSvc;
+        }
 
         cvt.first_call = 1;
-
-        $scope.pData = [[0, NaN, NaN, NaN, NaN, NaN]];
-
-        // TODO: move all of this plot related stuff into a directive for reuse...
-        $scope.options = {
-            ylabel: "IA",
-            labels: ["t", "Cell 1", "Cell 2", "Cell 3", "Cell 4", "Cell 5"],
-            legend: 'always'
-        };
-
-        $scope.pDataCMOptions = [
-            ['IA', function () {
-                $scope.options.ylabel = "IA";
-                selPlot = 0;
-
-            }],
-            ["f0",
-                function () {
-                    $scope.options.ylabel = "f0 (Hz)";
-                    selPlot = 1;
-                }],
-            ['Q', function () {
-                $scope.options.ylabel = "Q";
-                selPlot = 2;
-            }]
-        ];
-
-        // Listen for data
-        $scope.$on('dataAvailable', function () {
-
-            $scope.data = Data.pas;
-
-            switch (selPlot) {
-                case 0:
-                    $scope.pData = $scope.data.cell.IA;
-                    break;
-                case 1:
-                    $scope.pData = $scope.data.cell.f0;
-                    break;
-                case 2:
-                    $scope.pData = $scope.data.cell.Q;
-                    break;
-                case 3:
-                    $scope.pData = $scope.data.cell.p;
-                    break;
-                case 4:
-                    $scope.pData = $scope.data.cell.abs;
-                    break;
-            }
-        });
-
 
     }
 
@@ -2113,7 +1920,7 @@
 
         var PasData = new PasObject();
 
-        $scope.$on('dataAvailable', function () {
+        $rootScope.$on('dataAvailable', function () {
 
             PasData = handle_pas(Data, PasData);
 
@@ -2131,7 +1938,7 @@
 
         });
 
-        return CrdData;
+        return PasData;
     }
 
     // Annotations for angular minification
@@ -2154,6 +1961,13 @@
         this.set_history = function (n) {
         };
         this.clear = function () {
+            this.f0 = [];
+            this.IA = [];
+            this.Q = [];
+            this.p = [];
+            this.abs = [];
+
+            shift = false;
         };
     }
 
@@ -2173,7 +1987,6 @@
      * @return {Object} Data object defined in the inputs.
      */
     function handle_pas(d, pas) {
-        var t = Data.time[0];
 
         var f0 = [d.tObj],
             IA = [d.tObj],
@@ -2193,7 +2006,7 @@
             shift = pas.f0.length >= history ? true : false;
         }
 
-        for (var index in d.PAS.CellData) {
+        for (var index in d.data.PAS.CellData) {
             f0.push(d.data.PAS.CellData[index].derived.f0);
             IA.push(d.data.PAS.CellData[index].derived.IA);
             Q.push(d.data.PAS.CellData[index].derived.Q);
@@ -2214,7 +2027,7 @@
         pas.wvfm.pd = [];
 
         // point by point
-        for (k = 0; k < d.PAS.CellData[0].MicFreq.Y.length; k++) {
+        for (k = 0; k < d.data.PAS.CellData[0].MicFreq.Y.length; k++) {
             var micf = [k], mict = [k], pd = [k];
             for (j = 0; j < d.pas.CellData.length; j++) {
                 micf.push(d.data.PAS.CellData[j].MicFreq.Y[j]);
@@ -2227,7 +2040,7 @@
             pas.wvfm.mict.push(mict);
             pas.wvfm.pd.push(pd);
         }
-        return Data;
+        return pas;
     }
 
 
@@ -2427,10 +2240,160 @@
     }
 
 })();
+
+(function () {
+    angular.module('main').directive('exPasplot', pas_plot);
+
+    /**
+     * @ngdoc directive
+     * @name main.directive:exPasPlot
+     *
+     * @description
+     *
+     *
+     */
+    function pas_plot() {
+
+        /**
+         * @ngdoc controller
+         * @name main.controller:PasPlotCtl
+         * @requires $rootScope
+         * @requires main.service:ExPasSvc
+         * @description
+         *
+         */
+        var PasPlotCtl = function ($rootScope, ExPasSvc) {
+
+            var vm = this;
+
+            var objectData = 'IA';
+
+            /**
+             * @ngdoc property
+             * @name main.controller:PasPlotCtl#cm
+             * @propertyOf main.controller:PasPlotCtl
+             * @description
+             * Provide a context menu for the Pas graph.  The elements are
+             *
+             *  * tau
+             *  * tau'
+             *  * standard deviation
+             *  * max
+             *
+             * Also provides some functionality for clearing the plots and changing the lengths...
+             */
+            vm.cm = [
+                ['IA', function () {
+                    objectData = "IA";
+                    vm.options.ylabel = "IA (a.u.)";
+                }],
+                ["f0",
+                    function () {
+                        objectData = "f0";
+                        vm.options.ylabel = "f0 (Hz)";
+                    }],
+                ['Quality', function () {
+                    objectData = "Q";
+                    vm.options.ylabel = "Quality (a.u.)";
+                }],
+                ['Noise Floor', function () {
+                    objectData = "p";
+                    vm.options.ylabel = "Noise (a.u.)";
+                }],
+                ['Absorption', function () {
+                    objectData = "abs";
+                    vm.options.ylabel = "Absorption (Mm-1)";
+                }],
+                null, // Creates a divider
+                ['Clear Data', function () {
+                    ExPasSvc.clear();
+                }],
+                ['>', 'History'],
+                ['30', function () {
+                    ExPasSvc.set_history(30);
+                }],
+                ['60', function () {
+                    ExPasSvc.set_history(60);
+                }],
+                ['120', function () {
+                    ExPasSvc.set_history(120);
+                }],
+                ['150', function () {
+                    ExPasSvc.set_history(150);
+                }],
+                ['300', function () {
+                    ExPasSvc.set_history(300);
+                }],
+                ['<']
+            ];
+
+            /**
+             * @ngdoc property
+             * @name main.controller:PasPlotCtl#optoins
+             * @propertyOf main.controller:PasPlotCtl
+             * @description
+             * Options for the Pas graph. The options are based on teh ``dygraph`` plot options.  The ones
+             * that are explicit at invocation are
+             *
+             * * ``ylabel`` - set for the initial plotting of tau
+             * * ``labels`` - the initial labels are for time and cells 1-5
+             * * ``legend`` - set to always be shown
+             * * ``axes``   - set parameters for the axes such as width of the axes
+             */
+            vm.options = {
+                ylabel: "IA (a.u.)",
+                labels: ["t", "Cell 1", "Cell 2", "Cell 3", "Cell 4", "Cell 5"],
+                legend: 'always',
+                axes: {
+                    y: {
+                        axisLabelWidth: 70
+                    },
+                    x: {
+                        drawAxis: true,
+                        axisLabelFormatter: function (d) {
+                            return Dygraph.zeropad(d.getHours()) + ":" + Dygraph.zeropad(d.getMinutes()) + ":" + Dygraph.zeropad(d.getSeconds());
+                        }
+                    }
+                }
+            };
+
+            // If the user specifies a title, put it up there...
+            if (vm.title !== undefined) {
+                vm.options.title = vm.title;
+            }
+
+            // Some default data so that you can see the actual graph
+            vm.data = [[0, NaN, NaN, NaN, NaN, NaN]];
+
+            $rootScope.$on('pasDataAvaliable', update_plot);
+
+            function update_plot() {
+
+                vm.data = ExPasSvc[objectData];
+
+            }
+
+        };
+
+        // Provide annotation for angular minification
+        PasPlotCtl.$inject = ['$rootScope', 'ExPasSvc'];
+
+        return {
+            restrict: 'E',
+            scope: {
+                title: "@?"
+            },
+            controller: PasPlotCtl,
+            controllerAs: 'vm',
+            bindToController: true,
+            template: '<dy-graph options="vm.options" data="vm.data" context-menu="vm.cm"></dy-graph>'
+        };
+    }
+})();
 (function () {
     angular.module('main').controller("ExFlowCtl", FlowCtl);
 
-    FlowCtl.$inject = ['$scope', "Data", "cvt", "ExFlowSvc",];
+    FlowCtl.$inject = ['$scope', "Data", "cvt", "ExFlowSvc"];
 
 
     /**
@@ -2501,6 +2464,7 @@
 
             var data_set = "P";
 
+            vm.ref = {};
 
             /**
              * @ngdoc property
@@ -2529,35 +2493,36 @@
             vm.cm = [
                 ['P', function () {
                     data_set = "P";
-                    console.log("Select P.");
                     vm.options.ylabel = 'P (mb)';
+                    vm.options.axes.y.valueRange = [null,null];
                 }
                 ],
                 ['T',
                     function () {
                         data_set = "T";
-                        console.log("Select T.");
                         vm.options.ylabel = 'T (degC)';
+                        vm.options.axes.y.valueRange = [null,null];
                     }
                 ],
                 ['Q',
                     function () {
                         data_set = "Q";
-                        console.log("Select Q.");
                         vm.options.ylabel = 'Q (lpm)';
+                        vm.options.axes.y.valueRange = [null,null];
                     }
                 ],
                 ['Q0',
                     function () {
                         data_set = "Q0";
-                        console.log("Select Q0.");
-                        vm.options.ylabel = 'T (degC)';
                         vm.options.ylabel = 'Q0 (slpm)';
+                        vm.options.axes.y.valueRange = [null,null];
                     }
                 ],
 
                 ['>', 'Controller'],
-                ['Controller 1', function(){console.log('testing 1');}],
+                ['Controller 1', function(){
+
+                }],
                 ['Controller 2', function(){}],
                 ['Enable All', function(){}],
                 ['Disable All', function(){}],
@@ -2565,8 +2530,11 @@
                 null,
                 ['Clear Data', function(){}],
                 ['>', 'Autoscale'],
-                ['Autoscale', function(){}],
-                ['Autoscale 1x', function(){}],
+                ['Autoscale', function(){
+                    vm.options.axes.y.valueRange = [null,null];
+                }],
+                ['Autoscale 1x', function(){
+                        vm.options.axes.y.valueRange = vm.ref.yAxisRange();}],
                 ['<']
             ];
 
@@ -2658,7 +2626,7 @@
             controller: FlowPlotCtl,
             controllerAs: 'vm',
             bindToController: true,
-            template: '<dy-graph options="vm.options" data="vm.data" context-menu="vm.cm"></dy-graph>'
+            template: '<dy-graph options="vm.options" ref= "vm.ref" data="vm.data" context-menu="vm.cm"></dy-graph>'
         };
     }
 })();
