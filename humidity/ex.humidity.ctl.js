@@ -37,7 +37,7 @@
 
             $scope.updateHum = function () {
                 var i = arguments[0];
-                cvt.humidifier[i].updateParams($scope.h);
+                cvt.humidifier[i].updateParams();
             };
 
             $scope.ctlrOutData = [[0, NaN, NaN]];

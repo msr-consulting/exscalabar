@@ -103,7 +103,7 @@
                 ['Disable All', function(){}],
                 ['<'],
                 null,
-                ['Clear Data', function(){}],
+                ['Clear Data', function(){ExFlowSvc.clear_data();}],
                 ['>', 'Autoscale'],
                 ['Autoscale', function(){
                     vm.options.axes.y.valueRange = [null,null];
