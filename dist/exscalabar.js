@@ -2570,7 +2570,6 @@
                     }
                 },
                 labelsUTC: true
-                //sigFigs:2
             };
 
             if (vm.title !== undefined) {
@@ -2626,7 +2625,8 @@
             controller: FlowPlotCtl,
             controllerAs: 'vm',
             bindToController: true,
-            template: '<dy-graph options="vm.options" ref= "vm.ref" data="vm.data" context-menu="vm.cm"></dy-graph>'
+            template: '<dy-graph options="vm.options" ref= "vm.ref" data="vm.data" context-menu="vm.cm"></dy-graph>',
+            //template: '<dy-graph options="vm.options" ref= "vm.ref" data="vm.data" ></dy-graph>'
         };
     }
 })();
