@@ -44,6 +44,14 @@
             this.data = {};
             this.Qsp = [];
 
+            this.clear_data = function(){
+
+                this.Q = [];
+                this.P = [];
+                this.T = [];
+                this.Q0 = [];
+
+            };
         }
 
         var flow = new FlowObj();
@@ -116,7 +124,7 @@
             // Store the ID as key
             var key = "";
 
-            for (i = 0; i < alicats.length; i++) {
+            for ( var i = 0; i < alicats.length; i++) {
                 // Check to see if the current ID is in the Data Object
                 if (alicats[i] in Data.data) {
 

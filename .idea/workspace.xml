@@ -3,7 +3,29 @@
   <component name="ChangeListManager">
     <list default="true" id="b17b5e2a-9baf-466e-8338-3602342ae81a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/cm" afterPath="$PROJECT_DIR$/assets/cm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/cui" afterPath="$PROJECT_DIR$/assets/cui" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/alicat/ex.flow.svc.js" afterPath="$PROJECT_DIR$/alicat/ex.flow.svc.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/alicat/ex.flowplot.dir.js" afterPath="$PROJECT_DIR$/alicat/ex.flowplot.dir.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cvt/cvt-service.js" afterPath="$PROJECT_DIR$/cvt/cvt-service.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/cvt.json" afterPath="$PROJECT_DIR$/data/cvt.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/ad.js" afterPath="$PROJECT_DIR$/dist/ad.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/ad.min.js" afterPath="$PROJECT_DIR$/dist/ad.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/assets.js" afterPath="$PROJECT_DIR$/dist/assets.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/assets.min.js" afterPath="$PROJECT_DIR$/dist/assets.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/cui.js" afterPath="$PROJECT_DIR$/dist/cui.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/cui.min.js" afterPath="$PROJECT_DIR$/dist/cui.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/exscalabar.js" afterPath="$PROJECT_DIR$/dist/exscalabar.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/exscalabar.min.js" afterPath="$PROJECT_DIR$/dist/exscalabar.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/js/docs-setup.js" afterPath="$PROJECT_DIR$/docs/js/docs-setup.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/main.service.cvt.html" afterPath="$PROJECT_DIR$/docs/partials/api/main.service.cvt.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.carousel.directive.carousel.html" afterPath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.carousel.directive.carousel.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.carousel.directive.slide.html" afterPath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.carousel.directive.slide.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tab.html" afterPath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tab.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tabHeading.html" afterPath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tabHeading.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tabset.html" afterPath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tabset.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/humidity/ex.humidity.ctl.js" afterPath="$PROJECT_DIR$/humidity/ex.humidity.ctl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/humidity/humidifier.html" afterPath="$PROJECT_DIR$/humidity/humidifier.html" />
     </list>
     <ignored path="exscalabar.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -23,7 +45,7 @@
     <favorites_list name="exscalabar" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.35768116">
+    <splitter split-orientation="horizontal" split-proportion="0.27896994">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
           <file leaf-file-name="ex.pas.svc.js" pinned="false" current-in-tab="false">
@@ -31,10 +53,17 @@
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
                   <caret line="48" column="26" selection-start-line="48" selection-start-column="26" selection-end-line="48" selection-end-column="26" />
-                  <folding>
-                    <marker date="1451932137591" expanded="true" signature="651:703" placeholder="{...}" />
-                    <marker date="1451932137591" expanded="true" signature="4348:4355" placeholder="{...}" />
-                  </folding>
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="cvt.json" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/data/cvt.json">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.87540984">
+                  <caret line="103" column="1" selection-start-line="103" selection-start-column="1" selection-end-line="103" selection-end-column="1" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -49,7 +78,7 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="contextMenu.js" pinned="false" current-in-tab="true">
+          <file leaf-file-name="contextMenu.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/assets/cm/contextMenu.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.5782313">
@@ -102,11 +131,7 @@
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
                   <caret line="81" column="19" selection-start-line="81" selection-start-column="19" selection-end-line="81" selection-end-column="19" />
-                  <folding>
-                    <marker date="1451932272104" expanded="true" signature="3901:3938" placeholder="..." />
-                    <marker date="1451932272104" expanded="true" signature="3993:4079" placeholder="..." />
-                    <marker date="1451932272104" expanded="true" signature="4142:4242" placeholder="..." />
-                  </folding>
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -125,10 +150,8 @@
             <entry file="file://$PROJECT_DIR$/alicat/ex.flowplot.dir.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="186" column="17" selection-start-line="186" selection-start-column="17" selection-end-line="186" selection-end-column="17" />
-                  <folding>
-                    <marker date="1452124826558" expanded="true" signature="1066:1131" placeholder="{...}" />
-                  </folding>
+                  <caret line="105" column="65" selection-start-line="105" selection-start-column="65" selection-end-line="105" selection-end-column="65" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -153,7 +176,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/alicat/ex.flow.svc.js" />
         <option value="$PROJECT_DIR$/data/data-service.js" />
         <option value="$PROJECT_DIR$/crd/crds.html" />
         <option value="$PROJECT_DIR$/crd/ex.crd.ctl.js" />
@@ -169,8 +191,13 @@
         <option value="$PROJECT_DIR$/css/app.css" />
         <option value="$PROJECT_DIR$/config/config_ui.json" />
         <option value="$PROJECT_DIR$/assets/cm/cm.css" />
-        <option value="$PROJECT_DIR$/alicat/ex.flowplot.dir.js" />
         <option value="$PROJECT_DIR$/assets/cm/contextMenu.js" />
+        <option value="$PROJECT_DIR$/data/cvt.json" />
+        <option value="$PROJECT_DIR$/alicat/ex.flowplot.dir.js" />
+        <option value="$PROJECT_DIR$/alicat/ex.flow.svc.js" />
+        <option value="$PROJECT_DIR$/humidity/humidifier.html" />
+        <option value="$PROJECT_DIR$/humidity/ex.humidity.ctl.js" />
+        <option value="$PROJECT_DIR$/cvt/cvt-service.js" />
       </list>
     </option>
   </component>
@@ -305,6 +332,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -468,9 +496,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="134" column="13" selection-start-line="134" selection-start-column="13" selection-end-line="134" selection-end-column="13" />
-          <folding>
-            <marker date="1452124826558" expanded="true" signature="1066:1131" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -703,10 +729,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="48" column="26" selection-start-line="48" selection-start-column="26" selection-end-line="48" selection-end-column="26" />
-          <folding>
-            <marker date="1451932137591" expanded="true" signature="651:703" placeholder="{...}" />
-            <marker date="1451932137591" expanded="true" signature="4348:4355" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -765,11 +788,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="81" column="19" selection-start-line="81" selection-start-column="19" selection-end-line="81" selection-end-column="19" />
-          <folding>
-            <marker date="1451932272104" expanded="true" signature="3901:3938" placeholder="..." />
-            <marker date="1451932272104" expanded="true" signature="3993:4079" placeholder="..." />
-            <marker date="1451932272104" expanded="true" signature="4142:4242" placeholder="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -781,17 +800,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/alicat/ex.flowplot.dir.js">
+    <entry file="file://$PROJECT_DIR$/assets/cm/contextMenu.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="186" column="17" selection-start-line="186" selection-start-column="17" selection-end-line="186" selection-end-column="17" />
-          <folding>
-            <marker date="1452124826558" expanded="true" signature="1066:1131" placeholder="{...}" />
-          </folding>
+          <caret line="71" column="38" selection-start-line="71" selection-start-column="38" selection-end-line="71" selection-end-column="38" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/cm/contextMenu.js">
+    <entry file="file://$PROJECT_DIR$/alicat/ex.flowplot.dir.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="105" column="65" selection-start-line="105" selection-start-column="65" selection-end-line="105" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alicat/ex.flow.svc.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="131" column="30" selection-start-line="131" selection-start-column="30" selection-end-line="131" selection-end-column="30" />
