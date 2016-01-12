@@ -2283,7 +2283,6 @@
     }
 
 })();
-
 (function () {
     angular.module('main').directive('exPasplot', pas_plot);
 
@@ -2326,14 +2325,14 @@
              * Also provides some functionality for clearing the plots and changing the lengths...
              */
             vm.cm = [
-                ['IA', function () {
+                ['<em>IA</em>', function () {
                     objectData = "IA";
                     vm.options.ylabel = "IA (a.u.)";
                 }],
-                ["f0",
+                ["<em>f<sub>0</sub></em>",
                     function () {
                         objectData = "f0";
-                        vm.options.ylabel = "f0 (Hz)";
+                        vm.options.ylabel = "<em>f<sub>0</sub></em> (Hz)";
                     }],
                 ['Quality', function () {
                     objectData = "Q";
@@ -2343,31 +2342,38 @@
                     objectData = "p";
                     vm.options.ylabel = "Noise (a.u.)";
                 }],
-                ['Absorption', function () {
+                ['<em>&sigma;<sub>abs</sub></em>', function () {
                     objectData = "abs";
-                    vm.options.ylabel = "Absorption (Mm-1)";
+                    vm.options.ylabel = "<em>&sigma;<sub>abs</sub></em> (Mm<sup>-1</sup>)";
                 }],
                 null, // Creates a divider
                 ['Clear Data', function () {
                     ExPasSvc.clear();
                 }],
-                ['>', 'History'],
-                ['30', function () {
-                    ExPasSvc.set_history(30);
-                }],
-                ['60', function () {
-                    ExPasSvc.set_history(60);
-                }],
-                ['120', function () {
-                    ExPasSvc.set_history(120);
-                }],
-                ['150', function () {
-                    ExPasSvc.set_history(150);
-                }],
-                ['300', function () {
-                    ExPasSvc.set_history(300);
-                }],
-                ['<']
+                ['History', null, [
+                    ['30', function () {
+                        ExPasSvc.set_history(30);
+                    }],
+                    ['60', function () {
+                        ExPasSvc.set_history(60);
+                    }],
+                    ['120', function () {
+                        ExPasSvc.set_history(120);
+                    }],
+                    ['150', function () {
+                        ExPasSvc.set_history(150);
+                    }],
+                    ['300', function () {
+                        ExPasSvc.set_history(300);
+                    }]
+                ]],
+                ['Grid', null,
+                    [['Grid X', function () {
+                    }], ['Grid Y', function () {
+                    }], ['Enable', function () {
+                    }],
+                    ['Disable', function(){}]]
+                ]
             ];
 
             /**
@@ -2429,9 +2435,7 @@
             controller: PasPlotCtl,
             controllerAs: 'vm',
             bindToController: true,
-            //template: '<dy-graph options="vm.options" data="vm.data" context-menu="vm.cm"></dy-graph>'
-
-            template: '<dy-graph options="vm.options" data="vm.data"></dy-graph>'
+            template: '<context-menu menu-options="vm.cm"><dy-graph options="vm.options" data="vm.data"></dy-graph></context-menu>'
 
         };
     }
