@@ -11,5 +11,6 @@ test/test/
 docs/
 
 .idea/workspace.xml
+.idea/
 
 
