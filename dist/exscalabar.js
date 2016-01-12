@@ -1824,21 +1824,24 @@
                 ['Clear Data', function () {
                     ExCrdSvc.clear_history();
                 }],
-                ['30', function () {
-                    ExCrdSvc.set_history(30);
-                }],
-                ['60', function () {
-                    ExCrdSvc.set_history(60);
-                }],
-                ['120', function () {
-                    ExCrdSvc.set_history(120);
-                }],
-                ['150', function () {
-                    ExCrdSvc.set_history(150);
-                }],
-                ['300', function () {
-                    ExCrdSvc.set_history(300);
-                }]
+                ['Length', null,
+                    [['30', function () {
+                        ExCrdSvc.set_history(30);
+                    }],
+                        ['60', function () {
+                            ExCrdSvc.set_history(60);
+                        }],
+                        ['120', function () {
+                            ExCrdSvc.set_history(120);
+                        }],
+                        ['150', function () {
+                            ExCrdSvc.set_history(150);
+                        }],
+                        ['300', function () {
+                            ExCrdSvc.set_history(300);
+                        }]
+                    ]
+                ]
             ];
 
             /**
@@ -1894,6 +1897,7 @@
 
         return {
             restrict: 'E',
+            require: 'contextMenu',
             scope: {
                 title: "@?"
             },
@@ -1901,7 +1905,7 @@
             controllerAs: 'vm',
             bindToController: true,
             //template: '<dy-graph options="vm.options" data="vm.data" context-menu="vm.cm"></dy-graph>'
-            template: '<dy-graph options="vm.options" data="vm.data"></dy-graph>'
+            template: '<context-menu menu-options="vm.cm"><dy-graph options="vm.options" data="vm.data" ></dy-graph></context-menu>'
         };
     }
 })();

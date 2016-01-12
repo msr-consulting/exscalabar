@@ -2,28 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b17b5e2a-9baf-466e-8338-3602342ae81a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/assets.js" afterPath="$PROJECT_DIR$/dist/assets.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/exscalabar.js" afterPath="$PROJECT_DIR$/dist/exscalabar.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/assets.min.js" afterPath="$PROJECT_DIR$/dist/assets.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tabset.html" afterPath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tabset.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/cui.min.js" afterPath="$PROJECT_DIR$/dist/cui.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/main.service.cvt.html" afterPath="$PROJECT_DIR$/docs/partials/api/main.service.cvt.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tab.html" afterPath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tab.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/js/docs-setup.js" afterPath="$PROJECT_DIR$/docs/js/docs-setup.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main/ex.main.ctl.js" afterPath="$PROJECT_DIR$/main/ex.main.ctl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.carousel.directive.carousel.html" afterPath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.carousel.directive.carousel.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tabHeading.html" afterPath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tabHeading.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/cm" afterPath="$PROJECT_DIR$/assets/cm" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main/main.html" afterPath="$PROJECT_DIR$/main/main.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pas/ex.pasplot.dir.js" afterPath="$PROJECT_DIR$/pas/ex.pasplot.dir.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/ad.js" afterPath="$PROJECT_DIR$/dist/ad.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/cui.js" afterPath="$PROJECT_DIR$/dist/cui.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.carousel.directive.slide.html" afterPath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.carousel.directive.slide.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/ad.min.js" afterPath="$PROJECT_DIR$/dist/ad.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/cui" afterPath="$PROJECT_DIR$/assets/cui" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/crd/ex.crdplot.dir.js" afterPath="$PROJECT_DIR$/crd/ex.crdplot.dir.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/ad.js" afterPath="$PROJECT_DIR$/dist/ad.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/ad.min.js" afterPath="$PROJECT_DIR$/dist/ad.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/assets.js" afterPath="$PROJECT_DIR$/dist/assets.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/assets.min.js" afterPath="$PROJECT_DIR$/dist/assets.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/cui.js" afterPath="$PROJECT_DIR$/dist/cui.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/cui.min.js" afterPath="$PROJECT_DIR$/dist/cui.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/exscalabar.js" afterPath="$PROJECT_DIR$/dist/exscalabar.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/exscalabar.min.js" afterPath="$PROJECT_DIR$/dist/exscalabar.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/alicat/ex.flowplot.dir.js" afterPath="$PROJECT_DIR$/alicat/ex.flowplot.dir.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.carousel.directive.carousel.html" afterPath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.carousel.directive.carousel.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.carousel.directive.slide.html" afterPath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.carousel.directive.slide.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tab.html" afterPath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tab.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tabHeading.html" afterPath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tabHeading.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tabset.html" afterPath="$PROJECT_DIR$/docs/partials/api/ui.bootstrap.tabs.directive.tabset.html" />
     </list>
     <ignored path="exscalabar.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -43,7 +38,7 @@
     <favorites_list name="exscalabar" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.23928343">
+    <splitter split-orientation="horizontal" split-proportion="0.569378">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
           <file leaf-file-name="ex.pas.svc.js" pinned="false" current-in-tab="false">
@@ -70,7 +65,17 @@
             <entry file="file://$PROJECT_DIR$/crd/ex.crdplot.dir.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="141" column="68" selection-start-line="141" selection-start-column="68" selection-end-line="141" selection-end-column="68" />
+                  <caret line="80" column="20" selection-start-line="80" selection-start-column="20" selection-end-line="80" selection-end-column="20" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="exscalabar.ini" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/../../Version Controlled Software/UK Met 2/exscalabar_server/Support/exscalabar.ini">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.20913884">
+                  <caret line="223" column="12" selection-start-line="223" selection-start-column="12" selection-end-line="223" selection-end-column="12" />
                   <folding />
                 </state>
               </provider>
@@ -106,10 +111,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="main.html" pinned="false" current-in-tab="true">
+          <file leaf-file-name="main.html" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/main/main.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.33333334">
+                <state vertical-scroll-proportion="0.0">
                   <caret line="6" column="46" selection-start-line="6" selection-start-column="46" selection-end-line="6" selection-end-column="46" />
                   <folding />
                 </state>
@@ -120,7 +125,7 @@
             <entry file="file://$PROJECT_DIR$/assets/cm/contextMenu.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="8" column="19" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
+                  <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -130,14 +135,12 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="contextMenu.js" pinned="false" current-in-tab="true">
+          <file leaf-file-name="contextMenu.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/assets/cm/contextMenu.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="1.0572289">
-                  <caret line="43" column="180" selection-start-line="43" selection-start-column="180" selection-end-line="43" selection-end-column="180" />
-                  <folding>
-                    <marker date="1452554382696" expanded="true" signature="1250:1307" placeholder="..." />
-                  </folding>
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="26" column="17" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="17" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -146,7 +149,7 @@
             <entry file="file://$PROJECT_DIR$/assets/cm/cm.css">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="59" column="16" selection-start-line="59" selection-start-column="16" selection-end-line="59" selection-end-column="16" />
+                  <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -157,11 +160,7 @@
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
                   <caret line="85" column="49" selection-start-line="85" selection-start-column="49" selection-end-line="85" selection-end-column="49" />
-                  <folding>
-                    <marker date="1451932272104" expanded="true" signature="3901:3938" placeholder="..." />
-                    <marker date="1451932272104" expanded="true" signature="3993:4079" placeholder="..." />
-                    <marker date="1451932272104" expanded="true" signature="4142:4242" placeholder="..." />
-                  </folding>
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -176,10 +175,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="ex.flowplot.dir.js" pinned="false" current-in-tab="false">
+          <file leaf-file-name="ex.flowplot.dir.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/alicat/ex.flowplot.dir.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
+                <state vertical-scroll-proportion="0.029876977">
                   <caret line="113" column="16" selection-start-line="113" selection-start-column="16" selection-end-line="113" selection-end-column="16" />
                   <folding />
                 </state>
@@ -191,11 +190,7 @@
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
                   <caret line="16" column="80" selection-start-line="16" selection-start-column="80" selection-end-line="16" selection-end-column="80" />
-                  <folding>
-                    <marker date="1449679952445" expanded="true" signature="468:501" placeholder="..." />
-                    <marker date="1449679952445" expanded="true" signature="569:596" placeholder="..." />
-                    <marker date="1449679952445" expanded="true" signature="697:714" placeholder="..." />
-                  </folding>
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -227,13 +222,14 @@
         <option value="$PROJECT_DIR$/humidity/humidifier.html" />
         <option value="$PROJECT_DIR$/humidity/ex.humidity.ctl.js" />
         <option value="$PROJECT_DIR$/cvt/cvt-service.js" />
-        <option value="$PROJECT_DIR$/crd/ex.crdplot.dir.js" />
         <option value="$PROJECT_DIR$/pas/ex.pasplot.dir.js" />
         <option value="$PROJECT_DIR$/main/ex.main.ctl.js" />
         <option value="$PROJECT_DIR$/main/main.html" />
         <option value="$PROJECT_DIR$/alicat/ex.flowplot.dir.js" />
         <option value="$PROJECT_DIR$/assets/cm/cm.css" />
         <option value="$PROJECT_DIR$/assets/cm/contextMenu.js" />
+        <option value="$PROJECT_DIR$/crd/ex.crdplot.dir.js" />
+        <option value="$PROJECT_DIR$/../../Version Controlled Software/UK Met 2/exscalabar_server/Support/exscalabar.ini" />
       </list>
     </option>
   </component>
@@ -299,9 +295,10 @@
     </layout>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="683" />
-    <option name="width" value="683" />
-    <option name="height" value="728" />
+    <option name="x" value="200" />
+    <option name="y" value="138" />
+    <option name="width" value="1239" />
+    <option name="height" value="979" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -331,6 +328,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -360,6 +358,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="exscalabar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="exscalabar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crd" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -438,11 +450,10 @@
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Version Controlled Software/UK Met 2/exscalabar_server/Support/exscalabar.ini" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files (x86)\nodejs\node.exe" />
@@ -513,18 +524,18 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="683" y="0" width="683" height="728" extended-state="0" />
-    <editor active="false" />
+    <frame x="200" y="138" width="1239" height="979" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.53523237" sideWeight="0.75555557" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20278005" sideWeight="0.7370184" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4184168" sideWeight="0.3388306" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31300345" sideWeight="0.34587082" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.184375" sideWeight="0.67085713" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4184168" sideWeight="0.6611694" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.53523237" sideWeight="0.24444444" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31300345" sideWeight="0.6541292" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20278005" sideWeight="0.26298156" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -560,13 +571,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/assets/ad/js/cirrus-dygraphs-dev.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4341" column="22" selection-start-line="4341" selection-start-column="22" selection-end-line="4341" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/alicat/ex.flowplot.dir.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -850,14 +854,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/crd/ex.crdplot.dir.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="141" column="68" selection-start-line="141" selection-start-column="68" selection-end-line="141" selection-end-column="68" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pas/ex.pasplot.dir.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -870,11 +866,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="16" column="80" selection-start-line="16" selection-start-column="80" selection-end-line="16" selection-end-column="80" />
-          <folding>
-            <marker date="1449679952445" expanded="true" signature="468:501" placeholder="..." />
-            <marker date="1449679952445" expanded="true" signature="569:596" placeholder="..." />
-            <marker date="1449679952445" expanded="true" signature="697:714" placeholder="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -894,30 +886,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main/main.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="6" column="46" selection-start-line="6" selection-start-column="46" selection-end-line="6" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/assets/ad/js/angular-dygraph.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="85" column="49" selection-start-line="85" selection-start-column="49" selection-end-line="85" selection-end-column="49" />
-          <folding>
-            <marker date="1451932272104" expanded="true" signature="3901:3938" placeholder="..." />
-            <marker date="1451932272104" expanded="true" signature="3993:4079" placeholder="..." />
-            <marker date="1451932272104" expanded="true" signature="4142:4242" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/alicat/ex.flowplot.dir.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="113" column="16" selection-start-line="113" selection-start-column="16" selection-end-line="113" selection-end-column="16" />
           <folding />
         </state>
       </provider>
@@ -925,18 +897,48 @@
     <entry file="file://$PROJECT_DIR$/assets/cm/cm.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="59" column="16" selection-start-line="59" selection-start-column="16" selection-end-line="59" selection-end-column="16" />
+          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/assets/cm/contextMenu.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0572289">
-          <caret line="43" column="180" selection-start-line="43" selection-start-column="180" selection-end-line="43" selection-end-column="180" />
-          <folding>
-            <marker date="1452554382696" expanded="true" signature="1250:1307" placeholder="..." />
-          </folding>
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/main.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="46" selection-start-line="6" selection-start-column="46" selection-end-line="6" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alicat/ex.flowplot.dir.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.029876977">
+          <caret line="113" column="16" selection-start-line="113" selection-start-column="16" selection-end-line="113" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crd/ex.crdplot.dir.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="80" column="20" selection-start-line="80" selection-start-column="20" selection-end-line="80" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Version Controlled Software/UK Met 2/exscalabar_server/Support/exscalabar.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.20913884">
+          <caret line="223" column="12" selection-start-line="223" selection-start-column="12" selection-end-line="223" selection-end-column="12" />
+          <folding />
         </state>
       </provider>
     </entry>
