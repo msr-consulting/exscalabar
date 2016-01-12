@@ -980,6 +980,13 @@
     controller('ExMainCtl', controller);
 
     function controller($scope, Data) {
+
+        var hello_function = function(){
+            console.log('hello');
+        };
+
+        $scope.testOptions =[['<em>&tau;</em>', hello_function, ["list1", "list2"]],
+        ['<b>This is awesoem!</b>', function(){console.log('Goodbye!');}]];
         
          $scope.optPData = {
                 ylabel: "tau (us)",
@@ -1893,7 +1900,8 @@
             controller: CrdPlotCtl,
             controllerAs: 'vm',
             bindToController: true,
-            template: '<dy-graph options="vm.options" data="vm.data" context-menu="vm.cm"></dy-graph>'
+            //template: '<dy-graph options="vm.options" data="vm.data" context-menu="vm.cm"></dy-graph>'
+            template: '<dy-graph options="vm.options" data="vm.data"></dy-graph>'
         };
     }
 })();
@@ -2417,7 +2425,10 @@
             controller: PasPlotCtl,
             controllerAs: 'vm',
             bindToController: true,
-            template: '<dy-graph options="vm.options" data="vm.data" context-menu="vm.cm"></dy-graph>'
+            //template: '<dy-graph options="vm.options" data="vm.data" context-menu="vm.cm"></dy-graph>'
+
+            template: '<dy-graph options="vm.options" data="vm.data"></dy-graph>'
+
         };
     }
 })();
@@ -2525,48 +2536,43 @@
                 ['P', function () {
                     data_set = "P";
                     vm.options.ylabel = 'P (mb)';
-                    vm.options.axes.y.valueRange = [null,null];
+                    vm.options.axes.y.valueRange = [null, null];
                 }
                 ],
                 ['T',
                     function () {
                         data_set = "T";
                         vm.options.ylabel = 'T (degC)';
-                        vm.options.axes.y.valueRange = [null,null];
+                        vm.options.axes.y.valueRange = [null, null];
                     }
                 ],
                 ['Q',
                     function () {
                         data_set = "Q";
                         vm.options.ylabel = 'Q (lpm)';
-                        vm.options.axes.y.valueRange = [null,null];
+                        vm.options.axes.y.valueRange = [null, null];
                     }
                 ],
                 ['Q0',
                     function () {
                         data_set = "Q0";
                         vm.options.ylabel = 'Q0 (slpm)';
-                        vm.options.axes.y.valueRange = [null,null];
+                        vm.options.axes.y.valueRange = [null, null];
                     }
                 ],
-
-                ['>', 'Controller'],
-                ['Controller 1', function(){
-
-                }],
-                ['Controller 2', function(){}],
-                ['Enable All', function(){}],
-                ['Disable All', function(){}],
-                ['<'],
                 null,
-                ['Clear Data', function(){ExFlowSvc.clear_data();}],
-                ['>', 'Autoscale'],
-                ['Autoscale', function(){
-                    vm.options.axes.y.valueRange = [null,null];
-                }],
-                ['Autoscale 1x', function(){
-                        vm.options.axes.y.valueRange = vm.ref.yAxisRange();}],
-                ['<']
+                ['Controller', null, [
+                    ['Controller 1', function(){console.log('Controller 1 fired.');}],
+                    ['Controller 2', function(){console.log('Controller 2 fired.');}]],
+                    ['Enable All', function(){console.log('Enabling all.');}],
+                    ['Clear Data', function () {ExFlowSvc.clear_data();}]
+                ],
+                ['Autoscale', null,[
+                    ['Autoscale 1x', function () {vm.options.axes.y.valueRange = vm.ref.yAxisRange();}],
+                    ['Autoscale', function () {vm.options.axes.y.valueRange = [null, null];}]
+                ]
+                ]
+
             ];
 
             /**
@@ -2650,14 +2656,15 @@
 
         return {
             restrict: 'E',
+            require: 'contextMenu',
             scope: {
                 title: "@?"
             },
             controller: FlowPlotCtl,
             controllerAs: 'vm',
             bindToController: true,
-            template: '<dy-graph options="vm.options" ref= "vm.ref" data="vm.data" context-menu="vm.cm"></dy-graph>',
-            //template: '<dy-graph options="vm.options" ref= "vm.ref" data="vm.data" ></dy-graph>'
+            // template: '</div><dy-graph options="vm.options" ref= "vm.ref" data="vm.data"></dy-graph>',
+            template: '<context-menu menu-options ="vm.cm"><dy-graph options="vm.options" ref= "vm.ref" data="vm.data" ></dy-graph></context-menu>'
         };
     }
 })();

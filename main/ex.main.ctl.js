@@ -4,6 +4,13 @@
     controller('ExMainCtl', controller);
 
     function controller($scope, Data) {
+
+        var hello_function = function(){
+            console.log('hello');
+        };
+
+        $scope.testOptions =[['<em>&tau;</em>', hello_function, ["list1", "list2"]],
+        ['<b>This is awesoem!</b>', function(){console.log('Goodbye!');}]];
         
          $scope.optPData = {
                 ylabel: "tau (us)",

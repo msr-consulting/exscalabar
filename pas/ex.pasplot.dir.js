@@ -144,7 +144,10 @@
             controller: PasPlotCtl,
             controllerAs: 'vm',
             bindToController: true,
-            template: '<dy-graph options="vm.options" data="vm.data" context-menu="vm.cm"></dy-graph>'
+            //template: '<dy-graph options="vm.options" data="vm.data" context-menu="vm.cm"></dy-graph>'
+
+            template: '<dy-graph options="vm.options" data="vm.data"></dy-graph>'
+
         };
     }
 })();
