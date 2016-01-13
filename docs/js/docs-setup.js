@@ -148,6 +148,15 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "main.service:ExReadCfgSvc",
+      "shortName": "ExReadCfgSvc",
+      "type": "service",
+      "moduleName": "main",
+      "shortDescription": "Simple service to retrieve configuration information from the",
+      "keywords": "$http api config configuration directory file json located main retrieve service simple ui"
+    },
+    {
+      "section": "api",
       "id": "main.service:net",
       "shortName": "net",
       "type": "service",

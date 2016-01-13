@@ -1,0 +1,19 @@
+{
+  "name": "EXSCALABAR",
+  "version": "0.2.0",
+  "pasplot": {
+    "color": [],
+    "xGrid": true,
+    "yGrid": true
+  },
+  "crdplot": {
+    "color": [],
+    "xGrid": true,
+    "yGrid": true
+  },
+  "flowplot": {
+    "color": [],
+    "xGrid": true,
+    "yGrid": true
+  }
+}

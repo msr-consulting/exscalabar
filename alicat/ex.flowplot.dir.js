@@ -32,7 +32,7 @@
          * This controller is used specifically for handling data returned by
          * the flow device service to plot the data.
          */
-        var FlowPlotCtl = function ($rootScope, ExFlowSvc) {
+        var FlowPlotCtl = function ($rootScope, ExFlowSvc, ExReadCfgSvc) {
 
 
             var vm = this;
@@ -95,14 +95,26 @@
                 ],
                 null,
                 ['Controller', null, [
-                    ['Controller 1', function(){console.log('Controller 1 fired.');}],
-                    ['Controller 2', function(){console.log('Controller 2 fired.');}]],
-                    ['Enable All', function(){console.log('Enabling all.');}],
-                    ['Clear Data', function () {ExFlowSvc.clear_data();}]
+                    ['Controller 1', function () {
+                        console.log('Controller 1 fired.');
+                    }],
+                    ['Controller 2', function () {
+                        console.log('Controller 2 fired.');
+                    }]],
+                    ['Enable All', function () {
+                        console.log('Enabling all.');
+                    }],
+                    ['Clear Data', function () {
+                        ExFlowSvc.clear_data();
+                    }]
                 ],
-                ['Autoscale', null,[
-                    ['Autoscale 1x', function () {vm.options.axes.y.valueRange = vm.ref.yAxisRange();}],
-                    ['Autoscale', function () {vm.options.axes.y.valueRange = [null, null];}]
+                ['Autoscale', null, [
+                    ['Autoscale 1x', function () {
+                        vm.options.axes.y.valueRange = vm.ref.yAxisRange();
+                    }],
+                    ['Autoscale', function () {
+                        vm.options.axes.y.valueRange = [null, null];
+                    }]
                 ]
                 ]
 
@@ -130,17 +142,20 @@
                 legend: 'always',
                 axes: {
                     y: {
-                        axisLabelWidth: 70
+                        axisLabelWidth: 70,
+                        drawGrid: ExReadCfgSvc.flow.yGrid,
                     },
                     x: {
                         drawAxis: true,
+                        drawGrid: ExReadCfgSvc.flow.xGrid,
                         axisLabelFormatter: function (d) {
                             return Dygraph.zeropad(d.getHours()) + ":" + Dygraph.zeropad(d.getMinutes()) + ":" + Dygraph.zeropad(d.getSeconds());
                         }
                     }
                 },
                 labelsUTC: true
-            };
+            }
+            ;
 
             if (vm.title !== undefined) {
                 vm.options.title = vm.title;
@@ -185,7 +200,7 @@
             }
         };
 
-        FlowPlotCtl.$inject = ['$rootScope', 'ExFlowSvc'];
+        FlowPlotCtl.$inject = ['$rootScope', 'ExFlowSvc', 'ExReadCfgSvc'];
 
         return {
             restrict: 'E',

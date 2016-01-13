@@ -546,35 +546,99 @@
     }
 
 })();
-/** 
+/**
  * This file conigures the routing for the main page.  These are the views which
  * Will be displayed when the user clicks a heading in the navigation menu.
  *
  * Routing requires the inclusion of 'angular-route.js' file and the module ngRoute.
  */
 
-(function(){
-	angular.module('main')
-	.config(['$routeProvider',
-	function($routeProvider){
-		$routeProvider
-		.when('/CRDS',{templateUrl:'crd/crds.html'})
-		.when('/PAS',{templateUrl:'pas/pas.html'})
-		.when('/O3',{templateUrl:'o3/ozone.html'})
-		.when('/', {templateUrl:'main/main.html'})
-		.when('/Flows', {templateUrl:'alicat/flows.html'})
-		.when('/Temperature', {templateUrl:'views/temperature.html'})
-		.when('/Humidifier', {templateUrl:'humidity/humidifier.html'})
-		.when('/Common', {templateUrl:'views/common.html'})
-		.when('/Config', {templateUrl:'config/config.html'})
-		.when('/msg', {templateUrl:'msgs/msg.html'});
-	}]);
+(function () {
+    angular.module('main')
+        .config(['$routeProvider',
+            function ($routeProvider) {
+                $routeProvider
+                    .when('/CRDS', {templateUrl: 'crd/crds.html'})
+                    .when('/PAS', {templateUrl: 'pas/pas.html'})
+                    .when('/O3', {templateUrl: 'o3/ozone.html'})
+                    .when('/', {templateUrl: 'main/main.html'})
+                    .when('/Flows', {templateUrl: 'alicat/flows.html'})
+                    .when('/Temperature', {templateUrl: 'views/temperature.html'})
+                    .when('/Humidifier', {templateUrl: 'humidity/humidifier.html'})
+                    .when('/Common', {templateUrl: 'views/common.html'})
+                    .when('/Config', {templateUrl: 'config/config.html'})
+                    .when('/msg', {templateUrl: 'msgs/msg.html'});
+            }]);
 })();
 
 (function () {
-    angular.module('main').controller('MainCtlr', ['Data', '$scope', '$interval', 'cvt',
-	function (Data, $scope, $interval, cvt) {
-            /** 
+    angular.module('main').factory('ExReadCfgSvc', read_cfg);
+
+    read_cfg.$inject = ['$http', '$location', '$rootScope'];
+    function read_cfg($http, $location, $rootScope) {
+        /**
+         * @ngdoc service
+         * @name main.service:ExReadCfgSvc
+         * @requires $http
+         *
+         * @description
+         * Simple service to retrieve configuration information from the
+         * json config file ``ui.json`` located in the main directory.
+         */
+
+        var cfg = {
+            name: "",
+            version: "",
+            pas: {
+                colors: [],
+                xGrid: false,
+                yGrid: false
+            },
+            crd: {
+                colors: [],
+                xGrid: false,
+                yGrid: false
+            },
+            flow: {
+                colors: [],
+                xGrid: false,
+                yGrid: false
+            }
+        };
+
+        var loc = $location.$$absUrl.search('#/');
+        var cfg_path = $location.$$absUrl.slice(0, loc) + 'ui.json';
+
+        var promise = $http.get(cfg_path)
+            .then(function (response) {
+                    cfg.name = response.data.name;
+                    cfg.version = response.data.version;
+                    cfg.pas.xGrid = response.data.pasplot.xGrid;
+                    cfg.pas.yGrid = response.data.pasplot.yGrid;
+                    cfg.pas.xGrid = response.data.crdplot.xGrid;
+                    cfg.pas.yGrid = response.data.crdplot.yGrid;
+                    cfg.flow.xGrid = response.data.flowplot.xGrid;
+                    cfg.flow.yGrid = response.data.flowplot.yGrid;
+
+
+                    $rootScope.$broadcast('CfgUpdated');
+                },
+                function () {
+                    console.log('Configuration file not found.');
+                    cfg.name = "EXSCALABAR";
+                    cfg.version = "0.1.0";
+
+                })
+            .finally(function () {
+            });
+
+        return cfg;
+    }
+})();
+(function () {
+    angular.module('main').controller('MainCtlr', ['Data', '$scope', '$rootScope','$interval', 'cvt', 'ExReadCfgSvc',
+        function (Data, $scope, $rootScope, $interval, cvt, ExReadCfgSvc) {
+            /**
              * @ngdoc controller
              * @name main.controller:MainCtlr
              * @requires Data
@@ -582,10 +646,12 @@
              * @requires $interval
              * @requires cvt
              * This is the main controller that is sucked into the entire program (this is placed
-             * 	in the body tag).  The primary function is to make regular server calls using the 
+             *    in the body tag).  The primary function is to make regular server calls using the
              * ``$interval``.
              */
 
+            $scope.name = ExReadCfgSvc.name;
+            $scope.ver = ExReadCfgSvc.version;
             /* Call the data service at regular intervals; this will force a regular update of the
              * data object.
              */
@@ -595,7 +661,12 @@
                 //deviceCfg.checkCfg();
             }, 1000);
 
-	}]);
+            $scope.$on('CfgUpdated', function () {
+                $scope.name = ExReadCfgSvc.name;
+                $scope.ver = ExReadCfgSvc.version;
+
+            });
+        }]);
 })();
 (function () {
     angular.module('main').factory('Data', ['$rootScope', '$http', 'net',
@@ -1781,7 +1852,7 @@
          * @description
          *
          */
-        var CrdPlotCtl = function ($rootScope, ExCrdSvc) {
+        var CrdPlotCtl = function ($rootScope, ExCrdSvc, ExReadCfgSvc) {
 
             var vm = this;
 
@@ -1863,10 +1934,12 @@
                 legend: 'always',
                 axes: {
                     y: {
-                        axisLabelWidth: 70
+                        axisLabelWidth: 70,
+                        drawGrid: ExReadCfgSvc.crd.yGrid
                     },
                     x: {
                         drawAxis: true,
+                        drawGrid: ExReadCfgSvc.crd.yGrid,
                         axisLabelFormatter: function (d) {
                             return Dygraph.zeropad(d.getHours()) + ":" + Dygraph.zeropad(d.getMinutes()) + ":" + Dygraph.zeropad(d.getSeconds());
                         }
@@ -1893,7 +1966,7 @@
         };
 
         // Provide annotation for angular minification
-        CrdPlotCtl.$inject = ['$rootScope', 'ExCrdSvc'];
+        CrdPlotCtl.$inject = ['$rootScope', 'ExCrdSvc', 'ExReadCfgSvc'];
 
         return {
             restrict: 'E',
@@ -2294,7 +2367,8 @@
      *
      *
      */
-    function pas_plot() {
+    pas_plot.$inject = ['ExReadCfgSvc'];
+    function pas_plot(ExReadCfgSvc) {
 
         /**
          * @ngdoc controller
@@ -2395,10 +2469,12 @@
                 legend: 'always',
                 axes: {
                     y: {
-                        axisLabelWidth: 70
+                        axisLabelWidth: 70,
+                        drawGrid: ExReadCfgSvc.pas.yGrid,
                     },
                     x: {
                         drawAxis: true,
+                        drawGrid: ExReadCfgSvc.pas.xGrid,
                         axisLabelFormatter: function (d) {
                             return Dygraph.zeropad(d.getHours()) + ":" + Dygraph.zeropad(d.getMinutes()) + ":" + Dygraph.zeropad(d.getSeconds());
                         }
@@ -2507,7 +2583,7 @@
          * This controller is used specifically for handling data returned by
          * the flow device service to plot the data.
          */
-        var FlowPlotCtl = function ($rootScope, ExFlowSvc) {
+        var FlowPlotCtl = function ($rootScope, ExFlowSvc, ExReadCfgSvc) {
 
 
             var vm = this;
@@ -2570,14 +2646,26 @@
                 ],
                 null,
                 ['Controller', null, [
-                    ['Controller 1', function(){console.log('Controller 1 fired.');}],
-                    ['Controller 2', function(){console.log('Controller 2 fired.');}]],
-                    ['Enable All', function(){console.log('Enabling all.');}],
-                    ['Clear Data', function () {ExFlowSvc.clear_data();}]
+                    ['Controller 1', function () {
+                        console.log('Controller 1 fired.');
+                    }],
+                    ['Controller 2', function () {
+                        console.log('Controller 2 fired.');
+                    }]],
+                    ['Enable All', function () {
+                        console.log('Enabling all.');
+                    }],
+                    ['Clear Data', function () {
+                        ExFlowSvc.clear_data();
+                    }]
                 ],
-                ['Autoscale', null,[
-                    ['Autoscale 1x', function () {vm.options.axes.y.valueRange = vm.ref.yAxisRange();}],
-                    ['Autoscale', function () {vm.options.axes.y.valueRange = [null, null];}]
+                ['Autoscale', null, [
+                    ['Autoscale 1x', function () {
+                        vm.options.axes.y.valueRange = vm.ref.yAxisRange();
+                    }],
+                    ['Autoscale', function () {
+                        vm.options.axes.y.valueRange = [null, null];
+                    }]
                 ]
                 ]
 
@@ -2605,17 +2693,20 @@
                 legend: 'always',
                 axes: {
                     y: {
-                        axisLabelWidth: 70
+                        axisLabelWidth: 70,
+                        drawGrid: ExReadCfgSvc.flow.yGrid,
                     },
                     x: {
                         drawAxis: true,
+                        drawGrid: ExReadCfgSvc.flow.xGrid,
                         axisLabelFormatter: function (d) {
                             return Dygraph.zeropad(d.getHours()) + ":" + Dygraph.zeropad(d.getMinutes()) + ":" + Dygraph.zeropad(d.getSeconds());
                         }
                     }
                 },
                 labelsUTC: true
-            };
+            }
+            ;
 
             if (vm.title !== undefined) {
                 vm.options.title = vm.title;
@@ -2660,7 +2751,7 @@
             }
         };
 
-        FlowPlotCtl.$inject = ['$rootScope', 'ExFlowSvc'];
+        FlowPlotCtl.$inject = ['$rootScope', 'ExFlowSvc', 'ExReadCfgSvc'];
 
         return {
             restrict: 'E',
@@ -2973,7 +3064,7 @@
 	function navi() {
 		return {
 			restrict : 'E',
-			scope : {},
+			scope : {name:"=?"},
 			templateUrl : 'nav/navi.html'
 		};
 	}

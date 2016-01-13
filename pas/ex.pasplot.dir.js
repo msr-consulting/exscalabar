@@ -9,7 +9,8 @@
      *
      *
      */
-    function pas_plot() {
+    pas_plot.$inject = ['ExReadCfgSvc'];
+    function pas_plot(ExReadCfgSvc) {
 
         /**
          * @ngdoc controller
@@ -110,10 +111,12 @@
                 legend: 'always',
                 axes: {
                     y: {
-                        axisLabelWidth: 70
+                        axisLabelWidth: 70,
+                        drawGrid: ExReadCfgSvc.pas.yGrid,
                     },
                     x: {
                         drawAxis: true,
+                        drawGrid: ExReadCfgSvc.pas.xGrid,
                         axisLabelFormatter: function (d) {
                             return Dygraph.zeropad(d.getHours()) + ":" + Dygraph.zeropad(d.getMinutes()) + ":" + Dygraph.zeropad(d.getSeconds());
                         }

@@ -11,6 +11,7 @@ var open = require('gulp-open');
 var htmlmin = require('gulp-htmlmin');
 var sass = require('gulp-sass');
 var ngdocs = require('gulp-ngdocs');
+var bump = require('gulp-bump');
 
 /* Since order matters, we can't just glob everything, but we must
  * make sure that the files are in the correct order. Since we have
@@ -30,6 +31,7 @@ var watch_list = ["main/main.module.js",
     "network/network-service.js",
     "cvt/cvt-service.js",
     "main/main-config.js",
+    "main/ex.readconfig.svc.js",
     "main/main-controller.js",
     "data/data-service.js",
     "msgs/ex.msg.svc.js",
@@ -93,6 +95,7 @@ var docList = [
     "assets/cm/contextMenu.js",
     //"assets/angular/angular-sanitize.js",
     "main/main.module.js",
+    "main/ex.readconfig.svc.js",
     "main/main-config.js",
     "main/main-controller.js",
     "data/data-service.js",
@@ -191,6 +194,24 @@ gulp.task('open', function () {
         .pipe(open({
             uri: 'http://localhost:8080'
         }));
+});
+
+gulp.task('bump-major', function(){
+    gulp.src('./*.json')
+        .pipe(bump({type:'major'}))
+        .pipe(gulp.dest('./'));
+});
+
+gulp.task('bump-minor', function(){
+    gulp.src('./*.json')
+        .pipe(bump({type:'minor'}))
+        .pipe(gulp.dest('./'));
+});
+
+gulp.task('bump-patch', function(){
+    gulp.src('./*.json')
+        .pipe(bump())
+        .pipe(gulp.dest('./'));
 });
 
 /*gulp.task('minify', function() {

@@ -4,7 +4,7 @@
 	function navi() {
 		return {
 			restrict : 'E',
-			scope : {},
+			scope : {name:"=?"},
 			templateUrl : 'nav/navi.html'
 		};
 	}

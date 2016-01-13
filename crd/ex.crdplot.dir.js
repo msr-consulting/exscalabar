@@ -19,7 +19,7 @@
          * @description
          *
          */
-        var CrdPlotCtl = function ($rootScope, ExCrdSvc) {
+        var CrdPlotCtl = function ($rootScope, ExCrdSvc, ExReadCfgSvc) {
 
             var vm = this;
 
@@ -101,10 +101,12 @@
                 legend: 'always',
                 axes: {
                     y: {
-                        axisLabelWidth: 70
+                        axisLabelWidth: 70,
+                        drawGrid: ExReadCfgSvc.crd.yGrid
                     },
                     x: {
                         drawAxis: true,
+                        drawGrid: ExReadCfgSvc.crd.yGrid,
                         axisLabelFormatter: function (d) {
                             return Dygraph.zeropad(d.getHours()) + ":" + Dygraph.zeropad(d.getMinutes()) + ":" + Dygraph.zeropad(d.getSeconds());
                         }
@@ -131,7 +133,7 @@
         };
 
         // Provide annotation for angular minification
-        CrdPlotCtl.$inject = ['$rootScope', 'ExCrdSvc'];
+        CrdPlotCtl.$inject = ['$rootScope', 'ExCrdSvc', 'ExReadCfgSvc'];
 
         return {
             restrict: 'E',
