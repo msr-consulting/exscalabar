@@ -250,6 +250,16 @@
         }
     ]);
 
+    /**
+     * This is a prototype for devices.
+     */
+    function device(){
+        this.label = "";
+        this.id = "";
+        this.ctlr = false;
+        this.sn = "";
+        this.sp = "";
+    }
 
     /**
      * @ngdoc object

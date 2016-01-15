@@ -1,48 +1,33 @@
 (function () {
-    angular.
-    module('main').
-    controller('ExMainCtl', controller);
+    angular.module('main').controller('ExMainCtl', ['Data', '$scope', '$rootScope','$interval', 'cvt', 'ExReadCfgSvc',
+        function (Data, $scope, $rootScope, $interval, cvt, ExReadCfgSvc) {
+            /**
+             * @ngdoc controller
+             * @name main.controller:MainCtlr
+             * @requires Data
+             * @requires $scope
+             * @requires $interval
+             * @requires cvt
+             * This is the main controller that is sucked into the entire program (this is placed
+             *    in the body tag).  The primary function is to make regular server calls using the
+             * ``$interval``.
+             */
 
-    function controller($scope, Data) {
+            $scope.name = ExReadCfgSvc.name;
+            $scope.ver = ExReadCfgSvc.version;
+            /* Call the data service at regular intervals; this will force a regular update of the
+             * data object.
+             */
+            $interval(function () {
+                Data.getData();
+                cvt.checkCvt();
+                //deviceCfg.checkCfg();
+            }, 1000);
 
-        var hello_function = function(){
-            console.log('hello');
-        };
+            $scope.$on('CfgUpdated', function () {
+                $scope.name = ExReadCfgSvc.name;
+                $scope.ver = ExReadCfgSvc.version;
 
-        $scope.testOptions =[['<em>&tau;</em>', hello_function, ["list1", "list2"]],
-        ['<b>This is awesoem!</b>', function(){console.log('Goodbye!');}]];
-        
-         $scope.optPData = {
-                ylabel: "tau (us)",
-                labels: ["t", "Cell 1", "Cell 2", "Cell 3", "Cell 4", "Cell 5"],
-                legend: 'always'
-            };
-
-            $scope.pDataCMOptions = [
-                ['tau', function () {
-                    $scope.optPData.ylabel = "tau (us)";
-                    objectData = "tau";
-
-
-            }],
-                ["tau'",
-                 function () {
-                        $scope.optPData.ylabel = "tau' (us)";
-                        objectData = "taucorr";
-                }],
-                ['stdev', function () {
-                    $scope.optPData.ylabel = "std. tau (us)";
-                    objectData = "stdevtau";
-                }],
-                ['max', function () {
-                    $scope.optPData.ylabel = "max";
-                    objectData = "max";
-                }]
-            ];
-        
-            $scope.pData = [[0, NaN, NaN, NaN, NaN, NaN]];
-
-    }
-    controller.$inject = ['$scope', 'Data'];
-
+            });
+        }]);
 })();

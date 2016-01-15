@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html >
+<html lang="en"  ng-app="main" ng-controller="ExMainCtl">
 
 <head>
     <meta charset="utf-8">
@@ -8,7 +8,7 @@
     <meta name="author" content="Matt Richardson">
     <link rel="shortcut icon" href="chirp.ico">
 
-    <title>EXSCALABAR</title>
+    <title>{{name}} v{{ver}}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="assets/bootstrap-3.3.4-dist/css/bootstrap.min.css" rel="stylesheet">
@@ -21,56 +21,61 @@
     </style>
 </head>
 
-<body ng-app="main" ng-controller="MainCtlr">
-    <navi name = "name"></navi>
+<body>
+<navi name="name"></navi>
+<div class="container">
+    <div class="row">
+        <div class="col-xl-11 col-lg-10 col-md-10 col-sm-10" role="main">
+            <ng-view></ng-view>
+        </div>
+        <div class="col-xl-1 col-lg-2 col-md-2 col-sm-2" role="complementary">
+            <sidebar></sidebar>
+        </div>
+    </div>
+</div>
+
+<footer class="footer" ng-controller="ExFooterCtl">
     <div class="container">
         <div class="row">
-            <div class="col-xl-11 col-lg-10 col-md-10 col-sm-10" role="main">
-                <ng-view></ng-view>
+
+            <div class="col-md-2">
+                <div style="padding-top:20px;">{{time}}</div>
             </div>
-            <div class="col-xl-1 col-lg-2 col-md-2 col-sm-2" role="complementary">
-                <sidebar></sidebar>
+            <div class="col-md-10">
+                <div style="position:absolute;right:0;font-size:20px;">
+                    <span class="label label-info label-as-badge" tooltip-placement="top"
+                          tooltip="Number of notification messages" tooltip-trigger="mouseenter"
+                          tooltip-append-to-body="true">{{num_codes[0]}}</span>
+                    <span class="label label-warning label-as-badge" tooltip-placement="top"
+                          tooltip="Number of warning messages" tooltip-trigger="mouseenter"
+                          tooltip-append-to-body="true">{{num_codes[1]}}</span>
+                    <span class="label label-danger label-as-badge" tooltip-placement="top"
+                          tooltip="Number of error messages" tooltip-trigger="mouseenter" tooltip-append-to-body="true">{{num_codes[2]}}</span>
+                </div>
             </div>
         </div>
     </div>
+</footer>
 
-    <footer class="footer" ng-controller="ExFooterCtl">
-        <div class="container">
-            <div class="row">
+<!--Import libraries -->
+<!--TODO: Make sure that you have the min libs for production!!! -->
+<script src="assets/jquery/jquery-2.1.4.js"></script>
+<script src="assets/angular.js"></script>
+<script src="assets/angular-route.js"></script>
+<script src="assets/ad/js/cirrus-dygraphs-dev.js"></script>
+<script src="assets/ad/js/angular-dygraph.js"></script>
+<script src="assets/ui-bootstrap-0.9.0.js"></script>
+<script src="assets/ui-bootstrap-tpls-0.9.0.js"></script>
+<script src="assets/cm/contextMenu.js"></script>
+<script src="assets/angular/angular-sanitize.js"></script>
 
-                <div class="col-md-2">
-                    <div style="padding-top:20px;">{{time}}</div>
-                </div>
-                <div class="col-md-10">
-                    <div style="position:absolute;right:0;font-size:20px;">
-                        <span class="label label-info label-as-badge" tooltip-placement="top" tooltip="Number of notification messages" tooltip-trigger="mouseenter" tooltip-append-to-body="true">{{num_codes[0]}}</span>
-                        <span class="label label-warning label-as-badge" tooltip-placement="top" tooltip="Number of warning messages" tooltip-trigger="mouseenter" tooltip-append-to-body="true">{{num_codes[1]}}</span>
-                        <span class="label label-danger label-as-badge" tooltip-placement="top" tooltip="Number of error messages" tooltip-trigger="mouseenter" tooltip-append-to-body="true">{{num_codes[2]}}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!--Import libraries -->
-    <!--TODO: Make sure that you have the min libs for production!!! -->
-    <script src="assets/jquery/jquery-2.1.4.js"></script>
-    <script src="assets/angular.js"></script>
-    <script src="assets/angular-route.js"></script>
-    <script src="assets/ad/js/cirrus-dygraphs-dev.js"></script>
-    <script src="assets/ad/js/angular-dygraph.js"></script>
-    <script src="assets/ui-bootstrap-0.9.0.js"></script>
-    <script src="assets/ui-bootstrap-tpls-0.9.0.js"></script>
-    <script src="assets/cm/contextMenu.js"></script>
-    <script src="assets/angular/angular-sanitize.js"></script>
-    
-    <!-- These will in a single library -->
-    <script src="assets/cui/ibutton/ibutton.js"></script>
-    <script src="assets/cui/inumeric/inumeric.js"></script>
-    <script src="assets/cui/istring/istring.js"></script>
+<!-- These will in a single library -->
+<script src="assets/cui/ibutton/ibutton.js"></script>
+<script src="assets/cui/inumeric/inumeric.js"></script>
+<script src="assets/cui/istring/istring.js"></script>
 
 
-    <script src="dist/exscalabar.js"></script>
+<script src="dist/exscalabar.js"></script>
 
 </body>
 

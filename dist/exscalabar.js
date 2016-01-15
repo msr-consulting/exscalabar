@@ -361,6 +361,16 @@
         }
     ]);
 
+    /**
+     * This is a prototype for devices.
+     */
+    function device(){
+        this.label = "";
+        this.id = "";
+        this.ctlr = false;
+        this.sn = "";
+        this.sp = "";
+    }
 
     /**
      * @ngdoc object
@@ -606,8 +616,14 @@
             }
         };
 
-        var loc = $location.$$absUrl.search('#/');
-        var cfg_path = $location.$$absUrl.slice(0, loc) + 'ui.json';
+        // Get the UI config path
+        var s =$location.$$absUrl;
+        var loc =s.search('#/');
+        s = s.slice(0, loc);
+
+        // On the first load, for some reason the trailing backslash is not there; correct this
+        var c = s.slice(-1) === '/' ? '' : '/';
+        var cfg_path = s + c + 'ui.json';
 
         var promise = $http.get(cfg_path)
             .then(function (response) {
@@ -636,7 +652,7 @@
     }
 })();
 (function () {
-    angular.module('main').controller('MainCtlr', ['Data', '$scope', '$rootScope','$interval', 'cvt', 'ExReadCfgSvc',
+    angular.module('main').controller('ExMainCtl', ['Data', '$scope', '$rootScope','$interval', 'cvt', 'ExReadCfgSvc',
         function (Data, $scope, $rootScope, $interval, cvt, ExReadCfgSvc) {
             /**
              * @ngdoc controller
@@ -1045,54 +1061,6 @@
 	}]);
 })();
 
-(function () {
-    angular.
-    module('main').
-    controller('ExMainCtl', controller);
-
-    function controller($scope, Data) {
-
-        var hello_function = function(){
-            console.log('hello');
-        };
-
-        $scope.testOptions =[['<em>&tau;</em>', hello_function, ["list1", "list2"]],
-        ['<b>This is awesoem!</b>', function(){console.log('Goodbye!');}]];
-        
-         $scope.optPData = {
-                ylabel: "tau (us)",
-                labels: ["t", "Cell 1", "Cell 2", "Cell 3", "Cell 4", "Cell 5"],
-                legend: 'always'
-            };
-
-            $scope.pDataCMOptions = [
-                ['tau', function () {
-                    $scope.optPData.ylabel = "tau (us)";
-                    objectData = "tau";
-
-
-            }],
-                ["tau'",
-                 function () {
-                        $scope.optPData.ylabel = "tau' (us)";
-                        objectData = "taucorr";
-                }],
-                ['stdev', function () {
-                    $scope.optPData.ylabel = "std. tau (us)";
-                    objectData = "stdevtau";
-                }],
-                ['max', function () {
-                    $scope.optPData.ylabel = "max";
-                    objectData = "max";
-                }]
-            ];
-        
-            $scope.pData = [[0, NaN, NaN, NaN, NaN, NaN]];
-
-    }
-    controller.$inject = ['$scope', 'Data'];
-
-})();
 (function() {
     angular.module('main')
       .controller('mrAlicatConfigCtlr', ['$scope', function($scope) {

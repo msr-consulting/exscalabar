@@ -96,9 +96,21 @@
     "auto": false
   },
   "testalicat": {
+    "type": "mtec",
+    "label": "",
+    "sn": "-1",
+    "controller": true,
+    "address": "not available",
+    "model": "",
     "setpoint": 0.000000
   },
   "htec": {
+    "type": "mtec",
+    "label": "",
+    "sn": "-1",
+    "controller": true,
+    "address": "Not Available",
+    "model": "",
     "setpoint": 0.000000
   }
 }

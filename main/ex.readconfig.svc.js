@@ -33,8 +33,14 @@
             }
         };
 
-        var loc = $location.$$absUrl.search('#/');
-        var cfg_path = $location.$$absUrl.slice(0, loc) + 'ui.json';
+        // Get the UI config path
+        var s =$location.$$absUrl;
+        var loc =s.search('#/');
+        s = s.slice(0, loc);
+
+        // On the first load, for some reason the trailing backslash is not there; correct this
+        var c = s.slice(-1) === '/' ? '' : '/';
+        var cfg_path = s + c + 'ui.json';
 
         var promise = $http.get(cfg_path)
             .then(function (response) {
