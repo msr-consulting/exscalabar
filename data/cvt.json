@@ -95,22 +95,24 @@
     "length": 60,
     "auto": false
   },
-  "testalicat": {
-    "type": "mtec",
-    "label": "",
-    "sn": "-1",
-    "controller": true,
-    "address": "not available",
-    "model": "",
-    "setpoint": 0.000000
-  },
-  "htec": {
-    "type": "mtec",
-    "label": "",
-    "sn": "-1",
-    "controller": true,
-    "address": "Not Available",
-    "model": "",
-    "setpoint": 0.000000
+  "device": {
+    "testalicat": {
+      "type": "alicat",
+      "label": "alicat<sub>test</sub>",
+      "sn": "-1",
+      "controller": true,
+      "address": "j",
+      "model": "",
+      "setpoint": 0.000000
+    },
+    "htec": {
+      "type": "mtec",
+      "label": "te<sub>hum</sub>",
+      "sn": "-1",
+      "controller": true,
+      "address": "Not Available",
+      "model": "",
+      "setpoint": 0.000000
+    }
   }
 }
