@@ -40,7 +40,12 @@
 
                     },
                     pos: true
-                }
+                },
+                "alicat": [],
+                "vaisala": [],
+                "mTEC": [],
+                "TEC": {},
+                "ppt": []
             };
 
             /**
@@ -63,8 +68,8 @@
                 this.updateParams = function (h) {
                     //http.get(net.address() +
                     //    'Humidity/hCtlParams?hID=' + f0.join(','));
-                   // http://192.168.0.73:8001/xService/Humidity/hCtlParams?hID={value}&D={value}&I={value}&P={value}
-                        //http://192.168.0.73:8001/xService/Humidity/Enable/:ID?Val={value}
+                    // http://192.168.0.73:8001/xService/Humidity/hCtlParams?hID={value}&D={value}&I={value}&P={value}
+                    //http://192.168.0.73:8001/xService/Humidity/Enable/:ID?Val={value}
                 };
                 this.name = name;
             }
@@ -155,19 +160,72 @@
                         var crd = response.data.crd;
                         var pas = response.data.pas;
 
-                        var h = response.data.humidifier;
+                        var dev = response.data.device;
 
-                        cvt.humidifier[0].p = h.med.p;
-                        cvt.humidifier[0].i = h.med.i;
-                        cvt.humidifier[0].d = h.med.d;
-                        cvt.humidifier[0].en = h.med.ctl;
-                        cvt.humidifier[0].sp = h.med.rhsp;
+                        /*
+                         * Device information comes in through the "device" property in the data array returned
+                         * by the CVT check.  Loop through the devices and check to see if anything has changed.
+                         * Add devices to each particular device array as they are found.
+                         *
+                         * This could be offloaded onto the server if this produces an odd load.
+                         */
+                        for (var d in dev) {
+                            var dd = dev[d];
+                            switch (dd.type) {
+                                case "alicat":
+                                    if (cvt.alicat.length > 0 && !findDevID(cvt.alicat, d)) {
 
-                        cvt.humidifier[1].p = h.high.p;
-                        cvt.humidifier[1].i = h.high.i;
-                        cvt.humidifier[1].d = h.high.d;
-                        cvt.humidifier[1].en = h.high.ctl;
-                        cvt.humidifier[1].sp = h.high.rhsp;
+                                        cvt.alicat.push(new device(dd.label, d, dd.controller, dd.sn, dd.sp, dd.address));
+
+                                    }
+                                    else {
+                                        cvt.alicat = [new device(dd.label, d, dd.controller, dd.sn, dd.sp, dd.address)];
+                                    }
+                                    break;
+                                case "mTEC":
+                                    if (cvt.mTEC.length > 0 && !findDevID(cvt.mTEC, d)) {
+                                        cvt.mTEC.push(new device(dd.label, d, dd.controller, dd.sn, dd.sp, dd.address));
+                                    }
+                                    else {
+                                        cvt.mTEC = [new device(dd.label, d, dd.controller, dd.sn, dd.sp, dd.address)];
+                                    }
+                                    break;
+                                case "vaisala":
+                                    if (cvt.vaisala.length > 0 && !findDevID(cvt.vaisala, d)) {
+                                        cvt.vaisala.push(new device(dd.label, d, dd.controller, dd.sn, dd.sp, dd.address));
+                                    }
+                                    else {
+
+                                        cvt.vaisala = [new device(dd.label, d, dd.controller, dd.sn, dd.sp, dd.address)];
+                                    }
+                                    break;
+                                case "ppt":
+                                    if (cvt.ppt.length > 0 && !findDevID(cvt.ppt, d)) {
+                                        cvt.ppt.push(new device(dd.label, d, dd.controller, dd.sn, dd.sp, dd.address));
+                                    }
+                                    else {
+                                        cvt.ppt = [new device(dd.label, d, dd.controller, dd.sn, dd.sp, dd.address)];
+                                    }
+                                    break;
+                                default:
+                                    console.log("Unexpected device found...");
+                            }
+                            $rootScope.$broadcast('deviceListRefresh');
+                        }
+
+                        var h = response.data.Humidifier;
+
+                        cvt.humidifier[0].p = h.Med.p;
+                        cvt.humidifier[0].i = h.Med.i;
+                        cvt.humidifier[0].d = h.Med.d;
+                        cvt.humidifier[0].en = h.Med.ctl;
+                        cvt.humidifier[0].sp = h.Med.rhsp;
+
+                        cvt.humidifier[1].p = h.High.p;
+                        cvt.humidifier[1].i = h.High.i;
+                        cvt.humidifier[1].d = h.High.d;
+                        cvt.humidifier[1].en = h.High.ctl;
+                        cvt.humidifier[1].sp = h.High.rhsp;
 
                         /* Update the CRD controls */
                         cvt.crd.fred = crd.red.f;
@@ -192,9 +250,9 @@
                         cvt.pas.spk.period = pas.spk.period;
                         cvt.pas.spk.pos = pas.spk.enabled;
 
-                        cvt.filter.cycle.period = response.data.filter.period;
-                        cvt.filter.cycle.length = response.data.filter.length;
-                        cvt.filter.cycle.auto = response.data.filter.auto;
+                        cvt.filter.cycle.period = response.data.Filter.period;
+                        cvt.filter.cycle.length = response.data.Filter.length;
+                        cvt.filter.cycle.auto = response.data.Filter.auto;
 
                         cvt.filter.position = response.data.general.filter_pos;
 
@@ -210,6 +268,7 @@
                         cvt.power.Denuder = power[2] == '1';
                         cvt.power.Laser = power[1] == '1';
                         cvt.power.TEC = power[0] == '1';
+
 
                         /**
                          * @ngdoc event
@@ -250,15 +309,28 @@
         }
     ]);
 
+
+    function findDevID(dev_array, id) {
+
+        for (var i in dev_array) {
+            if (dev_array[i].id === id) {
+                return true;
+            }
+        }
+        return false;
+
+    }
+
     /**
      * This is a prototype for devices.
      */
-    function device(){
-        this.label = "";
-        this.id = "";
-        this.ctlr = false;
-        this.sn = "";
-        this.sp = "";
+    function device(l, id, ctlr, sn, sp, addr) {
+        this.label = l;
+        this.id = id;
+        this.ctlr = ctlr;
+        this.sn = sn;
+        this.sp = sp;
+        this.address = addr;
     }
 
     /**

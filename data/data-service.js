@@ -94,7 +94,7 @@
 
                         }
                         // Object creation for devices
-                        for (i = 0; i < vaisalas.length; i++) {
+                        for (var i = 0; i < vaisalas.length; i++) {
                             if (vaisalas[i] in response.data) {
                                 dataObj[vaisalas[i]] = response.data[vaisalas[i]];
                             }

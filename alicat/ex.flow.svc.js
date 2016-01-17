@@ -13,9 +13,9 @@
      * and meters.
      */
 
-    flowSvc.$inject = ['$rootScope', 'Data'];
+    flowSvc.$inject = ['$rootScope', 'Data', 'cvt'];
 
-    function flowSvc($rootScope, Data) {
+    function flowSvc($rootScope, Data, cvt) {
 
         /**
          * @ngdoc property
@@ -76,7 +76,7 @@
         // Temporary variables for storing array data.
         var P, T, Q, Q0;
 
-        var alicats = ["TestAlicat"];
+        var alicats = cvt.alicat;
 
         /**
          * @ngdoc method
@@ -90,20 +90,25 @@
          */
         function populate_arrays(e, i) {
 
+            var id = e.id;
             if (!i) {
-                P = [Data.tObj, flow.data[e].P];
-                T = [Data.tObj, flow.data[e].T];
-                Q = [Data.tObj, flow.data[e].Q];
-                Q0 = [Data.tObj, flow.data[e].Q0];
+                P = [Data.tObj, flow.data[id].P];
+                T = [Data.tObj, flow.data[id].T];
+                Q = [Data.tObj, flow.data[id].Q];
+                Q0 = [Data.tObj, flow.data[id].Q0];
             } else {
-                P.push(flow.data[e].P);
-                T.push(flow.data[e].T);
-                Q.push(flow.data[e].Q);
-                Q0.push(flow.data[e].Q0);
+                P.push(flow.data[id].P);
+                T.push(flow.data[id].T);
+                Q.push(flow.data[id].Q);
+                Q0.push(flow.data[id].Q0);
             }
         }
 
         $rootScope.$on('dataAvailable', getData);
+
+        $rootScope.$on('deviceListRefresh', function(){
+            alicats = cvt.alicat;
+        });
 
         /**
          * @ngdoc method
@@ -126,9 +131,9 @@
 
             for ( var i = 0; i < alicats.length; i++) {
                 // Check to see if the current ID is in the Data Object
-                if (alicats[i] in Data.data) {
+                if (alicats[i].id in Data.data) {
 
-                    key = alicats[i];
+                    key = alicats[i].id;
 
                     if (!(key in flow.data)) {
                         flow.data[key] = new fData();
@@ -149,8 +154,7 @@
                     flow.data[key].T = Data.data[key].T;
                     flow.data[key].Q = Data.data[key].Q;
 
-                    // TODO: provide real label...
-                    flow.data[key].label = key;
+                    flow.data[key].label = alicats[i].label;
 
                 }
             }

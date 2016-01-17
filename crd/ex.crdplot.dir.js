@@ -41,18 +41,18 @@
              * Also provides some functionality for clearing the plots and changing the lengths...
              */
             vm.cm = [
-                ['Tau', function () {
+                ['<em>&tau;</em>', function () {
                     objectData = "tau";
-                    vm.options.ylabel = "Tau (us)";
+                    vm.options.ylabel = "<em>&tau;</em> (&mu;s)";
                 }],
-                ["Tau'",
+                ["<em>&tau;'</em>",
                     function () {
                         objectData = "taucorr";
-                        vm.options.ylabel = "Tau' (us)";
+                        vm.options.ylabel = "<em>&tau;'</em> (&mu;s)";
                     }],
-                ['Standard Deviation', function () {
+                ['<em>&sigma;<sub>&tau;</sub></em>', function () {
                     objectData = "stdevtau";
-                    vm.options.ylabel = "Stand. Dev. (us)";
+                    vm.options.ylabel = "<em>&sigma;<sub>&tau;</sub></em> (us)";
                 }],
                 ['Max', function () {
                     objectData = "max";
@@ -96,7 +96,7 @@
              * * ``axes``   - set parameters for the axes such as width of the axes
              */
             vm.options = {
-                ylabel: "Tau (us)",
+                ylabel: "<em>&tau;</em> (&mu;s)",
                 labels: ["t", "Cell 1", "Cell 2", "Cell 3", "Cell 4", "Cell 5"],
                 legend: 'always',
                 axes: {
