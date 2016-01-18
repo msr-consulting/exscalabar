@@ -15,5 +15,10 @@
     "color": [],
     "xGrid": true,
     "yGrid": true
+  },
+  "ppt": {
+    "color": [],
+    "xGrid": true,
+    "yGrid": true
   }
 }
