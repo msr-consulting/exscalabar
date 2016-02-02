@@ -1,6 +1,6 @@
 (function() {
   angular.module('main').factory('navservice', ['$http', 'net', 'cvt',
-    function($http, net, cvt) {
+    function($http, net) {
 
       var nav = {};
       nav.stop = function() {

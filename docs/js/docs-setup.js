@@ -44,7 +44,7 @@ NG_DOCS={
       "shortName": "navctlr",
       "type": "controller",
       "moduleName": "main",
-      "shortDescription": "Defines the controller the encompases the navigation meny at the top of the page. ",
+      "shortDescription": "Defines the controller the encompases the navigation meny at the top of the page.",
       "keywords": "$scope api based boolean button call controller current defines element encompases main meny method navctlr navigation navservice property representing save switches top update updatesave"
     },
     {

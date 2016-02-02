@@ -685,19 +685,22 @@
                 colors: [],
                 xGrid: false,
                 yGrid: false
-            }
+            },
+            main_path:""
         };
 
         // Get the UI config path
-        var s =$location.$$absUrl;
-        var loc =s.search('#/');
+        var s = $location.$$absUrl;
+        var loc = s.search('#/');
         s = s.slice(0, loc);
 
         // On the first load, for some reason the trailing backslash is not there; correct this
         var c = s.slice(-1) === '/' ? '' : '/';
-        var cfg_path = s + c + 'ui.json';
 
-        var promise = $http.get(cfg_path)
+        cfg.main_path = s+c;
+        var cfg_path = cfg.main_path + 'ui.json';
+
+        $http.get(cfg_path)
             .then(function (response) {
                     cfg.name = response.data.name;
                     cfg.version = response.data.version;
@@ -2738,14 +2741,23 @@
                 axes: {
                     y: {
                         axisLabelWidth: 70,
-                        drawGrid: ExReadCfgSvc.flow.yGrid,
+                        drawGrid: ExReadCfgSvc.flow.yGrid
                     },
                     x: {
                         drawAxis: true,
                         drawGrid: ExReadCfgSvc.flow.xGrid,
                         axisLabelFormatter: function (d) {
-                            return Dygraph.zeropad(d.getHours()) + ":" + Dygraph.zeropad(d.getMinutes()) + ":" + Dygraph.zeropad(d.getSeconds());
+                            return Dygraph.zeropad(d.getHours())
+                                + ":" + Dygraph.zeropad(d.getMinutes()) + ":"
+                                + Dygraph.zeropad(d.getSeconds());
                         }
+                    }
+                },
+                series: {
+                    Alicat0: {
+                        color: 'red',
+                        drawPoints: true,
+                        strokeWidth: 2
                     }
                 },
                 labelsUTC: true
@@ -2785,10 +2797,21 @@
             function updatePlot() {
                 var l = ['t'].concat(ExFlowSvc.IDs);
 
+                var colors = ['red', 'blue', 'green', 'purple', 'yellow']
+
                 if (l !== vm.options.labels) {
                     // If the labels have changed (usually the first time the data
                     // service is called), then copy the new labels into the options
                     vm.options.labels = l.slice();
+
+                    var lab = vm.options.labels.slice(1)
+                    for (l in lab) {
+                        vm.options.series[l] = {
+                            color: 'red', strokeWidth: 2, drawPoints: true
+
+                        }
+
+                    }
                 }
 
                 vm.data = ExFlowSvc[data_set];
@@ -2806,8 +2829,7 @@
             controller: FlowPlotCtl,
             controllerAs: 'vm',
             bindToController: true,
-            // template: '</div><dy-graph options="vm.options" ref= "vm.ref" data="vm.data"></dy-graph>',
-            template: '<context-menu menu-options ="vm.cm"><dy-graph options="vm.options" ref= "vm.ref" data="vm.data" ></dy-graph></context-menu>'
+            template: '<context-menu menu-options ="vm.cm"><dy-graph options="vm.options" ref="vm.ref" data="vm.data" ></dy-graph></context-menu>'
         };
     }
 })();
@@ -3211,7 +3233,7 @@
 
 (function() {
   angular.module('main').factory('navservice', ['$http', 'net', 'cvt',
-    function($http, net, cvt) {
+    function($http, net) {
 
       var nav = {};
       nav.stop = function() {
@@ -3248,12 +3270,12 @@
      * @requires $scope
      * @requires navservice
      * @description
-     * Defines the controller the encompases the navigation meny at the top of the page. 
+     * Defines the controller the encompases the navigation meny at the top of the page.
      */
     angular.module('main').controller('navctlr', ['$scope', 'navservice',
-    function ($scope, navservice) {
+        function ($scope, navservice) {
 
-            /** 
+            /**
              * @ngdoc property
              * @name main.navctlr.save
              * @propertyOf main.controller:navctlr
@@ -3266,8 +3288,8 @@
              * @ngdoc method
              * @name main.navctlr.updateSave
              * @methodOf main.controller:navctlr
-             * @description 
-             * Switches the save state based on the current save state and makes a 
+             * @description
+             * Switches the save state based on the current save state and makes a
              * call to the ``navservice.save()`` to update the value.
              */
 
@@ -3281,6 +3303,6 @@
                 navservice.stop();
             };
 
-    }
-  ]);
+        }
+    ]);
 })();

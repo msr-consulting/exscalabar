@@ -143,14 +143,23 @@
                 axes: {
                     y: {
                         axisLabelWidth: 70,
-                        drawGrid: ExReadCfgSvc.flow.yGrid,
+                        drawGrid: ExReadCfgSvc.flow.yGrid
                     },
                     x: {
                         drawAxis: true,
                         drawGrid: ExReadCfgSvc.flow.xGrid,
                         axisLabelFormatter: function (d) {
-                            return Dygraph.zeropad(d.getHours()) + ":" + Dygraph.zeropad(d.getMinutes()) + ":" + Dygraph.zeropad(d.getSeconds());
+                            return Dygraph.zeropad(d.getHours())
+                                + ":" + Dygraph.zeropad(d.getMinutes()) + ":"
+                                + Dygraph.zeropad(d.getSeconds());
                         }
+                    }
+                },
+                series: {
+                    Alicat0: {
+                        color: 'red',
+                        drawPoints: true,
+                        strokeWidth: 2
                     }
                 },
                 labelsUTC: true
@@ -190,10 +199,21 @@
             function updatePlot() {
                 var l = ['t'].concat(ExFlowSvc.IDs);
 
+                var colors = ['red', 'blue', 'green', 'purple', 'yellow']
+
                 if (l !== vm.options.labels) {
                     // If the labels have changed (usually the first time the data
                     // service is called), then copy the new labels into the options
                     vm.options.labels = l.slice();
+
+                    var lab = vm.options.labels.slice(1)
+                    for (l in lab) {
+                        vm.options.series[l] = {
+                            color: 'red', strokeWidth: 2, drawPoints: true
+
+                        }
+
+                    }
                 }
 
                 vm.data = ExFlowSvc[data_set];
@@ -211,8 +231,7 @@
             controller: FlowPlotCtl,
             controllerAs: 'vm',
             bindToController: true,
-            // template: '</div><dy-graph options="vm.options" ref= "vm.ref" data="vm.data"></dy-graph>',
-            template: '<context-menu menu-options ="vm.cm"><dy-graph options="vm.options" ref= "vm.ref" data="vm.data" ></dy-graph></context-menu>'
+            template: '<context-menu menu-options ="vm.cm"><dy-graph options="vm.options" ref="vm.ref" data="vm.data" ></dy-graph></context-menu>'
         };
     }
 })();

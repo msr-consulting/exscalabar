@@ -2,22 +2,62 @@
   "name": "EXSCALABAR",
   "version": "0.4.0",
   "pasplot": {
-    "color": [],
+    "color": [
+      "red",
+      "blue",
+      "green"
+    ],
+    "strokeWidth": [
+      2,
+      2,
+      2,
+      2
+    ],
     "xGrid": true,
     "yGrid": true
   },
   "crdplot": {
-    "color": [],
+    "color": [
+      "red",
+      "blue",
+      "green"
+    ],
+    "strokeWidth": [
+      2,
+      2,
+      2,
+      2
+    ],
     "xGrid": true,
     "yGrid": true
   },
   "flowplot": {
-    "color": [],
+    "color": [
+      "red",
+      "blue",
+      "green"
+    ],
+    "strokeWidth": [
+      2,
+      2,
+      2,
+      2
+    ],
     "xGrid": true,
     "yGrid": true
   },
   "ppt": {
-    "color": [],
+    "color": [
+      "red",
+      "blue",
+      "green"
+    ],
+    "strokeWidth": [
+      2,
+      2,
+      2,
+      2
+    ],
     "xGrid": true,
     "yGrid": true
   }

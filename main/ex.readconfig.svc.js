@@ -30,19 +30,22 @@
                 colors: [],
                 xGrid: false,
                 yGrid: false
-            }
+            },
+            main_path:""
         };
 
         // Get the UI config path
-        var s =$location.$$absUrl;
-        var loc =s.search('#/');
+        var s = $location.$$absUrl;
+        var loc = s.search('#/');
         s = s.slice(0, loc);
 
         // On the first load, for some reason the trailing backslash is not there; correct this
         var c = s.slice(-1) === '/' ? '' : '/';
-        var cfg_path = s + c + 'ui.json';
 
-        var promise = $http.get(cfg_path)
+        cfg.main_path = s+c;
+        var cfg_path = cfg.main_path + 'ui.json';
+
+        $http.get(cfg_path)
             .then(function (response) {
                     cfg.name = response.data.name;
                     cfg.version = response.data.version;

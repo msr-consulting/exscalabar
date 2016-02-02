@@ -2,22 +2,23 @@
     <nav class="bs-docs-sidebar hidden-print affix-top">
         <ul class="nav bs-docs-sidenav">
             <li>
-                <cui-button ival="filter" ng-click="setFilter()">Filter</cui-button>
-            </li>
-            <!--<li>
-				<button class="btn btn-primary btn-block btn-sm" type="button" ng-switch on="cabin" ng-click ="setCabin()" ng-class="{'btn-primary':cabin,'btn-info':!cabin}">
-					<div ng-switch-when="true">Inlet</div>
-					<div ng-switch-when="false">Cabin</div>
-				</button>
-			</li>-->
-            <li>
-               <cui-button ival="connected" ng-click="stop()">Stop</cui-button>
+                <cui-button ival="filter" ng-click="setFilter()">
+                    <div tooltip-placement="left" tooltip="Change filter state"
+                         tooltip-trigger="mouseenter" tooltip-append-to-body="true">Filter
+                    </div>
+                </cui-button>
             </li>
             <li>
-                <cui-button ival="cabin" ng-click="setCabin()">Inlet</cui-button>
+                <cui-button ival="connected" ng-click="stop()">Stop</cui-button>
+            </li>
+            <li>
+                <cui-button ival="cabin" ng-click="setCabin()">
+                    <div tooltip-placement="left" tooltip="Toggle sample inlet"
+                         tooltip-trigger="mouseenter" tooltip-append-to-body="true">Inlet
+                    </div>
+                </cui-button>
             </li>
             <li class ng-switch on="o3On">
-                <!-- Show nothing when an ozone cal is not running -->
                 <div ng-switch-when=t rue class="alert alert-success">
                     Ozone Cal Active
                 </div>
