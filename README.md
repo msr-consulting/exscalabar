@@ -35,6 +35,41 @@ The application entry point (``index.html``) resides within the top-level direct
 
 There are two types of views within the application - a view that is shared across all portions of the UI (such as the sidebar and navigation bar) and views that provide functionality particular to an aspect of instrument operation (such as the PAS or CRDS control).  The former views and their respective controllers and services are stored within the folder ``app`` in the main directory.  The latter are stored in the folder ``views``.
 
+## User Interface Configuration
+
+The user interface in configured with the file ``ui.json``.  The file is in javascript object notation (when modifying, the rules will have to be observed; see [json.org](http://json.org).  This file contains information on how the user interface should be displayed at startup.  
+
+### General Configuration
+
+The configuration file contains two key entries at the start: ``name`` and ``version``.  The name and version identify the build and are displayed in the tab of the user interface.  The ``name`` is also displayed at the top of the user interface.  The name can be changed to represent the intended use of the client UI, but it is advisable to not change the ``version`` field as this is an identifier that associates the current UI build with it's ``package.json``.  These two values should be bumped in unison.
+
+### Plot Configuration
+
+The configuration file also contains details on how to style plots.  These entries are identified by the key word *plot* in the property name.  Each of these objects contain similar properties.  These are:
+ 
+ * ``color`` - an array of colors.  These may be identified by canonical names such as ``red`` or they may use mor detailed descriptors such as ``rgb(255,0,0)``.  In either case, these are strings  and as such each entry must be enclosed by double quotation marks as determined by the json standard.
+ * ``strokeWidth`` - an array of integers.  These integers will determine the thickness of the stroke for each entry.
+ * ``pattern`` - an array of strings.  These strings determine the type of line that is drawn by the plotter. The possible values are:
+  * "DASHED_LINE"
+  * "DOTTED_LINE"
+  * "DOT_DASH_LINE"
+  
+  These values are defined by the ``Dygraphs`` API and are constants for an array of two values which define the spacing and the size of the lines.  For a solid line, the user may use ``null``.
+    
+* ``xGrid`` - boolean defining whether the x grid is displayed.
+* ``yGrid`` - boolean defining whether the y grid is displayed.
+
+Values that apply to how series are displayed usually require an array entry.  The user can supply as many entries as they wish or as few as 1.  If there are fewer entries than series, then the client should recycle values by continuously cycling through the existing values. 
+
+For example:
+
+> If the current values are "color": ["red","blue",],"strokeWidth": [ 2 ], "pattern": [ null,"DASHED_LINE","DOTTED_LINE"] for a plot containing three series, the first series will be a solid red line with a stroke width of 2, the second will be a blue dashed line with a stroke width of 2 and the third wil be a red dotted line with a stroke width of 2.
+ 
+## Reading in the Configuration
+ 
+
+  
+ 
 ## Resources
 
 * D3 Tree Layout - http://www.d3noob.org/2014/01/tree-diagrams-in-d3js_11.html

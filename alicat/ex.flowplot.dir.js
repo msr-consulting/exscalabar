@@ -159,7 +159,8 @@
                     Alicat0: {
                         color: 'red',
                         drawPoints: true,
-                        strokeWidth: 2
+                        strokeWidth: 2,
+                        strokePattern: null
                     }
                 },
                 labelsUTC: true
@@ -199,18 +200,33 @@
             function updatePlot() {
                 var l = ['t'].concat(ExFlowSvc.IDs);
 
-                var colors = ['red', 'blue', 'green', 'purple', 'yellow']
-
                 if (l !== vm.options.labels) {
                     // If the labels have changed (usually the first time the data
                     // service is called), then copy the new labels into the options
                     vm.options.labels = l.slice();
 
-                    var lab = vm.options.labels.slice(1)
-                    for (l in lab) {
-                        vm.options.series[l] = {
-                            color: 'red', strokeWidth: 2, drawPoints: true
+                    var lab = vm.options.labels.slice(1);
 
+                    var FlowCfg = ExReadCfgSvc.flow;
+
+                    var cl = CfgObj.color.length;
+                    var pl = CfgObj.pattern.length;
+                    var swl = CfgObj.strokeWidth.length;
+
+
+                    /* So, we can populate the plot fields by simply taking the modulus
+                     * of the entry length and the current index.  This means that we
+                     * don't need to specify a property for the label, we will just use the
+                     * existing.
+                     */
+                    for (var j = 0; l < lab.length; l++) {
+
+                        var p = FlowCfg.pattern[j % pl] == null? null: Dygraph[FlowCfg.pattern];
+                        vm.options.series[lab[j]] = {
+                            color: FlowCfg.colors[j % cl],
+                            strokeWidth: FlowCfg.strokeWidth[j % swl],
+                            strokePattern: p,
+                            drawPoints: true
                         }
 
                     }

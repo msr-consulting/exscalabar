@@ -673,20 +673,29 @@
             version: "",
             pas: {
                 colors: [],
+                strokeWidth: [],
+                pattern: [],
+                type: [],
                 xGrid: false,
                 yGrid: false
             },
             crd: {
                 colors: [],
+                strokeWidth: [],
+                pattern: [],
+                type: [],
                 xGrid: false,
                 yGrid: false
             },
             flow: {
                 colors: [],
+                strokeWidth: [],
+                pattern: [],
+                type: [],
                 xGrid: false,
                 yGrid: false
             },
-            main_path:""
+            main_path: ""
         };
 
         // Get the UI config path
@@ -697,8 +706,19 @@
         // On the first load, for some reason the trailing backslash is not there; correct this
         var c = s.slice(-1) === '/' ? '' : '/';
 
-        cfg.main_path = s+c;
+        cfg.main_path = s + c;
         var cfg_path = cfg.main_path + 'ui.json';
+
+        function get_longest(CfgObj) {
+            var longest = CfgObj.pattern.length > CfgObj.strokeWidth.length
+                ? CfgObj.pattern.length : CfgObj.strokeWidth.length;
+
+            longest = longest > CfgObj.color.length ? longest : CfgObj.color.length;
+
+            return longest;
+
+
+        }
 
         $http.get(cfg_path)
             .then(function (response) {
@@ -708,9 +728,8 @@
                     cfg.pas.yGrid = response.data.pasplot.yGrid;
                     cfg.pas.xGrid = response.data.crdplot.xGrid;
                     cfg.pas.yGrid = response.data.crdplot.yGrid;
-                    cfg.flow.xGrid = response.data.flowplot.xGrid;
-                    cfg.flow.yGrid = response.data.flowplot.yGrid;
 
+                    cfg.flow= response.data.flowplot;
 
                     $rootScope.$broadcast('CfgUpdated');
                 },
@@ -2757,7 +2776,8 @@
                     Alicat0: {
                         color: 'red',
                         drawPoints: true,
-                        strokeWidth: 2
+                        strokeWidth: 2,
+                        strokePattern: null
                     }
                 },
                 labelsUTC: true
@@ -2797,18 +2817,33 @@
             function updatePlot() {
                 var l = ['t'].concat(ExFlowSvc.IDs);
 
-                var colors = ['red', 'blue', 'green', 'purple', 'yellow']
-
                 if (l !== vm.options.labels) {
                     // If the labels have changed (usually the first time the data
                     // service is called), then copy the new labels into the options
                     vm.options.labels = l.slice();
 
-                    var lab = vm.options.labels.slice(1)
-                    for (l in lab) {
-                        vm.options.series[l] = {
-                            color: 'red', strokeWidth: 2, drawPoints: true
+                    var lab = vm.options.labels.slice(1);
 
+                    var FlowCfg = ExReadCfgSvc.flow;
+
+                    var cl = CfgObj.color.length;
+                    var pl = CfgObj.pattern.length;
+                    var swl = CfgObj.strokeWidth.length;
+
+
+                    /* So, we can populate the plot fields by simply taking the modulus
+                     * of the entry length and the current index.  This means that we
+                     * don't need to specify a property for the label, we will just use the
+                     * existing.
+                     */
+                    for (var j = 0; l < lab.length; l++) {
+
+                        var p = FlowCfg.pattern[j % pl] == null? null: Dygraph[FlowCfg.pattern];
+                        vm.options.series[lab[j]] = {
+                            color: FlowCfg.colors[j % cl],
+                            strokeWidth: FlowCfg.strokeWidth[j % swl],
+                            strokePattern: p,
+                            drawPoints: true
                         }
 
                     }

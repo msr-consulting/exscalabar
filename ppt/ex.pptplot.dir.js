@@ -22,7 +22,9 @@
                         drawAxis: true,
                         drawGrid: ExReadCfgSvc.ppt.xGrid,
                         axisLabelFormatter: function (d) {
-                            return Dygraph.zeropad(d.getHours()) + ":" + Dygraph.zeropad(d.getMinutes()) + ":" + Dygraph.zeropad(d.getSeconds());
+                            return Dygraph.zeropad(d.getHours()) + ":" +
+                                Dygraph.zeropad(d.getMinutes()) + ":" +
+                                Dygraph.zeropad(d.getSeconds());
                         }
                     }
                 },

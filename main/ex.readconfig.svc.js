@@ -18,20 +18,29 @@
             version: "",
             pas: {
                 colors: [],
+                strokeWidth: [],
+                pattern: [],
+                type: [],
                 xGrid: false,
                 yGrid: false
             },
             crd: {
                 colors: [],
+                strokeWidth: [],
+                pattern: [],
+                type: [],
                 xGrid: false,
                 yGrid: false
             },
             flow: {
                 colors: [],
+                strokeWidth: [],
+                pattern: [],
+                type: [],
                 xGrid: false,
                 yGrid: false
             },
-            main_path:""
+            main_path: ""
         };
 
         // Get the UI config path
@@ -42,8 +51,19 @@
         // On the first load, for some reason the trailing backslash is not there; correct this
         var c = s.slice(-1) === '/' ? '' : '/';
 
-        cfg.main_path = s+c;
+        cfg.main_path = s + c;
         var cfg_path = cfg.main_path + 'ui.json';
+
+        function get_longest(CfgObj) {
+            var longest = CfgObj.pattern.length > CfgObj.strokeWidth.length
+                ? CfgObj.pattern.length : CfgObj.strokeWidth.length;
+
+            longest = longest > CfgObj.color.length ? longest : CfgObj.color.length;
+
+            return longest;
+
+
+        }
 
         $http.get(cfg_path)
             .then(function (response) {
@@ -53,9 +73,8 @@
                     cfg.pas.yGrid = response.data.pasplot.yGrid;
                     cfg.pas.xGrid = response.data.crdplot.xGrid;
                     cfg.pas.yGrid = response.data.crdplot.yGrid;
-                    cfg.flow.xGrid = response.data.flowplot.xGrid;
-                    cfg.flow.yGrid = response.data.flowplot.yGrid;
 
+                    cfg.flow= response.data.flowplot;
 
                     $rootScope.$broadcast('CfgUpdated');
                 },
