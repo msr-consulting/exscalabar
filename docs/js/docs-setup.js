@@ -153,7 +153,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "main",
       "shortDescription": "Simple service to retrieve configuration information from the",
-      "keywords": "$http api config configuration directory file json located main retrieve service simple ui"
+      "keywords": "$http $location $rootscope api config configuration directory file json located main retrieve service simple ui"
     },
     {
       "section": "api",

@@ -41,7 +41,7 @@
              * Also provides some functionality for clearing the plots and changing the lengths...
              */
             vm.cm = [
-                ['<em>IA</em>', function () {
+                ['<em>IA (a.u.)</em>', function () {
                     objectData = "IA";
                     vm.options.ylabel = "IA (a.u.)";
                 }],
@@ -108,9 +108,9 @@
              */
 
             var CfgObj = ExReadCfgSvc.pas;
-            var labels = ["t"].concat(CfgObj.names)
+            var labels = ["t"].concat(CfgObj.names);
             vm.options = {
-                ylabel: "IA (a.u.)",
+                ylabel: "<em>IA</em> (a.u.)",
                 labels: labels,
                 legend: 'always',
                 axes: {
@@ -140,7 +140,7 @@
                     strokeWidth: CfgObj.strokeWidth[j % swl],
                     strokePattern: p,
                     drawPoints: true
-                }
+                };
 
             }
 

@@ -7,6 +7,8 @@
          * @ngdoc service
          * @name main.service:ExReadCfgSvc
          * @requires $http
+         * @requires $location
+         * @requires $rootScope
          *
          * @description
          * Simple service to retrieve configuration information from the
@@ -16,30 +18,9 @@
         var cfg = {
             name: "",
             version: "",
-            pas: {
-                colors: [],
-                strokeWidth: [],
-                pattern: [],
-                type: [],
-                xGrid: false,
-                yGrid: false
-            },
-            crd: {
-                colors: [],
-                strokeWidth: [],
-                pattern: [],
-                type: [],
-                xGrid: false,
-                yGrid: false
-            },
-            flow: {
-                colors: [],
-                strokeWidth: [],
-                pattern: [],
-                type: [],
-                xGrid: false,
-                yGrid: false
-            },
+            pas: {},
+            crd: {},
+            flow: {},
             main_path: ""
         };
 
@@ -53,17 +34,6 @@
 
         cfg.main_path = s + c;
         var cfg_path = cfg.main_path + 'ui.json';
-
-        function get_longest(CfgObj) {
-            var longest = CfgObj.pattern.length > CfgObj.strokeWidth.length
-                ? CfgObj.pattern.length : CfgObj.strokeWidth.length;
-
-            longest = longest > CfgObj.color.length ? longest : CfgObj.color.length;
-
-            return longest;
-
-
-        }
 
         $http.get(cfg_path)
             .then(function (response) {

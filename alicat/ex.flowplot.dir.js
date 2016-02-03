@@ -2,7 +2,6 @@
     angular.module('main').directive('exFlowplot', flowPlotDir);
 
     function flowPlotDir() {
-
         /**
          * @ngdoc directive
          * @name main.directive:exFlowplot
@@ -68,45 +67,39 @@
             vm.cm = [
                 ['P', function () {
                     data_set = "P";
-                    vm.options.ylabel = 'P (mb)';
+                    vm.options.ylabel = '<em>P</em> (mb)';
                     vm.options.axes.y.valueRange = [null, null];
                 }
                 ],
                 ['T',
                     function () {
                         data_set = "T";
-                        vm.options.ylabel = 'T (degC)';
+                        vm.options.ylabel = '<em>T</em> (&deg;C)';
                         vm.options.axes.y.valueRange = [null, null];
                     }
                 ],
                 ['Q',
                     function () {
                         data_set = "Q";
-                        vm.options.ylabel = 'Q (lpm)';
+                        vm.options.ylabel = '<em>Q</em> (lpm)';
                         vm.options.axes.y.valueRange = [null, null];
                     }
                 ],
                 ['Q0',
                     function () {
                         data_set = "Q0";
-                        vm.options.ylabel = 'Q0 (slpm)';
+                        vm.options.ylabel = '<em>Q<sub>0</sub></em> (slpm)';
                         vm.options.axes.y.valueRange = [null, null];
                     }
                 ],
                 null,
                 ['Controller', null, [
-                    ['Controller 1', function () {
-                        console.log('Controller 1 fired.');
-                    }],
-                    ['Controller 2', function () {
-                        console.log('Controller 2 fired.');
-                    }]],
                     ['Enable All', function () {
                         console.log('Enabling all.');
                     }],
                     ['Clear Data', function () {
                         ExFlowSvc.clear_data();
-                    }]
+                    }]]
                 ],
                 ['Autoscale', null, [
                     ['Autoscale 1x', function () {
@@ -136,36 +129,30 @@
              * The options are updated as necessary by the values returned from the
              * data service as well as the selection chosen in the context meny.
              */
+            var CfgObj = ExReadCfgSvc.flow;
             vm.options = {
-                ylabel: 'P (mb)',
+                ylabel: '<em>P</em> (mb)',
                 labels: ['t', 'Alicat0'],
                 legend: 'always',
                 axes: {
                     y: {
                         axisLabelWidth: 70,
-                        drawGrid: ExReadCfgSvc.flow.yGrid
+                        drawGrid: CfgObj.yGrid
                     },
                     x: {
                         drawAxis: true,
-                        drawGrid: ExReadCfgSvc.flow.xGrid,
+                        drawGrid: CfgObj.xGrid,
                         axisLabelFormatter: function (d) {
-                            return Dygraph.zeropad(d.getHours())
-                                + ":" + Dygraph.zeropad(d.getMinutes()) + ":"
-                                + Dygraph.zeropad(d.getSeconds());
+                            return Dygraph.zeropad(d.getHours()) +
+                                ":" + Dygraph.zeropad(d.getMinutes()) + ":" +
+                                Dygraph.zeropad(d.getSeconds());
                         }
                     }
                 },
-                series: {
-                    Alicat0: {
-                        color: 'red',
-                        drawPoints: true,
-                        strokeWidth: 2,
-                        strokePattern: null
-                    }
-                },
+                series: {},
                 labelsUTC: true
-            }
-            ;
+            };
+
 
             if (vm.title !== undefined) {
                 vm.options.title = vm.title;
@@ -201,33 +188,27 @@
                 var l = ['t'].concat(ExFlowSvc.IDs);
 
                 if (l !== vm.options.labels) {
-                    // If the labels have changed (usually the first time the data
-                    // service is called), then copy the new labels into the options
+                    /* If the labels have changed (usually the first time the data
+                     * service is called), then copy the new labels into the options.
+                     *
+                     * Remove the time label...
+                     */
                     vm.options.labels = l.slice();
 
                     var lab = vm.options.labels.slice(1);
-
-                    var FlowCfg = ExReadCfgSvc.flow;
 
                     var cl = CfgObj.color.length;
                     var pl = CfgObj.pattern.length;
                     var swl = CfgObj.strokeWidth.length;
 
-
-                    /* So, we can populate the plot fields by simply taking the modulus
-                     * of the entry length and the current index.  This means that we
-                     * don't need to specify a property for the label, we will just use the
-                     * existing.
-                     */
-                    for (var j = 0; j < lab.length; l++) {
-
-                        var p = FlowCfg.pattern[j % pl] == null? null: Dygraph[FlowCfg.pattern];
+                    for (var j = 0; j < lab.length; j++) {
+                        var p = CfgObj.pattern[j % pl] === null ? null : Dygraph[CfgObj.pattern[j % pl]];
                         vm.options.series[lab[j]] = {
-                            color: FlowCfg.colors[j % cl],
-                            strokeWidth: FlowCfg.strokeWidth[j % swl],
+                            color: CfgObj.color[j % cl],
+                            strokeWidth: CfgObj.strokeWidth[j % swl],
                             strokePattern: p,
                             drawPoints: true
-                        }
+                        };
 
                     }
                 }

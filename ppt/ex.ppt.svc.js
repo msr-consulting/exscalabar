@@ -4,8 +4,7 @@
 
     var maxi = 300, index = 0;
 
-
-    ppt_svc.$inject = ['$rootScope', 'Data', 'cvt']
+    ppt_svc.$inject = ['$rootScope', 'Data', 'cvt'];
     function ppt_svc($rootScope, Data, cvt) {
 
         /**
@@ -18,7 +17,6 @@
          * @description
          * Handle PPT Data retrieved from the ``Data`` service
          */
-
 
         var pptData = new PptObj();
         var ppts = cvt.ppt;
@@ -68,7 +66,6 @@
                     shift = index >= maxi;
 
                     $rootScope.$broadcast('PptDataAvailable');
-
                 }
             }
         }
@@ -78,8 +75,6 @@
         var P, T;
 
         function populate_arrays(e, i) {
-
-
             if (!i) {// First roll
                 P = [Data.tObj, pptData.data[e.id].P];
                 T = [Data.tObj, pptData.data[e.id].T];
@@ -88,15 +83,9 @@
                 P.push(pptData.data[e.id].P);
                 T.push(pptData.data[e.id].T);
             }
-
         }
-
-
         return pptData;
-
-
     }
-
 
     function PptObj() {
         this.IDs = [];
@@ -109,10 +98,8 @@
 
         };
         this.set_max = function(m){
-
             maxi = m;
-
-        }
+        };
     }
 
 

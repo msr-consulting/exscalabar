@@ -10,7 +10,6 @@
      *
      */
     function crdPlotDir() {
-
         /**
          * @ngdoc controller
          * @name main.controller:CrdPlotCtl
@@ -23,7 +22,7 @@
 
             var vm = this;
 
-            // Put
+            /* Plot tau by default... */
             var objectData = 'tau';
 
             /**
@@ -95,24 +94,40 @@
              * * ``legend`` - set to always be shown
              * * ``axes``   - set parameters for the axes such as width of the axes
              */
+            var CfgObj = ExReadCfgSvc.crd;
+            var labels = ["t"].concat(CfgObj.names);
             vm.options = {
                 ylabel: "<em>&tau;</em> (&mu;s)",
-                labels: ["t", "Cell 1", "Cell 2", "Cell 3", "Cell 4", "Cell 5"],
+                labels: labels,
                 legend: 'always',
                 axes: {
                     y: {
                         axisLabelWidth: 70,
-                        drawGrid: ExReadCfgSvc.crd.yGrid
+                        drawGrid: CfgObj.yGrid
                     },
                     x: {
                         drawAxis: true,
-                        drawGrid: ExReadCfgSvc.crd.yGrid,
+                        drawGrid: CfgObj.yGrid,
                         axisLabelFormatter: function (d) {
                             return Dygraph.zeropad(d.getHours()) + ":" + Dygraph.zeropad(d.getMinutes()) + ":" + Dygraph.zeropad(d.getSeconds());
                         }
                     }
                 }
             };
+            var cl = CfgObj.color.length;
+            var pl = CfgObj.pattern.length;
+            var swl = CfgObj.strokeWidth.length;
+
+            for (var j = 0; j < CfgObj.names.length; j++) {
+                var p = CfgObj.pattern[j % pl] === null ? null : Dygraph[CfgObj.pattern[j % pl]];
+                vm.options.series[CfgObj.names[j]] = {
+                    color: CfgObj.color[j % cl],
+                    strokeWidth: CfgObj.strokeWidth[j % swl],
+                    strokePattern: p,
+                    drawPoints: true
+                };
+
+            }
 
             // If the user specifies a title, put it up there...
             if (vm.title !== undefined) {
@@ -124,10 +139,9 @@
 
             $rootScope.$on('crdDataAvaliable', update_plot);
 
+            /* Update plot with new data. */
             function update_plot() {
-
                 vm.data = ExCrdSvc[objectData];
-
             }
 
         };
@@ -144,7 +158,6 @@
             controller: CrdPlotCtl,
             controllerAs: 'vm',
             bindToController: true,
-            //template: '<dy-graph options="vm.options" data="vm.data" context-menu="vm.cm"></dy-graph>'
             template: '<context-menu menu-options="vm.cm"><dy-graph options="vm.options" data="vm.data" ></dy-graph></context-menu>'
         };
     }
