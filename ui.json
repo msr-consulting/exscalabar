@@ -1,6 +1,6 @@
 {
   "name": "EXSCALABAR",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "pasplot": {
     "color": [
       "red",
@@ -13,8 +13,23 @@
       2,
       2
     ],
+    "pattern": [
+      null,
+      null,
+      null,
+      "DASHED_LINE",
+      "DASHED_LINE",
+      "DASHED_LINE"
+    ],
     "xGrid": true,
-    "yGrid": true
+    "yGrid": true,
+    "names": [
+      "Test 1",
+      "Cell 2",
+      "Cell 3",
+      "Cell 4",
+      "Cell 5"
+    ]
   },
   "crdplot": {
     "color": [

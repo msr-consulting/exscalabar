@@ -724,10 +724,8 @@
             .then(function (response) {
                     cfg.name = response.data.name;
                     cfg.version = response.data.version;
-                    cfg.pas.xGrid = response.data.pasplot.xGrid;
-                    cfg.pas.yGrid = response.data.pasplot.yGrid;
-                    cfg.pas.xGrid = response.data.crdplot.xGrid;
-                    cfg.pas.yGrid = response.data.crdplot.yGrid;
+                    cfg.pas = response.data.pasplot;
+                    cfg.crd = response.data.crdplot;
 
                     cfg.flow= response.data.flowplot;
 
@@ -2512,7 +2510,8 @@
                     }], ['Grid Y', function () {
                     }], ['Enable', function () {
                     }],
-                    ['Disable', function(){}]]
+                        ['Disable', function () {
+                        }]]
                 ]
             ];
 
@@ -2529,24 +2528,43 @@
              * * ``legend`` - set to always be shown
              * * ``axes``   - set parameters for the axes such as width of the axes
              */
+
+            var CfgObj = ExReadCfgSvc.pas;
+            var labels = ["t"].concat(CfgObj.names)
             vm.options = {
                 ylabel: "IA (a.u.)",
-                labels: ["t", "Cell 1", "Cell 2", "Cell 3", "Cell 4", "Cell 5"],
+                labels: labels,
                 legend: 'always',
                 axes: {
                     y: {
                         axisLabelWidth: 70,
-                        drawGrid: ExReadCfgSvc.pas.yGrid,
+                        drawGrid: CfgObj.yGrid,
                     },
                     x: {
                         drawAxis: true,
-                        drawGrid: ExReadCfgSvc.pas.xGrid,
+                        drawGrid: CfgObj.xGrid,
                         axisLabelFormatter: function (d) {
                             return Dygraph.zeropad(d.getHours()) + ":" + Dygraph.zeropad(d.getMinutes()) + ":" + Dygraph.zeropad(d.getSeconds());
                         }
                     }
-                }
+                },
+                series: {}
             };
+
+            var cl = CfgObj.color.length;
+            var pl = CfgObj.pattern.length;
+            var swl = CfgObj.strokeWidth.length;
+
+            for (var j = 0; j < CfgObj.names.length; j++) {
+                var p = CfgObj.pattern[j % pl] === null ? null : Dygraph[CfgObj.pattern[j % pl]];
+                vm.options.series[CfgObj.names[j]] = {
+                    color: CfgObj.color[j % cl],
+                    strokeWidth: CfgObj.strokeWidth[j % swl],
+                    strokePattern: p,
+                    drawPoints: true
+                }
+
+            }
 
             // If the user specifies a title, put it up there...
             if (vm.title !== undefined) {
@@ -2836,7 +2854,7 @@
                      * don't need to specify a property for the label, we will just use the
                      * existing.
                      */
-                    for (var j = 0; l < lab.length; l++) {
+                    for (var j = 0; j < lab.length; l++) {
 
                         var p = FlowCfg.pattern[j % pl] == null? null: Dygraph[FlowCfg.pattern];
                         vm.options.series[lab[j]] = {

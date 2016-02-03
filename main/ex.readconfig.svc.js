@@ -69,10 +69,8 @@
             .then(function (response) {
                     cfg.name = response.data.name;
                     cfg.version = response.data.version;
-                    cfg.pas.xGrid = response.data.pasplot.xGrid;
-                    cfg.pas.yGrid = response.data.pasplot.yGrid;
-                    cfg.pas.xGrid = response.data.crdplot.xGrid;
-                    cfg.pas.yGrid = response.data.crdplot.yGrid;
+                    cfg.pas = response.data.pasplot;
+                    cfg.crd = response.data.crdplot;
 
                     cfg.flow= response.data.flowplot;
 

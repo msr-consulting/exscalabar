@@ -219,7 +219,7 @@
                      * don't need to specify a property for the label, we will just use the
                      * existing.
                      */
-                    for (var j = 0; l < lab.length; l++) {
+                    for (var j = 0; j < lab.length; l++) {
 
                         var p = FlowCfg.pattern[j % pl] == null? null: Dygraph[FlowCfg.pattern];
                         vm.options.series[lab[j]] = {
