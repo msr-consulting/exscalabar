@@ -1979,7 +1979,8 @@
                             return Dygraph.zeropad(d.getHours()) + ":" + Dygraph.zeropad(d.getMinutes()) + ":" + Dygraph.zeropad(d.getSeconds());
                         }
                     }
-                }
+                },
+		series:{}
             };
             var cl = CfgObj.color.length;
             var pl = CfgObj.pattern.length;
@@ -2029,6 +2030,7 @@
         };
     }
 })();
+
 (function () {
     angular.module('main').controller('ExPasCtl', pas_ctl);
 
