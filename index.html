@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>Exscalabar by lo-co</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Exscalabar</h1>
+        <h2>User interface for the EXSCALABAR instrument.</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/lo-co/exscalabar/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/lo-co/exscalabar/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/lo-co/exscalabar" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>
+<a id="the-exscalabar-user-interface" class="anchor" href="#the-exscalabar-user-interface" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The EXSCALABAR User Interface</h1>
+
+<p>The directory structure is intended to provide some insight into the architecture of the UI.  The architecture roughly follows some of the guidelines laid out by <a href="https://github.com/johnpapa/angular-styleguide">John Pappa</a>.  Each piece is wrapped in an <a href="https://en.wikipedia.org/wiki/Immediately-invoked_function_expression">immediately invoked function expression (IIFE)</a> in an attempt not to pollute the global namespace with objects that don't need to be out there.  Each piece of code is intended to be small and focused.</p>
+
+<h2>
+<a id="the-build-system" class="anchor" href="#the-build-system" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The Build System</h2>
+
+<p>All files are processed during editing using the <a href="http://gulpjs.com/">Gulp build tool</a>.  Gulp can be used to perform a variety of tasks, but it is here used to </p>
+
+<ul>
+<li>lint</li>
+<li>concatenate</li>
+<li>minify</li>
+<li>uglify </li>
+<li>
+</ul>
+
+<p>So you need to</p>
+
+<pre><code>sudo npm install -g jshint
+npm install gulp-jshint
+npm install gulp-concat
+npm install gulp-uglify
+npm install gulp-rename
+npm install gulp-connect
+npm install gulp-open
+npm install gulp-htmlmin
+</code></pre>
+
+<p>In addition, Gulp provides a web server that allows live reload on change and watches and adjusts the generated files as changes occur.</p>
+
+<p>During the build process, two files are produced and both are stored in the folder found in the main directory <code>assets</code>.  The first file, <code>exscalabar.js</code> is the concatenated file.  This file can be used for development purposes and contains all of the files required by the system concatenated in the correct order (this list of files is defined in <code>gulpfile.js</code> under the variable <code>watch_list</code>.</p>
+
+<p>The developer may bypass the use of this tool entirely simply by placing the references to the individual scripts in the file <code>index.html</code>.</p>
+
+<h2>
+<a id="overview" class="anchor" href="#overview" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Overview</h2>
+
+<p>The application entry point (<code>index.html</code>) resides within the top-level directory along with some documentation and helper files.  The main application uses AngularJS to inject views into this portion of the application via <a href="https://docs.angularjs.org/guide/directive">directives</a> and store and share data between views via <a href="https://docs.angularjs.org/guide/services">services</a>.  </p>
+
+<p>There are two types of views within the application - a view that is shared across all portions of the UI (such as the sidebar and navigation bar) and views that provide functionality particular to an aspect of instrument operation (such as the PAS or CRDS control).  The former views and their respective controllers and services are stored within the folder <code>app</code> in the main directory.  The latter are stored in the folder <code>views</code>.</p>
+
+<h2>
+<a id="user-interface-configuration" class="anchor" href="#user-interface-configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>User Interface Configuration</h2>
+
+<p>The user interface in configured with the file <code>ui.json</code>.  The file is in javascript object notation (when modifying, the rules will have to be observed; see <a href="http://json.org">json.org</a>.  This file contains information on how the user interface should be displayed at startup.  </p>
+
+<h3>
+<a id="general-configuration" class="anchor" href="#general-configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>General Configuration</h3>
+
+<p>The configuration file contains two key entries at the start: <code>name</code> and <code>version</code>.  The name and version identify the build and are displayed in the tab of the user interface.  The <code>name</code> is also displayed at the top of the user interface.  The name can be changed to represent the intended use of the client UI, but it is advisable to not change the <code>version</code> field as this is an identifier that associates the current UI build with it's <code>package.json</code>.  These two values should be bumped in unison.</p>
+
+<h3>
+<a id="plot-configuration" class="anchor" href="#plot-configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Plot Configuration</h3>
+
+<p>The configuration file also contains details on how to style plots.  These entries are identified by the key word <em>plot</em> in the property name.  Each of these objects contain similar properties.  These are:</p>
+
+<ul>
+<li>
+<code>color</code> - an array of colors.  These may be identified by canonical names such as <code>red</code> or they may use mor detailed descriptors such as <code>rgb(255,0,0)</code>.  In either case, these are strings  and as such each entry must be enclosed by double quotation marks as determined by the json standard.</li>
+<li>
+<code>strokeWidth</code> - an array of integers.  These integers will determine the thickness of the stroke for each entry.</li>
+<li>
+<p><code>pattern</code> - an array of strings.  These strings determine the type of line that is drawn by the plotter. The possible values are:</p>
+
+<ul>
+<li>"DASHED_LINE"</li>
+<li>"DOTTED_LINE"</li>
+<li>"DOT_DASH_LINE"</li>
+</ul>
+
+<p>These values are defined by the <code>Dygraphs</code> API and are constants for an array of two values which define the spacing and the size of the lines.  For a solid line, the user may use <code>null</code>.</p>
+</li>
+</ul>
+
+<ul>
+<li>
+<code>xGrid</code> - boolean defining whether the x grid is displayed.</li>
+<li>
+<code>yGrid</code> - boolean defining whether the y grid is displayed.</li>
+</ul>
+
+<p>Values that apply to how series are displayed usually require an array entry.  The user can supply as many entries as they wish or as few as 1.  If there are fewer entries than series, then the client should recycle values by continuously cycling through the existing values. </p>
+
+<p>For example:</p>
+
+<blockquote>
+<p>If the current values are "color": ["red","blue",],"strokeWidth": [ 2 ], "pattern": [ null,"DASHED_LINE","DOTTED_LINE"] for a plot containing three series, the first series will be a solid red line with a stroke width of 2, the second will be a blue dashed line with a stroke width of 2 and the third wil be a red dotted line with a stroke width of 2.</p>
+</blockquote>
+
+<h2>
+<a id="reading-in-the-configuration" class="anchor" href="#reading-in-the-configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Reading in the Configuration</h2>
+
+<h2>
+<a id="resources" class="anchor" href="#resources" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Resources</h2>
+
+<ul>
+<li>D3 Tree Layout - <a href="http://www.d3noob.org/2014/01/tree-diagrams-in-d3js_11.html">http://www.d3noob.org/2014/01/tree-diagrams-in-d3js_11.html</a>
+</li>
+<li>D3 eBook - <a href="https://leanpub.com/D3-Tips-and-Tricks">https://leanpub.com/D3-Tips-and-Tricks</a>
+</li>
+<li>AngularUI for Bootstrap - <a href="https://angular-ui.github.io/bootstrap/">https://angular-ui.github.io/bootstrap/</a>
+</li>
+<li>Bootstrap - <a href="http://getbootstrap.com/">http://getbootstrap.com/</a>
+</li>
+<li>GulpJS - <a href="http://gulpjs.com/">http://gulpjs.com/</a>
+</li>
+<li>Node Package Manager (NPM) - <a href="https://www.npmjs.com/package/npm">https://www.npmjs.com/package/npm</a>
+</li>
+</ul>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
