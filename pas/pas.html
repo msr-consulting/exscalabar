@@ -29,71 +29,79 @@
             </div>
         </div>
         <div class="col-md-9 col-lg-10" ng-controller="pasLas">
-            <div class="table-responsive">
-                <table class="table table-condensed" style="color:white;">
-                    <thead>
-                    <tr>
-                        <th class="col-md-1">Cell</th>
-                        <th class="col-md-2">V
-                            <sub>range</sub> (V)
-                        </th>
-                        <th class="col-md-2">V
-                            <sub>offset</sub> (V)
-                        </th class="col-md-2">
-                        <th class="col-md-2">f
-                            <sub>0</sub> (Hz)
-                        </th>
-                        <th class="col-md-2">Modulation</th>
-                        <th class="col-md-2">Enable</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="n in lasCtl track by $index">
-                        <td>{{$index+1}}</td>
-                        <td>
-                            <input style="border-style:none;background-color:transparent;" class="col-md-12"
-                                   ng-blur="updateVr()" ng-model="n.Vrange" type="text">
-                        </td>
-                        <td>
-                            <input style="border-style:none;background-color:transparent;" class="col-md-12"
-                                   ng-blure="updateVo()" ng-model="n.Voffset" type="text">
-                        </td>
-                        <td>
-                            <input style="border-style:none;background-color:transparent;" class="col-md-12"
-                                   ng-blur="updatef0()" ng-model="n.f0" type="text">
-                        </td>
-                        <td>
-                            <button class="btn btn-primary btn-block" ng-click="n.modulation = !n.modulation" ng-switch
-                                    on="n.modulation" type="button" value="Sine">
-                                <div ng-switch-when=true>
-                                    Square
-                                </div>
-                                <div ng-switch-when=false>
-                                    Sine
-                                </div>
-                                <div ng-switch-default>
-                                    Sine
-                                </div>
-                            </button>
-                        </td>
-                        <td>
-                            <button class="btn btn-primary btn-block" ng-click="updateEnable($index)" ng-switch
-                                    on="n.lasEn" type="button" value="Disabled">
-                                <div ng-switch-when=true>
-                                    Enabled
-                                </div>
-                                <div ng-switch-when=false>
-                                    Disabled
-                                </div>
-                                <div ng-switch-default>
-                                    Disabled
-                                </div>
-                            </button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+            <div class="panel panel-default">
+                <div class="panel-heading">Laser Control</div>
+                <div class="panel-body">
+                    <div class="table-responsive" style="padding-bottom: 0px">
+                        <table class="table table-condensed table-input" style="color:white;margin-bottom: 0px">
+                            <thead>
+                            <tr>
+                                <th class="col-md-1">Cell</th>
+                                <th class="col-md-2">V
+                                    <sub>range</sub> (V)
+                                </th>
+                                <th class="col-md-2">V
+                                    <sub>offset</sub> (V)
+                                </th>
+                                <th class="col-md-2">f
+                                    <sub>0</sub> (Hz)
+                                </th>
+                                <th class="col-md-2">Modulation</th>
+                                <th class="col-md-2">Enable</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="n in lasCtl track by $index">
+                                <td>{{$index+1}}</td>
+                                <td>
+                                    <input class="col-md-12"
+                                           ng-blur="updateVr()" ng-model="n.Vrange" type="text">
+                                </td>
+                                <td>
+                                    <input  class="col-md-12"
+                                           ng-blure="updateVo()" ng-model="n.Voffset" type="text">
+                                </td>
+                                <td>
+                                    <input class="col-md-12"
+                                           ng-blur="updatef0()" ng-model="n.f0" type="text">
+                                </td>
+                                <td>
+                                    <button class="btn btn-block btn-default btn-sm" ng-click="n.modulation = !n.modulation"
+                                            ng-switch
+                                            on="n.modulation" type="button" value="Sine">
+                                        <div ng-switch-when=true>
+                                            Square
+                                        </div>
+                                        <div ng-switch-when=false>
+                                            Sine
+                                        </div>
+                                        <div ng-switch-default>
+                                            Sine
+                                        </div>
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-block btn-default btn-sm" ng-click="updateEnable($index)" ng-switch
+                                            on="n.lasEn" type="button" value="Disabled">
+                                        <div ng-switch-when=true>
+                                            Enabled
+                                        </div>
+                                        <div ng-switch-when=false>
+                                            Disabled
+                                        </div>
+                                        <div ng-switch-default>
+                                            Disabled
+                                        </div>
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
             </div>
+
         </div>
 
     </div>

@@ -160,22 +160,26 @@ body > .container {
 .navbar-header {
     color: white;
 }
-.dropdown-menu{
+
+.dropdown-menu {
     background-color: black;
 }
 
-.dropdown-menu>li>a{
+.dropdown-menu > li > a {
 
-    color:white
+    color: white
 }
-.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover{
+
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover {
     background-color: black;
-    color:#B9DC0C;
+    color: #B9DC0C;
 }
-.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+
+.navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover {
     color: #B9DC0C;
     background-color: transparent;
 }
+
 .navbar-default .navbar-toggle .icon-bar {
     background-color: #B9DC0C;
 }
@@ -195,4 +199,26 @@ body > .container {
     body {
         padding-top: 80px;
     }
+}
+.table-input>tbody>tr>td{
+    padding:2.5px;
+    margin:0px;
+    vertical-align: middle;
+}
+
+.table-input>tbody>tr>td>input{
+    background: whitesmoke;
+    color:grey;
+    border-style:none;
+    padding-left:5px;
+    border-radius:2.5px;
+    max-width:75px;
+}
+.table-input button{
+    width:75px;
+    padding:2.5px;
+    background:whitesmoke;
+    color:grey;
+    font-variant:small-caps;
+    font-size: 10pt;;
 }

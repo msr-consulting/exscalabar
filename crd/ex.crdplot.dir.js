@@ -113,7 +113,7 @@
                         }
                     }
                 },
-		series:{}
+                series: {}
             };
             var cl = CfgObj.color.length;
             var pl = CfgObj.pattern.length;
