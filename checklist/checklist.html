@@ -1,7 +1,10 @@
 <div ng-controller="ExChecklistCtl">
 
-    <ul>
-        <li ng-repeat="Item in ListObj">{{Item.title}}</li>
-    </ul>
+    <div ng-repeat="Item in ListObj.main">
+        <h3 class="checklist-sub">{{Item.title}}</h3>
+        <ul class="list-group checked-list-box">
+            <li ng-repeat="item in Item.items" class="list-group-item checklist-item"><input type="checkbox"> {{item}}</li>
+        </ul>
+    </div>
 
 </div>

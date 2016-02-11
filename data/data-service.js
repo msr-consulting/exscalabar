@@ -73,6 +73,7 @@
 
             dataObj.getData = function () {
                 if (busy) {
+                    // Don't just line up endless requests...
                     return;
                 }
                 busy = true;

@@ -822,6 +822,7 @@
 
             dataObj.getData = function () {
                 if (busy) {
+                    // Don't just line up endless requests...
                     return;
                 }
                 busy = true;
@@ -3335,7 +3336,10 @@
 
         $scope.ListObj = ExChecklistSvc;
 
+        $scope.setChecked = function(){};
+
         $scope.$on('CheckListUpdated', function () {
+
             $scope.ListObj = ExChecklistSvc;
 
         });
@@ -3357,7 +3361,7 @@
          * Service for handling the user defined checklist.
          */
 
-        var list_data = [];
+        var listData = {"main":[{}]};
 
         // Get the UI config path
         var s = $location.$$absUrl;
@@ -3371,7 +3375,7 @@
 
         $http.get(main_path)
             .then(function (response) {
-                    list_data = response.data.main;
+                    listData.main = response.data.main;
                     $rootScope.$broadcast('CheckListUpdated');
                 },
                 function () {
@@ -3380,7 +3384,6 @@
             .finally(function () {
             });
 
-        console.log(list_data);
-        return list_data;
+        return listData;
     }
 })();

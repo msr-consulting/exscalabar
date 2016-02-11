@@ -20,7 +20,10 @@
 
         $scope.ListObj = ExChecklistSvc;
 
+        $scope.setChecked = function(){};
+
         $scope.$on('CheckListUpdated', function () {
+
             $scope.ListObj = ExChecklistSvc;
 
         });

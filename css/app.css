@@ -222,3 +222,11 @@ body > .container {
     font-variant:small-caps;
     font-size: 10pt;;
 }
+
+.checklist-sub{
+    color:whitesmoke;
+}
+
+.checklist-item{
+    padding:2.5px;
+}
