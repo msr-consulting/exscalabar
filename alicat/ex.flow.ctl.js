@@ -15,7 +15,7 @@
      * @description
      * Controller for the flow control and visualization page.
      */
-    function FlowCtl($scope, cvt, ExFlowSvc) {
+    function FlowCtl($scope, Data, cvt, ExFlowSvc) {
 
         $scope.Devices = {};
 

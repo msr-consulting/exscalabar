@@ -649,7 +649,8 @@
                     .when('/Humidifier', {templateUrl: 'humidity/humidifier.html'})
                     .when('/Common', {templateUrl: 'views/common.html'})
                     .when('/Config', {templateUrl: 'config/config.html'})
-                    .when('/msg', {templateUrl: 'msgs/msg.html'});
+                    .when('/msg', {templateUrl: 'msgs/msg.html'})
+                    .when('/Checklist', {templateUrl: 'checklist/checklist.html'});
             }]);
 })();
 
@@ -2602,7 +2603,7 @@
      * @description
      * Controller for the flow control and visualization page.
      */
-    function FlowCtl($scope, cvt, ExFlowSvc) {
+    function FlowCtl($scope, Data, cvt, ExFlowSvc) {
 
         $scope.Devices = {};
 
@@ -3311,4 +3312,75 @@
 
         }
     ]);
+})();
+
+(function () {
+    angular.module('main').controller("ExChecklistCtl", checklist_ctl);
+
+    checklist_ctl.$inject = ['$scope', "ExChecklistSvc"];
+
+
+    /**
+     * @ngdoc controller
+     * @name main.controller:ExFlowCtl
+     * @requires $scope
+     * @requires main.service:Data
+     * @requires main.service:cvt
+     * @requires main.service:ExFlowSvc
+     *
+     * @description
+     * Controller for the flow control and visualization page.
+     */
+    function checklist_ctl($scope, ExChecklistSvc) {
+
+        $scope.ListObj = ExChecklistSvc;
+
+        $scope.$on('CheckListUpdated', function () {
+            $scope.ListObj = ExChecklistSvc;
+
+        });
+    }
+})();
+(function () {
+    angular.module('main').factory('ExChecklistSvc', get_checklist);
+
+    get_checklist.$inject = ['$http', '$location', '$rootScope'];
+    function get_checklist($http, $location, $rootScope) {
+        /**
+         * @ngdoc service
+         * @name main.service:ExChecklistSvc
+         * @requires $http
+         * @requires $location
+         * @requires $rootScope
+         *
+         * @description
+         * Service for handling the user defined checklist.
+         */
+
+        var list_data = [];
+
+        // Get the UI config path
+        var s = $location.$$absUrl;
+        var loc = s.search('#/');
+        s = s.slice(0, loc);
+
+        // On the first load, for some reason the trailing backslash is not there; correct this
+        var c = s.slice(-1) === '/' ? '' : '/';
+
+        var main_path = s + c + 'checklist.json';
+
+        $http.get(main_path)
+            .then(function (response) {
+                    list_data = response.data.main;
+                    $rootScope.$broadcast('CheckListUpdated');
+                },
+                function () {
+                    console.log('Checklist not found...');
+                })
+            .finally(function () {
+            });
+
+        console.log(list_data);
+        return list_data;
+    }
 })();

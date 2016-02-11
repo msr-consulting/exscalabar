@@ -65,7 +65,9 @@ var watch_list = ["main/main.module.js",
     "sidebar/sidebar-directive.js",
     "nav/nav.service.js",
     "nav/nav-directive.js",
-    "nav/nav.ctlr.js"];
+    "nav/nav.ctlr.js",
+    "checklist/ex.checklist.ctl.js",
+    "checklist/ex.checklist.svc.js"];
 
 // List of external assets required by the GUI
 // These are not expected to change.
@@ -196,19 +198,19 @@ gulp.task('open', function () {
         }));
 });
 
-gulp.task('bump-major', function(){
+gulp.task('bump-major', function () {
     gulp.src('./*.json')
-        .pipe(bump({type:'major'}))
+        .pipe(bump({type: 'major'}))
         .pipe(gulp.dest('./'));
 });
 
-gulp.task('bump-minor', function(){
+gulp.task('bump-minor', function () {
     gulp.src('./*.json')
-        .pipe(bump({type:'minor'}))
+        .pipe(bump({type: 'minor'}))
         .pipe(gulp.dest('./'));
 });
 
-gulp.task('bump-patch', function(){
+gulp.task('bump-patch', function () {
     gulp.src('./*.json')
         .pipe(bump())
         .pipe(gulp.dest('./'));
