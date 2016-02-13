@@ -715,8 +715,8 @@
     }
 })();
 (function () {
-    angular.module('main').controller('ExMainCtl', ['Data', '$scope', '$rootScope','$interval', 'cvt', 'ExReadCfgSvc',
-        function (Data, $scope, $rootScope, $interval, cvt, ExReadCfgSvc) {
+    angular.module('main').controller('ExMainCtl', ['Data', '$scope', '$rootScope','$interval', 'cvt', 'ExReadCfgSvc','ExChecklistSvc',
+        function (Data, $scope, $rootScope, $interval, cvt, ExReadCfgSvc, ExChecklistSvc) {
             /**
              * @ngdoc controller
              * @name main.controller:MainCtlr
@@ -739,6 +739,9 @@
                 cvt.checkCvt();
                 //deviceCfg.checkCfg();
             }, 1000);
+
+            // Load checklist data at startup
+            ExChecklistSvc.load();
 
             $scope.$on('CfgUpdated', function () {
                 $scope.name = ExReadCfgSvc.name;
@@ -3314,7 +3317,6 @@
         }
     ]);
 })();
-
 (function () {
     angular.module('main').controller("ExChecklistCtl", checklist_ctl);
 
@@ -3323,7 +3325,7 @@
 
     /**
      * @ngdoc controller
-     * @name main.controller:ExFlowCtl
+     * @name main.controller:ExChecklistCtl
      * @requires $scope
      * @requires main.service:Data
      * @requires main.service:cvt
@@ -3336,7 +3338,20 @@
 
         $scope.ListObj = ExChecklistSvc;
 
-        $scope.setChecked = function(){};
+        /**
+         * @ngdoc method
+         * @methodOf main.controller:ExChecklistCtl
+         * @name main.controller:ExChecklistCtl#setChecked
+         *
+         * @description
+         * Function to respond to clicking in checklist.  Should:
+         *
+         * 1. Update the object in the service
+         * 2. Broadcast the task to the server for logging...
+         */
+        $scope.setChecked = function () {
+            ExChecklistSvc.update($scope.ListObj)
+        };
 
         $scope.$on('CheckListUpdated', function () {
 
@@ -3361,7 +3376,12 @@
          * Service for handling the user defined checklist.
          */
 
-        var listData = {"main":[{}]};
+        var listData = {
+            "main": [{}],
+            update: function (List) {
+                this.main = List.main;
+            }
+        };
 
         // Get the UI config path
         var s = $location.$$absUrl;
@@ -3373,17 +3393,31 @@
 
         var main_path = s + c + 'checklist.json';
 
-        $http.get(main_path)
-            .then(function (response) {
-                    listData.main = response.data.main;
-                    $rootScope.$broadcast('CheckListUpdated');
-                },
-                function () {
-                    console.log('Checklist not found...');
-                })
-            .finally(function () {
-            });
+
+        listData.load = function() {
+            $http.get(main_path)
+                .then(function (response) {
+                        listData.main = response.data.main;
+
+                        // Add the property checked and set to false since this is startup...
+                        for (var i in listData.main) {
+                            listData.main[i]["checked"] = [];
+                            for (var j in listData.main[i].items) {
+                                listData.main[i].checked.push(false);
+                            }
+
+                        }
+                        $rootScope.$broadcast('CheckListUpdated');
+                    },
+                    function () {
+                        console.log('Checklist not found...');
+                    })
+                .finally(function () {
+                });
+
+        }
 
         return listData;
     }
-})();
+})
+();

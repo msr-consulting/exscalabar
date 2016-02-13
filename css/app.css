@@ -230,3 +230,11 @@ body > .container {
 .checklist-item{
     padding:2.5px;
 }
+
+.glyphicon-small{
+    font-size:10px;
+}
+
+.button-xxs{
+        padding: 1px 5px;
+}

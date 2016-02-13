@@ -1,6 +1,6 @@
 (function () {
-    angular.module('main').controller('ExMainCtl', ['Data', '$scope', '$rootScope','$interval', 'cvt', 'ExReadCfgSvc',
-        function (Data, $scope, $rootScope, $interval, cvt, ExReadCfgSvc) {
+    angular.module('main').controller('ExMainCtl', ['Data', '$scope', '$rootScope','$interval', 'cvt', 'ExReadCfgSvc','ExChecklistSvc',
+        function (Data, $scope, $rootScope, $interval, cvt, ExReadCfgSvc, ExChecklistSvc) {
             /**
              * @ngdoc controller
              * @name main.controller:MainCtlr
@@ -23,6 +23,9 @@
                 cvt.checkCvt();
                 //deviceCfg.checkCfg();
             }, 1000);
+
+            // Load checklist data at startup
+            ExChecklistSvc.load();
 
             $scope.$on('CfgUpdated', function () {
                 $scope.name = ExReadCfgSvc.name;

@@ -3,7 +3,15 @@
     <div ng-repeat="Item in ListObj.main">
         <h3 class="checklist-sub">{{Item.title}}</h3>
         <ul class="list-group checked-list-box">
-            <li ng-repeat="item in Item.items" class="list-group-item checklist-item"><input type="checkbox"> {{item}}</li>
+            <li ng-repeat="item in Item.items track by $index" class="list-group-item checklist-item"><input
+                    type="checkbox" ng-change="setChecked()" ng-model="Item.checked[$index]"> {{item}}
+                <button type="button" class="btn btn-default  btn-xs button-xxs">
+                    <span class="glyphicon glyphicon-chevron-up glyphicon-small"></span>
+                </button>
+                <button type="button" class="btn btn-default  btn-xs button-xxs">
+                    <span class="glyphicon glyphicon-chevron-down glyphicon-small"></span>
+                </button>
+            </li>
         </ul>
     </div>
 
