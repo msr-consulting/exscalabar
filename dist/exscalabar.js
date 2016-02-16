@@ -1979,7 +1979,7 @@
                     },
                     x: {
                         drawAxis: true,
-                        drawGrid: CfgObj.yGrid,
+                        drawGrid: CfgObj.xGrid,
                         axisLabelFormatter: function (d) {
                             return Dygraph.zeropad(d.getHours()) + ":" + Dygraph.zeropad(d.getMinutes()) + ":" + Dygraph.zeropad(d.getSeconds());
                         }
@@ -2768,9 +2768,7 @@
                         drawAxis: true,
                         drawGrid: CfgObj.xGrid,
                         axisLabelFormatter: function (d) {
-                            return Dygraph.zeropad(d.getHours()) +
-                                ":" + Dygraph.zeropad(d.getMinutes()) + ":" +
-                                Dygraph.zeropad(d.getSeconds());
+                            return Dygraph.zeropad(d.getHours()) + ":" + Dygraph.zeropad(d.getMinutes()) + ":" + Dygraph.zeropad(d.getSeconds());
                         }
                     }
                 },
@@ -2810,7 +2808,11 @@
              *
              */
             function updatePlot() {
-                var l = ['t'].concat(ExFlowSvc.IDs);
+                var l = ['t'];
+                for (key in ExFlowSvc.data){
+                    l.push(ExFlowSvc.data[key].label);
+                }
+                //var l = ['t'].concat(ExFlowSvc.label);
 
                 if (l !== vm.options.labels) {
                     /* If the labels have changed (usually the first time the data
@@ -2818,7 +2820,8 @@
                      *
                      * Remove the time label...
                      */
-                    vm.options.labels = l.slice();
+                    vm.ref.updateOptions({labels: l.slice()});
+                    //vm.options.labels = l.slice();
 
                     var lab = vm.options.labels.slice(1);
 

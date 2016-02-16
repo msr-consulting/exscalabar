@@ -107,7 +107,7 @@
                     },
                     x: {
                         drawAxis: true,
-                        drawGrid: CfgObj.yGrid,
+                        drawGrid: CfgObj.xGrid,
                         axisLabelFormatter: function (d) {
                             return Dygraph.zeropad(d.getHours()) + ":" + Dygraph.zeropad(d.getMinutes()) + ":" + Dygraph.zeropad(d.getSeconds());
                         }
