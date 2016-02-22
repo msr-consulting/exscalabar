@@ -20,6 +20,7 @@
                     .when('/Common', {templateUrl: 'views/common.html'})
                     .when('/Config', {templateUrl: 'config/config.html'})
                     .when('/msg', {templateUrl: 'msgs/msg.html'})
-                    .when('/Checklist', {templateUrl: 'checklist/checklist.html'});
+                    .when('/Checklist', {templateUrl: 'checklist/checklist.html'})
+                    .when('/Housekeeping', {templateUrl: 'housekeeping/housekeeping.html'});
             }]);
 })();

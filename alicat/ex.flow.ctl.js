@@ -1,7 +1,7 @@
 (function () {
     angular.module('main').controller("ExFlowCtl", FlowCtl);
 
-    FlowCtl.$inject = ['$scope', "Data", "cvt", "ExFlowSvc"];
+    FlowCtl.$inject = ['$scope', "cvt", "ExFlowSvc"];
 
 
     /**
@@ -15,7 +15,7 @@
      * @description
      * Controller for the flow control and visualization page.
      */
-    function FlowCtl($scope, Data, cvt, ExFlowSvc) {
+    function FlowCtl($scope, cvt, ExFlowSvc) {
 
         $scope.Devices = {};
 

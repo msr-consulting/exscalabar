@@ -67,7 +67,9 @@ var watch_list = ["main/main.module.js",
     "nav/nav-directive.js",
     "nav/nav.ctlr.js",
     "checklist/ex.checklist.ctl.js",
-    "checklist/ex.checklist.svc.js"];
+    "checklist/ex.checklist.svc.js",
+    "vaisala/ex.vaisala.svc.js",
+    "vaisala/ex.vaisala.ctl.js"];
 
 // List of external assets required by the GUI
 // These are not expected to change.

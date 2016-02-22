@@ -68,15 +68,15 @@
       1.00
     ]
   },
-  "humidifier": {
-    "med": {
+  "Humidifier": {
+    "Med": {
       "p": 1.000000,
       "i": 0.100000,
       "d": 0.000000,
       "ctl": true,
       "rhsp": 75.000000
     },
-    "high": {
+    "High": {
       "p": 1.000000,
       "i": 0.100000,
       "d": 0.000000,
@@ -90,29 +90,37 @@
     "power": 26,
     "purge": true
   },
-  "filter": {
+  "Filter": {
     "period": 240,
     "length": 60,
     "auto": false
   },
   "device": {
-    "testalicat": {
+    "Alicat0": {
       "type": "alicat",
-      "label": "alicat<sub>test</sub>",
-      "sn": "-1",
+      "label": "Alicat<sub>0</sub>",
+      "sn": "104484",
       "controller": true,
-      "address": "j",
-      "model": "",
+      "address": "A",
+      "model": "Number  MC-5SLPM-D",
       "setpoint": 0.000000
     },
-    "htec": {
-      "type": "mtec",
-      "label": "te<sub>hum</sub>",
-      "sn": "-1",
+    " Alicat1": {
+      "type": "alicat",
+      "label": "Alicat<sub>1</sub>",
+      "sn": "104483",
       "controller": true,
-      "address": "Not Available",
-      "model": "",
+      "address": "B",
+      "model": "Number  MC-5SLPM-D",
       "setpoint": 0.000000
+    },
+    "vDryBlue": {
+      "type": "vaisala",
+      "label": "",
+      "sn": "-1",
+      "controller": false,
+      "address": "Not Available",
+      "model": "Not Available"
     }
   }
 }
