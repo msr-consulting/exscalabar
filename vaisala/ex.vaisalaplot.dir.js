@@ -162,7 +162,7 @@
              */
             vm.data = [[0, NaN]];
 
-            $rootScope.$on('FlowDataAvailable', updatePlot);
+            $rootScope.$on('VaisalaDataAvailable', updatePlot);
 
             /**
              * @ngdoc method
@@ -177,10 +177,10 @@
              */
             function updatePlot() {
                 var l = ['t'];
-                for (key in ExFlowSvc.data){
-                    l.push(ExFlowSvc.data[key].label);
+                for (var key in ExVaisalaSvc.data){
+
+                    l.push(ExVaisalaSvc.data[key].label);
                 }
-                //var l = ['t'].concat(ExFlowSvc.label);
 
                 if (l !== vm.options.labels) {
                     /* If the labels have changed (usually the first time the data
