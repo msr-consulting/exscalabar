@@ -1,6 +1,6 @@
 (function() {
-  angular.module('main').controller('pasSpk', ['$scope', 'cvt', 'Data',
-    function($scope, cvt, Data) {
+  angular.module('main').controller('ExPasSpkCtl', ['$scope', 'cvt', 'Data',
+    function($scope, cvt) {
 
       var maxVrange = 10;
       var maxVoffset = 5;
@@ -51,13 +51,10 @@
       };
 
       $scope.updateSpkF = function() {
-        if ($scope.speaker.f0 > flim.high) {
-          $scope.speaker.f0 = flim.high;
-        } else {
-          if ($scope.speaker.f0 < flim.low) {
-            $scope.speaker.f0 = flim.low;
-          }
-        }
+
+        $scope.speaker.f0 = $scope.speaker.f0 > flim.high? flim.high:$scope.speaker.f0;
+        $scope.speaker.f0 = $scope.speaker.f0 < flim.low? flim.low:$scope.speaker.f0;
+
         cvt.pas.spk.updateCtl($scope.speaker);
       };
 

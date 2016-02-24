@@ -1,6 +1,6 @@
 <div ng-controller="ExPasCtl">
     <div class="row">
-        <div class="col-md-3 col-lg-2">
+        <div class="col-md-3 col-lg-2" ng-controller="ExPasSpkCtl">
             <div class="panel panel-default">
                 <div class="panel-heading">Speaker Control</div>
                 <div class="panel-body">
@@ -10,7 +10,7 @@
                     </cui-numeric>
                     <cui-numeric ng-model="speaker.f0" width="50" evnt-func="updateSpkF()" type="int">f<sub>c</sub> (Hz)
                     </cui-numeric>
-                    <cui-numeric ng-model="speaker.pos" width="50" evnt-func="updateSpkF()">&Delta;f (Hz)</cui-numeric>
+                    <cui-numeric ng-model="speaker.df" width="50" evnt-func="updateSpkF()">&Delta;f (Hz)</cui-numeric>
                     <cui-button ival="speaker.pos" ng-click="setPos()">Speaker</cui-button>
                 </div>
             </div>

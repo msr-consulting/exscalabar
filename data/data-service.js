@@ -39,6 +39,8 @@
                 "save": true,
                 "o3cal": false,
                 "Cabin": false,
+                "pas":{},
+                "crd":{},
                 "time": [],
                 "msg": [],
                 "date": {}
@@ -86,6 +88,8 @@
                         var tremain = response.data.fcycle.tt - response.data.fcycle.te;
                         // Don't let this time fall below 0
                         dataObj.filter.tremain = tremain > 0 ? tremain : 0;
+
+                        dataObj.pas = response.data.PAS;
 
                         // Object creation for devices
                         for (i = 0; i < ppts.length; i++) {

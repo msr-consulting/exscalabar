@@ -1,16 +1,14 @@
 (function () {
     angular.module('main').controller('pasLas', ['$scope', 'cvt', 'Data',
-    function ($scope, cvt, Data) {
+        function ($scope, cvt, Data) {
 
             $scope.lasCtl = [];
-
-            $scope.testVal = "hello";
 
             /** NOTE: This loop initializes the laser controls based on what is
              * in the CVT.  If the initial speaker setting is TRUE, then
              * the value of f0 will be overrun IMMEDIATELY.
              */
-            for (i = 0; i < cvt.pas.las.vr.length; i++) {
+            for (var i = 0; i < cvt.pas.las.vr.length; i++) {
 
                 $scope.lasCtl.push(new lasSet(cvt.pas.las.vr[i],
                     cvt.pas.las.voffset[i],
@@ -38,7 +36,7 @@
 
                 // Update the laser controls if something has set them on the
                 // server-side.
-                for (i = 0; i < cvt.pas.las.vr.length; i++) {
+                for (var i = 0; i < cvt.pas.las.vr.length; i++) {
 
                     $scope.lasCtl[i].vr = cvt.pas.las.vr[i];
                     $scope.lasCtl[i].vo = cvt.pas.las.voffset[i];
@@ -99,8 +97,8 @@
 
             };
 
-    }
-  ]);
+        }
+    ]);
 
     /** PAS Laser settings object.  The settings are
      * * Vrange = voltage range in volts of laser modulation

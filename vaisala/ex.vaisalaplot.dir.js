@@ -25,18 +25,20 @@
          * @ngdoc controller
          * @name main.controller:VaisalaPlotCtl
          * @requires $rootScope
-         * @requires main.service:ExFlowSvc
+         * @requires main.service:ExVaisalaSvc
          *
          * @description
          * This controller is used specifically for handling data returned by
          * the flow device service to plot the data.
          */
-        var VaisalaPlotCtl = function ($rootScope, ExFlowSvc, ExReadCfgSvc) {
+
+        VaisalaPlotCtl.$inject = ['$rootScope', 'ExVaisalaSvc', 'ExReadCfgSvc'];
+        function VaisalaPlotCtl($rootScope, ExVaisalaSvc, ExReadCfgSvc) {
 
 
             var vm = this;
 
-            var data_set = "P";
+            var data_set = "RH";
 
             vm.ref = {};
 
@@ -78,7 +80,7 @@
                         vm.options.axes.y.valueRange = [null, null];
                     }
                 ],
-                ['Q',
+                ['T<sub>d</sub>',
                     function () {
                         data_set = "Td";
                         vm.options.ylabel = '<em>T<sub>d</sub></em> (&deg;C)';
@@ -91,7 +93,7 @@
                         console.log('Enabling all.');
                     }],
                     ['Clear Data', function () {
-                        ExFlowSvc.clear_data();
+                        ExVaisalaSvc.clear_data();
                     }]]
                 ],
                 ['Autoscale', null, [
@@ -122,7 +124,7 @@
              * The options are updated as necessary by the values returned from the
              * data service as well as the selection chosen in the context meny.
              */
-            var CfgObj = ExReadCfgSvc.flow;
+            var CfgObj = ExReadCfgSvc.vaisala;
             vm.options = {
                 ylabel: '<em>RH</em> (%)',
                 labels: ['t', 'Vaisala0'],
@@ -209,11 +211,9 @@
                     }
                 }
 
-                vm.data = ExFlowSvc[data_set];
+                vm.data = ExVaisalaSvc[data_set];
             }
-        };
-
-        FlowPlotCtl.$inject = ['$rootScope', 'ExFlowSvc', 'ExReadCfgSvc'];
+        }
 
         return {
             restrict: 'E',
@@ -221,12 +221,10 @@
             scope: {
                 title: "@?"
             },
-            controller: FlowPlotCtl,
+            controller: VaisalaPlotCtl,
             controllerAs: 'vm',
             bindToController: true,
             template: '<context-menu menu-options ="vm.cm"><dy-graph options="vm.options" ref="vm.ref" data="vm.data" ></dy-graph></context-menu>'
         };
     }
-})();/**
- * Created by Exscalabar on 22/02/2016.
- */
+})();

@@ -100,5 +100,25 @@
     ],
     "xGrid": true,
     "yGrid": true
+  },
+  "vaisala": {
+    "color": [
+      "red",
+      "blue",
+      "green"
+    ],
+    "strokeWidth": [
+      2
+    ],
+    "pattern": [
+      null,
+      null,
+      null,
+      "DASHED_LINE",
+      "DASHED_LINE",
+      "DASHED_LINE"
+    ],
+    "xGrid": true,
+    "yGrid": true
   }
 }

@@ -1,18 +1,31 @@
 <div ng-controller="ExFlowCtl">
-    <div class="row">
-        <div class="col-md-12">
-            <ex-flowplot></ex-flowplot>
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">Setpoints</div>
+            <div class="panel-body">
+                <div ng-repeat="(key,d) in DeviceData">
+                    <cui-numeric ng-if="d.isController" width="45" evnt-func="updateSP(d, key)"
+                                 ng-model="d.Qsp">{{d.label}}</cui-numeric>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="table-responsive" style="color:white" ng-controller="InputTable">
-                <table class="table" id="cal-table">
-                    <!--<colgroup>
-					<col class="col-md-4" />
-					<col class="col-md-8" />
-				</colgroup>-->
-                    <thead>
+    <div class="col-md-9">
+        <div class="row">
+            <div class="col-md-12">
+                <ex-flowplot></ex-flowplot>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="table-responsive" style="color:white" ng-controller="InputTable">
+                    <table class="table" id="cal-table">
+                        <!--<colgroup>
+                        <col class="col-md-4" />
+                        <col class="col-md-8" />
+                    </colgroup>-->
+                        <thead>
                         <tr>
                             <th>ID</th>
                             <th>Q (lpm)</th>
@@ -21,9 +34,9 @@
                             <th>Q0 (slpm)</th>
                             <th>Qsp (lpm)</th>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="device in Devices track by $index">
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="device in DeviceData">
                             <td>{{device.label}}</td>
                             <td>{{device.Q}}</td>
                             <td>{{device.T}}</td>
@@ -32,8 +45,9 @@
                             <td>{{device.Qsp}}</td>
 
                         </tr>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

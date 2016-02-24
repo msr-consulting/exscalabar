@@ -22,11 +22,13 @@
         /* Update the CVT - the CVT should call the server... */
         $scope.updateSP = function () {
             var d = arguments[0];
-            cvt.flows.updateSP(d.ID, d.sp);
+            var key = arguments[1];
+            cvt.flows.updateSP(key, d.Qsp);
         };
 
         $scope.$on('dataAvailable', function () {
-            $scope.Devices = ExFlowSvc.data;
+            $scope.DeviceData = ExFlowSvc.data;
+            $scope.Device = ExFlowSvc;
 
         });
     }

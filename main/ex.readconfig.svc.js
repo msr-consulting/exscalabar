@@ -42,7 +42,8 @@
                     cfg.pas = response.data.pasplot;
                     cfg.crd = response.data.crdplot;
 
-                    cfg.flow= response.data.flowplot;
+                    cfg.flow = response.data.flowplot;
+                    cfg.vaisala = response.data.vaisala;
 
                     $rootScope.$broadcast('CfgUpdated');
                 },
