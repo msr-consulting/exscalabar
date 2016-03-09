@@ -50,6 +50,7 @@
                 this.P = [];
                 this.T = [];
                 this.Q0 = [];
+                shift = false;
 
             };
         }

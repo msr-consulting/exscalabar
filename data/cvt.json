@@ -98,29 +98,55 @@
   "device": {
     "Alicat0": {
       "type": "alicat",
-      "label": "Alicat<sub>0</sub>",
-      "sn": "104484",
+      "label": "Wet",
+      "sn": "104488",
       "controller": true,
       "address": "A",
-      "model": "Number  MC-5SLPM-D",
-      "setpoint": 0.000000
+      "model": "Number\s\sMC-5SLPM-D",
+      "setpoint": 1.000000
     },
-    " Alicat1": {
+    "Alicat1": {
       "type": "alicat",
-      "label": "Alicat<sub>1</sub>",
+      "label": "Dry",
       "sn": "104483",
       "controller": true,
       "address": "B",
-      "model": "Number  MC-5SLPM-D",
-      "setpoint": 0.000000
+      "model": "Number\s\sMC-5SLPM-D",
+      "setpoint": 2.500000
+    },
+    "Alicat3": {
+      "type": "alicat",
+      "label": "Blue",
+      "sn": "128461",
+      "controller": true,
+      "address": "C",
+      "model": "Number\s\sMC-5SLPM-D",
+      "setpoint": 0.730000
+    },
+    "Alicat4": {
+      "type": "alicat",
+      "label": "Red",
+      "sn": "120276",
+      "controller": true,
+      "address": "D",
+      "model": "Number\s\sMC-5SLPM-D",
+      "setpoint": 0.750000
+    },
+    "Alicat5": {
+      "type": "alicat",
+      "label": "Green",
+      "sn": "-1",
+      "controller": false,
+      "address": "E",
+      "model": ""
     },
     "vDryBlue": {
       "type": "vaisala",
-      "label": "",
+      "label": "Vaisala<sub>dry,blue</sub>",
       "sn": "-1",
       "controller": false,
-      "address": "Not Available",
-      "model": "Not Available"
+      "address": "Not\sAvailable",
+      "model": "Not\sAvailable"
     }
   }
 }
