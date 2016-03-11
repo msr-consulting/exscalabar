@@ -1,152 +1,161 @@
 {
-  "pas": {
-    "spk": {
-      "fcenter": 1350,
-      "df": 100,
-      "cycle": true,
-      "length": 20,
-      "enabled": true,
-      "period": 300,
-      "vrange": 5.000000,
-      "voffset": 0.000000,
-      "ienabled": [
-        true,
-        true,
-        true,
-        true,
-        true
-      ]
+    "pas": {
+        "spk": {
+            "fcenter": 1350,
+            "df": 100,
+            "cycle": true,
+            "length": 20,
+            "enabled": true,
+            "period": 300,
+            "vrange": 5.000000,
+            "voffset": 0.000000,
+            "ienabled": [true, true, true, true, true]
+        },
+        "las": {
+            "voffset": [2.50, 2.50, 2.50, 2.50, 2.50],
+            "f0": [1000.00, 1000.00, 1000.00, 1000.00, 1000.00],
+            "vrange": [5.00, 5.00, 5.00, 5.00, 5.00],
+            "enabled": [true, true, true, true, true]
+        }
     },
-    "las": {
-      "voffset": [
-        2.50,
-        2.50,
-        2.50,
-        2.50,
-        2.50
-      ],
-      "f0": [
-        1000.00,
-        1000.00,
-        1000.00,
-        1000.00,
-        1000.00
-      ],
-      "vrange": [
-        5.00,
-        5.00,
-        5.00,
-        5.00,
-        5.00
-      ],
-      "enabled": [
-        true,
-        true,
-        true,
-        true,
-        true
-      ]
+    "crd": {
+        "blue": {
+            "f": 2000,
+            "dc": 0.500000
+        },
+        "red": {
+            "f": 1000,
+            "dc": 0.500000
+        },
+        "kred": 1.000000,
+        "kblue0": 1.000000,
+        "kblue1": 1.000000,
+        "kpmt": [1.00, 1.00, 1.00, 1.00, 1.00]
+    },
+    "Humidifier": {
+        "Med": {
+            "p": 1.000000,
+            "i": 0.100000,
+            "d": 0.000000,
+            "ctl": true,
+            "rhsp": 75.000000
+        },
+        "High": {
+            "p": 1.000000,
+            "i": 0.100000,
+            "d": 0.000000,
+            "ctl": true,
+            "rhsp": 90.000000
+        }
+    },
+    "general": {
+        "filter_pos": true,
+        "inlet": true,
+        "power": 26,
+        "purge": true
+    },
+    "Filter": {
+        "period": 240,
+        "length": 60,
+        "auto": false
+    },
+    "device": {
+        "Alicat0": {
+            "type": "alicat",
+            "label": "Wet",
+            "sn": "104488A\s\sM06\sDate\sManufactured\s07/23/2014A\s\sM07\sDate\sCalibrated\s\s\s07/23/2014A\s\sM08\sCalibrated\sBy\s\s\s\s\sTHA\s\sM09\sSoftware\sRevision\s4v35",
+            "controller": true,
+            "address": "A",
+            "model": "Number\s\sMC-5SLPM-DA\s\sM05\sSerial\sNumber\s104488A\s\sM06\sDate\sManufactured\s07/23/2014A\s\sM07\sDate\sCalibrated\s\s\s07/23/2014A\s\sM08\sCalibrated\sBy\s\s\s\s\sTHA\s\sM09\sSoftware\sRevision\s4v35",
+            "setpoint": 1.000000
+        },
+        "Alicat1": {
+            "type": "alicat",
+            "label": "Dry",
+            "sn": "104483B\s\sM06\sDate\sManufactured\s07/23/2014B\s\sM07\sDate\sCalibrated\s\s\s07/23/2014B\s\sM08\sCalibrated\sBy\s\s\s\s\sTHB\s\sM09\sSoftware\sRevision\s4v35",
+            "controller": true,
+            "address": "B",
+            "model": "Number\s\sMC-5SLPM-DB\s\sM05\sSerial\sNumber\s104483B\s\sM06\sDate\sManufactured\s07/23/2014B\s\sM07\sDate\sCalibrated\s\s\s07/23/2014B\s\sM08\sCalibrated\sBy\s\s\s\s\sTHB\s\sM09\sSoftware\sRevision\s4v35",
+            "setpoint": 2.000000
+        },
+        "Alicat3": {
+            "type": "alicat",
+            "label": "Blue",
+            "sn": "128461C\s\sM06\sDate\sManufactured\s02/10/2016C\s\sM07\sDate\sCalibrated\s\s\s02/10/2016C\s\sM08\sCalibrated\sBy\s\s\s\s\sPDC\s\sM09\sSoftware\sRevision\s5v12.0-R22",
+            "controller": true,
+            "address": "C",
+            "model": "Number\s\sMC-5SLPM-DC\s\sM05\sSerial\sNumber\s128461C\s\sM06\sDate\sManufactured\s02/10/2016C\s\sM07\sDate\sCalibrated\s\s\s02/10/2016C\s\sM08\sCalibrated\sBy\s\s\s\s\sPDC\s\sM09\sSoftware\sRevision\s5v12.0-R22",
+            "setpoint": 0.500000
+        },
+        "Alicat4": {
+            "type": "alicat",
+            "label": "Red",
+            "sn": "120276D\s\sM06\sDate\sManufactured\s08/14/2015D\s\sM07\sDate\sCalibrated\s\s\s08/14/2015D\s\sM08\sCalibrated\sBy\s\s\s\s\sGGD\s\sM09\sSoftware\sRevision\s5v11.0-R22",
+            "controller": true,
+            "address": "D",
+            "model": "Number\s\sMC-5SLPM-DD\s\sM05\sSerial\sNumber\s120276D\s\sM06\sDate\sManufactured\s08/14/2015D\s\sM07\sDate\sCalibrated\s\s\s08/14/2015D\s\sM08\sCalibrated\sBy\s\s\s\s\sGGD\s\sM09\sSoftware\sRevision\s5v11.0-R22",
+            "setpoint": 1.500000
+        },
+        "Alicat5": {
+            "type": "alicat",
+            "label": "Purple",
+            "sn": "104485E\s\sM06\sDate\sManufactured\s07/23/2014E\s\sM07\sDate\sCalibrated\s\s\s07/23/2014E\s\sM08\sCalibrated\sBy\s\s\s\s\sTHE\s\sM09\sSoftware\sRevision\s4v35",
+            "controller": true,
+            "address": "E",
+            "model": "Number\s\sMC-5SLPM-DE\s\sM05\sSerial\sNumber\s104485E\s\sM06\sDate\sManufactured\s07/23/2014E\s\sM07\sDate\sCalibrated\s\s\s07/23/2014E\s\sM08\sCalibrated\sBy\s\s\s\s\sTHE\s\sM09\sSoftware\sRevision\s4v35",
+            "setpoint": 0.730000
+        },
+        "Alicat6": {
+            "type": "alicat",
+            "label": "Iron\sMaiden",
+            "sn": "104486F\s\sM06\sDate\sManufactured\s07/23/2014F\s\sM07\sDate\sCalibrated\s\s\s07/23/2014F\s\sM08\sCalibrated\sBy\s\s\s\s\sTHF\s\sM09\sSoftware\sRevision\s4v35",
+            "controller": true,
+            "address": "F",
+            "model": "Number\s\sMC-5SLPM-DF\s\sM05\sSerial\sNumber\s104486F\s\sM06\sDate\sManufactured\s07/23/2014F\s\sM07\sDate\sCalibrated\s\s\s07/23/2014F\s\sM08\sCalibrated\sBy\s\s\s\s\sTHF\s\sM09\sSoftware\sRevision\s4v35",
+            "setpoint": 0.730000
+        },
+        "Alicat7": {
+            "type": "alicat",
+            "label": "Metallica",
+            "sn": "104489G\s\sM06\sDate\sManufactured\s07/23/2014G\s\sM07\sDate\sCalibrated\s\s\s07/23/2014G\s\sM08\sCalibrated\sBy\s\s\s\s\sTHG\s\sM09\sSoftware\sRevision\s4v35",
+            "controller": true,
+            "address": "G",
+            "model": "Number\s\sMC-5SLPM-DG\s\sM05\sSerial\sNumber\s104489G\s\sM06\sDate\sManufactured\s07/23/2014G\s\sM07\sDate\sCalibrated\s\s\s07/23/2014G\s\sM08\sCalibrated\sBy\s\s\s\s\sTHG\s\sM09\sSoftware\sRevision\s4v35",
+            "setpoint": 0.730000
+        },
+        "Alicat8": {
+            "type": "alicat",
+            "label": "Slayer",
+            "sn": "104490H\s\sM06\sDate\sManufactured\s07/23/2014H\s\sM07\sDate\sCalibrated\s\s\s07/23/2014H\s\sM08\sCalibrated\sBy\s\s\s\s\sTHH\s\sM09\sSoftware\sRevision\s4v35",
+            "controller": true,
+            "address": "H",
+            "model": "Number\s\sMC-5SLPM-DH\s\sM05\sSerial\sNumber\s104490H\s\sM06\sDate\sManufactured\s07/23/2014H\s\sM07\sDate\sCalibrated\s\s\s07/23/2014H\s\sM08\sCalibrated\sBy\s\s\s\s\sTHH\s\sM09\sSoftware\sRevision\s4v35",
+            "setpoint": 0.730000
+        },
+        "Alicat9": {
+            "type": "alicat",
+            "label": "Megadeth",
+            "sn": "104484I\s\sM06\sDate\sManufactured\s07/23/2014I\s\sM07\sDate\sCalibrated\s\s\s07/23/2014I\s\sM08\sCalibrated\sBy\s\s\s\s\sTHI\s\sM09\sSoftware\sRevision\s4v35",
+            "controller": true,
+            "address": "I",
+            "model": "Number\s\sMC-5SLPM-DI\s\sM05\sSerial\sNumber\s104484I\s\sM06\sDate\sManufactured\s07/23/2014I\s\sM07\sDate\sCalibrated\s\s\s07/23/2014I\s\sM08\sCalibrated\sBy\s\s\s\s\sTHI\s\sM09\sSoftware\sRevision\s4v35",
+            "setpoint": 0.730000
+        },
+        "vDryBlue": {
+            "type": "vaisala",
+            "label": "Dry,\sBlue",
+            "sn": "-1",
+            "controller": false,
+            "address": "Not\sAvailable",
+            "model": "Not\sAvailable"
+        },
+        "vDryRed": {
+            "type": "vaisala",
+            "label": "Dry,\sRed",
+            "sn": "-1",
+            "controller": false,
+            "address": "Not\sAvailable",
+            "model": "Not\sAvailable"
+        }
     }
-  },
-  "crd": {
-    "blue": {
-      "f": 2000,
-      "dc": 0.500000
-    },
-    "red": {
-      "f": 1000,
-      "dc": 0.500000
-    },
-    "kred": 1.000000,
-    "kblue0": 1.000000,
-    "kblue1": 1.000000,
-    "kpmt": [
-      1.00,
-      1.00,
-      1.00,
-      1.00,
-      1.00
-    ]
-  },
-  "Humidifier": {
-    "Med": {
-      "p": 1.000000,
-      "i": 0.100000,
-      "d": 0.000000,
-      "ctl": true,
-      "rhsp": 75.000000
-    },
-    "High": {
-      "p": 1.000000,
-      "i": 0.100000,
-      "d": 0.000000,
-      "ctl": true,
-      "rhsp": 90.000000
-    }
-  },
-  "general": {
-    "filter_pos": true,
-    "inlet": true,
-    "power": 26,
-    "purge": true
-  },
-  "Filter": {
-    "period": 240,
-    "length": 60,
-    "auto": false
-  },
-  "device": {
-    "Alicat0": {
-      "type": "alicat",
-      "label": "Wet",
-      "sn": "104488",
-      "controller": true,
-      "address": "A",
-      "model": "Number\s\sMC-5SLPM-D",
-      "setpoint": 1.000000
-    },
-    "Alicat1": {
-      "type": "alicat",
-      "label": "Dry",
-      "sn": "104483",
-      "controller": true,
-      "address": "B",
-      "model": "Number\s\sMC-5SLPM-D",
-      "setpoint": 2.500000
-    },
-    "Alicat3": {
-      "type": "alicat",
-      "label": "Blue",
-      "sn": "128461",
-      "controller": true,
-      "address": "C",
-      "model": "Number\s\sMC-5SLPM-D",
-      "setpoint": 0.730000
-    },
-    "Alicat4": {
-      "type": "alicat",
-      "label": "Red",
-      "sn": "120276",
-      "controller": true,
-      "address": "D",
-      "model": "Number\s\sMC-5SLPM-D",
-      "setpoint": 0.750000
-    },
-    "Alicat5": {
-      "type": "alicat",
-      "label": "Green",
-      "sn": "-1",
-      "controller": false,
-      "address": "E",
-      "model": ""
-    },
-    "vDryBlue": {
-      "type": "vaisala",
-      "label": "Vaisala<sub>dry,blue</sub>",
-      "sn": "-1",
-      "controller": false,
-      "address": "Not\sAvailable",
-      "model": "Not\sAvailable"
-    }
-  }
 }
