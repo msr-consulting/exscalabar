@@ -58,6 +58,15 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "main.controller:TeTechPlotCtl",
+      "shortName": "TeTechPlotCtl",
+      "type": "controller",
+      "moduleName": "main",
+      "shortDescription": "This controller is used specifically for handling data returned by",
+      "keywords": "$rootscope allows api array arrays based chosen cm consists context controller controlling cotnext data default defined defining definition device displayed dygraph exectuted function going handling initial input1 input2 labels legend main menu meny nan object options plot plotted power property returned selection service set setpoint sets single string t1 t2 tec temperature time updated values variable visualization ylabel"
+    },
+    {
+      "section": "api",
       "id": "main.crd",
       "shortName": "main.crd",
       "type": "object",
@@ -82,6 +91,15 @@ NG_DOCS={
       "moduleName": "main",
       "shortDescription": "",
       "keywords": "api directive main"
+    },
+    {
+      "section": "api",
+      "id": "main.directive:exVaisalaPlot",
+      "shortName": "exVaisalaPlot",
+      "type": "directive",
+      "moduleName": "main",
+      "shortDescription": "This directive wraps a plot specifically for the purpose of providing",
+      "keywords": "api data directive display flow main plot providing purpose returned reusable server wraps"
     },
     {
       "section": "api",
@@ -154,6 +172,15 @@ NG_DOCS={
       "moduleName": "main",
       "shortDescription": "Simple service to retrieve configuration information from the",
       "keywords": "$http $location $rootscope api config configuration directory file json located main retrieve service simple ui"
+    },
+    {
+      "section": "api",
+      "id": "main.service:ExTetechSvc",
+      "shortName": "ExTetechSvc",
+      "type": "service",
+      "moduleName": "main",
+      "shortDescription": "Service handling the ordering of the data returned by flow controllers",
+      "keywords": "$rootscope api controllers data flow handling main meters ordering returned service"
     },
     {
       "section": "api",

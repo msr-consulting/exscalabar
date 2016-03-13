@@ -120,5 +120,20 @@
     ],
     "xGrid": true,
     "yGrid": true
+  },
+  "tec": {
+    "color": [
+      "red",
+      "blue"
+    ],
+    "strokeWidth": [
+      2
+    ],
+    "pattern": [
+      null,
+      "DASHED_LINE"
+    ],
+    "xGrid": true,
+    "yGrid": true
   }
 }

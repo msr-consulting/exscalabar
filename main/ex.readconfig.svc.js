@@ -21,8 +21,12 @@
             pas: {},
             crd: {},
             flow: {},
-            main_path: ""
-        };
+            tec: {},
+            ppt:{},
+            mtec:{},
+        main_path: ""
+    }
+        ;
 
         // Get the UI config path
         var s = $location.$$absUrl;
@@ -43,6 +47,8 @@
                     cfg.crd = response.data.crdplot;
 
                     cfg.flow = response.data.flowplot;
+                    cfg.tec = response.data.tec;
+                    cfg.ppt = response.data.ppt;
                     cfg.vaisala = response.data.vaisala;
 
                     $rootScope.$broadcast('CfgUpdated');

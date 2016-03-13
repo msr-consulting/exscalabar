@@ -44,7 +44,7 @@
                 "alicat": [],
                 "vaisala": [],
                 "mTEC": [],
-                "TEC": {},
+                "tec": {},
                 "ppt": []
             };
 
@@ -72,6 +72,15 @@
                     //http://192.168.0.73:8001/xService/Humidity/Enable/:ID?Val={value}
                 };
                 this.name = name;
+            }
+
+            function isEmpty(object) {
+                for (var key in object) {
+                    if (object.hasOwnProperty(key)) {
+                        return false;
+                    }
+                }
+                return true;
             }
 
             /* Indicates whether this is the first time this is called.  If it is, the
@@ -205,6 +214,13 @@
                                     }
                                     else {
                                         cvt.ppt = [new device(dd.label, d, dd.controller, dd.sn, dd.sp, dd.address)];
+                                    }
+                                    break;
+                                case "TEC":
+                                    if (isEmpty(cvt.tec)) {
+
+                                        cvt.tec = new device(dd.label, d, dd.controller, dd.sn, dd.sp, dd.address);
+
                                     }
                                     break;
                                 default:

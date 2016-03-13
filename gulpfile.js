@@ -70,7 +70,9 @@ var watch_list = ["main/main.module.js",
     "checklist/ex.checklist.svc.js",
     "vaisala/ex.vaisala.svc.js",
     "vaisala/ex.vaisala.ctl.js",
-    "vaisala/ex.vaisalaplot.dir.js"];
+    "vaisala/ex.vaisalaplot.dir.js",
+    "tetech/ex.tetech.svc.js",
+    "tetech/ex.tetechplot.dir.js"];
 
 // List of external assets required by the GUI
 // These are not expected to change.
@@ -114,7 +116,9 @@ var docList = [
     "msgs/ex.msg.svc.js",
     "crd/ex.crd.svc.js",
     "pas/ex.pas.svc.js",
-    "pas/ex.pasplot.dir.js"
+    "pas/ex.pasplot.dir.js",
+    "tetech/ex.tetech.svc.js",
+    "tetech/ex.tetechplot.dir.js"
 ];
 
 

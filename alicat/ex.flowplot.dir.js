@@ -184,7 +184,7 @@
              */
             function updatePlot() {
                 var l = ['t'];
-                for (key in ExFlowSvc.data){
+                for (var key in ExFlowSvc.data){
                     l.push(ExFlowSvc.data[key].label);
                 }
                 //var l = ['t'].concat(ExFlowSvc.label);

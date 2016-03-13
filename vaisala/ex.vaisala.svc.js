@@ -47,6 +47,8 @@
                 this.RH = [];
                 this.Td = [];
                 this.T = [];
+                shift = false;
+                index = 0;
 
             };
         }

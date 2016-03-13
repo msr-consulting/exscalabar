@@ -31,7 +31,7 @@
          * 2. Broadcast the task to the server for logging...
          */
         $scope.setChecked = function () {
-            ExChecklistSvc.update($scope.ListObj)
+            ExChecklistSvc.update($scope.ListObj);
         };
 
         $scope.$on('CheckListUpdated', function () {

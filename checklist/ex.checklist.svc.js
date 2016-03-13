@@ -39,7 +39,7 @@
 
                         // Add the property checked and set to false since this is startup...
                         for (var i in listData.main) {
-                            listData.main[i]["checked"] = [];
+                            listData.main[i].checked = [];
                             for (var j in listData.main[i].items) {
                                 listData.main[i].checked.push(false);
                             }
@@ -53,7 +53,7 @@
                 .finally(function () {
                 });
 
-        }
+        };
 
         return listData;
     }
