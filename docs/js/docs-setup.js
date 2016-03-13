@@ -14,6 +14,15 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "main.controller:ExExTetechCtl",
+      "shortName": "ExExTetechCtl",
+      "type": "controller",
+      "moduleName": "main",
+      "shortDescription": "Controller for TE Tech control functionality.",
+      "keywords": "api control controller functionality main te tech"
+    },
+    {
+      "section": "api",
       "id": "main.controller:ExFlowCtl",
       "shortName": "ExFlowCtl",
       "type": "controller",

@@ -42,6 +42,8 @@
             this.pow = [];
             this.data = {"t1": 0, "t2": 0, "power": 0};
 
+            this.cvt = {};
+
             this.label = "";
 
             this.clear_data = function () {
@@ -62,13 +64,15 @@
         var shift = false;
         var index = 0;
 
-        var TeTech = cvt.tec;
+        tec.cvt = cvt.tec;
 
 
         $rootScope.$on('dataAvailable', getData);
 
         $rootScope.$on('deviceListRefresh', function () {
-            TeTech = cvt.tec;
+            tec.cvt = cvt.tec;
+
+            $rootScope.$broadcast('tetechCVTUpdated');
         });
 
         /**

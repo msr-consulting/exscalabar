@@ -1,8 +1,18 @@
-<div >
+<div>
     <div class="row" ng-controller="ExVaisalaCtl">
         <ex-vaisala-plot></ex-vaisala-plot>
     </div>
     <div class="row">
-        <ex-tetech-plot></ex-tetech-plot>
+        <div class="col-md-2 col-lg-2 col-sm-3 col-xs-3" ng-controller="ExTetechCtl">
+            <cui-numeric ng-model="Tsp" width="30" evnt-func="updateCycle()">T<sub>sp</sub></cui-numeric>
+            <cui-numeric ng-model="ctl.P" width="30" evnt-func="set_pid()">P</cui-numeric>
+            <cui-numeric ng-model="ctl.I" width="30" evnt-func="set_pid()">I</cui-numeric>
+            <cui-numeric ng-model="ctl.D" width="30" evnt-func="set_pid()">D</cui-numeric>
+            <cui-numeric ng-model="ch_mult.htx" width="30" evnt-func="set_mult()">htx</cui-numeric>
+            <cui-numeric ng-model="ch_mult.clx" width="30" evnt-func="set_mult()">clx</cui-numeric>
+        </div>
+        <div class="col-md-10 col-lg-10 col-sm-9 col-xs-9">
+            <ex-tetech-plot></ex-tetech-plot>
+        </div>
     </div>
 </div>
