@@ -695,11 +695,10 @@
             crd: {},
             flow: {},
             tec: {},
-            ppt:{},
-            mtec:{},
-        main_path: ""
-    }
-        ;
+            ppt: {},
+            mtec: {},
+            main_path: ""
+        };
 
         // Get the UI config path
         var s = $location.$$absUrl;
@@ -1238,6 +1237,7 @@
                 this.T = [];
                 this.Q0 = [];
                 shift = false;
+                index =0;
 
             };
         }
@@ -2068,10 +2068,10 @@
 (function () {
     angular.module('main').controller('ExPasCtl', pas_ctl);
 
-    pas_ctl.$inject = ['$scope', 'cvt', 'ExPasSvc'];
+    pas_ctl.$inject = ['$scope', 'cvt', 'ExPasSvc', 'ExReadCfgSvc'];
 
 
-    function pas_ctl($scope, cvt,ExPasSvc) {
+    function pas_ctl($scope, cvt, ExPasSvc, ExReadCfgSvc) {
 
         /**
          * @ngdoc controller
@@ -2080,12 +2080,69 @@
          * Controller for PAS functionality.
          */
 
-        $scope.data = ExPasSvc;
+        $scope.data = ExPasSvc.data;
 
-        $scope.$on('pasDataAvailable', display_data);
+        var labels = ExReadCfgSvc.pas.names.slice();
 
-        function display_data(){
-            $scope.data = ExPasSvc;
+        labels.unshift('t');
+
+        var cl = ExReadCfgSvc.pas.color.length;
+        var pl = ExReadCfgSvc.pas.pattern.length;
+
+
+
+        $scope.$on('pasDataAvaliable', display_data);
+        $scope.wvfmData = [[0, NaN, NaN, NaN, NaN, NaN]];
+
+        // dygraph options object
+        $scope.options = {
+            title: 'PAS Waveform Data',
+            ylabel: 'Microphone Frequency (a.u.)',
+            labels: labels,
+            legend: 'always',
+            series: {}
+
+        };
+
+        for (var j = 0; j < ExReadCfgSvc.pas.names.length; j++) {
+            var p = ExReadCfgSvc.pas.pattern[j % pl] === null ? null : Dygraph[ExReadCfgSvc.pas.pattern[j % pl]];
+            $scope.options.series[ExReadCfgSvc.pas.names[j]] = {
+                color: ExReadCfgSvc.pas.color[j % cl],
+                strokeWidth: 1,
+                strokePattern: p,
+                drawPoints: false
+            };
+
+        }
+
+        $scope.cm_options = [
+            ['Mic. Frequency', function () {
+                data_set = "micf";
+                $scope.options.ylabel = 'Microphone Frequency (a.u.)';
+                $scope.options.axes.y.valueRange = [null, null];
+            }
+            ],
+            ['Mic. Time',
+                function () {
+                    data_set = "mict";
+                    $scope.options.ylabel = 'Microphone Time (a.u.)';
+                    $scope.options.axes.y.valueRange = [null, null];
+                }
+            ],
+            ['Photodiode Time',
+                function () {
+                    data_set = "pd";
+                    $scope.options.ylabel = 'Photodiode Time (a.u>)';
+                    $scope.options.axes.y.valueRange = [null, null];
+                }
+            ]
+        ];
+
+        function display_data() {
+            console.log('PAS data updated.');
+            $scope.data = ExPasSvc.data;
+
+            $scope.wvfmData = ExPasSvc.wvfm.micf;
         }
 
         cvt.first_call = 1;
@@ -2115,131 +2172,152 @@
      * @description
      *
      */
+
+        // Annotations for angular minification
+    pas_svc.$inject = ['$rootScope', 'Data'];
     function pas_svc($rootScope, Data) {
+
+        $rootScope.$on('dataAvailable', handle_pas);
 
         var PasData = new PasObject();
 
-        $rootScope.$on('dataAvailable', function () {
-
-            PasData = handle_pas(Data, PasData);
-
-            /**
-             * @ngdoc event
-             * @name pasDataAvailable
-             * @eventType broadcast
-             * @eventOf main.service:ExPasSvc
-             *
-             * @description
-             * Event that broadcasts the PAS Data has been processed
-             * and is available.
-             */
-            $rootScope.$broadcast('pasDataAvaliable');
-
-        });
-
-        return PasData;
-    }
-
-    // Annotations for angular minification
-    pas_svc.$inject = ['$rootScope', 'Data'];
-
-    function PasObject() {
-        this.f0 = [];
-        this.IA = [];
-        this.Q = [];
-        this.p = [];
-        this.abs = [];
-        this.wvfm = {
-            micf: [],
-            mict: [],
-            pd: []
-
-        };
-        this.drive = false;
-
-        this.set_history = function (n) {
-        };
-        this.clear = function () {
+        function PasObject() {
             this.f0 = [];
             this.IA = [];
             this.Q = [];
             this.p = [];
             this.abs = [];
+            this.wvfm = {
+                micf: [],
+                mict: [],
+                pd: []
 
-            shift = false;
-        };
-    }
+            };
+            this.drive = false;
 
-    /**
-     * @ngdoc method
-     * @name main.service:ExPasSvc#handlePAS
-     * @methodOf main.service:ExPasSvc
-     * @description
-     * This function handles allocation of the PAS data.  All data may be plotted
-     * and as such the data is divided up into arrays of {x,y} pairs for use by
-     * plotting libraries.  The length of the arrays is defined by the service
-     * and the length is indicated by the input shift.
-     * @param {Object} d The JSON data object returned by the server.
-     * @param {Object} Data Data object that will be broadcasted to controllers.
-     * @param {boolean} shift Indicates whether we have the correct number of
-     * points in the array and need to start shifting the data.
-     * @return {Object} Data object defined in the inputs.
-     */
-    function handle_pas(d, pas) {
+            this.data = [];
+            this.set_history = function (n) {
+            };
+            this.clear = function () {
+                this.f0 = [];
+                this.IA = [];
+                this.Q = [];
+                this.p = [];
+                this.abs = [];
 
-        var f0 = [d.tObj],
-            IA = [d.tObj],
-            Q = [d.tObj],
-            p = [d.tObj],
-            abs = [d.tObj];
-
-        /* Pop all of the ordered arrays if the arrays are of the set length... */
-        if (shift) {
-            pas.f0.shift();
-            pas.IA.shift();
-            pas.Q.shift();
-            pas.p.shift();
-            pas.abs.shift();
-        }
-        else {
-            shift = pas.f0.length >= history ? true : false;
+                shift = false;
+            };
         }
 
-        for (var index in d.data.PAS.CellData) {
-            f0.push(d.data.PAS.CellData[index].derived.f0);
-            IA.push(d.data.PAS.CellData[index].derived.IA);
-            Q.push(d.data.PAS.CellData[index].derived.Q);
-            p.push(d.data.PAS.CellData[index].derived.noiseLim);
-            abs.push(d.data.PAS.CellData[index].derived.ext);
+
+        function PasCellData(IA, f0, abs, Q, p, i, loc) {
+            this.IA = IA;
+            this.f0 = f0;
+            this.abs = abs;
+            this.Q = Q
+            this.p = p;
+            this.maxi = i;
+            this.maxloc = loc;
         }
 
-        pas.f0.push(f0);
-        pas.IA.push(IA);
-        pas.Q.push(Q);
-        pas.p.push(p);
-        pas.abs.push(abs);
+        /**
+         * @ngdoc method
+         * @name main.service:ExPasSvc#handlePAS
+         * @methodOf main.service:ExPasSvc
+         * @description
+         * This function handles allocation of the PAS data.  All data may be plotted
+         * and as such the data is divided up into arrays of {x,y} pairs for use by
+         * plotting libraries.  The length of the arrays is defined by the service
+         * and the length is indicated by the input shift.
+         * @param {Object} d The JSON data object returned by the server.
+         * @param {Object} Data Data object that will be broadcasted to controllers.
+         * @param {boolean} shift Indicates whether we have the correct number of
+         * points in the array and need to start shifting the data.
+         * @return {Object} Data object defined in the inputs.
+         */
+        function handle_pas() {
 
-        pas.drive = d.data.PAS.Drive;
+            var f0 = [Data.tObj],
+                IA = [Data.tObj],
+                Q = [Data.tObj],
+                p = [Data.tObj],
+                abs = [Data.tObj];
 
-        pas.wvfm.mict = [];
-        pas.wvfm.micf = [];
-        pas.wvfm.pd = [];
-
-        // point by point
-        for (k = 0; k < d.data.PAS.CellData[0].MicFreq.Y.length; k++) {
-            var micf = [k], mict = [k], pd = [k];
-            for (j = 0; j < d.pas.CellData.length; j++) {
-                micf.push(d.data.PAS.CellData[j].MicFreq.Y[j]);
-                mict.push(d.data.PAS.CellData[j].MicTime.Y[j]);
-                pd.push(d.data.PAS.CellData[index].PhotoDiode.Y[j]);
+            /* Pop all of the ordered arrays if the arrays are of the set length... */
+            if (shift) {
+                PasData.f0.shift();
+                PasData.IA.shift();
+                PasData.Q.shift();
+                PasData.p.shift();
+                PasData.abs.shift();
+            }
+            else {
+                shift = PasData.f0.length >= history;
             }
 
-            // Push the data in cell-wise
-            pas.wvfm.micf.push(micf);
-            pas.wvfm.mict.push(mict);
-            pas.wvfm.pd.push(pd);
+            // This is just for clarification
+            var celldata = Data.data.PAS.CellData;
+            for (var index in Data.data.PAS.CellData) {
+
+                if (PasData.data.length - 1 < (index)) {
+                    PasData.data.push(new PasCellData(celldata[index].derived.IA,
+                        celldata[index].derived.f0,
+                        celldata[index].derived.ext,
+                        celldata[index].derived.noiseLim,
+                        celldata[index].derived.Q,
+                        celldata[index].derived.max[0],
+                        celldata[index].derived.max[1]));
+                }
+                else {
+                    PasData.data[index] = {
+                        "IA": celldata[index].derived.IA,
+                        "f0": celldata[index].derived.f0,
+                        "abs": celldata[index].derived.ext,
+                        "p": celldata[index].derived.noiseLim,
+                        "Q": celldata[index].derived.Q,
+                        "maxi": celldata[index].derived.max[0],
+                        "maxloc": celldata[index].derived.max[1]
+                    };
+                }
+                f0.push(celldata[index].derived.f0);
+                IA.push(celldata[index].derived.IA);
+                Q.push(celldata[index].derived.Q);
+                p.push(celldata[index].derived.noiseLim);
+                abs.push(celldata[index].derived.ext);
+            }
+
+            PasData.f0.push(f0);
+            PasData.IA.push(IA);
+            PasData.Q.push(Q);
+            PasData.p.push(p);
+            PasData.abs.push(abs);
+
+            PasData.drive = Data.data.PAS.Drive;
+
+            PasData.wvfm.mict = [];
+            PasData.wvfm.micf = [];
+            PasData.wvfm.pd = [];
+
+            // point by point
+            for (var k = 0; k < celldata[0].MicFreq.Y.length; k++) {
+                var micf = [k], mict = [k], pd = [k];
+                for (var j = 0; j < celldata.length; j++) {
+                    micf.push(celldata[j].MicFreq.Y[k]);
+                    mict.push(celldata[j].MicTime.Y[k]);
+                    pd.push(celldata[index].PhotoDiode.Y[k]);
+                }
+
+                // Push the data in cell-wise
+                PasData.wvfm.micf.push(micf);
+                PasData.wvfm.mict.push(mict);
+                PasData.wvfm.pd.push(pd);
+            }
+
+            $rootScope.$broadcast('pasDataAvaliable');
+            console.log('Display data now!')
         }
-        return pas;
+
+        return PasData;
     }
 
 
@@ -2318,7 +2396,7 @@
 })();
 
 (function () {
-    angular.module('main').controller('pasLas', ['$scope', 'cvt', 'Data',
+    angular.module('main').controller('ExPasLasCtl', ['$scope', 'cvt', 'Data',
         function ($scope, cvt, Data) {
 
             $scope.lasCtl = [];
@@ -4038,7 +4116,7 @@
             tec.data.t2 = techData.Input2;
             tec.data.pow = techData.Power;
 
-            tec.label = TeTech.label;
+            tec.label = tec.cvt.label;
 
             if (shift) {
                 tec.t1.shift();
@@ -4046,16 +4124,17 @@
                 tec.pow.shift();
             }
             else if(index === 0){
-                tec.t1 = [Data.tObj];
-                tec.t2 = [Data.tObj];
-                tec.pow = [Data.tObj];
+                tec.t1 = [[Data.tObj, tec.data.t1]];
+                tec.t2 = [[Data.tObj, tec.data.t2]];
+                tec.pow = [[Data.tObj, tec.data.pow]];
+                index += 1;
             }
             else {
                 index += 1;
             }
-            tec.t1.push(tec.data.t1);
-            tec.t2.push(tec.data.t2);
-            tec.pow.push(tec.data.pow);
+            tec.t1.push([Data.tObj, tec.data.t1]);
+            tec.t2.push([Data.tObj, tec.data.t2]);
+            tec.pow.push([Data.tObj, tec.data.pow]);
 
             shift = index >= maxi;
 
@@ -4195,9 +4274,9 @@
              */
             var CfgObj = ExReadCfgSvc.tec;
             vm.options = {
-                ylabel: 'T<sub>1</sub>',
-                labels: ['t', 'T1'],
-                legend: 'always',
+                ylabel: '<em>T<sub>1</sub></em> (&deg;C)',
+                labels: ['t', 'T'],
+                legend: 'never',
                 axes: {
                     y: {
                         axisLabelWidth: 70,
@@ -4247,12 +4326,14 @@
              *
              */
             function updatePlot() {
-                var l = ['t'];
-                for (var key in ExTetechSvc.data) {
 
-                    l.push(ExTetechSvc.data[key].label);
+                if (data_set == 'pow') {
+                    l = ["t", "Power"];
+
                 }
-
+                else {
+                    l = ['t', 'T'];
+                }
                 if (l !== vm.options.labels) {
                     /* If the labels have changed (usually the first time the data
                      * service is called), then copy the new labels into the options.
@@ -4260,7 +4341,6 @@
                      * Remove the time label...
                      */
                     vm.ref.updateOptions({labels: l.slice()});
-                    //vm.options.labels = l.slice();
 
                     var lab = vm.options.labels.slice(1);
 

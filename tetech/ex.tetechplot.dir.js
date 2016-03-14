@@ -119,9 +119,9 @@
              */
             var CfgObj = ExReadCfgSvc.tec;
             vm.options = {
-                ylabel: 'T<sub>1</sub>',
-                labels: ['t', 'T1'],
-                legend: 'always',
+                ylabel: '<em>T<sub>1</sub></em> (&deg;C)',
+                labels: ['t', 'T'],
+                legend: 'never',
                 axes: {
                     y: {
                         axisLabelWidth: 70,
@@ -171,12 +171,14 @@
              *
              */
             function updatePlot() {
-                var l = ['t'];
-                for (var key in ExTetechSvc.data) {
 
-                    l.push(ExTetechSvc.data[key].label);
+                if (data_set == 'pow') {
+                    l = ["t", "Power"];
+
                 }
-
+                else {
+                    l = ['t', 'T'];
+                }
                 if (l !== vm.options.labels) {
                     /* If the labels have changed (usually the first time the data
                      * service is called), then copy the new labels into the options.
@@ -184,7 +186,6 @@
                      * Remove the time label...
                      */
                     vm.ref.updateOptions({labels: l.slice()});
-                    //vm.options.labels = l.slice();
 
                     var lab = vm.options.labels.slice(1);
 

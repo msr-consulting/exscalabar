@@ -1,5 +1,5 @@
 (function () {
-    angular.module('main').controller('pasLas', ['$scope', 'cvt', 'Data',
+    angular.module('main').controller('ExPasLasCtl', ['$scope', 'cvt', 'Data',
         function ($scope, cvt, Data) {
 
             $scope.lasCtl = [];

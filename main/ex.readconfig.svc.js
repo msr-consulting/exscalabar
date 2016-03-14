@@ -22,11 +22,10 @@
             crd: {},
             flow: {},
             tec: {},
-            ppt:{},
-            mtec:{},
-        main_path: ""
-    }
-        ;
+            ppt: {},
+            mtec: {},
+            main_path: ""
+        };
 
         // Get the UI config path
         var s = $location.$$absUrl;

@@ -97,7 +97,7 @@
             tec.data.t2 = techData.Input2;
             tec.data.pow = techData.Power;
 
-            tec.label = TeTech.label;
+            tec.label = tec.cvt.label;
 
             if (shift) {
                 tec.t1.shift();
@@ -105,16 +105,17 @@
                 tec.pow.shift();
             }
             else if(index === 0){
-                tec.t1 = [Data.tObj];
-                tec.t2 = [Data.tObj];
-                tec.pow = [Data.tObj];
+                tec.t1 = [[Data.tObj, tec.data.t1]];
+                tec.t2 = [[Data.tObj, tec.data.t2]];
+                tec.pow = [[Data.tObj, tec.data.pow]];
+                index += 1;
             }
             else {
                 index += 1;
             }
-            tec.t1.push(tec.data.t1);
-            tec.t2.push(tec.data.t2);
-            tec.pow.push(tec.data.pow);
+            tec.t1.push([Data.tObj, tec.data.t1]);
+            tec.t2.push([Data.tObj, tec.data.t2]);
+            tec.pow.push([Data.tObj, tec.data.pow]);
 
             shift = index >= maxi;
 
