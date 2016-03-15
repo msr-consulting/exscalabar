@@ -2090,7 +2090,6 @@
         var pl = ExReadCfgSvc.pas.pattern.length;
 
 
-
         $scope.$on('pasDataAvaliable', display_data);
         $scope.wvfmData = [[0, NaN, NaN, NaN, NaN, NaN]];
 
