@@ -10,9 +10,9 @@ test/test/
 
 docs/
 
+.idea/workspace.xml
 .idea/
-<<<<<<< HEAD
-=======
 
 *~
->>>>>>> b38d756c490a8d704afd502ecb2ee555990a3bcc
+
+
