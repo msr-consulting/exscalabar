@@ -31,9 +31,9 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="datum in data">
+					<tr ng-repeat="datum in data" >
 						<td>{{datum.id}}</td>
-						<td contenteditable>{{datum.val}}</td>
+						<td contenteditable ng-blur="update_data()"><input{{datum.val}}/></td>
 					</tr>
 				</tbody>
 			</table>

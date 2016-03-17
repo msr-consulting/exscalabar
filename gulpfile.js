@@ -73,7 +73,11 @@ var watch_list = ["main/main.module.js",
     "vaisala/ex.vaisalaplot.dir.js",
     "tetech/ex.tetech.ctl.js",
     "tetech/ex.tetech.svc.js",
-    "tetech/ex.tetechplot.dir.js"];
+    "tetech/ex.tetechplot.dir.js",
+    "ppt/ex.ppt.svc.js",
+    "ppt/ex.pptplot.dir.js",
+    "meerstetter/ex.meerstetter.svc.js"
+];
 
 // List of external assets required by the GUI
 // These are not expected to change.
@@ -120,7 +124,8 @@ var docList = [
     "pas/ex.pasplot.dir.js",
     "tetech/ex.tetech.ctl.js",
     "tetech/ex.tetech.svc.js",
-    "tetech/ex.tetechplot.dir.js"
+    "tetech/ex.tetechplot.dir.js",
+    "meerstetter/ex.meerstetter.svc.js"
 ];
 
 

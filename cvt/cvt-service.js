@@ -142,6 +142,16 @@
 
             };
 
+            // TODO: most of the update setpoint commands should be removed from the cvt if there is not direct interaction with the cvt service itself (i.e. we are not storing something in the cvt
+            cvt.tec.updateSP = function(sp){
+                $http.get(net.address() + 'General/DevSP?SP=' + sp + '&DevID=tetech');
+            };
+
+            cvt.tec.updateMult = function(m){
+                ///xService/tetech/multipliers?mult={value}
+                $http.get(net.address() + 'tetech/multipliers?mult=' + m.toString());
+            }
+
             /* TODO: Implement server side CVT communication. */
 
             /**

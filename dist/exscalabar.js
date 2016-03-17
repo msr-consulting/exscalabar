@@ -253,6 +253,16 @@
 
             };
 
+            // TODO: most of the update setpoint commands should be removed from the cvt if there is not direct interaction with the cvt service itself (i.e. we are not storing something in the cvt
+            cvt.tec.updateSP = function(sp){
+                $http.get(net.address() + 'General/DevSP?SP=' + sp + '&DevID=tetech');
+            };
+
+            cvt.tec.updateMult = function(m){
+                ///xService/tetech/multipliers?mult={value}
+                $http.get(net.address() + 'tetech/multipliers?mult=' + m.toString());
+            }
+
             /* TODO: Implement server side CVT communication. */
 
             /**
@@ -1080,79 +1090,87 @@
 
 	}]);
 })();
-(function() {
-	angular.module('main')
-	.controller('Sidebar', ['$scope','$http', 'Data', 'net','cvt', function($scope, $http, Data, net, cvt) {
+(function () {
+    angular.module('main')
+        .controller('Sidebar', ['$scope', '$http', 'Data', 'net', 'cvt', function ($scope, $http, Data, net, cvt) {
 
-		$scope.save = 1;
-		$scope.filter = Data.filter.state;
-		$scope.time = "Not connected";
-		$scope.connected = false;
-		$scope.o3On = false;
-		$scope.cabin = false;
-		$scope.pumpBlocked = false;
-		$scope.impBlocked = false;
-		$scope.interlock = false;
+            $scope.save = 1;
+            $scope.filter = Data.filter.state;
+            $scope.time = "Not connected";
+            $scope.connected = false;
+            $scope.o3On = false;
+            $scope.cabin = false;
+            $scope.pumpBlocked = false;
+            $scope.impBlocked = false;
 
-
-		// Initially time is not available
-		$scope.time = "Not Connected";
-
-		$scope.connected= false;
+            $scope.denuder_bypass = false;
+            $scope.interlock = false;
 
 
-		$scope.$on('dataAvailable', function(){
+            // Initially time is not available
+            $scope.time = "Not Connected";
 
-			$scope.filter = Data.filter.state;
-			$scope.cabin = Data.Cabin;
+            $scope.connected = false;
 
-			/* TODO: Have an issue with saving data - doesn't appear to be returning properly.
-			 * The save variable should be in the CVT rather than in the data object.
-			 *
-			 */
-			//$scope.save = Data.save;
-			$scope.connected = true;
-		});
-        
-        $scope.$on('cvtUpdated', function(){
-            //$scope.filter = cvt.filter_pos;
-        });
+            $scope.$on('dataAvailable', function () {
 
-		$scope.$on('dataNotAvailable', function(){
-			$scope.connected = false;
-		});
+                $scope.filter = Data.filter.state;
+                $scope.cabin = Data.Cabin;
 
-		$scope.saveData = function() {
+                /* TODO: Have an issue with saving data - doesn't appear to be returning properly.
+                 * The save variable should be in the CVT rather than in the data object.
+                 *
+                 */
+                //$scope.save = Data.save;
+                $scope.connected = true;
+            });
 
-			$scope.save = !$scope.save;
+            $scope.$on('cvtUpdated', function () {
+                //$scope.filter = cvt.filter_pos;
+            });
 
-			// TODO: Check to see if this is correct.
-			var s = $scope.save ? 1:0;
+            $scope.$on('dataNotAvailable', function () {
+                $scope.connected = false;
+            });
 
-			$http.get(net.address() + 'General/Save?save='+s.toString());
-		};
+            $scope.saveData = function () {
 
-		$scope.setFilter = function() {
+                $scope.save = !$scope.save;
 
-			$scope.filter = !$scope.filter;
-			var x = $scope.filter?1:0;
-			$http.get(net.address() + 'General/UpdateFilter?State='+x);
+                // TODO: Check to see if this is correct.
+                var s = $scope.save ? 1 : 0;
 
-		};
+                $http.get(net.address() + 'General/Save?save=' + s.toString());
+            };
 
-		/** Flip the switch cabin switch.
-		  */
-		$scope.setCabin = function(){
-			$scope.cabin = !$scope.cabin;
-			var x = $scope.cabin?1:0;
-			$http.get(net.address() + 'General/Cabin?Cabin='+x);
-		};
+            $scope.setFilter = function () {
 
-		$scope.stop = function(){
-			$http.get(net.address() + 'General/Stop');
-		};
+                $scope.filter = !$scope.filter;
+                var x = $scope.filter ? 1 : 0;
+                $http.get(net.address() + 'General/UpdateFilter?State=' + x);
 
-	}]);
+            };
+
+            $scope.setDenuderBypass = function () {
+
+
+                $http.get(net.address() + 'General/DenudedBypass?val=' + x);
+                console.log('Denuder position set.');
+            }
+
+            /** Flip the switch cabin switch.
+             */
+            $scope.setCabin = function () {
+                $scope.cabin = !$scope.cabin;
+                var x = $scope.cabin ? 1 : 0;
+                $http.get(net.address() + 'General/Cabin?Cabin=' + x);
+            };
+
+            $scope.stop = function () {
+                $http.get(net.address() + 'General/Stop');
+            };
+
+        }]);
 })();
 
 (function() {
@@ -2088,7 +2106,6 @@
 
         var cl = ExReadCfgSvc.pas.color.length;
         var pl = ExReadCfgSvc.pas.pattern.length;
-
 
 
         $scope.$on('pasDataAvaliable', display_data);
@@ -3159,68 +3176,90 @@
 })();
 
 /** This controller is placed on the O3 cal page and defines what will happen
- * 	when a user double clicks on a table element.
+ *    when a user double clicks on a table element.
  *
- * 	When the element containing this controller is first displayed, the values
- * 	in the attribute table_vals will be used to populate the canned table for
- * 	sequence building using the ng-repeat directive.
+ *    When the element containing this controller is first displayed, the values
+ *    in the attribute table_vals will be used to populate the canned table for
+ *    sequence building using the ng-repeat directive.
  *
- * 	When the user double clicks on a row, the controller will call the tableService
- * 	setTab method.  This in turn updates the attributes of that service with the ID
- * 	of the row that was clicked.  That ID is then broadcast and picked up by the
- * 	tableInput-ctlr which populates the table for the sequence with a default value
- * 	for the selected element.
+ *    When the user double clicks on a row, the controller will call the tableService
+ *    setTab method.  This in turn updates the attributes of that service with the ID
+ *    of the row that was clicked.  That ID is then broadcast and picked up by the
+ *    tableInput-ctlr which populates the table for the sequence with a default value
+ *    for the selected element.
  */
 
-(function() {
-	angular.module('main')
-	.controller('O3Table', ['$scope', 'tableService', function($scope, tableService) {
+(function () {
+    angular.module('main')
+        .controller('O3Table', ['$scope', 'tableService', function ($scope, tableService) {
 
-		/* Contains the entries that will go into the canned table. */
-		$scope.table_vals = [ {
-			"id": "Wait",
-			"step" : "Wait",
-			"descr" : "Set a wait time in the ozone cal in seconds"
-		},
-		{
-			"id": "Filter",
-			"step" : "Filter",
-			"descr" : "Boolean that sets the filter state."
-		},
-		{
-			"id": "Speaker",
-			"step" : "Speaker",
-			"descr" : "Boolean that sets the speaker state."
-		},
-		{
-			"id": "O2-Valve",
-			"step" : "O2 Valve",
-			"descr" : "Boolean that sets the O2 valve position."
-		},
-		{
-			"id": "O3-Valve",
-			"step" : "O3 Valve",
-			"descr" : "Boolean that sets the O3 valve state."
-		},
-		{
-			"id": "O3-Generator",
-			"step" : "O3 Generator",
-			"descr" : "Boolean that sets the O3 generator state."
-		},
-		{
-			"id": "QO2",
-			"step" : "QO2",
-			"descr" : "Numeric to set the oxygen flow rate"
-		}];
+            /* Contains the entries that will go into the canned table. */
+            $scope.table_vals = [
+                {
+                    "id": "Wait",
+                    "step": "Wait",
+                    "descr": "Set a wait time in the ozone cal in seconds"
+                },
+                {
+                    "id": "Filter",
+                    "step": "Filter",
+                    "descr": "Boolean that sets the filter state."
+                },
+                {
+                    "id": "Cabin",
+                    "step": "Cabin",
+                    "descr": "Boolean that sets the cabin valve state."
+                },
+                {
+                    "id": "Denuder",
+                    "step": "Denuder/Bypass",
+                    "descr": "Boolean that sets the denuder/bypass valve state."
+                },
+                {
+                    "id": "Speaker",
+                    "step": "Speaker",
+                    "descr": "Boolean that sets the speaker state."
+                },
+                {
+                    "id": "O2-Valve",
+                    "step": "O2 Valve",
+                    "descr": "Boolean that sets the O2 valve position."
+                },
+                {
+                    "id": "O3-Valve",
+                    "step": "O3 Valve",
+                    "descr": "Boolean that sets the O3 valve state."
+                },
+                {
+                    "id": "O3-Generator-Power",
+                    "step": "O3 Generator",
+                    "descr": "Boolean that sets the O3 generator state."
+                },
+                {
+                    "id": "O2-Flow-Rate",
+                    "step": "QO2",
+                    "descr": "Numeric to set the oxygen flow rate"
+                },
+                {
+                    "id": "O3-Level",
+                    "step": "O3 Level",
+                    "descr": "Numeric to set the oxygen flow rate"
+                },
 
-		/* Handle row double clicks */
-		$scope.clickRow = function(row){
+                {
+                    "id": "O3-Dump-Rate",
+                    "step": "QO3,dump",
+                    "descr": "Ozone dump rate in lpm."
+                }];
 
-			/* tableService will broadcast the the listeners the current ID */
-			tableService.setTab(row.id.toString());
+            /* Handle row double clicks */
+            $scope.clickRow = function (row) {
 
-		};
-	}]);
+                /* tableService will broadcast the the listeners the current ID */
+                tableService.setTab(row.id.toString());
+
+            };
+        }]);
 })();
 
 /* This service returns the current value of a selected portion
@@ -3248,7 +3287,14 @@
 
 (function(){
 	angular.module('main')
-	.factory('SaveData', function(){
+	.factory('ExSaveCalData', function(){
+		/**
+		 * @ngdoc service
+		 * @name main.service:ExSaveCalData
+		 *
+		 * @description
+		 * This service stores information regarding data in the calibration table.
+		 */
 		var savedData = {
 			data: [],
 			setData: function(d){
@@ -3265,7 +3311,7 @@
 /* This controller handles saving calibration data */
 
 (function() {
-	angular.module('main').controller('Save', ['$scope', 'SaveData', '$http','net',
+	angular.module('main').controller('Save', ['$scope', 'ExSaveCalData', '$http','net',
 	function($scope, SaveData, $http, net) {
 
 		$scope.cal_file = "default";
@@ -3276,6 +3322,7 @@
 			});
 
 			xml += "</OZONE>";
+			console.log(xml);
 
 			/* Send the calibration profile as XML data. */
 			$http({
@@ -3291,49 +3338,61 @@
 	}]);
 })();
 
-(function() {
-	angular.module('main')
-	.controller('InputTable', ['$scope', 'tableService', 'SaveData',
-	function($scope, tableService, SaveData) {
+(function () {
+    angular.module('main')
+        .controller('InputTable', ['$scope', 'tableService', 'ExSaveCalData',
+            function ($scope, tableService, SaveData) {
 
-		$scope.data = [];
+                $scope.data = [];
 
-		/* Handle the broadcast from the buildCal-service */
-		$scope.$on('handleBroadcast', function() {
+                $scope.update_data = function(){
+                    SaveData.setData($scope.data);
+                }
 
-			// The ID from the cal table
-			var tID = tableService.getTab();
-			// Value of the
-			var val = "";
+                /* Handle the broadcast from the buildCal-service */
+                $scope.$on('handleBroadcast', function () {
 
-			/* The following switch statement defines the default values */
-			switch (tID) {
-			case "O3-Valve":
-			case"O2-Valve":
-			case"O3-Generator":
-			case "Filter":
-				val = 'FALSE';
-				break;
-			case "Wait":
-			case "Speaker":
-				val = "20";
-				break;
+                    // The ID from the cal table
+                    var tID = tableService.getTab();
+                    // Value of the
+                    var val = "";
 
-			case "QO2":
-				val = "100";
-				break;
-			default:
-			}
+                    /* The following switch statement defines the default values */
+                    switch (tID) {
+                        case "O3-Valve":
+                        case"O2-Valve":
+                        case"O3-Generator":
+                        case "Filter":
+                        case "O3-Generator-Power":
+                        case "Denuder":
+                        case "Cabin":
+                        case "Filter":
+                            val = 'FALSE';
+                            break;
+                        case "Wait":
+                        case "Speaker":
+                            val = "20";
+                            break;
 
-			// Push the data into an array
-			$scope.data.push({
-				"id" : tID,
-				"val" :val
-			});
-			SaveData.setData($scope.data);
-		});
+                        case "O2-Flow-Rate":
+                        case "O3-Dump-Rate":
+                            val = "100";
+                            break;
+                        case "O3-Level":
+                            val = "1";
+                            break;
+                        default:
+                    }
 
-	}]);
+                    // Push the data into an array
+                    $scope.data.push({
+                        "id": tID,
+                        "val": val
+                    });
+                    SaveData.setData($scope.data);
+                });
+
+            }]);
 })();
 
 (function() {
@@ -3977,10 +4036,10 @@
 (function () {
     angular.module('main').controller('ExTetechCtl', tetech_ctl);
 
-    tetech_ctl.$inject = ['$scope', 'ExTetechSvc'];
+    tetech_ctl.$inject = ['$scope', 'ExTetechSvc', 'cvt'];
 
 
-    function tetech_ctl($scope, ExTetechSvc) {
+    function tetech_ctl($scope, ExTetechSvc, cvt) {
 
         /**
          * @ngdoc controller
@@ -4005,14 +4064,17 @@
         };
 
         $scope.set_mult = function(){
+
+            cvt.tec.updateMult([$scope.ch_mult.htx, $scope.ch_mult.clx]);
           console.log('Set multipliers.');
         };
 
         $scope.update_sp = function(){
-          console.log('Update set point.');
+
+            cvt.tec.updateSP($scope.Tsp);
         };
 
-        //cvt.first_call = 1;
+        cvt.first_call = 1;
 
     }
 
@@ -4375,5 +4437,312 @@
             bindToController: true,
             template: '<context-menu menu-options ="vm.cm"><dy-graph options="vm.options" ref="vm.ref" data="vm.data" ></dy-graph></context-menu>'
         };
+    }
+})();
+
+(function () {
+    angular.module('main').directive('exPptPlot', ppt_plot);
+
+    function ppt_plot() {
+        /**
+         * @ngdoc directive
+         * @name main.directive:exPptPlot
+         * @scope
+         * @restrict E
+         *
+         * @description
+         * This directive wraps a plot specifically for the purpose of providing
+         * a reusable means to display pressure transducer data returned by the server.
+         *
+         */
+        PptPlotCtl.$inject = ['$rootScope', 'ExPptSvc', 'ExReadCfgSvc'];
+
+        function PptPlotCtl($rootScope, ExPptSvc, ExReadCfgSvc) {
+            /**
+             * @ngdoc controller
+             * @name main.controller:PptPlotCtl
+             * @requires $rootScope
+             * @requires main.service:ExReadCfgSvc
+             * @requires main.service:ExPptSvc
+             *
+             * @description
+             * This controller is used specifically for handling data returned by
+             * the pressure transducer device service to plot the data.
+             */
+            var vm = this;
+
+            var data_set = "P";
+            vm.ref = {};
+            vm.cm = [
+                ['P', function () {
+                    data_set = "P";
+                    vm.options.ylabel = '<em>P</em> (mb)';
+                    vm.options.axes.y.valueRange = [null, null];
+                }
+                ],
+                ['T',
+                    function () {
+                        data_set = "T";
+                        vm.options.ylabel = '<em>T</em> (&deg;C)';
+                        vm.options.axes.y.valueRange = [null, null];
+                    }
+                ],
+                null,
+                ['Controller', null, [
+                    ['Enable All', function () {
+                        console.log('Enabling all.');
+                    }],
+                    ['Clear Data', function () {
+                        ExFlowSvc.clear_data();
+                    }]]
+                ],
+                ['Autoscale', null, [
+                    ['Autoscale 1x', function () {
+                        vm.options.axes.y.valueRange = vm.ref.yAxisRange();
+                    }],
+                    ['Autoscale', function () {
+                        vm.options.axes.y.valueRange = [null, null];
+                    }]
+                ]
+                ]
+            ];
+            var CfgObj = ExReadCfgSvc.ppt;
+            vm.options = {
+                ylabel: 'P (mb)',
+                labels: ['t', 'PPT0'],
+                legend: 'always',
+                axes: {
+                    y: {
+                        axisLabelWidth: 70,
+                        drawGrid: CfgObj.yGrid,
+                    },
+                    x: {
+                        drawAxis: true,
+                        drawGrid: CfgObj.xGrid,
+                        axisLabelFormatter: function (d) {
+                            return Dygraph.zeropad(d.getHours()) + ":" +
+                                Dygraph.zeropad(d.getMinutes()) + ":" +
+                                Dygraph.zeropad(d.getSeconds());
+                        }
+                    }
+                },
+                labelsUTC: true
+            };
+
+
+            if (vm.title !== undefined) {
+                vm.options.title = vm.title;
+            }
+
+            vm.data = [[0, NaN]];
+            $rootScope.$on('PptDataAvailable', update_data);
+
+            function update_data() {
+
+                var l = ['t'].concat(ExPptSvc.IDs);
+
+                if (l !== vm.options.labels) {
+                    // If the labels have changed (usually the first time the data
+                    // service is called), then copy the new labels into the options
+                    vm.options.labels = l.slice();
+                }
+
+                vm.data = ExPptSvc[d];
+
+            }
+        }
+
+        return {
+            restrict: 'E',
+            require: 'contextMenu',
+            scope: {
+                title: "@?"
+            },
+            controller: PptPlotCtl,
+            controllerAs: 'vm',
+            bindToController: true,
+            template: '<context-menu menu-options ="vm.cm"><dy-graph options="vm.options" ref= "vm.ref" data="vm.data" ></dy-graph></context-menu>'
+
+        }
+    }
+})();
+(function () {
+    angular.module('main').factory('ExMeerstetterSvc', mtec_svc);
+
+    /**
+     * @ngdoc service
+     * @name main.service:ExMeerstetterSvc
+     * @requires $rootScope
+     * @requires main.service:Data
+     * @requires main.service:cvt
+     *
+     * @description
+     * Service handling the ordering of the data returned by flow controllers
+     * and meters.
+     */
+
+    mtec_svc.$inject = ['$rootScope', 'Data', 'cvt'];
+
+    function mtec_svc($rootScope, Data, cvt) {
+
+        /**
+         * @ngdoc property
+         * @name main.service:ExMeerstetterSvc#MTecObj
+         * @propertyOf main.service:ExMeerstetterSvc
+         *
+         * @description
+         * This is the object that will be returned by the service.  This object contains
+         *
+         * * IDs - string array containg the IDs of the devices
+         * * Q - Array of arrays of volumetric flow values for plotting
+         * * P - Array of arrays of pressure values for plotting
+         * * T - Array of arrays of temperature values for plotting
+         * * Q0 - Array of arrays of mass flow values for plotting
+         * * data - object containing single point flow data
+         * * ``Qsp`` - an associative array that contains a key and value for each
+         * element.  The key is the device ID while the value is the setpoint.
+         */
+
+        function MTecObj() {
+            this.IDs = [];
+            this.Tsink = [];
+            this.Tobj = [];
+            this.Vout = [];
+            this.data = {};
+
+            this.clear_data = function(){
+
+                this.Tsink = [];
+                this.Tobj = [];
+                this.Vout = [];
+                shift = false;
+                index =0;
+
+            };
+        }
+
+        var mtec = new MTecObj();
+
+
+        var maxi = 300;
+
+        var shift = false;
+        var index = 0;
+
+        function tecData() {
+            this.Vout = 0;
+            this.Tobj = 0;
+            this.Tsink = 0;
+            this.label = "";
+        }
+
+
+        // Temporary variables for storing array data.
+        var Vout, Tobj, Tsink;
+
+        var tecs = cvt.mTEC;
+
+        /**
+         * @ngdoc method
+         * @name main.service:ExMeerstetterSvc#populate_arrays
+         * @methodOf main.service:ExMeerstetterSvc
+         * @param {object} e Element in array
+         * @param {number} i Index in array
+         *
+         * @description
+         * Populate the arrays for the plots.
+         */
+        function populate_arrays(e, i) {
+
+            var id = e.id;
+            if (!i) {
+                Vout = [Data.tObj, mtec.data[id].Vout];
+                Tobj = [Data.tObj, mtec.data[id].Tobj];
+                Tsink = [Data.tObj, mtec.data[id].Tsink];
+            } else {
+                Vout.push(mtec.data[id].Vout);
+                Tobj.push(mtec.data[id].Tobj);
+                Tsink.push(mtec.data[id].Tsink);
+            }
+        }
+
+        $rootScope.$on('dataAvailable', getData);
+
+        $rootScope.$on('deviceListRefresh', function(){
+            tecs = cvt.mTEC;
+        });
+
+        /**
+         * @ngdoc method
+         * @name main.service:ExMeerstetterSvc#getData
+         * @methodOf main.service:ExMeerstetterSvc
+         *
+         * @description
+         * Get the data concerning the Alicats via the Data object returned
+         * from the Data service.  Stuff teh data into the flow property of this
+         * service.  The first time data is returned, we will check for the
+         * presence of the actual object.  If it is not there, check to see if
+         *
+         * 1. it is a controller, and
+         * 2. it is a mass flow device
+         */
+        function getData() {
+
+            // Store the ID as key
+            var key = "";
+
+            for ( var i = 0; i < tecs.length; i++) {
+                // Check to see if the current ID is in the Data Object
+                if (tecs[i].id in Data.data) {
+
+                    key = tecs[i].id;
+
+                    if (!(key in mtec.data)) {
+                        mtec.data[key] = new tecData();
+                        if (mtec.IDs.length === 0) {
+                            mtec.IDs = [key];
+                        } else {
+                            mtec.IDs.push(key);
+                        }
+                    }
+
+                    mtec.data[key].Vout = Data.data[key].Vout;
+                    mtec.data[key].Tsink = Data.data[key].Tsink;
+                    mtec.data[key].Tobj = Data.data[key].Tobj;
+
+                    mtec.data[key].label = tecs[i].label;
+
+                }
+            }
+
+            tecs.forEach(populate_arrays);
+
+            if (shift) {
+                mtec.Vout.shift();
+                mtec.Tsink.shift();
+                mtec.Tobj.shift();
+            }
+            else {
+                index += 1;
+            }
+            mtec.Vout.push(P);
+            mtec.Tsink.push(T);
+            mtec.Tobj.push(Q);
+
+            shift = index >= maxi;
+
+            /**
+             * @ngdoc event
+             * @name main.service:ExMeerstetterSvc#MTecDataAvailable
+             * @eventType broadcast
+             * @eventOf main.service:ExMeerstetterSvc
+             *
+             * @description
+             * Announce to observers that flow data is available.
+             */
+            $rootScope.$broadcast('MTecDataAvailable');
+        }
+
+        return mtec;
     }
 })();

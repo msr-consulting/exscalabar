@@ -1,10 +1,10 @@
 (function () {
     angular.module('main').controller('ExTetechCtl', tetech_ctl);
 
-    tetech_ctl.$inject = ['$scope', 'ExTetechSvc'];
+    tetech_ctl.$inject = ['$scope', 'ExTetechSvc', 'cvt'];
 
 
-    function tetech_ctl($scope, ExTetechSvc) {
+    function tetech_ctl($scope, ExTetechSvc, cvt) {
 
         /**
          * @ngdoc controller
@@ -29,14 +29,17 @@
         };
 
         $scope.set_mult = function(){
+
+            cvt.tec.updateMult([$scope.ch_mult.htx, $scope.ch_mult.clx]);
           console.log('Set multipliers.');
         };
 
         $scope.update_sp = function(){
-          console.log('Update set point.');
+
+            cvt.tec.updateSP($scope.Tsp);
         };
 
-        //cvt.first_call = 1;
+        cvt.first_call = 1;
 
     }
 

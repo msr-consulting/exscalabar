@@ -1,6 +1,13 @@
 (function(){
 	angular.module('main')
-	.factory('SaveData', function(){
+	.factory('ExSaveCalData', function(){
+		/**
+		 * @ngdoc service
+		 * @name main.service:ExSaveCalData
+		 *
+		 * @description
+		 * This service stores information regarding data in the calibration table.
+		 */
 		var savedData = {
 			data: [],
 			setData: function(d){
