@@ -35,6 +35,11 @@
 
             };
 
+            $scope.$on('cvtUpdated', function () {
+                $scope.h = cvt.humidifier;
+                
+            });
+        
             $scope.updateHum = function () {
                 var i = arguments[0];
                 cvt.humidifier[i].updateParams();

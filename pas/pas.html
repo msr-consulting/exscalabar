@@ -3,10 +3,14 @@
         <div class="panel panel-default">
             <div class="panel-heading">Speaker Control</div>
             <div class="panel-body">
-                <cui-numeric ng-model="speaker.vrange" width="50" evnt-func="updateSpkV()">V<sub>range</sub>
-                </cui-numeric>
-                <cui-numeric ng-model="speaker.voffset" width="50" evnt-func="updateSpkV()">V<sub>offset</sub>
-                </cui-numeric>
+                <div tooltip-placement="right" tooltip="Raw voltage range of speaker signal" tooltip-trigger="mouseenter" tooltip-append-to-body="true">
+                    <cui-numeric ng-model="speaker.vrange" width="50" evnt-func="updateSpkV()">V<sub>range</sub>
+                    </cui-numeric>
+                </div>
+                <div tooltip-placement="right" tooltip="Raw voltage offset of speaker signal" tooltip-trigger="mouseenter" tooltip-append-to-body="true">
+                    <cui-numeric ng-model="speaker.voffset" width="50" evnt-func="updateSpkV()">V<sub>offset</sub>
+                    </cui-numeric>
+                </div>
                 <cui-numeric ng-model="speaker.f0" width="50" evnt-func="updateSpkF()" type="int">f<sub>c</sub> (Hz)
                 </cui-numeric>
                 <cui-numeric ng-model="speaker.df" width="50" evnt-func="updateSpkF()">&Delta;f (Hz)</cui-numeric>
@@ -20,8 +24,7 @@
                 <cui-numeric ng-model="speaker.length" width="45" evnt-func="updateCycle()">len (s)
                 </cui-numeric>
                 <cui-button ival="speaker.auto">
-                    <div tooltip-placement="bottom" tooltip="Set system to cycle speaker automatically"
-                         tooltip-trigger="mouseenter" tooltip-append-to-body="true" ng-click="updateAuto()">Auto
+                    <div tooltip-placement="bottom" tooltip="Set system to cycle speaker automatically" tooltip-trigger="mouseenter" tooltip-append-to-body="true" ng-click="updateAuto()">Auto
                     </div>
                 </cui-button>
             </div>
@@ -34,68 +37,60 @@
                 <div class="table-responsive" style="padding-bottom: 0px">
                     <table class="table table-condensed table-input" style="color:white;margin-bottom: 0px">
                         <thead>
-                        <tr>
-                            <th class="col-md-1">Cell</th>
-                            <th class="col-md-2">V
-                                <sub>range</sub> (V)
-                            </th>
-                            <th class="col-md-2">V
-                                <sub>offset</sub> (V)
-                            </th>
-                            <th class="col-md-2">f
-                                <sub>0</sub> (Hz)
-                            </th>
-                            <th class="col-md-2">Modulation</th>
-                            <th class="col-md-2">Enable</th>
-                        </tr>
+                            <tr>
+                                <th class="col-md-1">Cell</th>
+                                <th class="col-md-2">V
+                                    <sub>range</sub> (V)
+                                </th>
+                                <th class="col-md-2">V
+                                    <sub>offset</sub> (V)
+                                </th>
+                                <th class="col-md-2">f
+                                    <sub>0</sub> (Hz)
+                                </th>
+                                <th class="col-md-2">Modulation</th>
+                                <th class="col-md-2">Enable</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="n in lasCtl track by $index">
-                            <td>{{$index+1}}</td>
-                            <td>
-                                <input class="col-md-12"
-                                       ng-blur="updateVr()" ng-model="n.Vrange" type="text">
-                            </td>
-                            <td>
-                                <input class="col-md-12"
-                                       ng-blure="updateVo()" ng-model="n.Voffset" type="text">
-                            </td>
-                            <td>
-                                <input class="col-md-12"
-                                       ng-blur="updatef0()" ng-model="n.f0" type="text">
-                            </td>
-                            <td>
-                                <button class="btn btn-block btn-default btn-sm"
-                                        ng-click="n.modulation = !n.modulation"
-                                        ng-switch
-                                        on="n.modulation" type="button" value="Sine">
-                                    <div ng-switch-when=true>
-                                        Square
-                                    </div>
-                                    <div ng-switch-when=false>
-                                        Sine
-                                    </div>
-                                    <div ng-switch-default>
-                                        Sine
-                                    </div>
-                                </button>
-                            </td>
-                            <td>
-                                <button class="btn btn-block btn-default btn-sm" ng-click="updateEnable($index)"
-                                        ng-switch
-                                        on="n.lasEn" type="button" value="Disabled">
-                                    <div ng-switch-when=true>
-                                        Enabled
-                                    </div>
-                                    <div ng-switch-when=false>
-                                        Disabled
-                                    </div>
-                                    <div ng-switch-default>
-                                        Disabled
-                                    </div>
-                                </button>
-                            </td>
-                        </tr>
+                            <tr ng-repeat="n in lasCtl track by $index">
+                                <td>{{$index+1}}</td>
+                                <td>
+                                    <input class="col-md-12" ng-blur="updateVr()" ng-model="n.Vrange" type="text">
+                                </td>
+                                <td>
+                                    <input class="col-md-12" ng-blure="updateVo()" ng-model="n.Voffset" type="text">
+                                </td>
+                                <td>
+                                    <input class="col-md-12" ng-blur="updatef0()" ng-model="n.f0" type="text">
+                                </td>
+                                <td>
+                                    <button class="btn btn-block btn-default btn-sm" ng-click="n.modulation = !n.modulation" ng-switch on="n.modulation" type="button" value="Sine">
+                                        <div ng-switch-when=true>
+                                            Square
+                                        </div>
+                                        <div ng-switch-when=false>
+                                            Sine
+                                        </div>
+                                        <div ng-switch-default>
+                                            Sine
+                                        </div>
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-block btn-default btn-sm" ng-click="updateEnable($index)" ng-switch on="n.lasEn" type="button" value="Disabled">
+                                        <div ng-switch-when=true>
+                                            Enabled
+                                        </div>
+                                        <div ng-switch-when=false>
+                                            Disabled
+                                        </div>
+                                        <div ng-switch-default>
+                                            Disabled
+                                        </div>
+                                    </button>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -115,7 +110,9 @@
     </div>
 </div>
 <div class="row" ng-controller="ExPasCtl">
-    <context-menu menu-options ="cm_options"><dy-graph options="options" data="wvfmData"></dy-graph></context-menu>
+    <context-menu menu-options="cm_options">
+        <dy-graph options="options" data="wvfmData"></dy-graph>
+    </context-menu>
 </div>
 <div class="row">
     <div class="col-md-12">
@@ -128,16 +125,16 @@
                 <th>Noise</th>
                 <th>&sigma; (Mm<sup>-1</sup>)</th>
                 <tbody>
-                <tr ng-repeat="datum in data track by $index" ng-if="$index>=0">
-                    <td class="col-md-1">
-                        {{$index+1}}
-                    </td>
-                    <td class="col-md-2">{{ datum.f0 | number}}</td>
-                    <td class="col-md-2">{{ datum.IA | number:2}}</td>
-                    <td class="col-md-2">{{ datum.Q | number:2 }}</td>
-                    <td class="col-md-2">{{ datum.p | number:2 }}</td>
-                    <td class="col-md-2">{{ datum.abs | number:2 }}</td>
-                </tr>
+                    <tr ng-repeat="datum in data track by $index" ng-if="$index>=0">
+                        <td class="col-md-1">
+                            {{$index+1}}
+                        </td>
+                        <td class="col-md-2">{{ datum.f0 | number}}</td>
+                        <td class="col-md-2">{{ datum.IA | number:2}}</td>
+                        <td class="col-md-2">{{ datum.Q | number:2 }}</td>
+                        <td class="col-md-2">{{ datum.p | number:2 }}</td>
+                        <td class="col-md-2">{{ datum.abs | number:2 }}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>

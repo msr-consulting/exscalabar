@@ -62,8 +62,10 @@
             $scope.setDenuderBypass = function () {
 
 
+                $scope.filter = !$scope.denuder_bypass;
+                var x = $scope.denuder_bypass ? 1 : 0;
+                var x = $scope.denuder_bypass ? 1 : 0;
                 $http.get(net.address() + 'General/DenudedBypass?val=' + x);
-                console.log('Denuder position set.');
             }
 
             /** Flip the switch cabin switch.
