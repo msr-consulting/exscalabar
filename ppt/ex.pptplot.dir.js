@@ -51,7 +51,7 @@
                         console.log('Enabling all.');
                     }],
                     ['Clear Data', function () {
-                        ExFlowSvc.clear_data();
+                        ExPptSvc.clear_data();
                     }]]
                 ],
                 ['Autoscale', null, [
@@ -102,10 +102,10 @@
                 if (l !== vm.options.labels) {
                     // If the labels have changed (usually the first time the data
                     // service is called), then copy the new labels into the options
-                    vm.options.labels = l.slice();
+                    vm.ref.updateOptions({labels: l.slice()});
                 }
 
-                vm.data = ExPptSvc[d];
+                vm.data = ExPptSvc[data_set];
 
             }
         }
