@@ -62,7 +62,7 @@
             this.IA = IA;
             this.f0 = f0;
             this.abs = abs;
-            this.Q = Q
+            this.Q = Q;
             this.p = p;
             this.maxi = i;
             this.maxloc = loc;
@@ -162,7 +162,7 @@
             }
 
             $rootScope.$broadcast('pasDataAvaliable');
-            console.log('Display data now!')
+            console.log('Display data now!');
         }
 
         return PasData;

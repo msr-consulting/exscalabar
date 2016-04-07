@@ -14,10 +14,19 @@
 
 (function () {
     angular.module('main')
-        .controller('O3Table', ['$scope', 'tableService', function ($scope, tableService) {
+        .controller('ExCalibrationCtl', ['$scope', 'ExCalibrationSvc', function ($scope, ExCalibrationSvc) {
+
+
+            $scope.data = [];
+
+            $scope.save = function () {
+
+                ExCalibrationSvc.ship_data($scope.data);
+
+            };
 
             /* Contains the entries that will go into the canned table. */
-            $scope.table_vals = [
+            $scope.base_vals = [
                 {
                     "id": "Wait",
                     "step": "Wait",
@@ -42,7 +51,9 @@
                     "id": "Speaker",
                     "step": "Speaker",
                     "descr": "Boolean that sets the speaker state."
-                },
+                }];
+
+            $scope.ozone_vals = [
                 {
                     "id": "O2-Valve",
                     "step": "O2 Valve",
@@ -75,11 +86,45 @@
                     "descr": "Ozone dump rate in lpm."
                 }];
 
+
+            // Initial shallow copy of the base vals...
+            $scope.table_vals = $scope.base_vals.slice();
+
+            // TODO: provide dropdown for choosing type of calibration and adjust inputs as necessary...
+            for (var i = 0; i < $scope.ozone_vals.length; i++){
+                $scope.table_vals.push($scope.ozone_vals[i]);
+            }
+
+
+            var val = "";
+            var ID = "";
             /* Handle row double clicks */
             $scope.clickRow = function (row) {
-
                 /* tableService will broadcast the the listeners the current ID */
-                tableService.setTab(row.id.toString());
+                //tableService.setTab(row.id.toString());
+                ID = row.id.toString();
+                switch (ID) {
+                    case "Wait":
+                    case "Speaker":
+                        val = "20";
+                        break;
+                    case "O2-Flow-Rate":
+                    case "O3-Dump-Rate":
+                        val = "100";
+                        break;
+                    case "O3-Level":
+                        val = "1";
+                        break;
+                    default:
+                        val = "FALSE";
+                }
+
+                $scope.data.push(
+                    {
+                        "id": ID,
+                        "val": val
+                    }
+                );
 
             };
         }]);

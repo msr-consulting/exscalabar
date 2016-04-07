@@ -121,6 +121,6 @@
             bindToController: true,
             template: '<context-menu menu-options ="vm.cm"><dy-graph options="vm.options" ref= "vm.ref" data="vm.data" ></dy-graph></context-menu>'
 
-        }
+        };
     }
 })();

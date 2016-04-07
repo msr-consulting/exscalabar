@@ -60,20 +60,17 @@
             };
 
             $scope.setDenuderBypass = function () {
-
-
                 $scope.filter = !$scope.denuder_bypass;
                 var x = $scope.denuder_bypass ? 1 : 0;
-                var x = $scope.denuder_bypass ? 1 : 0;
                 $http.get(net.address() + 'General/DenudedBypass?val=' + x);
-            }
+            };
 
             /** Flip the switch cabin switch.
              */
             $scope.setCabin = function () {
                 $scope.cabin = !$scope.cabin;
                 var x = $scope.cabin ? 1 : 0;
-                $http.get(net.address() + 'General/Cabin?Cabin=' + x);
+                $http.get(net.address() + 'General/Cabin?val=' + x);
             };
 
             $scope.stop = function () {

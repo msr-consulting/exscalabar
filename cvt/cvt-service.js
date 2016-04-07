@@ -150,7 +150,7 @@
             cvt.tec.updateMult = function(m){
                 ///xService/tetech/multipliers?mult={value}
                 $http.get(net.address() + 'tetech/multipliers?mult=' + m.toString());
-            }
+            };
 
             /* TODO: Implement server side CVT communication. */
 
