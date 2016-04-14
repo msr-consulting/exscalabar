@@ -488,12 +488,12 @@
 
             var val = [];
 
-            for (i = 0; i < mod.length; i++) {
-                val.push(mod ? 1 : 0);
+            for (var i = 0; i < mod.length; i++) {
+                val.push(mod[i] ? 1 : 0);
             }
 
-            //$http.get(net.address() +
-            //  'PAS_CMD/UpdateVoffset?Voffset=' + val.join(','));
+            $http.get(net.address() +
+              'PAS_CMD/modulation?val=' + val.join(','));
 
         };
 

@@ -48,8 +48,10 @@
 
             });
 
-            $scope.updateMod = function (i) {
-                $scope.lasCtl[i].modulation = !$scope.lasCtl[i].modulation;
+            $scope.updateMod = function () {
+
+                var index = arguments[0];
+                $scope.lasCtl[index].modulation = !$scope.lasCtl[index].modulation;
 
                 var x = [];
                 for (j = 0; j < $scope.lasCtl.length; j++) {

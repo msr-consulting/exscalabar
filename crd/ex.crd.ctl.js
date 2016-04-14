@@ -25,6 +25,13 @@
 
             };
 
+            $scope.show_wvfm = true;
+            
+            $scope.update_wvfm_state = function(){
+                $scope.show_wvfm = !$scope.show_wvfm;
+
+            };
+
             $scope.setEn = function () {
                 var index = arguments[0];
                 $scope.laser_ctl[index].en = !$scope.laser_ctl[index].en;

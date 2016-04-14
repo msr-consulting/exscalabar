@@ -31,10 +31,16 @@
                 <div class="panel-heading">Purge</div>
                 <div class="panel-body">
                     <cui-button ival="purge.pos" ng-click="purge.setValve()">Flow Ctl</cui-button>
-                    <label for="pFlow">Flow</label>
-                    <input id="pFlow" class="form-control" ng-model="purge.flow" ng-blur="purge.setFlow()">
+
+                    <cui-numeric ng-model="purge.flow" width=10 evnt-func="purge.setFlow()">Q
+                    </cui-numeric>
                 </div>
             </div>
+            <cui-button ival="show_wvfm">
+                <div tooltip-placement="bottom" tooltip="Send waveform data.  Must have bandwidth to support this functionality."
+                     tooltip-trigger="mouseenter" tooltip-append-to-body="true" ng-click="update_wvfm_state()">Send Waveforms
+                </div>
+            </cui-button>
         </div>
         <div class="col-md-9 col-lg-10">
             <div class="row">

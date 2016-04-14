@@ -22,6 +22,13 @@
         var cl = ExReadCfgSvc.pas.color.length;
         var pl = ExReadCfgSvc.pas.pattern.length;
 
+        $scope.show_wvfm = true;
+
+        $scope.update_wvfm_state = function(){
+            $scope.show_wvfm = !$scope.show_wvfm;
+
+        };
+
 
         $scope.$on('pasDataAvaliable', display_data);
         $scope.wvfmData = [[0, NaN, NaN, NaN, NaN, NaN]];
