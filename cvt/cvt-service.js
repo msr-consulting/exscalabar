@@ -492,7 +492,7 @@
                 val.push(mod[i] ? 1 : 0);
             }
 
-            $http.get(net.address() +
+            http.get(net.address() +
               'PAS_CMD/modulation?val=' + val.join(','));
 
         };
