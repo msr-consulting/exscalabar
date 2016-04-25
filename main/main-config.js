@@ -1,5 +1,5 @@
 /**
- * This file conigures the routing for the main page.  These are the views which
+ * This file configures the routing for the main page.  These are the views which
  * Will be displayed when the user clicks a heading in the navigation menu.
  *
  * Routing requires the inclusion of 'angular-route.js' file and the module ngRoute.
@@ -10,17 +10,17 @@
         .config(['$routeProvider',
             function ($routeProvider) {
                 $routeProvider
-                    .when('/CRDS', {templateUrl: 'crd/crds.html'})
-                    .when('/PAS', {templateUrl: 'pas/pas.html'})
-                    .when('/O3', {templateUrl: 'o3/ozone.html'})
-                    .when('/', {templateUrl: 'main/main.html'})
-                    .when('/Flows', {templateUrl: 'alicat/flows.html'})
-                    .when('/Temperature', {templateUrl: 'views/temperature.html'})
-                    .when('/Humidifier', {templateUrl: 'humidity/humidifier.html'})
-                    .when('/Common', {templateUrl: 'views/common.html'})
-                    .when('/Config', {templateUrl: 'config/config.html'})
-                    .when('/msg', {templateUrl: 'msgs/msg.html'})
-                    .when('/Checklist', {templateUrl: 'checklist/checklist.html'})
-                    .when('/Housekeeping', {templateUrl: 'housekeeping/housekeeping.html'});
+                    .when('/CRDS', {templateUrl: 'html/crds.html'})
+                    .when('/PAS', {templateUrl: 'html/pas.html'})
+                    .when('/O3', {templateUrl: 'html/ozone.html'})
+                    .when('/', {templateUrl: 'html/main.html'})
+                    .when('/Flows', {templateUrl: 'html/flows.html'})
+                    .when('/Temperature', {templateUrl: 'html/temperature.html'})
+                    .when('/Humidifier', {templateUrl: 'html/humidifier.html'})
+                    .when('/Common', {templateUrl: 'html/common.html'})
+                    .when('/Config', {templateUrl: 'html/config.html'})
+                    .when('/msg', {templateUrl: 'html/msg.html'})
+                    .when('/Checklist', {templateUrl: 'html/checklist.html'})
+                    .when('/Housekeeping', {templateUrl: 'html/housekeeping.html'});
             }]);
 })();

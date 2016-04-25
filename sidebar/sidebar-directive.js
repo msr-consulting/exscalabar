@@ -5,7 +5,7 @@
 		return {
 			restrict : 'E',
 			scope : {},
-			templateUrl : 'sidebar/side.html'
+			templateUrl : 'html/side.html'
 		};
 	}
 

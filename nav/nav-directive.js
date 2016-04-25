@@ -5,7 +5,7 @@
 		return {
 			restrict : 'E',
 			scope : {name:"=?"},
-			templateUrl : 'nav/navi.html'
+			templateUrl : 'html/navi.html'
 		};
 	}
 

@@ -27,6 +27,7 @@ var bump = require('gulp-bump');
  */
 //var ngannotate = require('gulp-ng-annotate');
 
+
 var watch_list = ["main/main.module.js",
     "network/network-service.js",
     "cvt/cvt-service.js",
@@ -79,9 +80,11 @@ var watch_list = ["main/main.module.js",
     "meerstetter/ex.meerstetter.svc.js"
 ];
 
+
+var js_dist = 'js';
 // List of external assets required by the GUI
 // These are not expected to change.
-var assets = ["assets/jquery/jquery-2.1.4.js",
+var ext_assets = ["assets/jquery/jquery-2.1.4.js",
     "assets/angular.js",
     "assets/angular-route.js",
     "assets/ui-bootstrap-0.9.0.js",
@@ -90,13 +93,12 @@ var assets = ["assets/jquery/jquery-2.1.4.js",
     "assets/angular/angular-sanitize.js"];
 
 // Angular Dygraph assets
-var adJS = ["assets/ad/js/cirrus-dygraphs-dev.js",
-    "assets/ad/js/angular-dygraph.js"];
-
-// Cirrus GUI elements
-var cuiJS = ["assets/cui/ibutton/ibutton.js",
+var int_assets = ["assets/ad/js/cirrus-dygraphs-dev.js",
+    "assets/ad/js/angular-dygraph.js",
+    "assets/cui/ibutton/ibutton.js",
     "assets/cui/inumeric/inumeric.js",
     "assets/cui/istring/istring.js"];
+
 
 // Tested list of dygraph
 var docList = [
@@ -140,25 +142,23 @@ gulp.task('lint', function () {
 gulp.task('scripts', function () {
     return gulp.src(watch_list)
         .pipe(concat('exscalabar.js'))
-        .pipe(gulp.dest('dist'))
+        .pipe(gulp.dest(js_dist))
         .pipe(rename('exscalabar.min.js'))
         .pipe(uglify())
-        .pipe(gulp.dest('dist'))
-        .pipe(concat('ad.js'))
-        .pipe(gulp.dest('dist'))
-        .pipe(rename('ad.min.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest('dist'))
-        .pipe(concat('cui.js'))
-        .pipe(gulp.dest('dist'))
-        .pipe(rename('cui.min.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest('dist'))
+        .pipe(gulp.dest(js_dist));
+});
+
+gulp.task('ext_assets', function () {
+    return gulp.src(ext_assets)
         .pipe(concat('assets.js'))
-        .pipe(gulp.dest('dist'))
-        .pipe(rename('assets.min.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest(js_dist));
+});
+
+
+gulp.task('int_assets', function () {
+    return gulp.src(int_assets)
+        .pipe(concat('int_assets.js'))
+        .pipe(gulp.dest(js_dist));
 });
 
 /* Handle SASS preprocessor files */
@@ -237,7 +237,7 @@ gulp.task('bump-patch', function () {
  });*/
 
 // Default Task
-gulp.task('default', ['lint', 'scripts', 'styles', 'ngdocs', 'connect', 'connect2docs', 'open', 'watch']);
+gulp.task('default', ['lint', 'scripts', 'ext_assets', 'int_assets', 'styles', 'ngdocs', 'connect', 'connect2docs', 'open', 'watch']);
 
 gulp.task('no-browse', ['lint', 'scripts', 'styles', 'ngdocs', 'watch', 'connect2docs']);
 // TODO: add different builds for distribution and development...

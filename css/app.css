@@ -249,3 +249,7 @@ body > .container {
 .button-xxs{
         padding: 1px 5px;
 }
+
+.dygraph-legend {
+    width: 400px;
+}
