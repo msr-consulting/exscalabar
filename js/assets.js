@@ -43565,7 +43565,7 @@ angular.module("template/typeahead/typeahead-popup.html", []).run(["$templateCac
     // This is just better style here to use a function...
     function cm() {
 
-        var link = function (scope, element, attrs) {
+        var link = function (scope, element) {
 
             element.on('contextmenu', function (event) {
 

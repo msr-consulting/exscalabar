@@ -12607,7 +12607,9 @@ Dygraph.DataHandlers = {};
         });
 })();
 (function () {
+
     'use strict'
+
     /**
      * @ngdoc overview
      * @name cirrus.ui.ibutton
@@ -12646,13 +12648,15 @@ Dygraph.DataHandlers = {};
                 '</div>';
 
             /* Link function used in the DDO returned below...*/
-            var link = function (scope, e, attrs) {
+            var link = function (scope, e) {
 
+                
+                /* This is an addon functionality so let's just make sure
+                 * that the intended functionality is intact.
+                 */
                 if (scope.indicate === undefined) {
-                    scope.indicate = false;
+                    scope.indicate = true;
                 }
-
-                var b = e.find('button');
 
                 // If the field ``info`` is undefined, default the indicator to an info state.
                 if (scope.info === undefined) {
@@ -12680,7 +12684,7 @@ Dygraph.DataHandlers = {};
                     });
                 }
 
-            }
+            };
             return {
                 restric: 'E',
                 transclude: true,
@@ -12702,7 +12706,7 @@ Dygraph.DataHandlers = {};
         .directive('cuiNumeric', [function () {
 
             return {
-                restric: 'E',
+                restrict: 'E',
                 require: "ngModel",
                 transclude: true,
                 scope: {
@@ -12710,9 +12714,8 @@ Dygraph.DataHandlers = {};
                     dtype: '=?',
                     evntFunc: '&?'
                 },
-                transclude: true,
                 template: '<div class="input-group inumeric">' +
-                    '<span class="input-group-addon"><ng-transclude></ng-transclude></span>' +
+                    '<span class="input-group-addon" ng-transclude></span>' +
                     '<input class="form-control"  ng-model="data">' +
                     '</div>',
                 link: function (scope, e, attrs, ngm) {
@@ -12779,7 +12782,7 @@ Dygraph.DataHandlers = {};
                     /* Update the view value */
                     ngm.$render = function () {
                         scope.data = ngm.$viewValue;
-                    }
+                    };
 
                     /* Watch for changes in the view */
                     iVal.on('blur', function () {
@@ -12810,20 +12813,17 @@ Dygraph.DataHandlers = {};
                 transclude: true,
                 scope: {
                     width: '=?',
-                    evntFunc: '&?',
+                    evntFunc: '&?'
                 },
-                transclude: true,
-                template: '<div class="input-group" style="margin-top:2px; border-width:0px;">' +
-                    '<span class="input-group-addon" style = "border-width:1px;" ng-transclude></span>' +
-                    '<input type="text" class="form-control"  style="padding-left:5px;"  ng-model="data">' +
+                template: '<div class="input-group istring">' +
+                    '<span class="input-group-addon" ng-transclude></span>' +
+                    '<input type="text" class="form-control" ng-model="data">' +
                     '</div>',
                 link: function (scope, e, attrs, ngm) {
 
                     // Reference to the input element...
                     var inputElem = e.find('input');
                     var sElem = e.find('.input-group-addon');
-
-                    // var pattern = /{u-z}:\\/;   
 
                     if (scope.width === undefined) {
                         scope.width = 40;
@@ -12844,9 +12844,6 @@ Dygraph.DataHandlers = {};
                         }
                     });
 
-                    // Reference to the input element...
-                    var inputElem = e.find('input');
-
                     /* Set the look based on whether the user specifies if the 
                      * element is readonly.
                      */
@@ -12862,15 +12859,12 @@ Dygraph.DataHandlers = {};
 
                     // Handle how the model value is displayed
                     ngm.$formatters.push(function (mv) {
-                        //console.log(mv);    
-                        //console.log(pattern.test(mv));
                         return mv;
-
                     });
 
                     ngm.$render = function () {
                         scope.data = ngm.$viewValue;
-                    }
+                    };
 
                     /* Watch for changes in the view */
                     scope.$watch('data', function () {
