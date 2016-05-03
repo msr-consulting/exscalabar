@@ -585,6 +585,23 @@
                 'PAS_CMD/UpdateVrange?Vrange=' + vr.join(','));
 
         };
+        
+        this.send_wvfm = function(wvfm){
+            var data = wvfm?1:0;
+            console.log('New value for waveform retrieval is ' + data);
+            http.get(net.address() +
+                'PAS_CMD/wvfm?write=' + data);
+            
+        }
+        
+        
+        this.write_wvfm = function(wvfm){
+            var data = wvfm?1:0;
+            console.log('New value for waveform retrieval is ' + data);
+            http.get(net.address() +
+                'PAS_CMD/WVFM_to_File?Write_Data=' + data);
+            
+        }
 
         this.las.setVo = function (vo) {
             this.las.vr = vr;
@@ -824,8 +841,8 @@
                 "save": true,
                 "o3cal": false,
                 "Cabin": false,
-                "pas":{},
-                "crd":{},
+                "pas": {},
+                "crd": {},
                 "time": [],
                 "msg": [],
                 "date": {}
@@ -867,54 +884,58 @@
                 promise = $http.get(net.address() + 'General/Data')
                     .then(function (response) {
 
-                        // Handle filter infomration
-                        dataObj.filter.state = response.data.Filter;
-                        // Time remaining in cycle is the total time minus the elapsed time
-                        var tremain = response.data.fcycle.tt - response.data.fcycle.te;
-                        // Don't let this time fall below 0
-                        dataObj.filter.tremain = tremain > 0 ? tremain : 0;
+                        if (isEmpty(response.data)) {
+                            $rootScope.$broadcast('dataNotAvailable');
+                        }
+                        else {
 
-                        dataObj.pas = response.data.PAS;
+                            // Handle filter infomration
+                            dataObj.filter.state = response.data.Filter;
+                            // Time remaining in cycle is the total time minus the elapsed time
+                            var tremain = response.data.fcycle.tt - response.data.fcycle.te;
+                            // Don't let this time fall below 0
+                            dataObj.filter.tremain = tremain > 0 ? tremain : 0;
 
-                        // Object creation for devices
-                        for (i = 0; i < ppts.length; i++) {
-                            if (ppts[i] in response.data) {
-                                dataObj[ppts[i]] = response.data[ppts[i]];
+                            dataObj.pas = response.data.PAS;
+
+                            // Object creation for devices
+                            for (i = 0; i < ppts.length; i++) {
+                                if (ppts[i] in response.data) {
+                                    dataObj[ppts[i]] = response.data[ppts[i]];
+                                }
+
+                            }
+                            // Object creation for devices
+                            for (var i = 0; i < vaisalas.length; i++) {
+                                if (vaisalas[i] in response.data) {
+                                    dataObj[vaisalas[i]] = response.data[vaisalas[i]];
+                                }
+
                             }
 
-                        }
-                        // Object creation for devices
-                        for (var i = 0; i < vaisalas.length; i++) {
-                            if (vaisalas[i] in response.data) {
-                                dataObj[vaisalas[i]] = response.data[vaisalas[i]];
+                            /* The maximum length of the array is defined by the variable maxLength.
+                             * If the array is greater or equal than this, pop the array and then
+                             * place a new value at the front of the array using unshift().  Also,
+                             * set the flag shiftData to true to indicate to others that they neeed
+                             * to do likewise.
+                             */
+                            // TODO: Get rid of this array - it is not used!
+                            if (dataObj.time.length - 1 >= maxLength) {
+                                shiftData = true;
                             }
 
+                            dataObj.tObj = updateTime(Number(response.data.Time));
+
+                            dataObj.Cabin = response.data.Cabin;
+                            dataObj.msg = response.data.Msg;
+
+
+                            // TODO: We actually just want to pass on the data so that
+                            // others can grab it.  For now, putting it in this key (data)
+                            dataObj.data = response.data;
+
+                            $rootScope.$broadcast('dataAvailable');
                         }
-
-                        /* The maximum length of the array is defined by the variable maxLength.
-                         * If the array is greater or equal than this, pop the array and then
-                         * place a new value at the front of the array using unshift().  Also,
-                         * set the flag shiftData to true to indicate to others that they neeed
-                         * to do likewise.
-                         */
-                        // TODO: Get rid of this array - it is not used!
-                        if (dataObj.time.length - 1 >= maxLength) {
-                            shiftData = true;
-                        }
-
-                        dataObj.tObj = updateTime(Number(response.data.Time));
-
-                        dataObj.Cabin = response.data.Cabin;
-                        dataObj.msg = response.data.Msg;
-
-
-                        // TODO: We actually just want to pass on the data so that 
-                        // others can grab it.  For now, putting it in this key (data)
-                        dataObj.data = response.data;
-
-                        $rootScope.$broadcast('dataAvailable');
-
-                        busy = false;
                     }, function () {
                         $rootScope.$broadcast('dataNotAvailable');
                     }).finally(function () {
@@ -946,6 +967,15 @@
         var lvDate = new Date(1904, 0, 1);
         lvDate.setSeconds(t);
         return lvDate;
+    }
+
+    function isEmpty(obj) {
+        for (var prop in obj) {
+            if (obj.hasOwnProperty(prop))
+                return false;
+        }
+
+        return true;
     }
 })();
 (function () {
@@ -2117,8 +2147,20 @@
 
         $scope.update_wvfm_state = function(){
             $scope.show_wvfm = !$scope.show_wvfm;
+            
+            cvt.pas.send_wvfm($scope.show_wvfm);
 
         };
+        
+        $scope.write_wvfm = false;        
+        
+        $scope.update_wvfm_write_state = function(){
+            $scope.write_wvfm = !$scope.write_wvfm;
+            
+            cvt.pas.write_wvfm($scope.write_wvfm);
+
+        };
+        
 
 
         $scope.$on('pasDataAvaliable', display_data);

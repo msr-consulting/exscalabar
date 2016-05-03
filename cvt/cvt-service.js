@@ -474,6 +474,23 @@
                 'PAS_CMD/UpdateVrange?Vrange=' + vr.join(','));
 
         };
+        
+        this.send_wvfm = function(wvfm){
+            var data = wvfm?1:0;
+            console.log('New value for waveform retrieval is ' + data);
+            http.get(net.address() +
+                'PAS_CMD/wvfm?write=' + data);
+            
+        }
+        
+        
+        this.write_wvfm = function(wvfm){
+            var data = wvfm?1:0;
+            console.log('New value for waveform retrieval is ' + data);
+            http.get(net.address() +
+                'PAS_CMD/WVFM_to_File?Write_Data=' + data);
+            
+        }
 
         this.las.setVo = function (vo) {
             this.las.vr = vr;

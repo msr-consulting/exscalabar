@@ -40,6 +40,12 @@
                      tooltip-trigger="mouseenter" tooltip-append-to-body="true" ng-click="update_wvfm_state()">Send Waveforms
                 </div>
             </cui-button>
+            
+            <cui-button ival="write_wvfm">
+                <div tooltip-placement="bottom" tooltip="Write waveform to file."
+                     tooltip-trigger="mouseenter" tooltip-append-to-body="true" ng-click="update_wvfm_write_state()">Write Waveforms
+                </div>
+            </cui-button>
         </div>
     </div>
     <div class="col-md-9 col-lg-10" ng-controller="ExPasLasCtl">

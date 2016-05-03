@@ -26,8 +26,20 @@
 
         $scope.update_wvfm_state = function(){
             $scope.show_wvfm = !$scope.show_wvfm;
+            
+            cvt.pas.send_wvfm($scope.show_wvfm);
 
         };
+        
+        $scope.write_wvfm = false;        
+        
+        $scope.update_wvfm_write_state = function(){
+            $scope.write_wvfm = !$scope.write_wvfm;
+            
+            cvt.pas.write_wvfm($scope.write_wvfm);
+
+        };
+        
 
 
         $scope.$on('pasDataAvaliable', display_data);
