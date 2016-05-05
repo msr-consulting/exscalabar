@@ -262,7 +262,7 @@
 
                         /* Update PAS laser controls */
                         cvt.pas.las.f0 = pas.las.f0;
-                        cvt.pas.las.vrange = pas.las.vrange;
+                        cvt.pas.las.vr = pas.las.vrange;
                         cvt.pas.las.voffset = pas.las.voffset;
                         cvt.pas.las.enable = pas.las.enabled;
                         cvt.pas.las.modulation = pas.las.modulation;
@@ -479,7 +479,7 @@
          * @param {array} - array of voltages in Volts.
          */
         this.las.setVr = function (vr) {
-            this.las.vr = vr;
+            this.vr = vr;
 
             http.get(net.address() +
                 'PAS_CMD/UpdateVrange?Vrange=' + vr.join(','));
@@ -494,7 +494,7 @@
             http.get(net.address() +
                 'PAS_CMD/wvfm?write=' + data);
             
-        }
+        };
         
         
         this.write_wvfm = function(wvfm){
@@ -505,10 +505,10 @@
             http.get(net.address() +
                 'PAS_CMD/WVFM_to_File?Write_Data=' + data);
             
-        }
+        };
 
         this.las.setVo = function (vo) {
-            this.las.vr = vr;
+            this.voffset = vo;
 
             http.get(net.address() +
                 'PAS_CMD/UpdateVoffset?Voffset=' + vo.join(','));
@@ -532,6 +532,16 @@
         // TODO: Fix service to handle byte array not single number.
         this.las.updateEnable = function (en) {
             this.enable = en;
+            var enByte = 0;
+            
+            for(var i = 0; i < en.length; i++){
+                enByte += en[i]?(Math.pow(2,i)):0;
+            }
+            
+            
+
+            http.get(net.address() +
+                'PAS_CMD/UpdateLaserEnable?LasEnByte=' + enByte);
         };
 
         this.spk.updateCtl = function (spk) {
