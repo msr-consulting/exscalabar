@@ -422,6 +422,11 @@
 
                 }, function errorCallback(response){
                     $rootScope.$broadcast('cvtNotAvailable');
+                }).finally(function (){
+
+                    // Reset the first call property to 0 so we just wait for the
+                    // most recent values that have changed.
+                    cvt.first_call = 0;
                 });
 
             };
