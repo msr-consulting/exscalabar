@@ -147,8 +147,11 @@
             PasData.wvfm.pd = [];
 
             // point by point
+            var df = celldata[0].MicFreq.dt;
+            var dt = celldata[0].MicTime.dt;
+            var pdt = celldata[0].PhotoDiode.dt;
             for (var k = 0; k < celldata[0].MicFreq.Y.length; k++) {
-                var micf = [k], mict = [k], pd = [k];
+                var micf = [k*df], mict = [k*dt], pd = [k*pdt];
                 for (var j = 0; j < celldata.length; j++) {
                     micf.push(celldata[j].MicFreq.Y[k]);
                     mict.push(celldata[j].MicTime.Y[k]);
