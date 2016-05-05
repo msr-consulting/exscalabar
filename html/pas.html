@@ -36,14 +36,17 @@
         </div>
         <div ng-controller="ExPasCtl">
             <cui-button ival="show_wvfm">
-                <div tooltip-placement="bottom" tooltip="Send waveform data.  Must have bandwidth to support this functionality."
-                     tooltip-trigger="mouseenter" tooltip-append-to-body="true" ng-click="update_wvfm_state()">Send Waveforms
+                <div tooltip-placement="bottom"
+                     tooltip="Send waveform data.  Must have bandwidth to support this functionality."
+                     tooltip-trigger="mouseenter" tooltip-append-to-body="true" ng-click="update_wvfm_state()">Send
+                    Waveforms
                 </div>
             </cui-button>
-            
+
             <cui-button ival="write_wvfm">
                 <div tooltip-placement="bottom" tooltip="Write waveform to file."
-                     tooltip-trigger="mouseenter" tooltip-append-to-body="true" ng-click="update_wvfm_write_state()">Write Waveforms
+                     tooltip-trigger="mouseenter" tooltip-append-to-body="true" ng-click="update_wvfm_write_state()">
+                    Write Waveforms
                 </div>
             </cui-button>
         </div>
@@ -83,7 +86,8 @@
                                 <input class="col-md-12" ng-blur="updatef0()" ng-model="cell.f0" type="number">
                             </td>
                             <td>
-                                <button class="btn btn-block btn-default btn-sm" ng-click="updateMod($index)" ng-switch="cell.modulation" type="button" value="Sine">
+                                <button class="btn btn-block btn-default btn-sm" ng-click="updateMod($index)"
+                                        ng-switch="cell.modulation" type="button" value="Sine">
                                     <div ng-switch-when="1">
                                         Square
                                     </div>
@@ -123,15 +127,13 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div class="row">
-            <ex-pasplot title="PAS Data"></ex-pasplot>
-        </div>
+        <ex-pasplot title="PAS Data"></ex-pasplot>
     </div>
 </div>
-<div class="row">
-    <context-menu menu-options="cm_options">
-        <dy-graph options="options" data="wvfmData"></dy-graph>
-    </context-menu>
+<div class="row" ng-controller="ExPasCtl">
+    <div class="col-md-12">
+        <dy-graph options="options" data="wvfmData" id="pasWvfmData"></dy-graph>
+    </div>
 </div>
 <div class="row">
     <div class="col-md-12">

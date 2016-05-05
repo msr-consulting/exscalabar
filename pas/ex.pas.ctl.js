@@ -15,6 +15,7 @@
 
         $scope.data = ExPasSvc.data;
 
+
         var labels = ExReadCfgSvc.pas.names.slice();
 
         labels.unshift('t');
@@ -67,7 +68,7 @@
         $scope.options = {
             title: 'PAS Waveform Data',
             ylabel: 'Microphone Frequency (a.u.)',
-            labels: labels,
+            labels: ['t', 'Cell 1', 'Cell 2', 'Cell 3', 'Cell 4', 'Cell 5'],
             legend: 'always',
             series: {}
 
