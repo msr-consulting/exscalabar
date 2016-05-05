@@ -22,8 +22,19 @@
         var cl = ExReadCfgSvc.pas.color.length;
         var pl = ExReadCfgSvc.pas.pattern.length;
 
-        $scope.show_wvfm = true;
+        $scope.show_wvfm = cvt.pas.send_wvfm;
 
+        
+        /**
+         * @ngdoc method
+         * @name main.controller:ExPasCtl#update_wvfm_state
+         * @methodOf main.service:ExPasCtl
+         *
+         * @description
+         * Change state of whether the waveforms will be sent to the 
+         * client.  Calls the cvt.pas.send_wvfm() function to store 
+         * this in the CVT service.
+         */
         $scope.update_wvfm_state = function(){
             $scope.show_wvfm = !$scope.show_wvfm;
             
@@ -31,8 +42,16 @@
 
         };
         
-        $scope.write_wvfm = false;        
-        
+        $scope.write_wvfm = cvt.pas.write_wvfm;        
+         
+        /**
+         * @ngdoc method
+         * @name main.controller:ExPasCtl#update_wvfm_write_state
+         * @methodOf main.service:ExPasCtl
+         *
+         * @description
+         * Update the state of writing PAS waveforms on the server side.
+         */
         $scope.update_wvfm_write_state = function(){
             $scope.write_wvfm = !$scope.write_wvfm;
             
@@ -40,8 +59,7 @@
 
         };
         
-
-
+        $scope.$on('cvtUpdated', update_ctl);
         $scope.$on('pasDataAvaliable', display_data);
         $scope.wvfmData = [[0, NaN, NaN, NaN, NaN, NaN]];
 
@@ -90,10 +108,15 @@
         ];
 
         function display_data() {
-            console.log('PAS data updated.');
             $scope.data = ExPasSvc.data;
-
             $scope.wvfmData = ExPasSvc.wvfm.micf;
+        }
+        
+        function update_ctl() {
+        
+            $scope.write_wvfm = cvt.pas.write_wvfm_state;  
+            $scope.show_wvfm = cvt.pas.send_wvfm_state;
+            
         }
 
         cvt.first_call = 1;

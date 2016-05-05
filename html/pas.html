@@ -71,24 +71,23 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="n in lasCtl track by $index">
+                        <tr ng-repeat="cell in lasCtl track by $index">
                             <td>{{$index+1}}</td>
                             <td>
-                                <input class="col-md-12" ng-blur="updateVr()" ng-model="n.Vrange" type="text">
+                                <input class="col-md-12" ng-blur="updateVr()" ng-model="cell.Vrange" type="text">
                             </td>
                             <td>
-                                <input class="col-md-12" ng-blure="updateVo()" ng-model="n.Voffset" type="text">
+                                <input class="col-md-12" ng-blure="updateVo()" ng-model="cell.Voffset" type="text">
                             </td>
                             <td>
-                                <input class="col-md-12" ng-blur="updatef0()" ng-model="n.f0" type="text">
+                                <input class="col-md-12" ng-blur="updatef0()" ng-model="cell.f0" type="text">
                             </td>
                             <td>
-                                <button class="btn btn-block btn-default btn-sm" ng-click="updateMod($index)" ng-switch
-                                        on="n.modulation" type="button" value="Sine">
-                                    <div ng-switch-when=true>
+                                <button class="btn btn-block btn-default btn-sm" ng-click="updateMod($index)" ng-switch="cell.modulation" type="button" value="Sine">
+                                    <div ng-switch-when="1">
                                         Square
                                     </div>
-                                    <div ng-switch-when=false>
+                                    <div ng-switch-when="0">
                                         Sine
                                     </div>
                                     <div ng-switch-default>
@@ -98,7 +97,7 @@
                             </td>
                             <td>
                                 <button class="btn btn-block btn-default btn-sm" ng-click="updateEnable($index)"
-                                        ng-switch on="n.lasEn" type="button" value="Disabled">
+                                        ng-switch on="cell.lasEn" type="button" value="Disabled">
                                     <div ng-switch-when=true>
                                         Enabled
                                     </div>

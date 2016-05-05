@@ -25,11 +25,11 @@
                  * populate the modulation frequencies in the laser controls with
                  * the current resonant frequency measured by the microphone.
                  */
-                if (Data.pas.drive) {
+                /* if (Data.pas.drive) {
                     for (i = 0; i < Data.pas.cell.length; i++) {
-                        $scope.lasCtl[i].f0 = $scope.data.cell[i].f0[0].y;
+                        $scope.lasCtl[i].f0 = Data.pas.cell[i].f0[0].y;
                     }
-                }
+                }*/
             });
 
             $scope.$on('cvtUpdated', function () {
@@ -38,20 +38,21 @@
                 // server-side.
                 for (var i = 0; i < cvt.pas.las.vr.length; i++) {
 
-                    $scope.lasCtl[i].vr = cvt.pas.las.vr[i];
-                    $scope.lasCtl[i].vo = cvt.pas.las.voffset[i];
+                    $scope.lasCtl[i].Vrange = cvt.pas.las.vr[i];
+                    $scope.lasCtl[i].Voffset = cvt.pas.las.voffset[i];
                     $scope.lasCtl[i].f0 = cvt.pas.las.f0[i];
-                    $scope.lasCtl[i].mod = cvt.pas.las.modulation[i];
-                    $scope.lasCtl[i].en = cvt.pas.las.enable[i];
+                    $scope.lasCtl[i].modulation = cvt.pas.las.modulation[i];
+                    $scope.lasCtl[i].lasEn = cvt.pas.las.enable[i];
 
                 }
+                console.log($scope.lasCtl);
 
             });
 
             $scope.updateMod = function () {
 
                 var index = arguments[0];
-                $scope.lasCtl[index].modulation = !$scope.lasCtl[index].modulation;
+                $scope.lasCtl[index].modulation = $scope.lasCtl[index].modulation===0?1:0;
 
                 var x = [];
                 for (j = 0; j < $scope.lasCtl.length; j++) {

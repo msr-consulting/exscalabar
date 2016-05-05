@@ -167,7 +167,7 @@
              */
             cvt.checkCvt = function () {
 
-                promise = $http.get(net.address() + 'General/cvt?force=' + cvt.first_call).then(function (response) {
+                promise = $http.get(net.address() + 'General/cvt?force=' + cvt.first_call).then(function successCallback(response) {
 
                     // After the first successful call, set this value to false (0).
                     first_Call = 0;
@@ -265,7 +265,8 @@
                         cvt.pas.las.vrange = pas.las.vrange;
                         cvt.pas.las.voffset = pas.las.voffset;
                         cvt.pas.las.enable = pas.las.enabled;
-
+                        cvt.pas.las.modulation = pas.las.modulation;
+                        
                         /* Update PAS speaker controls */
                         cvt.pas.spk.f0 = pas.spk.fcenter;
                         cvt.pas.spk.df = pas.spk.df;
@@ -308,6 +309,8 @@
                         $rootScope.$broadcast('cvtUpdated');
                     }
 
+                }, function errorCallback(response){
+                    $rootScope.$broadcast('cvtNotAvailable');
                 });
 
             };
@@ -431,11 +434,14 @@
         };
     }
 
-    function Pas(_http, _net) {
+    function Pas(_http, _net) { 
 
         var http = _http;
 
         var net = _net;
+        
+        this.write_wvfm_state = false;
+        this.send_wvfm_state = true;
 
         this.spk = {
             "vrange": 5,
@@ -452,7 +458,7 @@
             "vr": [5, 5, 5, 5, 5],
             "voffset": [1, 2, 3, 4, 5],
             "f0": [1351, 1352, 1353, 1354, 1355],
-            "modulation": [false, false, false, false, false],
+            "modulation": [0, 0, 0, 0, 0],
             "enable": [false, false, false, false, false]
         };
 
@@ -477,6 +483,8 @@
         
         this.send_wvfm = function(wvfm){
             var data = wvfm?1:0;
+            
+            this.send_wvfm_state = wvfm;
             console.log('New value for waveform retrieval is ' + data);
             http.get(net.address() +
                 'PAS_CMD/wvfm?write=' + data);
@@ -486,6 +494,8 @@
         
         this.write_wvfm = function(wvfm){
             var data = wvfm?1:0;
+            
+            this.write_wvfm_state = wvfm;
             console.log('New value for waveform retrieval is ' + data);
             http.get(net.address() +
                 'PAS_CMD/WVFM_to_File?Write_Data=' + data);

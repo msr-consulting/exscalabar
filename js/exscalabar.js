@@ -278,7 +278,7 @@
              */
             cvt.checkCvt = function () {
 
-                promise = $http.get(net.address() + 'General/cvt?force=' + cvt.first_call).then(function (response) {
+                promise = $http.get(net.address() + 'General/cvt?force=' + cvt.first_call).then(function successCallback(response) {
 
                     // After the first successful call, set this value to false (0).
                     first_Call = 0;
@@ -376,7 +376,8 @@
                         cvt.pas.las.vrange = pas.las.vrange;
                         cvt.pas.las.voffset = pas.las.voffset;
                         cvt.pas.las.enable = pas.las.enabled;
-
+                        cvt.pas.las.modulation = pas.las.modulation;
+                        
                         /* Update PAS speaker controls */
                         cvt.pas.spk.f0 = pas.spk.fcenter;
                         cvt.pas.spk.df = pas.spk.df;
@@ -419,6 +420,8 @@
                         $rootScope.$broadcast('cvtUpdated');
                     }
 
+                }, function errorCallback(response){
+                    $rootScope.$broadcast('cvtNotAvailable');
                 });
 
             };
@@ -542,11 +545,14 @@
         };
     }
 
-    function Pas(_http, _net) {
+    function Pas(_http, _net) { 
 
         var http = _http;
 
         var net = _net;
+        
+        this.write_wvfm_state = false;
+        this.send_wvfm_state = true;
 
         this.spk = {
             "vrange": 5,
@@ -563,7 +569,7 @@
             "vr": [5, 5, 5, 5, 5],
             "voffset": [1, 2, 3, 4, 5],
             "f0": [1351, 1352, 1353, 1354, 1355],
-            "modulation": [false, false, false, false, false],
+            "modulation": [0, 0, 0, 0, 0],
             "enable": [false, false, false, false, false]
         };
 
@@ -588,6 +594,8 @@
         
         this.send_wvfm = function(wvfm){
             var data = wvfm?1:0;
+            
+            this.send_wvfm_state = wvfm;
             console.log('New value for waveform retrieval is ' + data);
             http.get(net.address() +
                 'PAS_CMD/wvfm?write=' + data);
@@ -597,6 +605,8 @@
         
         this.write_wvfm = function(wvfm){
             var data = wvfm?1:0;
+            
+            this.write_wvfm_state = wvfm;
             console.log('New value for waveform retrieval is ' + data);
             http.get(net.address() +
                 'PAS_CMD/WVFM_to_File?Write_Data=' + data);
@@ -2143,8 +2153,19 @@
         var cl = ExReadCfgSvc.pas.color.length;
         var pl = ExReadCfgSvc.pas.pattern.length;
 
-        $scope.show_wvfm = true;
+        $scope.show_wvfm = cvt.pas.send_wvfm;
 
+        
+        /**
+         * @ngdoc method
+         * @name main.controller:ExPasCtl#update_wvfm_state
+         * @methodOf main.service:ExPasCtl
+         *
+         * @description
+         * Change state of whether the waveforms will be sent to the 
+         * client.  Calls the cvt.pas.send_wvfm() function to store 
+         * this in the CVT service.
+         */
         $scope.update_wvfm_state = function(){
             $scope.show_wvfm = !$scope.show_wvfm;
             
@@ -2152,8 +2173,16 @@
 
         };
         
-        $scope.write_wvfm = false;        
-        
+        $scope.write_wvfm = cvt.pas.write_wvfm;        
+         
+        /**
+         * @ngdoc method
+         * @name main.controller:ExPasCtl#update_wvfm_write_state
+         * @methodOf main.service:ExPasCtl
+         *
+         * @description
+         * Update the state of writing PAS waveforms on the server side.
+         */
         $scope.update_wvfm_write_state = function(){
             $scope.write_wvfm = !$scope.write_wvfm;
             
@@ -2161,8 +2190,7 @@
 
         };
         
-
-
+        $scope.$on('cvtUpdated', update_ctl);
         $scope.$on('pasDataAvaliable', display_data);
         $scope.wvfmData = [[0, NaN, NaN, NaN, NaN, NaN]];
 
@@ -2211,10 +2239,15 @@
         ];
 
         function display_data() {
-            console.log('PAS data updated.');
             $scope.data = ExPasSvc.data;
-
             $scope.wvfmData = ExPasSvc.wvfm.micf;
+        }
+        
+        function update_ctl() {
+        
+            $scope.write_wvfm = cvt.pas.write_wvfm_state;  
+            $scope.show_wvfm = cvt.pas.send_wvfm_state;
+            
         }
 
         cvt.first_call = 1;
@@ -2494,11 +2527,11 @@
                  * populate the modulation frequencies in the laser controls with
                  * the current resonant frequency measured by the microphone.
                  */
-                if (Data.pas.drive) {
+                /* if (Data.pas.drive) {
                     for (i = 0; i < Data.pas.cell.length; i++) {
-                        $scope.lasCtl[i].f0 = $scope.data.cell[i].f0[0].y;
+                        $scope.lasCtl[i].f0 = Data.pas.cell[i].f0[0].y;
                     }
-                }
+                }*/
             });
 
             $scope.$on('cvtUpdated', function () {
@@ -2507,20 +2540,21 @@
                 // server-side.
                 for (var i = 0; i < cvt.pas.las.vr.length; i++) {
 
-                    $scope.lasCtl[i].vr = cvt.pas.las.vr[i];
-                    $scope.lasCtl[i].vo = cvt.pas.las.voffset[i];
+                    $scope.lasCtl[i].Vrange = cvt.pas.las.vr[i];
+                    $scope.lasCtl[i].Voffset = cvt.pas.las.voffset[i];
                     $scope.lasCtl[i].f0 = cvt.pas.las.f0[i];
-                    $scope.lasCtl[i].mod = cvt.pas.las.modulation[i];
-                    $scope.lasCtl[i].en = cvt.pas.las.enable[i];
+                    $scope.lasCtl[i].modulation = cvt.pas.las.modulation[i];
+                    $scope.lasCtl[i].lasEn = cvt.pas.las.enable[i];
 
                 }
+                console.log($scope.lasCtl);
 
             });
 
             $scope.updateMod = function () {
 
                 var index = arguments[0];
-                $scope.lasCtl[index].modulation = !$scope.lasCtl[index].modulation;
+                $scope.lasCtl[index].modulation = $scope.lasCtl[index].modulation===0?1:0;
 
                 var x = [];
                 for (j = 0; j < $scope.lasCtl.length; j++) {
