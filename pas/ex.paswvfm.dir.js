@@ -10,6 +10,7 @@
      *
      */
     pas_wvfm.$inject = ['ExReadCfgSvc'];
+
     function pas_wvfm(ExReadCfgSvc) {
 
         /**
@@ -24,8 +25,8 @@
 
             var vm = this;
 
-            var objectData = 'IA';
-
+            var objectData = 'micf';
+            
             /**
              * @ngdoc property
              * @name main.controller:PasPlotCtl#cm
@@ -44,24 +45,23 @@
                 ['Microphone Frequency Domain', function () {
                     objectData = "micf";
                     vm.options.ylabel = "Mic Frequency Power (a.u.)";
+                    vm.options.xlabel = "f (Hz)";
                 }],
                 ["Microphone Time Domain",
                     function () {
                         objectData = "mict";
                         vm.options.ylabel = "Mic Time Magnitude (a.u.)";
+                        vm.options.xlabel = "t";
                     }],
                 ['Photodiode Time Domain', function () {
                     objectData = "pd";
                     vm.options.ylabel = "PD Time Magnitude (a.u.)";
+                    vm.options.xlabel = "t";
                 }],
                 null,
                 ['Grid', null,
-                    [['Grid X', function () {
-                    }], ['Grid Y', function () {
-                    }], ['Enable', function () {
-                    }],
-                        ['Disable', function () {
-                        }]]
+                    [['Grid X', function () {}], ['Grid Y', function () {}], ['Enable', function () {}],
+                        ['Disable', function () {}]]
                 ]
             ];
 
@@ -88,14 +88,11 @@
                 axes: {
                     y: {
                         axisLabelWidth: 70,
-                        drawGrid: CfgObj.yGrid,
+                        drawGrid: CfgObj.yGrid
                     },
                     x: {
                         drawAxis: true,
-                        drawGrid: CfgObj.xGrid,
-                        axisLabelFormatter: function (d) {
-                            return Dygraph.zeropad(d.getHours()) + ":" + Dygraph.zeropad(d.getMinutes()) + ":" + Dygraph.zeropad(d.getSeconds());
-                        }
+                        drawGrid: CfgObj.xGrid
                     }
                 },
                 series: {}
@@ -123,6 +120,8 @@
 
             // Some default data so that you can see the actual graph
             vm.data = [[0, NaN, NaN, NaN, NaN, NaN]];
+            
+            vm.options.xlabel = "f (Hz)";
 
             $rootScope.$on('pasDataAvaliable', update_plot);
 

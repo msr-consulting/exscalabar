@@ -17,7 +17,9 @@
      */
     function FlowCtl($scope, cvt, ExFlowSvc) {
 
-        $scope.Devices = {};
+        //$scope.Devices = {};
+        $scope.DeviceData = ExFlowSvc.data;
+        $scope.Device = ExFlowSvc;
 
         /* Update the CVT - the CVT should call the server... */
         $scope.updateSP = function () {

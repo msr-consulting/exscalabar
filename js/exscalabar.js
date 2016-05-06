@@ -2423,22 +2423,36 @@
             var df = celldata[0].MicFreq.dt;
             var dt = celldata[0].MicTime.dt;
             var pdt = celldata[0].PhotoDiode.dt;
+            
             for (var k = 0; k < celldata[0].MicFreq.Y.length; k++) {
-                var micf = [k*df], mict = [k*dt], pd = [k*pdt];
+                var micf = [k*df];
                 for (var j = 0; j < celldata.length; j++) {
                     micf.push(celldata[j].MicFreq.Y[k]);
-                    mict.push(celldata[j].MicTime.Y[k]);
-                    pd.push(celldata[index].PhotoDiode.Y[k]);
                 }
 
                 // Push the data in cell-wise
                 PasData.wvfm.micf.push(micf);
+            }
+            for (var k = 0; k < celldata[0].MicTime.Y.length; k++) {
+                var mict = [k*dt];
+                for (var j = 0; j < celldata.length; j++) {
+                    mict.push(celldata[j].MicTime.Y[k]);
+                }
+
+                // Push the data in cell-wise
                 PasData.wvfm.mict.push(mict);
+            }
+            for (var k = 0; k < celldata[0].PhotoDiode.Y.length; k++) {
+                var pd = [k*pdt];
+                for (var j = 0; j < celldata.length; j++) {
+                    pd.push(celldata[index].PhotoDiode.Y[k]);
+                }
+
+                // Push the data in cell-wise
                 PasData.wvfm.pd.push(pd);
             }
 
             $rootScope.$broadcast('pasDataAvaliable');
-            console.log('Display data now!');
         }
 
         return PasData;
@@ -2831,6 +2845,7 @@
      *
      */
     pas_wvfm.$inject = ['ExReadCfgSvc'];
+
     function pas_wvfm(ExReadCfgSvc) {
 
         /**
@@ -2845,8 +2860,8 @@
 
             var vm = this;
 
-            var objectData = 'IA';
-
+            var objectData = 'micf';
+            
             /**
              * @ngdoc property
              * @name main.controller:PasPlotCtl#cm
@@ -2865,24 +2880,23 @@
                 ['Microphone Frequency Domain', function () {
                     objectData = "micf";
                     vm.options.ylabel = "Mic Frequency Power (a.u.)";
+                    vm.options.xlabel = "f (Hz)";
                 }],
                 ["Microphone Time Domain",
                     function () {
                         objectData = "mict";
                         vm.options.ylabel = "Mic Time Magnitude (a.u.)";
+                        vm.options.xlabel = "t";
                     }],
                 ['Photodiode Time Domain', function () {
                     objectData = "pd";
                     vm.options.ylabel = "PD Time Magnitude (a.u.)";
+                    vm.options.xlabel = "t";
                 }],
                 null,
                 ['Grid', null,
-                    [['Grid X', function () {
-                    }], ['Grid Y', function () {
-                    }], ['Enable', function () {
-                    }],
-                        ['Disable', function () {
-                        }]]
+                    [['Grid X', function () {}], ['Grid Y', function () {}], ['Enable', function () {}],
+                        ['Disable', function () {}]]
                 ]
             ];
 
@@ -2909,14 +2923,11 @@
                 axes: {
                     y: {
                         axisLabelWidth: 70,
-                        drawGrid: CfgObj.yGrid,
+                        drawGrid: CfgObj.yGrid
                     },
                     x: {
                         drawAxis: true,
-                        drawGrid: CfgObj.xGrid,
-                        axisLabelFormatter: function (d) {
-                            return Dygraph.zeropad(d.getHours()) + ":" + Dygraph.zeropad(d.getMinutes()) + ":" + Dygraph.zeropad(d.getSeconds());
-                        }
+                        drawGrid: CfgObj.xGrid
                     }
                 },
                 series: {}
@@ -2944,6 +2955,8 @@
 
             // Some default data so that you can see the actual graph
             vm.data = [[0, NaN, NaN, NaN, NaN, NaN]];
+            
+            vm.options.xlabel = "f (Hz)";
 
             $rootScope.$on('pasDataAvaliable', update_plot);
 
@@ -2990,7 +3003,9 @@
      */
     function FlowCtl($scope, cvt, ExFlowSvc) {
 
-        $scope.Devices = {};
+        //$scope.Devices = {};
+        $scope.DeviceData = ExFlowSvc.data;
+        $scope.Device = ExFlowSvc;
 
         /* Update the CVT - the CVT should call the server... */
         $scope.updateSP = function () {

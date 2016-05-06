@@ -18,7 +18,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="table-responsive" style="color:white" ng-controller="InputTable">
+                <div class="table-responsive" style="color:white">
                     <table class="table" id="cal-table">
                         <!--<colgroup>
                         <col class="col-md-4" />
@@ -35,13 +35,13 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="device in DeviceData">
-                            <td>{{device.label}}</td>
-                            <td>{{device.Q}}</td>
-                            <td>{{device.T}}</td>
-                            <td>{{device.P}}</td>
-                            <td>{{device.Q0}}</td>
-                            <td>{{device.Qsp}}</td>
+                        <tr ng-repeat="(key,d) in DeviceData">
+                            <td>{{d.label}}</td>
+                            <td>{{d.Q}}</td>
+                            <td>{{d.T}}</td>
+                            <td>{{d.P}}</td>
+                            <td>{{d.Q0}}</td>
+                            <td>{{d.Qsp}}</td>
 
                         </tr>
                         </tbody>
