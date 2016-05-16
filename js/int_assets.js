@@ -12550,7 +12550,7 @@ Dygraph.DataHandlers = {};
                 // Set the cursor to a pointer over the legend to let the user know they can click on it...
                 angular.element('.cirrus-legend').css("cursor", "pointer");
 
-                //scope.labels = scope.ref.getLabels();
+                var labels = scope.ref.getLabels();
 
                 // Provide a unique ID
                 if (attrs.id === undefined) {
@@ -12562,7 +12562,7 @@ Dygraph.DataHandlers = {};
                 // Add event handler for clicking on the legend element.
                 // TODO: This needs to be based on the id rather than the inner text (need way to separate two)
                 $('#' + attrs.id).on('click', '.legend-entry', function () {
-                    var index = scope.ref.getLabels().indexOf($(this).text().trim()) - 1;
+                    var index = labels.indexOf($(this).text().trim()) - 1;
                     scope.ref.setVisibility(index, !scope.ref.visibility()[index]);
                 });
 
@@ -12706,7 +12706,7 @@ Dygraph.DataHandlers = {};
         .directive('cuiNumeric', [function () {
 
             return {
-                restrict: 'E',
+                restric: 'E',
                 require: "ngModel",
                 transclude: true,
                 scope: {
@@ -12715,7 +12715,7 @@ Dygraph.DataHandlers = {};
                     evntFunc: '&?'
                 },
                 template: '<div class="input-group inumeric">' +
-                    '<span class="input-group-addon" ng-transclude></span>' +
+                    '<span class="input-group-addon"><ng-transclude></ng-transclude></span>' +
                     '<input class="form-control"  ng-model="data">' +
                     '</div>',
                 link: function (scope, e, attrs, ngm) {

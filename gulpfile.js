@@ -91,7 +91,8 @@ var ext_assets = ["assets/jquery/jquery-2.1.4.js",
     "assets/ui-bootstrap-0.9.0.js",
     "assets/ui-bootstrap-tpls-0.9.0.js",
     "assets/cm/contextMenu.js",
-    "assets/angular/angular-sanitize.js"];
+    "assets/angular/angular-sanitize.js",
+    "assets/angular/round-progress/roundProgress.js"];
 
 // Angular Dygraph assets
 var int_assets = ["assets/ad/js/cirrus-dygraphs-dev.js",

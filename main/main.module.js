@@ -1,4 +1,3 @@
-
 /**
  * @ngdoc overview
  * @name main
@@ -14,8 +13,9 @@
  */
 (function () {
     angular.module('main', ['ngRoute', 'ui.bootstrap',
-                           'ui.bootstrap.contextMenu', 'dygraph',
-                           'cirrus.ui.ibutton', 'cirrus.ui.inumeric',
-                           'cirrus.ui.string',
-                           'ngSanitize', 'ui.bootstrap.dropdownToggle']);
+        'ui.bootstrap.contextMenu', 'dygraph',
+        'cirrus.ui.ibutton', 'cirrus.ui.inumeric',
+        'cirrus.ui.string',
+        'ngSanitize', 'ui.bootstrap.dropdownToggle',
+        'angular-svg-round-progressbar']);
 })();
