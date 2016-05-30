@@ -35,6 +35,7 @@
             this.Q = [];
             this.p = [];
             this.abs = [];
+            this.temp = [];
             this.wvfm = {
                 micf: [],
                 mict: [],
@@ -52,6 +53,7 @@
                 this.Q = [];
                 this.p = [];
                 this.abs = [];
+                this.temp = [];
 
                 shift = false;
             };
@@ -89,7 +91,8 @@
                 IA = [Data.tObj],
                 Q = [Data.tObj],
                 p = [Data.tObj],
-                abs = [Data.tObj];
+                abs = [Data.tObj],
+                temp = [Data.tObj];
 
             /* Pop all of the ordered arrays if the arrays are of the set length... */
             if (shift) {
@@ -98,6 +101,7 @@
                 PasData.Q.shift();
                 PasData.p.shift();
                 PasData.abs.shift();
+                PasData.temp.shift();
             }
             else {
                 shift = PasData.f0.length >= history;
@@ -105,6 +109,7 @@
 
             // This is just for clarification
             var celldata = Data.data.PAS.CellData;
+            
             for (var index in Data.data.PAS.CellData) {
 
                 if (PasData.data.length - 1 < (index)) {
@@ -114,7 +119,8 @@
                         celldata[index].derived.noiseLim,
                         celldata[index].derived.Q,
                         celldata[index].derived.max[0],
-                        celldata[index].derived.max[1]));
+                        celldata[index].derived.max[1],
+                                                      celldata[index].T[0]));
                 }
                 else {
                     PasData.data[index] = {
@@ -132,6 +138,9 @@
                 Q.push(celldata[index].derived.Q);
                 p.push(celldata[index].derived.noiseLim);
                 abs.push(celldata[index].derived.ext);
+                
+                // TODO: Make sure this works...we will likely remove the array
+                temp.push(celldata[index].T[0]);
             }
 
             PasData.f0.push(f0);
@@ -139,6 +148,7 @@
             PasData.Q.push(Q);
             PasData.p.push(p);
             PasData.abs.push(abs);
+            PasData.temp.push(temp);
 
             PasData.drive = Data.data.PAS.Drive;
 
