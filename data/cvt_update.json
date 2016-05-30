@@ -1,0 +1,229 @@
+{
+    "pas": {
+        "spk": {
+            "fcenter": 1350,
+            "df": 100,
+            "cycle": true,
+            "length": 20,
+            "enabled": false,
+            "period": 300,
+            "vrange": 0.000000,
+            "voffset": 5.000000,
+            "ienabled": [true]
+        },
+        "las": {
+            "voffset": [2.50, 2.50, 2.50, 2.50, 2.50],
+            "f0": [-5812.00, 1316.00, 1396.00, 938.00, 1316.00],
+            "vrange": [5.00, 5.00, 5.00, 5.00, 5.00],
+            "enabled": [true, false, false, false, false],
+            "modulation": [0, 0, 0, 0, 0]
+        }
+    },
+    "crd": {
+        "blue": {
+            "f": 2000,
+            "dc": 0.500000
+        },
+        "red": {
+            "f": 1000,
+            "dc": 0.500000
+        },
+        "kred": 1.000000,
+        "kblue0": 1.000000,
+        "kblue1": 1.000000,
+        "kpmt": [1.00, 1.00, 1.00, 1.00, 1.00]
+    },
+    "Humidifier": {
+        "Med": {
+            "p": 1.000000,
+            "i": 0.100000,
+            "d": 0.000000,
+            "ctl": true,
+            "rhsp": 75.000000
+        },
+        "High": {
+            "p": 1.000000,
+            "i": 0.100000,
+            "d": 0.000000,
+            "ctl": true,
+            "rhsp": 90.000000
+        }
+    },
+    "general": {
+        "filter_pos": true,
+        "inlet": true,
+        "power": 26,
+        "purge": true
+    },
+    "Filter": {
+        "period": 240,
+        "length": 60,
+        "auto": false
+    },
+    "device": {
+        "tetech": {
+            "type": "TEC",
+            "label": "Not Available",
+            "sn": "-1",
+            "controller": true,
+            "address": "01",
+            "model": "Not Available",
+            "setpoint": 0.000000
+        },
+        "AlicatA": {
+            "type": "alicat",
+            "label": "High RH",
+            "sn": "104488A  M06 Date Manufactured 07/23/2014A  M07 Date Calibrated   07/23/2014A  M08 Calibrated By     THA  M09 Software Revision 4v35",
+            "controller": true,
+            "address": "A",
+            "model": "Number  MC-5SLPM-DA  M05 Serial Number 104488A  M06 Date Manufactured 07/23/2014A  M07 Date Calibrated   07/23/2014A  M08 Calibrated By     THA  M09 Software Revision 4v35",
+            "setpoint": 0.000000
+        },
+        "p1": {
+            "type": "ppt",
+            "label": "p1",
+            "sn": "00089546",
+            "controller": false,
+            "address": "p1",
+            "model": "PPT"
+        },
+        "AlicatB": {
+            "type": "alicat",
+            "label": "Med RH",
+            "sn": "104483B  M06 Date Manufactured 07/23/2014B  M07 Date Calibrated   07/23/2014B  M08 Calibrated By     THB  M09 Software Revision 4v35",
+            "controller": true,
+            "address": "B",
+            "model": "Number  MC-5SLPM-DB  M05 Serial Number 104483B  M06 Date Manufactured 07/23/2014B  M07 Date Calibrated   07/23/2014B  M08 Calibrated By     THB  M09 Software Revision 4v35",
+            "setpoint": 0.000000
+        },
+        "p2": {
+            "type": "ppt",
+            "label": "p2",
+            "sn": "00089547",
+            "controller": false,
+            "address": "p2",
+            "model": "PPT"
+        },
+        "AlicatC": {
+            "type": "alicat",
+            "label": "Blue",
+            "sn": "128461C  M06 Date Manufactured 02/10/2016C  M07 Date Calibrated   02/10/2016C  M08 Calibrated By     PDC  M09 Software Revision 5v12.0-R22",
+            "controller": true,
+            "address": "C",
+            "model": "Number  MC-5SLPM-DC  M05 Serial Number 128461C  M06 Date Manufactured 02/10/2016C  M07 Date Calibrated   02/10/2016C  M08 Calibrated By     PDC  M09 Software Revision 5v12.0-R22",
+            "setpoint": 0.000000
+        },
+        "p3": {
+            "type": "ppt",
+            "label": "p3",
+            "sn": "00086857",
+            "controller": false,
+            "address": "p3",
+            "model": "PPT"
+        },
+        "AlicatD": {
+            "type": "alicat",
+            "label": "Red",
+            "sn": "120276D  M06 Date Manufactured 08/14/2015D  M07 Date Calibrated   08/14/2015D  M08 Calibrated By     GGD  M09 Software Revision 5v11.0-R22",
+            "controller": true,
+            "address": "D",
+            "model": "Number  MC-5SLPM-DD  M05 Serial Number 120276D  M06 Date Manufactured 08/14/2015D  M07 Date Calibrated   08/14/2015D  M08 Calibrated By     GGD  M09 Software Revision 5v11.0-R22",
+            "setpoint": 0.000000
+        },
+        "p4": {
+            "type": "ppt",
+            "label": "p4",
+            "sn": "00081391",
+            "controller": false,
+            "address": "p4",
+            "model": "PPT"
+        },
+        "AlicatE": {
+            "type": "alicat",
+            "label": "Green",
+            "sn": "104485E  M06 Date Manufactured 07/23/2014E  M07 Date Calibrated   07/23/2014E  M08 Calibrated By     THE  M09 Software Revision 4v35",
+            "controller": true,
+            "address": "E",
+            "model": "Number  MC-5SLPM-DE  M05 Serial Number 104485E  M06 Date Manufactured 07/23/2014E  M07 Date Calibrated   07/23/2014E  M08 Calibrated By     THE  M09 Software Revision 4v35",
+            "setpoint": 0.000000
+        },
+        "p5": {
+            "type": "ppt",
+            "label": "p5",
+            "sn": "00081390",
+            "controller": false,
+            "address": "p5",
+            "model": "PPT"
+        },
+        "AlicatF": {
+            "type": "alicat",
+            "label": "Red TD",
+            "sn": "104486F  M06 Date Manufactured 07/23/2014F  M07 Date Calibrated   07/23/2014F  M08 Calibrated By     THF  M09 Software Revision 4v35",
+            "controller": true,
+            "address": "F",
+            "model": "Number  MC-5SLPM-DF  M05 Serial Number 104486F  M06 Date Manufactured 07/23/2014F  M07 Date Calibrated   07/23/2014F  M08 Calibrated By     THF  M09 Software Revision 4v35",
+            "setpoint": 0.000000
+        },
+        "AlicatG": {
+            "type": "alicat",
+            "label": "Blue TD",
+            "sn": "104489G  M06 Date Manufactured 07/23/2014G  M07 Date Calibrated   07/23/2014G  M08 Calibrated By     THG  M09 Software Revision 4v35",
+            "controller": true,
+            "address": "G",
+            "model": "Number  MC-5SLPM-DG  M05 Serial Number 104489G  M06 Date Manufactured 07/23/2014G  M07 Date Calibrated   07/23/2014G  M08 Calibrated By     THG  M09 Software Revision 4v35",
+            "setpoint": 0.000000
+        },
+        "AlicatH": {
+            "type": "alicat",
+            "label": "TAP",
+            "sn": "104490H  M06 Date Manufactured 07/23/2014H  M07 Date Calibrated   07/23/2014H  M08 Calibrated By     THH  M09 Software Revision 4v35",
+            "controller": true,
+            "address": "H",
+            "model": "Number  MC-5SLPM-DH  M05 Serial Number 104490H  M06 Date Manufactured 07/23/2014H  M07 Date Calibrated   07/23/2014H  M08 Calibrated By     THH  M09 Software Revision 4v35",
+            "setpoint": 0.000000
+        },
+        "v8": {
+            "type": "vaisala",
+            "label": "Inlet",
+            "sn": "-1",
+            "controller": false,
+            "address": "Not Available",
+            "model": "Not Available"
+        },
+        "AlicatI": {
+            "type": "alicat",
+            "label": "Mirror Purge",
+            "sn": "104481I  M06 Date Manufactured 07/21/2014I  M07 Date Calibrated   08/28/2015I  M08 Calibrated By     BKI  M09 Software Revision 4v35",
+            "controller": true,
+            "address": "I",
+            "model": "Number  MC-1SLPM-DI  M05 Serial Number 104481I  M06 Date Manufactured 07/21/2014I  M07 Date Calibrated   08/28/2015I  M08 Calibrated By     BKI  M09 Software Revision 4v35",
+            "setpoint": 0.000000
+        },
+        "v7": {
+            "type": "vaisala",
+            "label": "Dried inlet",
+            "sn": "-1",
+            "controller": false,
+            "address": "Not Available",
+            "model": "Not Available"
+        },
+        "AlicatJ": {
+            "type": "alicat",
+            "label": "O2 supply",
+            "sn": "120275J  M06 Date Manufactured 08/14/2015J  M07 Date Calibrated   08/14/2015J  M08 Calibrated By     JCJ  M09 Software Revision 5v11.0-R22",
+            "controller": true,
+            "address": "J",
+            "model": "Number  MC-1SLPM-DJ  M05 Serial Number 120275J  M06 Date Manufactured 08/14/2015J  M07 Date Calibrated   08/14/2015J  M08 Calibrated By     JCJ  M09 Software Revision 5v11.0-R22",
+            "setpoint": 0.000000
+        },
+        "AlicatK": {
+            "type": "alicat",
+            "label": "Ozone exhaust?",
+            "sn": "104491K  M06 Date Manufactured 07/21/2014",
+            "controller": true,
+            "address": "K",
+            "model": "Number  MC-1SLPM-DK  M05 Serial Number 104491K  M06 Date Manufactured 07/21/2014",
+            "setpoint": 0.000000
+        }
+    }
+}

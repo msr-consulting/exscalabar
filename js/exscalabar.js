@@ -3000,32 +3000,26 @@
     function pasTempPlotDir() {
         /**
          * @ngdoc directive
-         * @name main.directive:exVaisalaPlot
+         * @name main.directive:exPasTempPlot
          * @scope
          * @restrict E
          *
          * @description
          * This directive wraps a plot specifically for the purpose of providing
-         * a reusable means to display flow data returned by the server.
+         * a reusable means to display PAS specfiic temperature data returned by the server.
          *
          */
 
-        // TODO: Add scope variable for specifying the subsystem so we
-        // don't have to place every variable on the graph...
-        // Suggested:
-        // * PAS
-        // * CRD
-        // * System/General
-
         /**
          * @ngdoc controller
-         * @name main.controller:VaisalaPlotCtl
+         * @name main.controller:pasTempPoltCtl
          * @requires $rootScope
-         * @requires main.service:ExVaisalaSvc
+         * @requires main.service:ExReadCfgSvc
+         * @requires main.service:ExPasSvc
          *
          * @description
          * This controller is used specifically for handling data returned by
-         * the flow device service to plot the data.
+         * the PAS service to plot the temperature data.
          */
 
         pasTempPlotDir.$inject = ['$rootScope', 'ExReadCfgSvc', 'ExPasSvc'];
@@ -3038,8 +3032,8 @@
 
             /**
              * @ngdoc property
-             * @name main.controller:FlowPlotCtl#cm
-             * @propertyOf main.controller:FlowPlotCtl
+             * @name main.controller:pasTempPoltCtl#cm
+             * @propertyOf main.controller:pasTempPoltCtl
              *
              * @description
              * Provides an array of arrays for defining the context menu on the plot.
@@ -3051,13 +3045,10 @@
              *
              * The context meny for this plot is defined as follows:
              *
-             * * ``P`` - pressure in mb .
-             * * ``T`` - temperature in degrees Celsius.
-             * * ``Q`` - volumetric flow rate in lpm.
-             * * ``Q0`` - mass flow rate in slpm.
-             *
-             * Not all values are measured by every device.  In every case, the function executed
-             * will set the axis label to the correct value.
+             * * Enable All - enable all plots
+             * * Clear Data - empty plot arrays
+             * * Autoscale 1x - adjust the limits to the current plot range
+             * * Autoscale - set the range to ``[null, null]`` and axis will adjust to the current range
              *
              */
             vm.cm = [[
@@ -3081,8 +3072,8 @@
 
             /**
              * @ngdoc property
-             * @name main.controller:FlowPlotCtl#options
-             * @propertyOf main.controller:FlowPlotCtl
+             * @name main.controller:pasTempPoltCtl#options
+             * @propertyOf main.controller:pasTempPoltCtl
              *
              * @description
              * Object defining the options for the definition of the dygraph plot.
@@ -3097,7 +3088,7 @@
              */
             var CfgObj = ExReadCfgSvc.pas;
             vm.options = {
-                ylabel: '<Temperature (&deg;C)',
+                ylabel: 'Temperature (&deg;C)',
                 labels: ['t', 'Cell 1', 'Cell 2', 'Cell 3', 'Cell 4', 'Cell 5'],
                 legend: 'always',
                 axes: {
@@ -3118,14 +3109,15 @@
             };
 
 
+            // If the user provides a title in the directive call, add the title.
             if (vm.title !== undefined) {
                 vm.options.title = vm.title;
             }
 
             /**
              * @ngdoc property
-             * @name main.controller:FlowPlotCtl#data
-             * @propertyOf main.controller:FlowPlotCtl
+             * @name main.controller:pasTempPoltCtl#data
+             * @propertyOf main.controller:pasTempPoltCtl
              *
              * @description
              * The data to be plotted in the dygraph plot.  This is updated with the selection
@@ -3139,13 +3131,11 @@
 
             /**
              * @ngdoc method
-             * @name main.controller:FlowPlotCtl#updatePlot
+             * @name main.controller:pasTempPoltCtl#updatePlot
              * @methodOf main.controller:FlowPlotCtl
              *
              * @description
-             * Function to be executed when data is made available via the service.
-             * This function will update the data object with data stored in the service
-             * and (if necessary) update the ``labels`` property in the ``options`` object.
+             * Simply popluates the ``data`` variable with the PAS temperature arrays.
              *
              */
             function updatePlot() {
