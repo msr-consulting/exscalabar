@@ -6,6 +6,8 @@
             
             var maxPMTGain = 10;
             var maxLaserGain = 5;
+            
+            $scope.write_wvfm_data = false;
 
             // Lasers have three inputs
             var laserInput = function (_rate, _DC, _k, enabled, ID) {
