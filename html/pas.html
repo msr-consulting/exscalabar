@@ -60,11 +60,8 @@
                         <thead>
                         <tr>
                             <th class="col-md-1">Cell</th>
-                            <th class="col-md-2">V
-                                <sub>range</sub> (V)
-                            </th>
-                            <th class="col-md-2">V
-                                <sub>offset</sub> (V)
+                            <th class="col-md-2" tooltip-placement="bottom" tooltip="Set the laser settings on a 0-100% scale."
+                     tooltip-trigger="mouseenter" tooltip-append-to-body="true">Setting
                             </th>
                             <th class="col-md-2">f
                                 <sub>0</sub> (Hz)
@@ -77,10 +74,7 @@
                         <tr ng-repeat="cell in lasCtl track by $index">
                             <td>{{$index+1}}</td>
                             <td>
-                                <input class="col-md-12" ng-blur="updateVr()" ng-model="cell.Vrange" type="number">
-                            </td>
-                            <td>
-                                <input class="col-md-12" ng-blur="updateVo()" ng-model="cell.Voffset" type="number">
+                                <input class="col-md-12" ng-blur="updateLasVolt()" ng-model="cell.Vnorm" type="number" min ="0" max = "100">
                             </td>
                             <td>
                                 <input class="col-md-12" ng-blur="updatef0()" ng-model="cell.f0" type="number">
@@ -134,7 +128,7 @@
     <ex-pas-wvfm></ex-pas-wvfm>
 </div>
 <div class="row">
-    <ex-pas-temp-plot>   </ex-pas-temp-plot>
+    <ex-pas-temp-plot></ex-pas-temp-plot>
 </div>
 <div class="row" style="margin-top:10px;">
     <div class="col-md-12">

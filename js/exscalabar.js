@@ -1851,6 +1851,9 @@
         function ($scope, cvt, ExCrdSvc) {
 
             cvt.firstcall = 1;
+            
+            var maxPMTGain = 10;
+            var maxLaserGain = 5;
 
             // Lasers have three inputs
             var laserInput = function (_rate, _DC, _k, enabled, ID) {
@@ -1891,18 +1894,18 @@
              * second to red.
              */
             $scope.laser_ctl = [
-                new laserInput(cvt.crd.fblue, cvt.crd.dcblue, cvt.crd.kblue, cvt.crd.eblue, "Blue Laser"),
-                new laserInput(cvt.crd.fred, cvt.crd.dcred, cvt.crd.kred, cvt.crd.ered, "Red Laser")
+                new laserInput(cvt.crd.fblue, cvt.crd.dcblue, cvt.crd.kblue/maxLaserGain*100, cvt.crd.eblue, "Blue Laser"),
+                new laserInput(cvt.crd.fred, cvt.crd.dcred, cvt.crd.kred/maxLaserGain*100, cvt.crd.ered, "Red Laser")
             ];
 
-            $scope.pmt = cvt.crd.kpmt;
+            $scope.pmt = cvt.crd.kpmt.map(function(x){return x/maxPMTGain*100;});
 
             $scope.setGain = function () {
-                cvt.crd.setGain($scope.pmt);
+                cvt.crd.setGain($scope.pmt.map(function(x){ return x/100*maxPMTGain;}));
             };
 
             $scope.setLaserGain = function () {
-                cvt.crd.setLaserGain([$scope.laser_ctl[0].k, $scope.laser_ctl[1].k]);
+                cvt.crd.setLaserGain([$scope.laser_ctl[0].k/100*maxLaserGain, $scope.laser_ctl[1].k/100*maxLaserGain]);
             };
 
             $scope.purge = {
@@ -1962,15 +1965,15 @@
             $scope.$on('cvtUpdated', function () {
                 $scope.laser_ctl[0].rate = cvt.crd.fblue;
                 $scope.laser_ctl[0].DC = cvt.crd.dcblue;
-                $scope.laser_ctl[0].k = cvt.crd.kblue;
+                $scope.laser_ctl[0].k = cvt.crd.kblue/maxPMTGain*100;
                 $scope.laser_ctl[0].enabled = cvt.crd.eblue;
 
                 $scope.laser_ctl[1].rate = cvt.crd.fred;
                 $scope.laser_ctl[1].DC = cvt.crd.dcred;
-                $scope.laser_ctl[1].k = cvt.crd.kred;
+                $scope.laser_ctl[1].k = cvt.crd.kred/maxPMTGain*100;
                 $scope.laser_ctl[1].enabled = cvt.crd.ered;
 
-                $scope.pmt = cvt.crd.kpmt;
+                $scope.pmt = cvt.crd.kpmt.map(function(x){return x/maxPMTGain*100;});
 
                 //$scope.purge.pos = cvt.general.purge;
 
@@ -2548,6 +2551,8 @@
         function ($scope, cvt, Data) {
 
             $scope.lasCtl = [];
+            
+            var maxRange = 5;
 
             /** NOTE: This loop initializes the laser controls based on what is
              * in the CVT.  If the initial speaker setting is TRUE, then
@@ -2555,27 +2560,12 @@
              */
             for (var i = 0; i < cvt.pas.las.vr.length; i++) {
 
-                $scope.lasCtl.push(new lasSet(cvt.pas.las.vr[i],
-                    cvt.pas.las.voffset[i],
+                $scope.lasCtl.push(new lasSet(cvt.pas.las.vr[i]/maxRange*100,
                     cvt.pas.las.f0[i],
                     cvt.pas.las.modulation[i],
                     cvt.pas.las.enable[i]));
 
-            }
-
-            // Listen for data
-            $scope.$on('dataAvailable', function () {
-
-                /* If the current position of the speaker is TRUE (speaker is on),
-                 * populate the modulation frequencies in the laser controls with
-                 * the current resonant frequency measured by the microphone.
-                 */
-                /* if (Data.pas.drive) {
-                    for (i = 0; i < Data.pas.cell.length; i++) {
-                        $scope.lasCtl[i].f0 = Data.pas.cell[i].f0[0].y;
-                    }
-                }*/
-            });
+            };
 
             $scope.$on('cvtUpdated', function () {
 
@@ -2583,8 +2573,8 @@
                 // server-side.
                 for (var i = 0; i < cvt.pas.las.vr.length; i++) {
 
-                    $scope.lasCtl[i].Vrange = cvt.pas.las.vr[i];
-                    $scope.lasCtl[i].Voffset = cvt.pas.las.voffset[i];
+                    $scope.lasCtl[i].Vnorm = cvt.pas.las.vr[i]/maxRange*100;
+                    
                     $scope.lasCtl[i].f0 = cvt.pas.las.f0[i];
                     $scope.lasCtl[i].modulation = cvt.pas.las.modulation[i];
                     $scope.lasCtl[i].lasEn = cvt.pas.las.enable[i];
@@ -2609,20 +2599,16 @@
             /* Update the laser voltage range for the lasers in the current value
              * table.
              */
-            $scope.updateVr = function () {
+            $scope.updateLasVolt = function () {
                 var x = [];
+                var y = [];
+                var tempRange = 0;
                 for (i = 0; i < $scope.lasCtl.length; i++) {
-                    x.push($scope.lasCtl[i].Vrange);
+                    tempRange = $scope.lasCtl[i].Vnorm*maxRange/100;
+                    x.push(tempRange);
+                    y.push(tempRange/2);
                 }
                 cvt.pas.las.setVr(x);
-            };
-
-            /* Update the voltage offset in the current value table. */
-            $scope.updateVo = function () {
-                var x = [];
-                for (i = 0; i < $scope.lasCtl.length; i++) {
-                    x.push($scope.lasCtl[i].Voffset);
-                }
                 cvt.pas.las.setVo(x);
             };
 
@@ -2649,14 +2635,12 @@
     ]);
 
     /** PAS Laser settings object.  The settings are
-     * * Vrange = voltage range in volts of laser modulation
-     * * Voffset = voltage offset in volts for laser modulation.
+     * * Vnorm = voltage range in volts of laser modulation
      * * f0 = modulation frequency in Hz
      * * modulation = boolean representing sine (false) or square (true)
      */
     function lasSet(vr, vo, f0, mod, en) {
-        this.Vrange = vr;
-        this.Voffset = vo;
+        this.Vnorm = vr;
         this.f0 = f0;
         this.modulation = mod;
         this.lasEn = false;
