@@ -4,6 +4,20 @@
 
             cvt.first_call = 1;
             
+            $scope.connected = false;
+
+            $scope.$on('dataNotAvailable', function () {
+                $scope.connected = false;
+            });
+            $scope.$on("dataAvailable", function(){
+                $scope.connected= true;
+            });
+            
+
+            $scope.stop = function () {
+                $http.get(net.address() + 'General/Stop');
+            };
+            
             $scope.network = {"ip": net.ip,
                          "port":net.port};
 

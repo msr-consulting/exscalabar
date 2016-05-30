@@ -9,12 +9,12 @@
                             (Hz)
                         </cui-numeric>
                         <cui-numeric ng-model="ctl.DC" width="45">DC (%)</cui-numeric>
-                        <cui-numeric width="45" ng-model="ctl.k" evnt-func="setLaserGain()">k</cui-numeric>
+                        <cui-numeric width="45" ng-model="ctl.k" evnt-func="setLaserGain()" data-toggle="tooltip" data-placement="right" title="Laser gain in %.">k</cui-numeric>
                         <cui-button ival="ctl.en" ng-model="ctl.en" ng-click="setEn($index)">Power</cui-button>
                     </div>
                 </div>
             </div>
-            <div class="panel panel-default" data-toggle="tooltip" data-placement="right" title="PMT gains in volts.">
+            <div class="panel panel-default" data-toggle="tooltip" data-placement="right" title="PMT gains in %.">
                 <div class="panel-heading">
                     PMT Gain
                 </div>
