@@ -36,6 +36,7 @@
             this.p = [];
             this.abs = [];
             this.temp = [];
+            this.lrms = [];
             this.wvfm = {
                 micf: [],
                 mict: [],
@@ -54,13 +55,14 @@
                 this.p = [];
                 this.abs = [];
                 this.temp = [];
+                this.lrms = [];
 
                 shift = false;
             };
         }
 
 
-        function PasCellData(IA, f0, abs, Q, p, i, loc) {
+        function PasCellData(IA, f0, abs, Q, p, i, loc, lrms) {
             this.IA = IA;
             this.f0 = f0;
             this.abs = abs;
@@ -68,6 +70,7 @@
             this.p = p;
             this.maxi = i;
             this.maxloc = loc;
+            this.lrms = lrms;
         }
 
         /**
@@ -92,7 +95,8 @@
                 Q = [Data.tObj],
                 p = [Data.tObj],
                 abs = [Data.tObj],
-                temp = [Data.tObj];
+                temp = [Data.tObj],
+                lrms = [Data.tObj];
 
             /* Pop all of the ordered arrays if the arrays are of the set length... */
             if (shift) {
@@ -102,6 +106,7 @@
                 PasData.p.shift();
                 PasData.abs.shift();
                 PasData.temp.shift();
+                PasData.lrms.shift();
             }
             else {
                 shift = PasData.f0.length >= history;
@@ -120,7 +125,8 @@
                         celldata[index].derived.Q,
                         celldata[index].derived.max[0],
                         celldata[index].derived.max[1],
-                                                      celldata[index].T[0]));
+                        celldata[index].T[0],
+                        celldata[index].lRMS));
                 }
                 else {
                     PasData.data[index] = {
@@ -130,7 +136,9 @@
                         "p": celldata[index].derived.noiseLim,
                         "Q": celldata[index].derived.Q,
                         "maxi": celldata[index].derived.max[0],
-                        "maxloc": celldata[index].derived.max[1]
+                        "maxloc": celldata[index].derived.max[1],
+                        "temp": celldata[index].T[0],
+                        "lrms": celldata[index].lRMS
                     };
                 }
                 f0.push(celldata[index].derived.f0);
@@ -138,9 +146,9 @@
                 Q.push(celldata[index].derived.Q);
                 p.push(celldata[index].derived.noiseLim);
                 abs.push(celldata[index].derived.ext);
-                
-                // TODO: Make sure this works...we will likely remove the array
+                // TODO: Remove array from temperature
                 temp.push(celldata[index].T[0]);
+                lrms.push(celldata[index].lRMS);
             }
 
             PasData.f0.push(f0);
@@ -149,6 +157,7 @@
             PasData.p.push(p);
             PasData.abs.push(abs);
             PasData.temp.push(temp);
+            PasData.lrms.push(lrms);
 
             PasData.drive = Data.data.PAS.Drive;
 

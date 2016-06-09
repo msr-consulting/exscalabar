@@ -62,6 +62,10 @@
                     objectData = "abs";
                     vm.options.ylabel = "<em>&sigma;<sub>abs</sub></em> (Mm<sup>-1</sup>)";
                 }],
+                ['LRMS', function () {
+                    objectData = "lrms";
+                    vm.options.ylabel = "Laser RMS (V)";
+                }],
                 null, // Creates a divider
                 ['Clear Data', function () {
                     ExPasSvc.clear();
