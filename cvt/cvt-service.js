@@ -377,6 +377,16 @@
     function Crd(_http, _net) {
         var http = _http;
         var net = _net;
+        this.write_taus = false;
+        
+        this.update_tau_write = function(state){
+            this.write_taus = state;
+            
+            var val = state?1:0;
+            var cmd = 'CRDS_CMD/WriteTausFile?Write_Data=' + val;
+            http.get(net.address() + cmd);
+            
+        }
 
         this.net = net;
         // Red laser frequency in Hz

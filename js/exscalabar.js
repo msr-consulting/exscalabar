@@ -488,6 +488,16 @@
     function Crd(_http, _net) {
         var http = _http;
         var net = _net;
+        this.write_taus = false;
+        
+        this.update_tau_write = function(state){
+            this.write_taus = state;
+            
+            var val = state?1:0;
+            var cmd = 'CRDS_CMD/WriteTausFile?Write_Data=' + val;
+            http.get(net.address() + cmd);
+            
+        }
 
         this.net = net;
         // Red laser frequency in Hz
@@ -1527,6 +1537,9 @@
             cvt.first_call = 1;
             
             $scope.connected = false;
+            
+            $scope.filter_speaker = false;
+            
 
             $scope.$on('dataNotAvailable', function () {
                 $scope.connected = false;
@@ -1848,6 +1861,7 @@
             var maxLaserGain = 5;
             
             $scope.write_wvfm_data = false;
+            $scope.write_taus = cvt.crd.write_taus;
 
             // Lasers have three inputs
             var laserInput = function (_rate, _DC, _k, enabled, ID) {
@@ -1876,6 +1890,11 @@
                 $scope.show_wvfm = !$scope.show_wvfm;
 
             };
+            
+            $scope.update_tau_write= function(){
+                $scope.write_taus = !$scope.write_taus;
+                cvt.crd.update_tau_write($scope.write_taus);
+            }
 
             $scope.setEn = function () {
                 var index = arguments[0];
@@ -1969,6 +1988,7 @@
 
                 $scope.pmt = cvt.crd.kpmt.map(function(x){return x/maxPMTGain*100;});
 
+                $scope.write_taus = cvt.crd.write_taus;
                 //$scope.purge.pos = cvt.general.purge;
 
             });
@@ -2559,7 +2579,7 @@
                     cvt.pas.las.modulation[i],
                     cvt.pas.las.enable[i]));
 
-            };
+            }
 
             $scope.$on('cvtUpdated', function () {
 

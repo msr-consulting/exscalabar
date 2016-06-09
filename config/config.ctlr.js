@@ -5,6 +5,9 @@
             cvt.first_call = 1;
             
             $scope.connected = false;
+            
+            $scope.filter_speaker = false;
+            
 
             $scope.$on('dataNotAvailable', function () {
                 $scope.connected = false;

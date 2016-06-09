@@ -17,7 +17,7 @@
                     cvt.pas.las.modulation[i],
                     cvt.pas.las.enable[i]));
 
-            };
+            }
 
             $scope.$on('cvtUpdated', function () {
 
