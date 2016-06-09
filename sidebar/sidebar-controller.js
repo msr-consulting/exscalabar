@@ -1,6 +1,6 @@
 (function () {
     angular.module('main')
-        .controller('Sidebar', ['$scope', '$http', 'Data', 'net', 'cvt', function ($scope, $http, Data, net, cvt) {
+        .controller('Sidebar', ['$scope', 'Data','cvt', function ($scope,Data, cvt) {
 
             $scope.save = 1;
             $scope.filter = Data.filter.state;
@@ -26,33 +26,26 @@
             $scope.saveData = function () {
 
                 $scope.save = !$scope.save;
-
-                // TODO: Check to see if this is correct.
-                var s = $scope.save ? 1 : 0;
-
-                $http.get(net.address() + 'General/Save?save=' + s.toString());
+                cvt.setSaveData($scope.save);
             };
 
             $scope.setFilter = function () {
 
                 $scope.filter = !$scope.filter;
-                var x = $scope.filter ? 1 : 0;
-                $http.get(net.address() + 'General/UpdateFilter?State=' + x);
+                cvt.setFilterValve($scope.filter);
 
             };
 
             $scope.setDenuderBypass = function () {
-                $scope.filter = !$scope.denuder_bypass;
-                var x = $scope.denuder_bypass ? 1 : 0;
-                $http.get(net.address() + 'General/DenudedBypass?val=' + x);
+                $scope.denuder_bypass = !$scope.denuder_bypass;
+                cvt.setDenuderBypassValve($scope.denuder_bypass);
             };
 
             /** Flip the switch cabin switch.
              */
             $scope.setCabin = function () {
                 $scope.cabin = !$scope.cabin;
-                var x = $scope.cabin ? 1 : 0;
-                $http.get(net.address() + 'General/Cabin?val=' + x);
+                cvt.setCabinValve($scope.cabin);
             };
 
         }]);

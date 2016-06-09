@@ -48,6 +48,32 @@
                 "ppt": []
             };
 
+            cvt.setCabinValve = function(pos){
+                var x = pos ? 1 : 0;
+                $http.get(net.address() + 'General/Cabin?val=' + x);
+
+            };
+
+            cvt.setDenuderBypassValve = function(pos){
+                var x = pos ? 1 : 0;
+                $http.get(net.address() + 'General/DenudedBypass?val=' + x);
+
+            };
+
+            cvt.setFilterValve = function(pos){
+                var x = pos ? 1 : 0;
+                $http.get(net.address() + 'General/UpdateFilter?State=' + x);
+
+            };
+
+            cvt.setSaveData = function (val){
+
+                var s = val ? 1 : 0;
+
+                $http.get(net.address() + 'General/Save?save=' + s.toString());
+
+            }
+
             /**
              * @ngdoc object
              * @name main.humidifier
