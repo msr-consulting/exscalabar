@@ -3,7 +3,7 @@
         .controller('Sidebar', ['$scope', 'Data','cvt', function ($scope,Data, cvt) {
 
             $scope.save = 1;
-            $scope.filter = Data.filter.state;
+            $scope.filter = cvt.filter.position;
             $scope.time = "Not connected";
             $scope.o3On = false;
             $scope.cabin = false;
@@ -19,8 +19,12 @@
 
             $scope.$on('dataAvailable', function () {
 
-                $scope.filter = Data.filter.state;
+                //$scope.filter = Data.filter.state;
                 $scope.cabin = Data.Cabin;
+            });
+            
+            $scope.$on('cvtUpdated', function(){
+                $scope.filter = cvt.filter.position;
             });
 
             $scope.saveData = function () {
