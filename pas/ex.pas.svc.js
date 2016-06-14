@@ -125,7 +125,7 @@
                         celldata[index].derived.Q,
                         celldata[index].derived.max[0],
                         celldata[index].derived.max[1],
-                        celldata[index].T[0],
+                        celldata[index].T,
                         celldata[index].lRMS));
                 }
                 else {
@@ -137,7 +137,7 @@
                         "Q": celldata[index].derived.Q,
                         "maxi": celldata[index].derived.max[0],
                         "maxloc": celldata[index].derived.max[1],
-                        "temp": celldata[index].T[0],
+                        "temp": celldata[index].T,
                         "lrms": celldata[index].lRMS
                     };
                 }
@@ -147,7 +147,7 @@
                 p.push(celldata[index].derived.noiseLim);
                 abs.push(celldata[index].derived.ext);
                 // TODO: Remove array from temperature
-                temp.push(celldata[index].T[0]);
+                temp.push(celldata[index].T);
                 lrms.push(celldata[index].lRMS);
             }
 
