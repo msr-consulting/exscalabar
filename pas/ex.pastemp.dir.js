@@ -55,22 +55,22 @@
              * * Autoscale - set the range to ``[null, null]`` and axis will adjust to the current range
              *
              */
-            vm.cm = [[
+            vm.cm = [
                     ['Enable All', function () {
                         console.log('Enabling all.');
                     }],
                     ['Clear Data', function () {
                         ExVaisalaSvc.clear_data();
                     }]
-                ],
-                [
+                ,
+                
                     ['Autoscale 1x', function () {
                         vm.options.axes.y.valueRange = vm.ref.yAxisRange();
                     }],
                     ['Autoscale', function () {
                         vm.options.axes.y.valueRange = [null, null];
                     }]
-                ]
+                
 
             ];
 
