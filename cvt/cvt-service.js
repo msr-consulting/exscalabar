@@ -426,11 +426,13 @@
         // Red laser gain
         this.kred = 1;
         // Blue laser gain
-        this.kblue = 1;
+        this.kblue0 = 1;
+        this.kblue1 = 1;
         // PMT gains
         this.kpmt = [0, 0, 0, 0, 0];
         // Blue enable state
-        this.eblue = true;
+        this.eblue0 = true;
+        this.eblue1 = true;
         // Red enable state
         this.ered = true;
 
@@ -448,14 +450,16 @@
 
         };
         this.setEnable = function (vals) {
-            this.eblue = vals[0];
-            this.ered = vals[1];
+            this.eblue0 = vals[0];
+            this.eblue1 = vals[1];
+            this.ered = vals[2];
 
             var enr = this.ered ? 1 : 0;
-            var enb = this.eblue ? 1 : 0;
+            var enb0 = this.eblue0 ? 1 : 0;
+            var enb1 = this.eblue1 ? 1 : 0;
 
 
-            var cmd = 'CRDS_CMD/LaserEnable?Red=' + enr + '&Blue=' + enb;
+            var cmd = 'CRDS_CMD/LaserEnable?Red=' + enr + '&Blue=' + enb0;
             http.get(net.address() + cmd);
         };
 
@@ -469,9 +473,10 @@
 
         this.setLaserGain = function (val) {
 
-            this.kred = val[1];
-            this.kblue = val[0];
-            http.get(net.address() + 'CRDS_CMD/LaserGain?B1=0&B0=' + val[0] + '&R=' + val[1]);
+            this.kred = val[2];
+            this.kblue0 = val[0];
+            this.kblue1 = val[1];
+            http.get(net.address() + 'CRDS_CMD/LaserGain?B1='+ val[1] + '&B0=' + val[0] + '&R=' + val[1]);
         };
     }
 
