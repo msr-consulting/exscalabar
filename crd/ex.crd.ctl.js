@@ -46,8 +46,10 @@
             $scope.setEn = function () {
                 var index = arguments[0];
                 $scope.laser_ctl[index].en = !$scope.laser_ctl[index].en;
+                
+                var vals = [$scope.laser_ctl[0].en, $scope.laser_ctl[1].en, $scope.laser_ctl[2].en];
 
-                cvt.crd.setEnable([$scope.laser_ctl[0].en, $scope.laser_ctl[1].en]);
+                cvt.crd.setEnable(vals);
             };
 
             /* Variable for laser control binding; first element is related to blue,
@@ -85,27 +87,6 @@
             };
 
             $scope.data = ExCrdSvc;
-
-            // TODO: Implement enabled functionality
-            $scope.setEnable = function (index) {
-
-                $scope.laser_ctl[index].en = !$scope.laser_ctl[index].en;
-                var enabled = $scope.laser_ctl[index].en;
-                switch (index) {
-                    case 0:
-                        cvt.crd.eblue0 = enabled;
-                        break;
-                    case 1:
-                        cvt.crd.eblue1 = enabled;
-                        break;
-                    case 2:
-                        cvt.crd.ered = enabled;
-                        break;
-                    default:
-
-                }
-
-            };
 
             // Space data - allows us to display the dygraph plot with no data if not connected
             $scope.ringdownAvg = [[0, NaN, NaN, NaN, NaN, NaN]];

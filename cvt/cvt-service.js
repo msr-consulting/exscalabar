@@ -459,7 +459,7 @@
             var enb1 = this.eblue1 ? 1 : 0;
 
 
-            var cmd = 'CRDS_CMD/LaserEnable?Red=' + enr + '&Blue0=' + enb0+ '&Blue0=' + enb0;
+            var cmd = 'CRDS_CMD/LaserEnable?Red=' + enr + '&Blue0=' + enb0+ '&Blue1=' + enb1;
             http.get(net.address() + cmd);
         };
 
