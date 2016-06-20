@@ -285,6 +285,9 @@
                         cvt.crd.dcred = crd.red.dc;
                         cvt.crd.dcblue = crd.blue.dc;
                         cvt.crd.kpmt = crd.kpmt;
+                        cvt.crd.kblue0 = crd.klaser[1];
+                        cvt.crd.kblue1 = crd.klaser[2];
+                        cvt.crd.kred = crd.klaser[0];
 
                         /* Update PAS laser controls */
                         cvt.pas.las.f0 = pas.las.f0;
@@ -476,7 +479,7 @@
             this.kred = val[2];
             this.kblue0 = val[0];
             this.kblue1 = val[1];
-            http.get(net.address() + 'CRDS_CMD/LaserGain?B1='+ val[1] + '&B0=' + val[0] + '&R=' + val[1]);
+            http.get(net.address() + 'CRDS_CMD/LaserGain?B1='+ val[1] + '&B0=' + val[0] + '&R=' + val[2]);
         };
     }
 
