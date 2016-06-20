@@ -311,6 +311,7 @@
                         cvt.filter.cycle.auto = response.data.Filter.auto;
 
                         cvt.filter.position = response.data.general.filter_pos;
+                        cvt.inlet = response.data.general.inlet;
 
                         var power = Number(response.data.general.power).toString(2);
 

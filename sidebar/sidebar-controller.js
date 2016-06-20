@@ -16,15 +16,10 @@
 
             // Initially time is not available
             $scope.time = "Not Connected";
-
-            $scope.$on('dataAvailable', function () {
-
-                //$scope.filter = Data.filter.state;
-                $scope.cabin = Data.Cabin;
-            });
             
             $scope.$on('cvtUpdated', function(){
                 $scope.filter = cvt.filter.position;
+                $scope.cabin = cvt.inlet;
             });
 
             $scope.saveData = function () {

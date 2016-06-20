@@ -1,36 +1,36 @@
 {
     "pas": {
+        "filter_cycle": false,
         "spk": {
-            "fcenter": 1350,
-            "df": 100,
+            "fcenter": 1364,
+            "df": 150,
             "cycle": false,
             "length": 20,
             "enabled": true,
             "period": 300,
-            "vrange": 0.000000,
-            "voffset": 5.000000,
+            "vrange": 0.040000,
+            "voffset": 0.200000,
             "ienabled": [true]
         },
         "las": {
             "voffset": [2.50, 2.50, 2.50, 2.50, 2.50],
-            "f0": [1352.00, 1354.00, 1354.00, 1354.00, 1351.00],
+            "f0": [1359.00, 1364.00, 1357.00, 1363.00, 1364.00],
             "vrange": [5.00, 5.00, 5.00, 5.00, 5.00],
             "enabled": [true, false, false, false, false],
-            "mod": ["Sine", "Sine", "Sine", "Sine", "Sine"]
+            "modulation": [0, 0, 0, 0, 0]
         }
     },
     "crd": {
         "blue": {
-            "f": 2000,
+            "f": 1000,
             "dc": 0.500000
         },
         "red": {
             "f": 1000,
             "dc": 0.500000
         },
-        "kred": 1.000000,
-        "kblue0": 1.000000,
-        "kblue1": 1.000000,
+        "klaser": [2.50, 1.25, 1.00],
+        "enable": [true, true, false],
         "kpmt": [1.00, 1.00, 1.00, 1.00, 1.00]
     },
     "Humidifier": {
@@ -61,22 +61,21 @@
         "auto": false
     },
     "device": {
-        "tetech": {
-            "type": "TEC",
-            "label": "Not\sAvailable",
-            "sn": "-1",
-            "controller": true,
-            "address": "01",
-            "model": "Not\sAvailable",
-            "setpoint": 0.000000
+        "p1": {
+            "type": "ppt",
+            "label": "hello",
+            "sn": "00089546",
+            "controller": false,
+            "address": "p1",
+            "model": "PPT"
         },
         "AlicatA": {
             "type": "alicat",
-            "label": "High\sRH",
-            "sn": "104488A\s\sM06\sDate\sManufactured\s07/23/2014A\s\sM07\sDate\sCalibrated\s\s\s07/23/2014A\s\sM08\sCalibrated\sBy\s\s\s\s\sTHA\s\sM09\sSoftware\sRevision\s4v35",
+            "label": "High RH",
+            "sn": "104488A",
             "controller": true,
             "address": "A",
-            "model": "Number\s\sMC-5SLPM-DA\s\sM05\sSerial\sNumber\s104488A\s\sM06\sDate\sManufactured\s07/23/2014A\s\sM07\sDate\sCalibrated\s\s\s07/23/2014A\s\sM08\sCalibrated\sBy\s\s\s\s\sTHA\s\sM09\sSoftware\sRevision\s4v35",
+            "model": "Number  MC-5SLPM-DA  M05 Serial Number 104488A  M06 Date Manufactured 07/23/2014A  M07 Date Calibrated   07/23/2014A  M08 Calibrated By     THA  M09 Software Revision 4v35",
             "setpoint": 0.000000
         },
         "v2": {
@@ -84,33 +83,16 @@
             "label": "MedRH",
             "sn": "-1",
             "controller": false,
-            "address": "Not\sAvailable",
-            "model": "Not\sAvailable"
-        },
-        "p1": {
-            "type": "ppt",
-            "label": "p1",
-            "sn": "00089546",
-            "controller": false,
-            "address": "p1",
-            "model": "PPT"
-        },
-        "AlicatB": {
-            "type": "alicat",
-            "label": "Med\sRH",
-            "sn": "104483B\s\sM06\sDate\sManufactured\s07/23/2014B\s\sM07\sDate\sCalibrated\s\s\s07/23/2014B\s\sM08\sCalibrated\sBy\s\s\s\s\sTHB\s\sM09\sSoftware\sRevision\s4v35",
-            "controller": true,
-            "address": "B",
-            "model": "Number\s\sMC-5SLPM-DB\s\sM05\sSerial\sNumber\s104483B\s\sM06\sDate\sManufactured\s07/23/2014B\s\sM07\sDate\sCalibrated\s\s\s07/23/2014B\s\sM08\sCalibrated\sBy\s\s\s\s\sTHB\s\sM09\sSoftware\sRevision\s4v35",
-            "setpoint": 0.000000
+            "address": "Not Available",
+            "model": "Not Available"
         },
         "v3": {
             "type": "vaisala",
             "label": "HighRH",
             "sn": "-1",
             "controller": false,
-            "address": "Not\sAvailable",
-            "model": "Not\sAvailable"
+            "address": "Not Available",
+            "model": "Not Available"
         },
         "p2": {
             "type": "ppt",
@@ -120,22 +102,22 @@
             "address": "p2",
             "model": "PPT"
         },
-        "AlicatC": {
-            "type": "alicat",
-            "label": "Blue",
-            "sn": "128461C\s\sM06\sDate\sManufactured\s02/10/2016C\s\sM07\sDate\sCalibrated\s\s\s02/10/2016C\s\sM08\sCalibrated\sBy\s\s\s\s\sPDC\s\sM09\sSoftware\sRevision\s5v12.0-R22",
-            "controller": true,
-            "address": "C",
-            "model": "Number\s\sMC-5SLPM-DC\s\sM05\sSerial\sNumber\s128461C\s\sM06\sDate\sManufactured\s02/10/2016C\s\sM07\sDate\sCalibrated\s\s\s02/10/2016C\s\sM08\sCalibrated\sBy\s\s\s\s\sPDC\s\sM09\sSoftware\sRevision\s5v12.0-R22",
-            "setpoint": 0.000000
-        },
         "v9": {
             "type": "vaisala",
             "label": "Blue",
             "sn": "-1",
             "controller": false,
-            "address": "Not\sAvailable",
-            "model": "Not\sAvailable"
+            "address": "Not Available",
+            "model": "Not Available"
+        },
+        "AlicatB": {
+            "type": "alicat",
+            "label": "Med RH",
+            "sn": "104483B",
+            "controller": true,
+            "address": "B",
+            "model": "Number  MC-5SLPM-DB  M05 Serial Number 104483B  M06 Date Manufactured 07/23/2014B  M07 Date Calibrated   07/23/2014B  M08 Calibrated By     THB  M09 Software Revision 4v35",
+            "setpoint": 0.000000
         },
         "p3": {
             "type": "ppt",
@@ -145,22 +127,13 @@
             "address": "p3",
             "model": "PPT"
         },
-        "AlicatD": {
-            "type": "alicat",
-            "label": "Red",
-            "sn": "120276D\s\sM06\sDate\sManufactured\s08/14/2015D\s\sM07\sDate\sCalibrated\s\s\s08/14/2015D\s\sM08\sCalibrated\sBy\s\s\s\s\sGGD\s\sM09\sSoftware\sRevision\s5v11.0-R22",
-            "controller": true,
-            "address": "D",
-            "model": "Number\s\sMC-5SLPM-DD\s\sM05\sSerial\sNumber\s120276D\s\sM06\sDate\sManufactured\s08/14/2015D\s\sM07\sDate\sCalibrated\s\s\s08/14/2015D\s\sM08\sCalibrated\sBy\s\s\s\s\sGGD\s\sM09\sSoftware\sRevision\s5v11.0-R22",
-            "setpoint": 0.000000
-        },
         "v1": {
             "type": "vaisala",
             "label": "Red",
             "sn": "-1",
             "controller": false,
-            "address": "Not\sAvailable",
-            "model": "Not\sAvailable"
+            "address": "Not Available",
+            "model": "Not Available"
         },
         "p4": {
             "type": "ppt",
@@ -170,22 +143,39 @@
             "address": "p4",
             "model": "PPT"
         },
-        "AlicatE": {
-            "type": "alicat",
-            "label": "Green",
-            "sn": "104485E\s\sM06\sDate\sManufactured\s07/23/2014E\s\sM07\sDate\sCalibrated\s\s\s07/23/2014E\s\sM08\sCalibrated\sBy\s\s\s\s\sTHE\s\sM09\sSoftware\sRevision\s4v35",
-            "controller": true,
-            "address": "E",
-            "model": "Number\s\sMC-5SLPM-DE\s\sM05\sSerial\sNumber\s104485E\s\sM06\sDate\sManufactured\s07/23/2014E\s\sM07\sDate\sCalibrated\s\s\s07/23/2014E\s\sM08\sCalibrated\sBy\s\s\s\s\sTHE\s\sM09\sSoftware\sRevision\s4v35",
-            "setpoint": 0.000000
-        },
         "v6": {
             "type": "vaisala",
             "label": "Green",
             "sn": "-1",
             "controller": false,
-            "address": "Not\sAvailable",
-            "model": "Not\sAvailable"
+            "address": "Not Available",
+            "model": "Not Available"
+        },
+        "v4": {
+            "type": "vaisala",
+            "label": "Red TD",
+            "sn": "-1",
+            "controller": false,
+            "address": "Not Available",
+            "model": "Not Available"
+        },
+        "AlicatC": {
+            "type": "alicat",
+            "label": "Blue",
+            "sn": "128461C",
+            "controller": true,
+            "address": "C",
+            "model": "Number  MC-5SLPM-DC  M05 Serial Number 128461C  M06 Date Manufactured 02/10/2016C  M07 Date Calibrated   02/10/2016C  M08 Calibrated By     PDC  M09 Software Revision 5v12.0-R22",
+            "setpoint": 0.000000
+        },
+        "tetech": {
+            "type": "TEC",
+            "label": "Not Available",
+            "sn": "-1",
+            "controller": true,
+            "address": "01",
+            "model": "Not Available",
+            "setpoint": 0.000000
         },
         "p5": {
             "type": "ppt",
@@ -195,47 +185,21 @@
             "address": "p5",
             "model": "PPT"
         },
-        "AlicatF": {
-            "type": "alicat",
-            "label": "Red\sTD",
-            "sn": "104486F\s\sM06\sDate\sManufactured\s07/23/2014F\s\sM07\sDate\sCalibrated\s\s\s07/23/2014F\s\sM08\sCalibrated\sBy\s\s\s\s\sTHF\s\sM09\sSoftware\sRevision\s4v35",
-            "controller": true,
-            "address": "F",
-            "model": "Number\s\sMC-5SLPM-DF\s\sM05\sSerial\sNumber\s104486F\s\sM06\sDate\sManufactured\s07/23/2014F\s\sM07\sDate\sCalibrated\s\s\s07/23/2014F\s\sM08\sCalibrated\sBy\s\s\s\s\sTHF\s\sM09\sSoftware\sRevision\s4v35",
-            "setpoint": 0.000000
-        },
-        "v4": {
-            "type": "vaisala",
-            "label": "Red\sTD",
-            "sn": "-1",
-            "controller": false,
-            "address": "Not\sAvailable",
-            "model": "Not\sAvailable"
-        },
-        "AlicatG": {
-            "type": "alicat",
-            "label": "Blue\sTD",
-            "sn": "104489G\s\sM06\sDate\sManufactured\s07/23/2014G\s\sM07\sDate\sCalibrated\s\s\s07/23/2014G\s\sM08\sCalibrated\sBy\s\s\s\s\sTHG\s\sM09\sSoftware\sRevision\s4v35",
-            "controller": true,
-            "address": "G",
-            "model": "Number\s\sMC-5SLPM-DG\s\sM05\sSerial\sNumber\s104489G\s\sM06\sDate\sManufactured\s07/23/2014G\s\sM07\sDate\sCalibrated\s\s\s07/23/2014G\s\sM08\sCalibrated\sBy\s\s\s\s\sTHG\s\sM09\sSoftware\sRevision\s4v35",
-            "setpoint": 0.000000
-        },
         "v5": {
             "type": "vaisala",
-            "label": "Blue\sTD",
+            "label": "Blue TD",
             "sn": "-1",
             "controller": false,
-            "address": "Not\sAvailable",
-            "model": "Not\sAvailable"
+            "address": "Not Available",
+            "model": "Not Available"
         },
-        "AlicatH": {
+        "AlicatD": {
             "type": "alicat",
-            "label": "TAP",
-            "sn": "104490H\s\sM06\sDate\sManufactured\s07/23/2014H\s\sM07\sDate\sCalibrated\s\s\s07/23/2014H\s\sM08\sCalibrated\sBy\s\s\s\s\sTHH\s\sM09\sSoftware\sRevision\s4v35",
+            "label": "Red",
+            "sn": "120276D",
             "controller": true,
-            "address": "H",
-            "model": "Number\s\sMC-5SLPM-DH\s\sM05\sSerial\sNumber\s104490H\s\sM06\sDate\sManufactured\s07/23/2014H\s\sM07\sDate\sCalibrated\s\s\s07/23/2014H\s\sM08\sCalibrated\sBy\s\s\s\s\sTHH\s\sM09\sSoftware\sRevision\s4v35",
+            "address": "D",
+            "model": "Number  MC-5SLPM-DD  M05 Serial Number 120276D  M06 Date Manufactured 08/14/2015D  M07 Date Calibrated   08/14/2015D  M08 Calibrated By     GGD  M09 Software Revision 5v11.0-R22",
             "setpoint": 0.000000
         },
         "v8": {
@@ -243,42 +207,123 @@
             "label": "Inlet",
             "sn": "-1",
             "controller": false,
-            "address": "Not\sAvailable",
-            "model": "Not\sAvailable"
+            "address": "Not Available",
+            "model": "Not Available"
         },
-        "AlicatI": {
-            "type": "alicat",
-            "label": "Mirror\sPurge",
-            "sn": "104481I\s\sM06\sDate\sManufactured\s07/21/2014I\s\sM07\sDate\sCalibrated\s\s\s08/28/2015I\s\sM08\sCalibrated\sBy\s\s\s\s\sBKI\s\sM09\sSoftware\sRevision\s4v35",
+        "p405": {
+            "type": "mTEC",
+            "label": "405",
+            "sn": "-1",
             "controller": true,
-            "address": "I",
-            "model": "Number\s\sMC-1SLPM-DI\s\sM05\sSerial\sNumber\s104481I\s\sM06\sDate\sManufactured\s07/21/2014I\s\sM07\sDate\sCalibrated\s\s\s08/28/2015I\s\sM08\sCalibrated\sBy\s\s\s\s\sBKI\s\sM09\sSoftware\sRevision\s4v35",
+            "address": "Not Available",
+            "model": "Not Available",
+            "setpoint": 0.000000
+        },
+        "AlicatE": {
+            "type": "alicat",
+            "label": "Green",
+            "sn": "104485E",
+            "controller": true,
+            "address": "E",
+            "model": "Number  MC-5SLPM-DE  M05 Serial Number 104485E  M06 Date Manufactured 07/23/2014E  M07 Date Calibrated   07/23/2014E  M08 Calibrated By     THE  M09 Software Revision 4v35",
+            "setpoint": 0.000000
+        },
+        "p515": {
+            "type": "mTEC",
+            "label": "515",
+            "sn": "-1",
+            "controller": true,
+            "address": "Not Available",
+            "model": "Not Available",
+            "setpoint": 0.000000
+        },
+        "p660": {
+            "type": "mTEC",
+            "label": "660",
+            "sn": "-1",
+            "controller": true,
+            "address": "Not Available",
+            "model": "Not Available",
+            "setpoint": 0.000000
+        },
+        "AlicatF": {
+            "type": "alicat",
+            "label": "Red TD",
+            "sn": "104486F",
+            "controller": true,
+            "address": "F",
+            "model": "Number  MC-5SLPM-DF  M05 Serial Number 104486F  M06 Date Manufactured 07/23/2014F  M07 Date Calibrated   07/23/2014F  M08 Calibrated By     THF  M09 Software Revision 4v35",
             "setpoint": 0.000000
         },
         "v7": {
             "type": "vaisala",
-            "label": "Dried\sinlet",
+            "label": "Dried inlet",
             "sn": "-1",
             "controller": false,
-            "address": "Not\sAvailable",
-            "model": "Not\sAvailable"
+            "address": "Not Available",
+            "model": "Not Available"
+        },
+        "AlicatG": {
+            "type": "alicat",
+            "label": "Blue TD",
+            "sn": "104489G",
+            "controller": true,
+            "address": "G",
+            "model": "Number  MC-5SLPM-DG  M05 Serial Number 104489G  M06 Date Manufactured 07/23/2014G  M07 Date Calibrated   07/23/2014G  M08 Calibrated By     THG  M09 Software Revision 4v35",
+            "setpoint": 0.000000
+        },
+        "AlicatH": {
+            "type": "alicat",
+            "label": "TAP",
+            "sn": "104490H",
+            "controller": true,
+            "address": "H",
+            "model": "Number  MC-5SLPM-DH  M05 Serial Number 104490H  M06 Date Manufactured 07/23/2014H  M07 Date Calibrated   07/23/2014H  M08 Calibrated By     THH  M09 Software Revision 4v35",
+            "setpoint": 0.000000
+        },
+        "AlicatI": {
+            "type": "alicat",
+            "label": "Mirror Purge",
+            "sn": "104481I",
+            "controller": true,
+            "address": "I",
+            "model": "Number  MC-1SLPM-DI  M05 Serial Number 104481I  M06 Date Manufactured 07/21/2014I  M07 Date Calibrated   08/28/2015I  M08 Calibrated By     BKI  M09 Software Revision 4v35",
+            "setpoint": 0.000000
+        },
+        "ptd405": {
+            "type": "mTEC",
+            "label": "405, TD",
+            "sn": "-1",
+            "controller": true,
+            "address": "Not Available",
+            "model": "Not Available",
+            "setpoint": 0.000000
         },
         "AlicatJ": {
             "type": "alicat",
-            "label": "O2\ssupply",
-            "sn": "120275J\s\sM06\sDate\sManufactured\s08/14/2015J\s\sM07\sDate\sCalibrated\s\s\s08/14/2015J\s\sM08\sCalibrated\sBy\s\s\s\s\sJCJ\s\sM09\sSoftware\sRevision\s5v11.0-R22",
+            "label": "O2 supply",
+            "sn": "120275J",
             "controller": true,
             "address": "J",
-            "model": "Number\s\sMC-1SLPM-DJ\s\sM05\sSerial\sNumber\s120275J\s\sM06\sDate\sManufactured\s08/14/2015J\s\sM07\sDate\sCalibrated\s\s\s08/14/2015J\s\sM08\sCalibrated\sBy\s\s\s\s\sJCJ\s\sM09\sSoftware\sRevision\s5v11.0-R22",
+            "model": "Number  MC-1SLPM-DJ  M05 Serial Number 120275J  M06 Date Manufactured 08/14/2015J  M07 Date Calibrated   08/14/2015J  M08 Calibrated By     JCJ  M09 Software Revision 5v11.0-R22",
             "setpoint": 0.000000
         },
         "AlicatK": {
             "type": "alicat",
-            "label": "Ozone\sexhaust?",
-            "sn": "104491K\s\sM06\sDate\sManufactured\s07/21/2014K\s\sM07\sDate\sCalibrated\s\s\s07/21/2014K\s\sM08\sCalibrated\sBy\s\s\s\s\sTHK\s\sM09\sSoftware\sRevision\s4v35",
+            "label": "Ozone exhaust?",
+            "sn": "104491K",
             "controller": true,
             "address": "K",
-            "model": "Number\s\sMC-1SLPM-DK\s\sM05\sSerial\sNumber\s104491K\s\sM06\sDate\sManufactured\s07/21/2014K\s\sM07\sDate\sCalibrated\s\s\s07/21/2014K\s\sM08\sCalibrated\sBy\s\s\s\s\sTHK\s\sM09\sSoftware\sRevision\s4v35",
+            "model": "Number  MC-1SLPM-DK  M05 Serial Number 104491K  M06 Date Manufactured 07/21/2014K  M07 Date Calibrated   07/21/2014K  M08 Calibrated By     THK  M09 Software Revision 4v35",
+            "setpoint": 0.000000
+        },
+        "ptd660": {
+            "type": "mTEC",
+            "label": "660, TD",
+            "sn": "-1",
+            "controller": true,
+            "address": "Not Available",
+            "model": "Not Available",
             "setpoint": 0.000000
         }
     }

@@ -24,8 +24,6 @@
             $scope.time = Data.tObj.toLocaleTimeString('en-US', {
               hour12: false
             });
-            $scope.filter = Data.filter;
-            $scope.cabin = Data.Cabin;
 
             /* TODO: Have an issue with saving data - doesn't appear to be returning properly.
              * The save variable should be in the CVT rather than in the data object.
