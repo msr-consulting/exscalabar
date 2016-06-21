@@ -4,6 +4,7 @@
 
             $scope.lasCtl = [];
             
+            // Defines the maximum voltage for the PAS lasers...
             var maxRange = 5;
 
             /** NOTE: This loop initializes the laser controls based on what is
@@ -61,7 +62,7 @@
                     y.push(tempRange/2);
                 }
                 cvt.pas.las.setVr(x);
-                cvt.pas.las.setVo(x);
+                cvt.pas.las.setVo(y);
             };
 
             $scope.updatef0 = function () {
