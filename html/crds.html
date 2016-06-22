@@ -20,7 +20,7 @@
                 </div>
                 <div class="panel-body">
                     <div ng-repeat="p in pmt track by $index">
-                        <cui-numeric ng-model="pmt[$index]" width=10 evnt-func="setGain($index)">{{$index}}
+                        <cui-numeric ng-model="pmt[$index]" width=10 evnt-func="setGain($index)">{{$index+1}}
                         </cui-numeric>
                     </div>
 
