@@ -74,7 +74,7 @@
             };
 
             $scope.purge = {
-                pos: false,
+                pos: cvt.purge.pos,
                 flow: 0.16,
                 setValve: function () {
                     this.pos = !this.pos;
@@ -127,6 +127,7 @@
 
                 $scope.pmt = cvt.crd.kpmt.map(function(x){return x/maxPMTGain*100;});
 
+                $scope.purge.pos = cvt.purge.pos;
                 $scope.write_taus = cvt.crd.write_taus;
                 //$scope.purge.pos = cvt.general.purge;
 

@@ -312,6 +312,8 @@
 
                         cvt.filter.position = response.data.general.filter_pos;
                         cvt.inlet = response.data.general.inlet;
+                        
+                        cvt.purge.pos = response.data.general.purge;
 
                         var power = Number(response.data.general.power).toString(2);
 
