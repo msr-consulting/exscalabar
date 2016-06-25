@@ -134,7 +134,8 @@
 
                             $rootScope.$broadcast('dataAvailable');
                         }
-                    }, function () {
+                    }, function (response) {
+                    console.log(response);
                         $rootScope.$broadcast('dataNotAvailable');
                     }).finally(function () {
                         busy = false;
