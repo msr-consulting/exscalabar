@@ -79,7 +79,8 @@ var watch_list = ["main/main.module.js",
     "tetech/ex.tetechplot.dir.js",
     "ppt/ex.ppt.svc.js",
     "ppt/ex.pptplot.dir.js",
-    "meerstetter/ex.meerstetter.svc.js"
+    "meerstetter/ex.meerstetter.svc.js",
+    "meerstetter/ex.meerstetter.ctl.js"
 ];
 
 
@@ -130,6 +131,7 @@ var docList = [
     "tetech/ex.tetech.ctl.js",
     "tetech/ex.tetech.svc.js",
     "tetech/ex.tetechplot.dir.js",
+    "meerstetter/ex.meerstetter.ctl.js",
     "meerstetter/ex.meerstetter.svc.js"
 ];
 

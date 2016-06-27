@@ -48,25 +48,35 @@
                 "ppt": []
             };
 
-            cvt.setCabinValve = function(pos){
+            /* ****************** FOR TESTING ***********************/
+            cvt.mTEC = [new mtec("Test1", "mTEC01", true, "00", 15, "01"),
+                new mtec("Test2", "mTEC01", true, "01", 132, "02"),
+                new mtec("Test3", "mTEC01", true, "02", 15, "03")];
+            cvt.mTEC[0].ctl_temp = 1;
+
+            cvt.mTEC[0].pid = [12, 0.3, 4];
+
+            /* ****************** END TESTING ***********************/
+
+            cvt.setCabinValve = function (pos) {
                 var x = pos ? 1 : 0;
                 $http.get(net.address() + 'General/Cabin?val=' + x);
 
             };
 
-            cvt.setDenuderBypassValve = function(pos){
+            cvt.setDenuderBypassValve = function (pos) {
                 var x = pos ? 1 : 0;
                 $http.get(net.address() + 'General/DenudedBypass?val=' + x);
 
             };
 
-            cvt.setFilterValve = function(pos){
+            cvt.setFilterValve = function (pos) {
                 var x = pos ? 1 : 0;
                 $http.get(net.address() + 'General/UpdateFilter?State=' + x);
 
             };
 
-            cvt.setSaveData = function (val){
+            cvt.setSaveData = function (val) {
 
                 var s = val ? 1 : 0;
 
@@ -169,11 +179,11 @@
             };
 
             // TODO: most of the update setpoint commands should be removed from the cvt if there is not direct interaction with the cvt service itself (i.e. we are not storing something in the cvt
-            cvt.tec.updateSP = function(sp){
+            cvt.tec.updateSP = function (sp) {
                 $http.get(net.address() + 'General/DevSP?SP=' + sp + '&DevID=tetech');
             };
 
-            cvt.tec.updateMult = function(m){
+            cvt.tec.updateMult = function (m) {
                 ///xService/tetech/multipliers?mult={value}
                 $http.get(net.address() + 'tetech/multipliers?mult=' + m.toString());
             };
@@ -229,10 +239,10 @@
                                     break;
                                 case "mTEC":
                                     if (cvt.mTEC.length > 0 && !findDevID(cvt.mTEC, d)) {
-                                        cvt.mTEC.push(new device(dd.label, d, dd.controller, dd.sn, dd.sp, dd.address));
+                                        cvt.mTEC.push(new mtec(dd.label, d, dd.controller, dd.sn, dd.sp, dd.address));
                                     }
                                     else {
-                                        cvt.mTEC = [new device(dd.label, d, dd.controller, dd.sn, dd.sp, dd.address)];
+                                        cvt.mTEC = [new mtec(dd.label, d, dd.controller, dd.sn, dd.sp, dd.address)];
                                     }
                                     break;
                                 case "vaisala":
@@ -255,7 +265,7 @@
                                 case "TEC":
                                     if (isEmpty(cvt.tec)) {
 
-                                        cvt.tec = new device(dd.label, d, dd.controller, dd.sn, dd.sp, dd.address);
+                                        cvt.tec = new te_tec(dd.label, d, dd.controller, dd.sn, dd.sp, dd.address);
 
                                     }
                                     break;
@@ -295,7 +305,7 @@
                         cvt.pas.las.voffset = pas.las.voffset;
                         cvt.pas.las.enable = pas.las.enabled;
                         cvt.pas.las.modulation = pas.las.modulation;
-                        
+
                         /* Update PAS speaker controls */
                         cvt.pas.spk.f0 = pas.spk.fcenter;
                         cvt.pas.spk.df = pas.spk.df;
@@ -312,7 +322,7 @@
 
                         cvt.filter.position = response.data.general.filter_pos;
                         cvt.inlet = response.data.general.inlet;
-                        
+
                         cvt.purge.pos = response.data.general.purge;
 
                         var power = Number(response.data.general.power).toString(2);
@@ -341,9 +351,9 @@
                         $rootScope.$broadcast('cvtUpdated');
                     }
 
-                }, function errorCallback(response){
+                }, function errorCallback(response) {
                     $rootScope.$broadcast('cvtNotAvailable');
-                }).finally(function (){
+                }).finally(function () {
 
                     // Reset the first call property to 0 so we just wait for the
                     // most recent values that have changed.
@@ -399,6 +409,91 @@
         this.address = addr;
     }
 
+    // The TEC both have PID controls, so create a prototype that
+    // will store these controls; presently, we will not extend the
+    // constructor until we are certain
+
+    function tec(l, id, ctlr, sn, sp, addr) {
+        device.call(this, l, id, ctlr, sn, sp, addr);
+        this.pid = [1, 0, 0];
+    }
+
+    tec.prototype = Object.create(device.prototype);
+    tec.prototype.updateSP = function (sp) {
+        this.sp = sp;
+    }
+    tec.prototype.updateCtlParams = function (index, val) {
+        this.pid[index] = val;
+        $http.get(net.address() + 'General/tec_ctl_params?DevID='
+            + this.id + '&d=' + this.pid[2]
+            + '&i=' +this.pid[1] +  '&p=' + this.pid[0]);
+    };
+
+
+    // TE Technology TEC is a one off and has two additional parameters
+    // we want to expose - cooling and heating factors.
+    function te_tec(l, id, ctlr, sn, sp, addr) {
+        tec.call(this, l, id, ctlr, sn, sp, addr)
+
+        this.htx = 0;
+        this.clx = 1;
+        this.updateHtx = function (val) {
+            this.htx = val;
+            updateServerHeatingParams();
+
+        }
+        this.updateClx = function (val) {
+            this.clx = val;
+            updateServerHeatingParams();
+
+        }
+
+        function updateServerHeatingParams() {
+            $http.get(net.address() + 'tetech/multipliers?mult=' + [this.htx, this.clx].toString());
+        }
+
+        //this.updateCtlParams = function(index, val){
+        //tec.call(this, index, val);
+
+        //console.log("Updating TE Tech PID");
+        //}
+
+        this.updateSP = function (sp) {
+            tec.prototype.updateSP.call(this, sp);
+            try {
+                $http.get(net.address() + 'General/DevSP?SP=' + sp + '&DevID=tetech');
+            }
+            catch (e) {
+                console.log("Attempt to set TE Tech setpoint failed.  Server unavailable.")
+            }
+
+        }
+    }
+
+    te_tec.prototype = Object.create(tec.prototype);
+
+    // The meerstetter TECs have a bunch of stuff that we may be interested
+    // in.  One property is whether we are controlling on temperature or power.
+
+    function mtec(l, id, ctlr, sn, sp, addr) {
+        tec.call(this, l, id, ctlr, sn, sp, addr);
+        this.ctl_temp = 0;
+
+
+        this.updateCtlParams = function (index, val) {
+            tec.call.updateCtlParams.call(this, index, val);
+
+            console.log("Updating Meerstetter Tech PID with ID " + this.ID + ".");
+        }
+
+        this.updateCtlVal = function (val) {
+
+            this.ctl_temp = val;
+
+        };
+    }
+
+    mtec.prototype = Object.create(tec.prototype);
     /**
      * @ngdoc object
      * @name main.crd
@@ -410,14 +505,14 @@
         var http = _http;
         var net = _net;
         this.write_taus = false;
-        
-        this.update_tau_write = function(state){
+
+        this.update_tau_write = function (state) {
             this.write_taus = state;
-            
-            var val = state?1:0;
+
+            var val = state ? 1 : 0;
             var cmd = 'CRDS_CMD/WriteTausFile?Write_Data=' + val;
             http.get(net.address() + cmd);
-            
+
         }
 
         this.net = net;
@@ -465,7 +560,7 @@
             var enb1 = this.eblue1 ? 1 : 0;
 
 
-            var cmd = 'CRDS_CMD/LaserEnable?Red=' + enr + '&Blue0=' + enb0+ '&Blue1=' + enb1;
+            var cmd = 'CRDS_CMD/LaserEnable?Red=' + enr + '&Blue0=' + enb0 + '&Blue1=' + enb1;
             http.get(net.address() + cmd);
         };
 
@@ -482,16 +577,16 @@
             this.kred = val[2];
             this.kblue0 = val[0];
             this.kblue1 = val[1];
-            http.get(net.address() + 'CRDS_CMD/LaserGain?B1='+ val[1] + '&B0=' + val[0] + '&R=' + val[2]);
+            http.get(net.address() + 'CRDS_CMD/LaserGain?B1=' + val[1] + '&B0=' + val[0] + '&R=' + val[2]);
         };
     }
 
-    function Pas(_http, _net) { 
+    function Pas(_http, _net) {
 
         var http = _http;
 
         var net = _net;
-        
+
         this.write_wvfm_state = false;
         this.send_wvfm_state = true;
 
@@ -532,26 +627,26 @@
                 'PAS_CMD/UpdateVrange?Vrange=' + vr.join(','));
 
         };
-        
-        this.send_wvfm = function(wvfm){
-            var data = wvfm?1:0;
-            
+
+        this.send_wvfm = function (wvfm) {
+            var data = wvfm ? 1 : 0;
+
             this.send_wvfm_state = wvfm;
             console.log('New value for waveform retrieval is ' + data);
             http.get(net.address() +
                 'PAS_CMD/wvfm?write=' + data);
-            
+
         };
-        
-        
-        this.write_wvfm = function(wvfm){
-            var data = wvfm?1:0;
-            
+
+
+        this.write_wvfm = function (wvfm) {
+            var data = wvfm ? 1 : 0;
+
             this.write_wvfm_state = wvfm;
             console.log('New value for waveform retrieval is ' + data);
             http.get(net.address() +
                 'PAS_CMD/WVFM_to_File?Write_Data=' + data);
-            
+
         };
 
         this.las.setVo = function (vo) {
@@ -572,7 +667,7 @@
             }
 
             http.get(net.address() +
-              'PAS_CMD/modulation?val=' + val.join(','));
+                'PAS_CMD/modulation?val=' + val.join(','));
 
         };
 
@@ -580,12 +675,11 @@
         this.las.updateEnable = function (en) {
             this.enable = en;
             var enByte = 0;
-            
-            for(var i = 0; i < en.length; i++){
-                enByte += en[i]?(Math.pow(2,i)):0;
+
+            for (var i = 0; i < en.length; i++) {
+                enByte += en[i] ? (Math.pow(2, i)) : 0;
             }
-            
-            
+
 
             http.get(net.address() +
                 'PAS_CMD/UpdateLaserEnable?LasEnByte=' + enByte);
