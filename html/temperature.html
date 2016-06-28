@@ -22,7 +22,7 @@
                     <tr ng-repeat="tec in tecs track by $index" ng-init="parentIndex = $index">
                         <td>{{tec.id}}</td>
                         <td>
-                            <input class="col-md-12" ng-model="tec.sp" type="number" min ="0" max = "100">
+                            <input class="col-md-12" ng-model="tec.sp" ng-blur="updateSetpoint($index)" type="number" min ="0" max = "100">
                         </td>
 
                         <td ng-repeat="ctl in tec.pid track by $index">

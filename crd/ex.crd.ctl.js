@@ -56,8 +56,8 @@
              * second to red.
              */
             $scope.laser_ctl = [
-                new laserInput(cvt.crd.fblue, cvt.crd.dcblue, cvt.crd.kblue0/maxLaserGain*100, cvt.crd.eblue0, "Blue Laser 0"),
-                new laserInput(cvt.crd.fblue, cvt.crd.dcblue, cvt.crd.kblue1/maxLaserGain*100, cvt.crd.eblue1, "Blue Laser 1"),
+                new laserInput(cvt.crd.fblue, cvt.crd.dcblue, cvt.crd.kblue0/maxLaserGain*100, cvt.crd.eblue0, "Blue Lower"),
+                new laserInput(cvt.crd.fblue, cvt.crd.dcblue, cvt.crd.kblue1/maxLaserGain*100, cvt.crd.eblue1, "Blue Upper"),
                 new laserInput(cvt.crd.fred, cvt.crd.dcred, cvt.crd.kred/maxLaserGain*100, cvt.crd.ered, "Red Laser")
             ];
 

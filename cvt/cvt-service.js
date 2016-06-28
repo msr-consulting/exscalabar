@@ -407,6 +407,12 @@
         this.sn = sn;
         this.sp = sp;
         this.address = addr;
+        
+        this.updateSetpoint = function(val){
+            this.sp = val;
+            $http.get(net.address() + 'General/DevSP?SP=' 
+                      + this.sp + '&DevID=' + this.id);
+        }
     }
 
     // The TEC both have PID controls, so create a prototype that
@@ -486,9 +492,16 @@
             console.log("Updating Meerstetter Tech PID with ID " + this.ID + ".");
         }
 
-        this.updateCtlVal = function (val) {
+        this.updateCtlVal = function () {
 
-            this.ctl_temp = val;
+            this.ctl_temp = !this.ctl_temp;
+            
+            var c = val?1:0;
+            
+            $http.get(net.address() + 'meerstetter/mctl?val='+ 
+                      c +'&DevID='  + this.id);
+        
+            //http://192.168.101.214:8001/xService/meerstetter/mctl/:id?val={value}
 
         };
     }

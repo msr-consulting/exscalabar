@@ -17,7 +17,6 @@
      */
     function FlowCtl($scope, cvt, ExFlowSvc) {
 
-        //$scope.Devices = {};
         $scope.DeviceData = ExFlowSvc.data;
         $scope.Device = ExFlowSvc;
 

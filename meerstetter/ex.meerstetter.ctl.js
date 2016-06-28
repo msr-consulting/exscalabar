@@ -8,14 +8,27 @@
 
         $scope.tecs = cvt.mTEC;
 
-        $scope.updatePID = function(dev_i, i){
+        $scope.updatePID = function (dev_i, i) {
 
             $scope.tecs[dev_i].updateCtlParams(i, $scope.tecs[dev_i].pid[i]);
 
+        };
+
+        $scope.updateCtl = function (dev_i) {
+            $scope.tecs[dev_i].updateCtlVal();
+        }
+        
+        $scope.updateSetpoint  =function(i){
+            cvt.mTEC[i].updateSetpoint($scope.tecs[i].sp);
         }
 
         cvt.first_call = 1;
+        $scope.$on('cvtUpdated', function () {
+            $scope.tecs = cvt.mTEC;
+        });
 
     }
+
+
 
 })();

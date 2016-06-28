@@ -11,11 +11,11 @@
         <h2>TE Technology TEC Data</h2>
         <div class="col-md-2 col-lg-2 col-sm-3 col-xs-3" ng-controller="ExTetechCtl">
             <cui-numeric ng-model="Tsp" width="30" evnt-func="updateCycle()">T<sub>sp</sub></cui-numeric>
-            <cui-numeric ng-model="ctl.P" width="30" evnt-func="set_pid()">P</cui-numeric>
-            <cui-numeric ng-model="ctl.I" width="30" evnt-func="set_pid()">I</cui-numeric>
-            <cui-numeric ng-model="ctl.D" width="30" evnt-func="set_pid()">D</cui-numeric>
-            <cui-numeric ng-model="ch_mult.htx" width="30" evnt-func="set_mult()">htx</cui-numeric>
-            <cui-numeric ng-model="ch_mult.clx" width="30" evnt-func="set_mult()">clx</cui-numeric>
+            <cui-numeric ng-model="ctl[0]" width="30" evnt-func="set_pid(0)">P</cui-numeric>
+            <cui-numeric ng-model="ctl[1]" width="30" evnt-func="set_pid(1)">I</cui-numeric>
+            <cui-numeric ng-model="ctl[2]" width="30" evnt-func="set_pid(2)">D</cui-numeric>
+            <cui-numeric ng-model="ch_mult.htx" width="30" evnt-func="setHTX()">htx</cui-numeric>
+            <cui-numeric ng-model="ch_mult.clx" width="30" evnt-func="setCLX()">clx</cui-numeric>
         </div>
         <div class="col-md-10 col-lg-10 col-sm-9 col-xs-9">
             <ex-tetech-plot></ex-tetech-plot>
