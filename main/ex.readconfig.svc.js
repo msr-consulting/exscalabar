@@ -44,6 +44,7 @@
                     cfg.version = response.data.version;
                     cfg.pas = response.data.pasplot;
                     cfg.crd = response.data.crdplot;
+                    cfg.mtec = response.data.mtec;
 
                     cfg.flow = response.data.flowplot;
                     cfg.tec = response.data.tec;

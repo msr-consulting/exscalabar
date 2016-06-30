@@ -1,6 +1,6 @@
 {
   "name": "cirrus",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "This is the build system configuration for the exscalabar ui project.",
   "main": "gulp.js",
   "directories": {

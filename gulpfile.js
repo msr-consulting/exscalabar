@@ -80,7 +80,8 @@ var watch_list = ["main/main.module.js",
     "ppt/ex.ppt.svc.js",
     "ppt/ex.pptplot.dir.js",
     "meerstetter/ex.meerstetter.svc.js",
-    "meerstetter/ex.meerstetter.ctl.js"
+    "meerstetter/ex.meerstetter.ctl.js",
+    "meerstetter/ex.meerstetterplot.dir.js"
 ];
 
 
@@ -218,19 +219,19 @@ gulp.task('open', function () {
 });
 
 gulp.task('bump-major', function () {
-    gulp.src('./*.json')
+    gulp.src(['./package.json', './ui.json'])
         .pipe(bump({type: 'major'}))
         .pipe(gulp.dest('./'));
 });
 
 gulp.task('bump-minor', function () {
-    gulp.src('./*.json')
+    gulp.src(['./package.json', './ui.json'])
         .pipe(bump({type: 'minor'}))
         .pipe(gulp.dest('./'));
 });
 
 gulp.task('bump-patch', function () {
-    gulp.src('./*.json')
+    gulp.src(['./package.json', './ui.json'])
         .pipe(bump())
         .pipe(gulp.dest('./'));
 });
