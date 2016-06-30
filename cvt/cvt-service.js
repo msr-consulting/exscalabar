@@ -49,12 +49,12 @@
             };
 
             /* ****************** FOR TESTING ***********************/
-            cvt.mTEC = [new mtec("Test1", "mTEC01", true, "00", 15, "01"),
+           /* cvt.mTEC = [new mtec("Test1", "mTEC01", true, "00", 15, "01"),
                 new mtec("Test2", "mTEC01", true, "01", 132, "02"),
                 new mtec("Test3", "mTEC01", true, "02", 15, "03")];
             cvt.mTEC[0].ctl_temp = 1;
 
-            cvt.mTEC[0].pid = [12, 0.3, 4];
+            cvt.mTEC[0].pid = [12, 0.3, 4];*/
 
             /* ****************** END TESTING ***********************/
 
@@ -230,42 +230,42 @@
                                 case "alicat":
                                     if (cvt.alicat.length > 0 && !findDevID(cvt.alicat, d)) {
 
-                                        cvt.alicat.push(new device(dd.label, d, dd.controller, dd.sn, dd.sp, dd.address));
+                                        cvt.alicat.push(new device(dd.label, d, dd.controller, dd.sn, dd.setpoint, dd.address));
 
                                     }
                                     else {
-                                        cvt.alicat = [new device(dd.label, d, dd.controller, dd.sn, dd.sp, dd.address)];
+                                        cvt.alicat = [new device(dd.label, d, dd.controller, dd.sn, dd.setpoint, dd.address)];
                                     }
                                     break;
                                 case "mTEC":
                                     if (cvt.mTEC.length > 0 && !findDevID(cvt.mTEC, d)) {
-                                        cvt.mTEC.push(new mtec(dd.label, d, dd.controller, dd.sn, dd.sp, dd.address));
+                                        cvt.mTEC.push(new mtec(dd.label, d, dd.controller, dd.sn, dd.setpoint, dd.address, $http, net));
                                     }
                                     else {
-                                        cvt.mTEC = [new mtec(dd.label, d, dd.controller, dd.sn, dd.sp, dd.address)];
+                                        cvt.mTEC = [new mtec(dd.label, d, dd.controller, dd.sn, dd.setpoint, dd.address, $http, net)];
                                     }
                                     break;
                                 case "vaisala":
                                     if (cvt.vaisala.length > 0 && !findDevID(cvt.vaisala, d)) {
-                                        cvt.vaisala.push(new device(dd.label, d, dd.controller, dd.sn, dd.sp, dd.address));
+                                        cvt.vaisala.push(new device(dd.label, d, dd.controller, dd.sn, 0, dd.address, $http, net));
                                     }
                                     else {
 
-                                        cvt.vaisala = [new device(dd.label, d, dd.controller, dd.sn, dd.sp, dd.address)];
+                                        cvt.vaisala = [new device(dd.label, d, dd.controller, dd.sn, 0, dd.address, $http, net)];
                                     }
                                     break;
                                 case "ppt":
                                     if (cvt.ppt.length > 0 && !findDevID(cvt.ppt, d)) {
-                                        cvt.ppt.push(new device(dd.label, d, dd.controller, dd.sn, dd.sp, dd.address));
+                                        cvt.ppt.push(new device(dd.label, d, dd.controller, dd.sn, 0, dd.address, $http, net));
                                     }
                                     else {
-                                        cvt.ppt = [new device(dd.label, d, dd.controller, dd.sn, dd.sp, dd.address)];
+                                        cvt.ppt = [new device(dd.label, d, dd.controller, dd.sn, 0, dd.address, $http, net)];
                                     }
                                     break;
                                 case "TEC":
                                     if (isEmpty(cvt.tec)) {
 
-                                        cvt.tec = new te_tec(dd.label, d, dd.controller, dd.sn, dd.sp, dd.address);
+                                        cvt.tec = new te_tec(dd.label, d, dd.controller, dd.sn, dd.setpoint, dd.address, $http, net);
 
                                     }
                                     break;
@@ -400,7 +400,13 @@
     /**
      * This is a prototype for devices.
      */
-    function device(l, id, ctlr, sn, sp, addr) {
+    function device(l, id, ctlr, sn, sp, addr, _http, _net) {
+        
+        
+        // Pass in these references and store them locally...
+        this.net = _net;
+        this.http = _http;
+        
         this.label = l;
         this.id = id;
         this.ctlr = ctlr;
@@ -410,7 +416,7 @@
         
         this.updateSetpoint = function(val){
             this.sp = val;
-            $http.get(net.address() + 'General/DevSP?SP=' 
+            this.http.get(this.net.address() + 'General/DevSP?SP=' 
                       + this.sp + '&DevID=' + this.id);
         }
     }
@@ -419,8 +425,8 @@
     // will store these controls; presently, we will not extend the
     // constructor until we are certain
 
-    function tec(l, id, ctlr, sn, sp, addr) {
-        device.call(this, l, id, ctlr, sn, sp, addr);
+    function tec(l, id, ctlr, sn, sp, addr, _http, _net) {
+        device.call(this, l, id, ctlr, sn, sp, addr, _http, _net);
         this.pid = [1, 0, 0];
     }
 
@@ -438,9 +444,11 @@
 
     // TE Technology TEC is a one off and has two additional parameters
     // we want to expose - cooling and heating factors.
-    function te_tec(l, id, ctlr, sn, sp, addr) {
-        tec.call(this, l, id, ctlr, sn, sp, addr)
+    function te_tec(l, id, ctlr, sn, sp, addr, _http, _net) {
+        tec.call(this, l, id, ctlr, sn, sp, addr, _http, _net)
 
+        
+        // These are multiplication 
         this.htx = 0;
         this.clx = 1;
         this.updateHtx = function (val) {
@@ -455,7 +463,7 @@
         }
 
         function updateServerHeatingParams() {
-            $http.get(net.address() + 'tetech/multipliers?mult=' + [this.htx, this.clx].toString());
+            http.get(net.address() + 'tetech/multipliers?mult=' + [this.htx, this.clx].toString());
         }
 
         //this.updateCtlParams = function(index, val){
@@ -467,7 +475,7 @@
         this.updateSP = function (sp) {
             tec.prototype.updateSP.call(this, sp);
             try {
-                $http.get(net.address() + 'General/DevSP?SP=' + sp + '&DevID=tetech');
+                http.get(net.address() + 'General/DevSP?SP=' + sp + '&DevID=tetech');
             }
             catch (e) {
                 console.log("Attempt to set TE Tech setpoint failed.  Server unavailable.")
@@ -481,8 +489,8 @@
     // The meerstetter TECs have a bunch of stuff that we may be interested
     // in.  One property is whether we are controlling on temperature or power.
 
-    function mtec(l, id, ctlr, sn, sp, addr) {
-        tec.call(this, l, id, ctlr, sn, sp, addr);
+    function mtec(l, id, ctlr, sn, sp, addr, _http, _net) {
+        tec.call(this, l, id, ctlr, sn, sp, addr, _http, _net);
         this.ctl_temp = 0;
 
 
@@ -498,7 +506,7 @@
             
             var c = val?1:0;
             
-            $http.get(net.address() + 'meerstetter/mctl?val='+ 
+            http.get(net.address() + 'meerstetter/mctl?val='+ 
                       c +'&DevID='  + this.id);
         
             //http://192.168.101.214:8001/xService/meerstetter/mctl/:id?val={value}
