@@ -25,14 +25,6 @@
          * @description
          * This is the object that will be returned by the service.  This object contains
          *
-         * * IDs - string array containg the IDs of the devices
-         * * Q - Array of arrays of volumetric flow values for plotting
-         * * P - Array of arrays of pressure values for plotting
-         * * T - Array of arrays of temperature values for plotting
-         * * Q0 - Array of arrays of mass flow values for plotting
-         * * data - object containing single point flow data
-         * * ``Qsp`` - an associative array that contains a key and value for each
-         * element.  The key is the device ID while the value is the setpoint.
          */
 
         function MTecObj() {
@@ -53,11 +45,14 @@
             };
         }
 
+        // This is the object that will be returned by the service...
         var mtec = new MTecObj();
 
-
+        // Max number of points for plotting
         var maxi = 300;
 
+        // Determines when to shift the data arrays (i.e. the arrays have
+        // maxi points)
         var shift = false;
         var index = 0;
 
@@ -101,6 +96,9 @@
         $rootScope.$on('dataAvailable', getData);
 
         $rootScope.$on('deviceListRefresh', function(){
+
+            // This is the array of Meerstetter TEC devices
+            // defined in the CVT
             tecs = cvt.mTEC;
         });
 
@@ -130,6 +128,9 @@
                     key = tecs[i].id;
 
                     if (!(key in mtec.data)) {
+
+                        // First time this TEC has shown up in the data...
+
                         mtec.data[key] = new tecData();
                         if (mtec.IDs.length === 0) {
                             mtec.IDs = [key];

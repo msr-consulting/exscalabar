@@ -61,7 +61,7 @@
                 ['Clear Data', function () {
                     ExCrdSvc.clear_history();
                 }],
-                ['Length', null,
+                ['History', null,
                     [['30', function () {
                         ExCrdSvc.set_history(30);
                     }],
@@ -78,6 +78,15 @@
                             ExCrdSvc.set_history(300);
                         }]
                     ]
+                ],
+                ['Autoscale', null, [
+                    ['Autoscale 1x', function () {
+                        vm.options.axes.y.valueRange = vm.ref.yAxisRange();
+                    }],
+                    ['Autoscale', function () {
+                        vm.options.axes.y.valueRange = [null, null];
+                    }]
+                ]
                 ]
             ];
 

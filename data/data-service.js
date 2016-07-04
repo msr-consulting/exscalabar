@@ -101,8 +101,8 @@
                                 if (ppts[i] in response.data) {
                                     dataObj[ppts[i]] = response.data[ppts[i]];
                                 }
-
                             }
+                            
                             // Object creation for devices
                             for (var i = 0; i < vaisalas.length; i++) {
                                 if (vaisalas[i] in response.data) {
@@ -135,7 +135,6 @@
                             $rootScope.$broadcast('dataAvailable');
                         }
                     }, function (response) {
-                    console.log(response);
                         $rootScope.$broadcast('dataNotAvailable');
                     }).finally(function () {
                         busy = false;

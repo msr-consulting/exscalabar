@@ -105,8 +105,6 @@
 
                 $scope.data = ExCrdSvc;
 
-                $scope.ringdownAvg = ExCrdSvc.avg_rd;
-
             });
 
             $scope.$on('cvtUpdated', function () {

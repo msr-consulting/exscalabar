@@ -1,67 +1,46 @@
 (function () {
-    angular.module('main').directive('exPasWvfm', pas_wvfm);
+    angular.module('main').directive('exCrdWvfm', crd_wvfm);
 
     /**
      * @ngdoc directive
-     * @name main.directive:exPasPlot
+     * @name main.directive:exCrdWvfm
      *
      * @description
-     *
+     * Directive defines a space for building a dygraph plot for the CRD
+     * ringdowns.
      *
      */
-    pas_wvfm.$inject = ['ExReadCfgSvc'];
+    crd_wvfm.$inject = ['ExReadCfgSvc'];
 
-    function pas_wvfm(ExReadCfgSvc) {
+    function crd_wvfm(ExReadCfgSvc) {
 
         /**
          * @ngdoc controller
-         * @name main.controller:PasPlotCtl
+         * @name main.controller:CrdWvfmCtl
          * @requires $rootScope
-         * @requires main.service:ExPasSvc
+         * @requires main.service:ExCrdSvc
          * @description
-         *
+         * Controller for the ringdown plotting directive.
          */
-        var PasWvfmCtl = function ($rootScope, ExPasSvc) {
+        var CrdWvfmCtl = function ($rootScope, ExCrdSvc) {
 
             var vm = this;
 
-            var objectData = 'micf';
-            
             /**
              * @ngdoc property
-             * @name main.controller:PasPlotCtl#cm
-             * @propertyOf main.controller:PasPlotCtl
+             * @name main.controller:CrdWvfmCtl#cm
+             * @propertyOf main.controller:CrdWvfmCtl
              * @description
-             * Provide a context menu for the Pas graph.  The elements are
-             *
-             *  * tau
-             *  * tau'
-             *  * standard deviation
-             *  * max
-             *
-             * Also provides some functionality for clearing the plots and changing the lengths...
+             * Provide a context menu for the CRD ringdown graph.
              */
             vm.cm = [
-                ['Microphone Frequency Domain', function () {
-                    objectData = "micf";
-                    vm.options.ylabel = "Mic Frequency Power (a.u.)";
-                    vm.options.xlabel = "f (Hz)";
-                }],
-                ["Microphone Time Domain",
-                    function () {
-                        objectData = "mict";
-                        vm.options.ylabel = "Mic Time Magnitude (a.u.)";
-                        vm.options.xlabel = "t";
-                    }],
-                ['Photodiode Time Domain', function () {
-                    objectData = "pd";
-                    vm.options.ylabel = "PD Time Magnitude (a.u.)";
-                    vm.options.xlabel = "t";
-                }],
-                null,
                 ['Grid', null,
-                    [['Grid X', function () {}], ['Grid Y', function () {}], ['Enable', function () {}],
-                        ['Disable', function () {}]]
+                    [['Grid X', function () {
+                    }], ['Grid Y', function () {
+                    }], ['Enable', function () {
+                    }],
+                        ['Disable', function () {
+                        }]]
                 ],
                 ['Autoscale', null, [
                     ['Autoscale 1x', function () {
@@ -76,8 +55,8 @@
 
             /**
              * @ngdoc property
-             * @name main.controller:PasWvfmCtl#optoins
-             * @propertyOf main.controller:PasWvfmCtl
+             * @name main.controller:CrdWvfmCtl#options
+             * @propertyOf main.controller:CrdWvfmCtl
              * @description
              * Options for the Pas graph. The options are based on teh ``dygraph`` plot options.  The ones
              * that are explicit at invocation are
@@ -88,10 +67,10 @@
              * * ``axes``   - set parameters for the axes such as width of the axes
              */
 
-            var CfgObj = ExReadCfgSvc.pas;
-            var labels = ["f"].concat(CfgObj.names);
+            var CfgObj = ExReadCfgSvc.crd;
+            var labels = ["t"].concat(CfgObj.names);
             vm.options = {
-                ylabel: "Mic Frequency Power (a.u.)",
+                ylabel: "Ringdown Amplitude (a.u.)",
                 labels: labels,
                 legend: 'always',
                 axes: {
@@ -129,28 +108,25 @@
 
             // Some default data so that you can see the actual graph
             vm.data = [[0, NaN, NaN, NaN, NaN, NaN]];
-            
-            vm.options.xlabel = "f (Hz)";
 
-            $rootScope.$on('pasDataAvaliable', update_plot);
+            vm.options.xlabel = "t";
 
-            function update_plot() {
-
-                vm.data = ExPasSvc.wvfm[objectData];
-
-            }
+            $rootScope.$on('crdDataAvaliable',
+                function () {
+                    vm.data = ExCrdSvc.avg_rd
+                });
 
         };
 
         // Provide annotation for angular minification
-        PasWvfmCtl.$inject = ['$rootScope', 'ExPasSvc'];
+        CrdWvfmCtl.$inject = ['$rootScope', 'ExCrdSvc'];
 
         return {
             restrict: 'E',
             scope: {
                 title: "@?"
             },
-            controller: PasWvfmCtl,
+            controller: CrdWvfmCtl,
             controllerAs: 'vm',
             bindToController: true,
             template: '<context-menu menu-options="vm.cm"><dy-graph options="vm.options" data="vm.data"></dy-graph></context-menu>'

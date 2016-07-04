@@ -94,6 +94,15 @@
                     }],
                         ['Disable', function () {
                         }]]
+                ],
+                ['Autoscale', null, [
+                    ['Autoscale 1x', function () {
+                        vm.options.axes.y.valueRange = vm.ref.yAxisRange();
+                    }],
+                    ['Autoscale', function () {
+                        vm.options.axes.y.valueRange = [null, null];
+                    }]
+                ]
                 ]
             ];
 

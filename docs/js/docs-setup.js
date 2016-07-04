@@ -162,7 +162,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "main",
       "shortDescription": "Service handling the ordering of the data returned by flow controllers",
-      "keywords": "$rootscope actual alicats api array arrays associative check concerning containg controller controllers data device devices element flow getdata handling ids key main mass meters method mtecobj object ordering plots plotting point populate populate_arrays presence pressure property q0 qsp returned service setpoint single string stuff teh temperature time values volumetric"
+      "keywords": "$rootscope actual alicats api array arrays check concerning controller controllers data device element flow getdata handling main mass meters method mtecobj object ordering plots populate populate_arrays presence property returned service stuff teh time"
     },
     {
       "section": "api",
