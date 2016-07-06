@@ -13,10 +13,14 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Filter</div>
                 <div class="panel-body">
-                    <cui-numeric type="int" ng-model="filter.per">Per. (s)</cui-numeric>
-                    <cui-numeric type="int" ng-model="filter.len">Len. (s)</cui-numeric>
-                    <cui-ibutton ival="filter.pos" ng-model="filter.pos" evnt-func="filter.updatePos()">Position</cui-ibutton>
-                    <cui-ibutton ng-model="filter.auto">Auto</cui-ibutton>
+                    <cui-numeric type="int" ng-model="filter.per" evnt-func="filter.updateCycle()"><div tooltip-placement="left" tooltip="Adjust the period in seconds of the filter cycle."
+                         tooltip-trigger="mouseenter" tooltip-append-to-body="true" >Per. (s)</div></cui-numeric>
+                    <cui-numeric type="int" ng-model="filter.len" evnt-func="filter.updateCycle()"><div tooltip-placement="left" tooltip="Adjust the length of the filter time in the filter cycle."
+                         tooltip-trigger="mouseenter" tooltip-append-to-body="true" >Len. (s)</div></cui-numeric>
+                    <cui-button ival="filter.pos" ng-model="filter.pos" evnt-func="filter.updatePos()"><div tooltip-placement="right" tooltip="Toggle filter position."
+                         tooltip-trigger="mouseenter" tooltip-append-to-body="true">Position</div></cui-button>
+                    <cui-button ival="filter.auto" ng-model="filter.auto" evnt-func="filter.updateAuto()"><div tooltip-placement="left" tooltip="Toggle automatic filter cycling."
+                         tooltip-trigger="mouseenter" tooltip-append-to-body="true" >Auto</div></cui-button>
                 </div>
             </div>
         </div>
@@ -30,7 +34,7 @@
                     <cui-string width = "100" ng-model="file.prefix">File Prefix</cui-string>
                     <cui-string width = "100" ng-model="file.ext">File Extension</cui-string>
                     <cui-numeric ng-model="file.max">Max Size</cui-numeric>
-                    <cui-ibutton ival="file.save" ng-model="file.save">Save</cui-ibutton>
+                    <cui-button ival="file.save" ng-model="file.save">Save</cui-button>
                 </div>
             </div>
         </div>
@@ -70,7 +74,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-2"><cui-button ival="filter_speaker" ng-click="">Connect Filter Cycle</cui-button></div>
+        <div class="col-md-2"><cui-button ival="filter_speaker" ng-click="connectFilterSpeaker()">Connect Filter Cycle</cui-button></div>
     </div>
     <div class="row">
         <div class="col-md-2"><cui-button ival="connected" ng-click="stop()">Stop</cui-button></div>

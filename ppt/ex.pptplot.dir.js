@@ -97,7 +97,7 @@
 
             function update_data() {
 
-                var l = ['t'].concat(ExPptSvc.IDs);
+                var l = ['t'].concat(ExPptSvc.labels);
 
                 if (l !== vm.options.labels) {
                     // If the labels have changed (usually the first time the data

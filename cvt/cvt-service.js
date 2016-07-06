@@ -315,6 +315,7 @@
                         cvt.pas.spk.length = pas.spk.length;
                         cvt.pas.spk.period = pas.spk.period;
                         cvt.pas.spk.pos = pas.spk.enabled;
+                        cvt.pas.spk.connected = pas.filter_cycle;
 
                         cvt.filter.cycle.period = response.data.Filter.period;
                         cvt.filter.cycle.length = response.data.Filter.length;
@@ -375,6 +376,7 @@
                 $http.get(net.address() + 'General/DevSP?SP=' + sp + '&DevID=' + id);
 
             };
+            
 
             cvt.updatePS = function (val) {
                 $http.get(net.address() + 'General/PowerSupply?val=' + val);
@@ -716,6 +718,15 @@
                 '&Vrange=' + this.vrange);
 
         };
+        
+        this.spk.connectToFilter = function(val){
+            var c = val?1:0;
+            //http://192.168.101.214:8001/xService/PAS_CMD/SpkFilterConnect?conn={value}
+            http.get(net.address() + 'PAS_CMD/SpkFilterConnect?conn=' + c);
+        
+        };
+        
+        this.spk.connected = false;
 
         this.spk.updateCycle = function (auto, p, l) {
             this.auto = auto;

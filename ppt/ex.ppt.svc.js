@@ -24,6 +24,7 @@
             this.IDs = [];
             this.T = [];
             this.P = [];
+            this.labels = [];
             this.data = {};
             this.clear_data = function () {
                 this.P = [];
@@ -69,8 +70,11 @@
 
                         if (pptData.IDs.length === 0) {
                             pptData.IDs = [key];
+                            
+                            pptData.labels = [ppts[i].label];
                         } else {
                             pptData.IDs.push(key);
+                            pptData.labels.push(ppts[i].label)
                         }
                     } else {
                         pptData.data[key].P = Data.data[key].P;
