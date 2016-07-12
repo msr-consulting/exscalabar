@@ -158,9 +158,9 @@
             else {
                 index += 1;
             }
-            mtec.Vout.push(P);
-            mtec.Tsink.push(T);
-            mtec.Tobj.push(Q);
+            mtec.Vout.push(Vout);
+            mtec.Tsink.push(Tsink);
+            mtec.Tobj.push(Tobj);
 
             shift = index >= maxi;
 

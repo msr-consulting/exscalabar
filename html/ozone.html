@@ -1,75 +1,86 @@
 <div ng-controller="ExCalibrationCtl">
     <div class="row">
-        <div class="col-md-8">
-            <div class="panel panel-default">
-                <div class="panel-heading" tooltip-placement="right"
-                     tooltip="Double click calibration steps to add to calibration routine" tooltip-trigger="mouseenter"
-                     tooltip-append-to-body="true">Calibration Step Selection
+        <div class="col-md-2">
+            <cui-button ival="cal_active" ng-click="runCal()">
+                Start Cal
+            </cui-button>
+            <cui-button ival="o3_valve" ng-click="updateO3Valve()">
+                O3 Valve
+            </cui-button>
+            <cui-numeric type="int" ng-model="o3_output" evnt-func="updateLamp()">
+                <div tooltip-placement="right" tooltip="Change lamp output. Scale is 0-100%" tooltip-trigger="mouseenter" tooltip-append-to-body="true">
+                    O3 Lamp
                 </div>
-                <div class="panel-body">
-                    <div class="table-responsive" style="padding-bottom:0px;">
-                        <table class="table " id="xml-table" style="color:white">
-                            <thead>
-                            <tr>
-                                <th>Step</th>
-                                <th>Description</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="val in table_vals" ng-dblclick="clickRow(val)">
-                                <th scope="row" id="{{val.id}}">{{val.step}}</th>
-                                <td>{{val.descr}}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading" tooltip-placement="left"
-                     tooltip="Calibration routine for configuration" tooltip-trigger="mouseenter"
-                     tooltip-append-to-body="true">Calibration Routine
-                </div>
-                <div class="panel-body">
-                    <div class="table-responsive" style="color:white"
-                         style="padding-bottom:0px;">
-                        <table class="table" id="cal-table">
-                            <colgroup>
-                                <col class="col-md-7"/>
-                                <col class="col-md-5"/>
-                            </colgroup>
-                            <thead>
-                            <tr>
-                                <th>Step</th>
-                                <th>Value</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="datum in data">
-                                <td>{{datum.id}}</td>
-                                <td contenteditable><input style="width:7em;color:darkgray;"
-                                                                                   ng-model="datum.val"/>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            </cui-numeric>
 
-            </div>
         </div>
-    </div>
-    <div class="row">
-        <form class="form-inline">
-            <div class="form-group">
-                <!--<label class="sr-only" for="FileName">File Name</label>
+        <div class="col-md-10">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" tooltip-placement="right" tooltip="Double click calibration steps to add to calibration routine" tooltip-trigger="mouseenter" tooltip-append-to-body="true">Calibration Step Selection
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive" style="padding-bottom:0px;">
+                                <table class="table " id="xml-table" style="color:white">
+                                    <thead>
+                                        <tr>
+                                            <th>Step</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="val in table_vals" ng-dblclick="clickRow(val)">
+                                            <th scope="row" id="{{val.id}}">{{val.step}}</th>
+                                            <td>{{val.descr}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" tooltip-placement="left" tooltip="Calibration routine for configuration" tooltip-trigger="mouseenter" tooltip-append-to-body="true">Calibration Routine
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive" style="color:white" style="padding-bottom:0px;">
+                                <table class="table" id="cal-table">
+                                    <colgroup>
+                                        <col class="col-md-7" />
+                                        <col class="col-md-5" />
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th>Step</th>
+                                            <th>Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="datum in data">
+                                            <td>{{datum.id}}</td>
+                                            <td contenteditable>
+                                                <input style="width:7em;color:darkgray;" ng-model="datum.val" />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <!--<label class="sr-only" for="FileName">File Name</label>
                 <input type="text" id="FileName" ng-model="cal_file" class="form-control">-->
-                <button type="button" class="btn btn-primary btn-block" ng-click="save()">
-                    <span class="glyphicon glyphicon-transfer pull-left" aria-hidden="true"> </span>Save Cal
-                </button>
-                <!--<button type="button" class="btn btn-primary btn-block">
+                        <button type="button" class="btn btn-primary btn-block" ng-click="save()">
+                            <span class="glyphicon glyphicon-transfer pull-left" aria-hidden="true"> </span>Save Cal
+                        </button>
+                        <!--<button type="button" class="btn btn-primary btn-block">
                     <span class="glyphicon glyphicon-check pull-left" aria-hidden="true"></span> Set as Default
                 </button>
                 <button ng-controller="startCal" ng-click="startCalibration()" type="button"
@@ -81,11 +92,13 @@
                         Start Cal
                     </div>
                 </button>-->
+                    </div>
+                </form>
             </div>
-        </form>
-    </div>
-    <div class="row">
+            <div class="row">
 
 
+            </div>
+        </div>
     </div>
 </div>

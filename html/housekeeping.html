@@ -7,15 +7,15 @@
         <h2>Honeywell Pressure Tranducer Data</h2>
         <ex-ppt-plot></ex-ppt-plot>
     </div>
-    <div class="row">
+    <div class="row" ng-controller="ExTetechCtl">
         <h2>TE Technology TEC Data</h2>
         <div class="col-md-2 col-lg-2 col-sm-3 col-xs-3" ng-controller="ExTetechCtl">
-            <cui-numeric ng-model="Tsp" width="30" evnt-func="updateCycle()">T<sub>sp</sub></cui-numeric>
+            <cui-numeric ng-model="Tsp" width="30" evnt-func="update_sp()">T<sub>sp</sub></cui-numeric>
             <cui-numeric ng-model="ctl[0]" width="30" evnt-func="set_pid(0)">P</cui-numeric>
             <cui-numeric ng-model="ctl[1]" width="30" evnt-func="set_pid(1)">I</cui-numeric>
             <cui-numeric ng-model="ctl[2]" width="30" evnt-func="set_pid(2)">D</cui-numeric>
-            <cui-numeric ng-model="ch_mult.htx" width="30" evnt-func="setHTX()">htx</cui-numeric>
-            <cui-numeric ng-model="ch_mult.clx" width="30" evnt-func="setCLX()">clx</cui-numeric>
+            <cui-numeric ng-model="ch_mult.htx" width="30" evnt-func="setHtx()">htx</cui-numeric>
+            <cui-numeric ng-model="ch_mult.clx" width="30" evnt-func="setClx()">clx</cui-numeric>
         </div>
         <div class="col-md-10 col-lg-10 col-sm-9 col-xs-9">
             <ex-tetech-plot></ex-tetech-plot>

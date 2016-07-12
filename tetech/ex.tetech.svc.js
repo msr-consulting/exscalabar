@@ -74,6 +74,10 @@
 
             $rootScope.$broadcast('tetechCVTUpdated');
         });
+        
+        $rootScope.$on('cvtUpdated', function(){
+            tec.cvt = cvt.tec;
+        });
 
         /**
          * @ngdoc method

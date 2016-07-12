@@ -45,16 +45,23 @@
                 "vaisala": [],
                 "mTEC": [],
                 "tec": {},
-                "ppt": []
+                "ppt": [],
+                "cal":{
+                    active: false,
+                    o3_valve: false,
+                    lamp: 0
+                }
             };
 
-            /* ****************** FOR TESTING ***********************/
-           /* cvt.mTEC = [new mtec("Test1", "mTEC01", true, "00", 15, "01"),
-                new mtec("Test2", "mTEC01", true, "01", 132, "02"),
-                new mtec("Test3", "mTEC01", true, "02", 15, "03")];
-            cvt.mTEC[0].ctl_temp = 1;
 
-            cvt.mTEC[0].pid = [12, 0.3, 4];*/
+
+            /* ****************** FOR TESTING ***********************/
+            /* cvt.mTEC = [new mtec("Test1", "mTEC01", true, "00", 15, "01"),
+                 new mtec("Test2", "mTEC01", true, "01", 132, "02"),
+                 new mtec("Test3", "mTEC01", true, "02", 15, "03")];
+             cvt.mTEC[0].ctl_temp = 1;
+
+             cvt.mTEC[0].pid = [12, 0.3, 4];*/
 
             /* ****************** END TESTING ***********************/
 
@@ -177,16 +184,18 @@
                 }
 
             };
+            
+            cvt.tec = {};
 
             // TODO: most of the update setpoint commands should be removed from the cvt if there is not direct interaction with the cvt service itself (i.e. we are not storing something in the cvt
-            cvt.tec.updateSP = function (sp) {
-                $http.get(net.address() + 'General/DevSP?SP=' + sp + '&DevID=tetech');
-            };
+           // cvt.tec.updateSP = function (sp) {
+            //    $http.get(net.address() + 'General/DevSP?SP=' + sp + '&DevID=tetech');
+           // };
 
-            cvt.tec.updateMult = function (m) {
+            //cvt.tec.updateMult = function (m) {
                 ///xService/tetech/multipliers?mult={value}
-                $http.get(net.address() + 'tetech/multipliers?mult=' + m.toString());
-            };
+             //   $http.get(net.address() + 'tetech/multipliers?mult=' + m.toString());
+            //};
 
             /* TODO: Implement server side CVT communication. */
 
@@ -227,50 +236,46 @@
                         for (var d in dev) {
                             var dd = dev[d];
                             switch (dd.type) {
-                                case "alicat":
-                                    if (cvt.alicat.length > 0 && !findDevID(cvt.alicat, d)) {
+                            case "alicat":
+                                if (cvt.alicat.length > 0 && !findDevID(cvt.alicat, d)) {
 
-                                        cvt.alicat.push(new device(dd.label, d, dd.controller, dd.sn, dd.setpoint, dd.address));
+                                    cvt.alicat.push(new device(dd.label, d, dd.controller, dd.sn, dd.setpoint, dd.address));
 
-                                    }
-                                    else {
-                                        cvt.alicat = [new device(dd.label, d, dd.controller, dd.sn, dd.setpoint, dd.address)];
-                                    }
-                                    break;
-                                case "mTEC":
-                                    if (cvt.mTEC.length > 0 && !findDevID(cvt.mTEC, d)) {
-                                        cvt.mTEC.push(new mtec(dd.label, d, dd.controller, dd.sn, dd.setpoint, dd.address, $http, net));
-                                    }
-                                    else {
-                                        cvt.mTEC = [new mtec(dd.label, d, dd.controller, dd.sn, dd.setpoint, dd.address, $http, net)];
-                                    }
-                                    break;
-                                case "vaisala":
-                                    if (cvt.vaisala.length > 0 && !findDevID(cvt.vaisala, d)) {
-                                        cvt.vaisala.push(new device(dd.label, d, dd.controller, dd.sn, 0, dd.address, $http, net));
-                                    }
-                                    else {
+                                } else {
+                                    cvt.alicat = [new device(dd.label, d, dd.controller, dd.sn, dd.setpoint, dd.address)];
+                                }
+                                break;
+                            case "mTEC":
+                                if (cvt.mTEC.length > 0 && !findDevID(cvt.mTEC, d)) {
+                                    cvt.mTEC.push(new mtec(dd.label, d, dd.controller, dd.sn, dd.setpoint, dd.address, $http, net));
+                                } else {
+                                    cvt.mTEC = [new mtec(dd.label, d, dd.controller, dd.sn, dd.setpoint, dd.address, $http, net)];
+                                }
+                                break;
+                            case "vaisala":
+                                if (cvt.vaisala.length > 0 && !findDevID(cvt.vaisala, d)) {
+                                    cvt.vaisala.push(new device(dd.label, d, dd.controller, dd.sn, 0, dd.address, $http, net));
+                                } else {
 
-                                        cvt.vaisala = [new device(dd.label, d, dd.controller, dd.sn, 0, dd.address, $http, net)];
-                                    }
-                                    break;
-                                case "ppt":
-                                    if (cvt.ppt.length > 0 && !findDevID(cvt.ppt, d)) {
-                                        cvt.ppt.push(new device(dd.label, d, dd.controller, dd.sn, 0, dd.address, $http, net));
-                                    }
-                                    else {
-                                        cvt.ppt = [new device(dd.label, d, dd.controller, dd.sn, 0, dd.address, $http, net)];
-                                    }
-                                    break;
-                                case "TEC":
-                                    if (isEmpty(cvt.tec)) {
+                                    cvt.vaisala = [new device(dd.label, d, dd.controller, dd.sn, 0, dd.address, $http, net)];
+                                }
+                                break;
+                            case "ppt":
+                                if (cvt.ppt.length > 0 && !findDevID(cvt.ppt, d)) {
+                                    cvt.ppt.push(new device(dd.label, d, dd.controller, dd.sn, 0, dd.address, $http, net));
+                                } else {
+                                    cvt.ppt = [new device(dd.label, d, dd.controller, dd.sn, 0, dd.address, $http, net)];
+                                }
+                                break;
+                            case "TEC":
+                                if (isEmpty(cvt.tec)) {
 
-                                        cvt.tec = new te_tec(dd.label, d, dd.controller, dd.sn, dd.setpoint, dd.address, $http, net);
+                                    cvt.tec = new te_tec(dd.label, d, dd.controller, dd.sn, dd.setpoint, dd.address, $http, net);
 
-                                    }
-                                    break;
-                                default:
-                                    console.log("Unexpected device found...");
+                                }
+                                break;
+                            default:
+                                console.log("Unexpected device found...");
                             }
                             $rootScope.$broadcast('deviceListRefresh');
                         }
@@ -325,22 +330,24 @@
                         cvt.inlet = response.data.general.inlet;
 
                         cvt.purge.pos = response.data.general.purge;
+                        
+                        cvt.cal.o3_valve = response.data.calibration.o3_valve;
 
                         var power = Number(response.data.general.power).toString(2);
 
                         while (power.length < 5) {
-                            power += "0";
+                            power = "0"+ power;
 
                         }
 
-                        cvt.power.Pump = power[4] == '1';
-                        cvt.power.O3Gen = power[3] == '1';
-                        cvt.power.Denuder = power[2] == '1';
+                        cvt.power.Pump = power[3] == '1';
+                        cvt.power.O3Gen = power[2] == '1';
+                        cvt.power.Denuder = power[0] == '1';
                         cvt.power.Laser = power[1] == '1';
-                        cvt.power.TEC = power[0] == '1';
+                        cvt.power.TEC = power[4] == '1';
 
 
-                        /**
+                        /*
                          * @ngdoc event
                          * @name cvtUpdated
                          * @eventOf main.service:cvt
@@ -376,7 +383,7 @@
                 $http.get(net.address() + 'General/DevSP?SP=' + sp + '&DevID=' + id);
 
             };
-            
+
 
             cvt.updatePS = function (val) {
                 $http.get(net.address() + 'General/PowerSupply?val=' + val);
@@ -403,23 +410,22 @@
      * This is a prototype for devices.
      */
     function device(l, id, ctlr, sn, sp, addr, _http, _net) {
-        
-        
+
+
         // Pass in these references and store them locally...
         this.net = _net;
         this.http = _http;
-        
+
         this.label = l;
         this.id = id;
         this.ctlr = ctlr;
         this.sn = sn;
         this.sp = sp;
         this.address = addr;
-        
-        this.updateSetpoint = function(val){
+
+        this.updateSetpoint = function (val) {
             this.sp = val;
-            this.http.get(this.net.address() + 'General/DevSP?SP=' 
-                      + this.sp + '&DevID=' + this.id);
+            this.http.get(this.net.address() + 'General/DevSP?SP=' + this.sp + '&DevID=' + this.id);
         }
     }
 
@@ -438,9 +444,7 @@
     }
     tec.prototype.updateCtlParams = function (index, val) {
         this.pid[index] = val;
-        $http.get(net.address() + 'General/tec_ctl_params?DevID='
-            + this.id + '&d=' + this.pid[2]
-            + '&i=' +this.pid[1] +  '&p=' + this.pid[0]);
+        $http.get(net.address() + 'General/tec_ctl_params?DevID=' + this.id + '&d=' + this.pid[2] + '&i=' + this.pid[1] + '&p=' + this.pid[0]);
     };
 
 
@@ -449,27 +453,27 @@
     function te_tec(l, id, ctlr, sn, sp, addr, _http, _net) {
         tec.call(this, l, id, ctlr, sn, sp, addr, _http, _net)
 
-        
+
         // These are multiplication 
         this.htx = 0;
         this.clx = 1;
         this.updateHtx = function (val) {
             this.htx = val;
-            updateServerHeatingParams();
+            this.updateServerHeatingParams();
 
         }
         this.updateClx = function (val) {
             this.clx = val;
-            updateServerHeatingParams();
+            this.updateServerHeatingParams();
 
         }
 
-        function updateServerHeatingParams() {
-            http.get(net.address() + 'tetech/multipliers?mult=' + [this.htx, this.clx].toString());
+        this.updateServerHeatingParams = function() {
+            this.http.get(this.net.address() + 'tetech/multipliers?mult=' + [this.htx, this.clx].toString());
         }
 
         //this.updateCtlParams = function(index, val){
-        //tec.call(this, index, val);
+        //tec.call(this, index, val);   
 
         //console.log("Updating TE Tech PID");
         //}
@@ -477,9 +481,8 @@
         this.updateSP = function (sp) {
             tec.prototype.updateSP.call(this, sp);
             try {
-                http.get(net.address() + 'General/DevSP?SP=' + sp + '&DevID=tetech');
-            }
-            catch (e) {
+                this.http.get(this.net.address() + 'General/DevSP?SP=' + sp + '&DevID=tetech');
+            } catch (e) {
                 console.log("Attempt to set TE Tech setpoint failed.  Server unavailable.")
             }
 
@@ -505,12 +508,12 @@
         this.updateCtlVal = function () {
 
             this.ctl_temp = !this.ctl_temp;
-            
-            var c = val?1:0;
-            
-            http.get(net.address() + 'meerstetter/mctl?val='+ 
-                      c +'&DevID='  + this.id);
-        
+
+            var c = val ? 1 : 0;
+
+            http.get(net.address() + 'meerstetter/mctl?val=' +
+                c + '&DevID=' + this.id);
+
             //http://192.168.101.214:8001/xService/meerstetter/mctl/:id?val={value}
 
         };
@@ -718,14 +721,14 @@
                 '&Vrange=' + this.vrange);
 
         };
-        
-        this.spk.connectToFilter = function(val){
-            var c = val?1:0;
+
+        this.spk.connectToFilter = function (val) {
+            var c = val ? 1 : 0;
             //http://192.168.101.214:8001/xService/PAS_CMD/SpkFilterConnect?conn={value}
             http.get(net.address() + 'PAS_CMD/SpkFilterConnect?conn=' + c);
-        
+
         };
-        
+
         this.spk.connected = false;
 
         this.spk.updateCycle = function (auto, p, l) {
