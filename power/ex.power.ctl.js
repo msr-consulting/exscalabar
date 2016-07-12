@@ -4,10 +4,10 @@
 
             $scope.power = cvt.power;
 
-            //$scope.order = ["Pump", "O3Gen", "Denuder", "Laser", "TEC"];
+            $scope.order = ["Pump", "O3Gen", "Denuder", "Laser", "TEC"];
 
             //$scope.order = ["Denuder", "Laser", "O3Gen", "Pump", "TEC"];
-        $scope.order = ["TEC", "Pump", "O3Gen", "Laser", "Denuder"];
+        //$scope.order = ["TEC", "Pump", "O3Gen", "Laser", "Denuder"];
             cvt.first_call = 1;
 
             $scope.toggle = function (id) {

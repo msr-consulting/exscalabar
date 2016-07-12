@@ -349,11 +349,11 @@
 
                         }
 
-                        cvt.power.Pump = power[3] == '1';
-                        cvt.power.O3Gen = power[2] == '1';
-                        cvt.power.Denuder = power[0] == '1';
+                        cvt.power.Pump = power[4] == '1';
+                        cvt.power.O3Gen = power[3] == '1';
+                        cvt.power.Denuder = power[2] == '1';
                         cvt.power.Laser = power[1] == '1';
-                        cvt.power.TEC = power[4] == '1';
+                        cvt.power.TEC = power[0] == '1';
 
 
                         /*
