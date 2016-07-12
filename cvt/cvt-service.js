@@ -19,7 +19,6 @@
 
             var cvt = {
                 "save": true,
-                "ozone": false,
                 "filter_pos": true,
                 "first_call": 1,
                 "fctl": [],
@@ -50,6 +49,14 @@
                     active: false,
                     o3_valve: false,
                     lamp: 0
+                },
+                "ozone":{
+                    valve: false,
+                    updateValve: function(val){
+                        this.valve = val;
+                        var cmd = val ? 1 : 0;
+                        $http.get(net.address() + 'Calibration/ChangeO3Valve?State=' + cmd);
+                    }
                 }
             };
 
@@ -328,6 +335,8 @@
 
                         cvt.filter.position = response.data.general.filter_pos;
                         cvt.inlet = response.data.general.inlet;
+                        
+                        cvt.ozone.valve = response.data.calibration.o3_valve;
 
                         cvt.purge.pos = response.data.general.purge;
                         

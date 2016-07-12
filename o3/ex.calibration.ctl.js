@@ -16,15 +16,17 @@
     angular.module('main')
         .controller('ExCalibrationCtl', cal_ctl);
 
-    cal_ctl.$inject = ['$scope', 'ExCalibrationSvc', 'cvt'];
+    cal_ctl.$inject = ['$scope', '$rootScope', 'ExCalibrationSvc', 'cvt'];
 
-    function cal_ctl($scope, ExCalibrationSvc, cvt) {
+    function cal_ctl($scope, $rootScope, ExCalibrationSvc, cvt) {
 
 
         $scope.data = [];
-        $scope.o3_valve = false;
+        $scope.o3_valve = cvt.ozone.valve;
         $scope.updateO3Valve = function () {
             $scope.o3_valve = !$scope.o3_valve;
+            cvt.ozone.updateValve($scope.o3_valve);
+            
         }
         $scope.o3_output = 0;
 
@@ -111,6 +113,10 @@
         for (var i = 0; i < $scope.ozone_vals.length; i++) {
             $scope.table_vals.push($scope.ozone_vals[i]);
         }
+        
+        $rootScope.$on('cvtUpdated', function(){
+            $scope.o3_valve = cvt.ozone.valve;
+        });
 
 
         var val = "";
