@@ -145,8 +145,8 @@
              * @description
              * Defines the parameters for humidifier control.
              */
-            cvt.humidifier = [new Humidifier(0.75, 1, 0, 90, false, "Medium"),
-                new Humidifier(0.75, 1, 0, 80, false, "High")];
+            cvt.humidifier = [new Humidifier(0.75, 1, 0, 20, false, "Medium"),
+                new Humidifier(0.75, 1, 0, 30, false, "High")];
 
             /**
              * @ngdoc property
@@ -287,19 +287,19 @@
                             $rootScope.$broadcast('deviceListRefresh');
                         }
 
-                        var h = response.data.Humidifier;
+                        var h = response.data.humidifier;
 
-                        cvt.humidifier[0].p = h.Med.p;
-                        cvt.humidifier[0].i = h.Med.i;
-                        cvt.humidifier[0].d = h.Med.d;
-                        cvt.humidifier[0].en = h.Med.ctl;
-                        cvt.humidifier[0].sp = h.Med.rhsp;
+                        cvt.humidifier[0].p = h.med.p;
+                        cvt.humidifier[0].i = h.med.i;
+                        cvt.humidifier[0].d = h.med.d;
+                        cvt.humidifier[0].en = h.med.ctl;
+                        cvt.humidifier[0].sp = h.med.rhsp;
 
-                        cvt.humidifier[1].p = h.High.p;
-                        cvt.humidifier[1].i = h.High.i;
-                        cvt.humidifier[1].d = h.High.d;
-                        cvt.humidifier[1].en = h.High.ctl;
-                        cvt.humidifier[1].sp = h.High.rhsp;
+                        cvt.humidifier[1].p = h.high.p;
+                        cvt.humidifier[1].i = h.high.i;
+                        cvt.humidifier[1].d = h.high.d;
+                        cvt.humidifier[1].en = h.high.ctl;
+                        cvt.humidifier[1].sp = h.high.rhsp;
 
                         /* Update the CRD controls */
                         cvt.crd.fred = crd.red.f;
