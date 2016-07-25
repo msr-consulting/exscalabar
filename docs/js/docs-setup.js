@@ -126,7 +126,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "main",
       "shortDescription": "The cvt service maintains a current value table of control values so that all controls will",
-      "keywords": "$http $rootscope api associated broadcast byt call called callers calls checkcvt control controls crd current cvt cvtupdated defines empty humidifier intervals lasers main mainctrl maintains making method module object parameters pas photoacoustic populated properly property provided regular returned returns server service settings speaker spectrometer successful table ui updated updates values"
+      "keywords": "$http $rootscope api associated broadcast byt call called callers calls changewvfmstate checkcvt control controls crd current cvt cvtupdated data defines empty humidifier intervals lasers main mainctrl maintains making method module object overloading parameters pas photoacoustic populated properly property provided regular returned returns server service settings speaker spectrometer stream successful table turn ui updated updates values waveform"
     },
     {
       "section": "api",

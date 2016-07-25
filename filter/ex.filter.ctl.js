@@ -8,6 +8,10 @@
              * that the filter is on and a boolean indicating whether the syste is set
              * to cycle.
              */
+            
+            
+        
+            cvt.changeWvfmState(false, false);
 
             cvt.first_call = 1;
             

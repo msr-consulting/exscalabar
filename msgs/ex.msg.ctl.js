@@ -1,6 +1,6 @@
 (function () {
-    angular.module('main').controller('ExMsgCtl', ['$scope', 'ExMsgSvc',
-	function ($scope, ExMsgSvc) {
+    angular.module('main').controller('ExMsgCtl', ['$scope', 'ExMsgSvc', 'cvt',
+	function ($scope, ExMsgSvc, cvt) {
             /**
              * @ngdoc controller
              * @name main.msgCtlr
@@ -19,6 +19,9 @@
              * Scope variable that holds the html based text stream.
              */
             $scope.msgs = ExMsgSvc.msgs;
+        
+            cvt.changeWvfmState(false, false);
+        
             $scope.$on('msgAvailable', function () {
 
                 $scope.msgs = ExMsgSvc.msgs;

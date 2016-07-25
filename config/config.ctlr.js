@@ -3,6 +3,9 @@
         .controller('mrConfigCtlr', ['$scope', '$http', 'Data', 'net', 'cvt', function ($scope, $http, Data, net, cvt) {
 
             cvt.first_call = 1;
+            
+        
+            cvt.changeWvfmState(false, false);
 
             $scope.connected = false;
 

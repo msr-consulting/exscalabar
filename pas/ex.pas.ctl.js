@@ -5,6 +5,8 @@
 
 
     function pas_ctl($scope, cvt, ExPasSvc, ExReadCfgSvc) {
+        
+        cvt.changeWvfmState(false, true);
 
         /**
          * @ngdoc controller

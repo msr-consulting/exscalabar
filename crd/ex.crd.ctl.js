@@ -2,11 +2,12 @@
     angular.module('main').controller('ExCrdCtl', ['$scope', 'cvt', 'ExCrdSvc',
         function ($scope, cvt, ExCrdSvc) {
 
+            cvt.changeWvfmState(true, false);
             cvt.firstcall = 1;
-            
+
             var maxPMTGain = 10;
             var maxLaserGain = 5;
-            
+
             $scope.write_wvfm_data = false;
             $scope.write_taus = cvt.crd.write_taus;
 
@@ -32,13 +33,13 @@
             };
 
             $scope.show_wvfm = true;
-            
-            $scope.update_wvfm_state = function(){
+
+            $scope.update_wvfm_state = function () {
                 $scope.show_wvfm = !$scope.show_wvfm;
 
             };
-            
-            $scope.update_tau_write= function(){
+
+            $scope.update_tau_write = function () {
                 $scope.write_taus = !$scope.write_taus;
                 cvt.crd.update_tau_write($scope.write_taus);
             }
@@ -46,7 +47,7 @@
             $scope.setEn = function () {
                 var index = arguments[0];
                 $scope.laser_ctl[index].en = !$scope.laser_ctl[index].en;
-                
+
                 var vals = [$scope.laser_ctl[0].en, $scope.laser_ctl[1].en, $scope.laser_ctl[2].en];
 
                 cvt.crd.setEnable(vals);
@@ -56,21 +57,25 @@
              * second to red.
              */
             $scope.laser_ctl = [
-                new laserInput(cvt.crd.fblue, cvt.crd.dcblue, cvt.crd.kblue0/maxLaserGain*100, cvt.crd.eblue0, "Blue Lower"),
-                new laserInput(cvt.crd.fblue, cvt.crd.dcblue, cvt.crd.kblue1/maxLaserGain*100, cvt.crd.eblue1, "Blue Upper"),
-                new laserInput(cvt.crd.fred, cvt.crd.dcred, cvt.crd.kred/maxLaserGain*100, cvt.crd.ered, "Red Laser")
+                new laserInput(cvt.crd.fblue, cvt.crd.dcblue, cvt.crd.kblue0 / maxLaserGain * 100, cvt.crd.eblue0, "Blue Lower"),
+                new laserInput(cvt.crd.fblue, cvt.crd.dcblue, cvt.crd.kblue1 / maxLaserGain * 100, cvt.crd.eblue1, "Blue Upper"),
+                new laserInput(cvt.crd.fred, cvt.crd.dcred, cvt.crd.kred / maxLaserGain * 100, cvt.crd.ered, "Red Laser")
             ];
 
-            $scope.pmt = cvt.crd.kpmt.map(function(x){return x/maxPMTGain*100;});
+            $scope.pmt = cvt.crd.kpmt.map(function (x) {
+                return x / maxPMTGain * 100;
+            });
 
             $scope.setGain = function () {
-                cvt.crd.setGain($scope.pmt.map(function(x){ return x/100*maxPMTGain;}));
+                cvt.crd.setGain($scope.pmt.map(function (x) {
+                    return x / 100 * maxPMTGain;
+                }));
             };
 
             $scope.setLaserGain = function () {
-                cvt.crd.setLaserGain([$scope.laser_ctl[0].k/100*maxLaserGain, 
-                                      $scope.laser_ctl[1].k/100*maxLaserGain, 
-                                      $scope.laser_ctl[2].k/100*maxLaserGain]);
+                cvt.crd.setLaserGain([$scope.laser_ctl[0].k / 100 * maxLaserGain,
+                                      $scope.laser_ctl[1].k / 100 * maxLaserGain,
+                                      $scope.laser_ctl[2].k / 100 * maxLaserGain]);
             };
 
             $scope.purge = {
@@ -110,20 +115,22 @@
             $scope.$on('cvtUpdated', function () {
                 $scope.laser_ctl[0].rate = cvt.crd.fblue;
                 $scope.laser_ctl[0].DC = cvt.crd.dcblue;
-                $scope.laser_ctl[0].k = cvt.crd.kblue0/maxLaserGain*100;
+                $scope.laser_ctl[0].k = cvt.crd.kblue0 / maxLaserGain * 100;
                 $scope.laser_ctl[0].enabled = cvt.crd.eblue0;
-                
+
                 $scope.laser_ctl[1].rate = cvt.crd.fblue;
                 $scope.laser_ctl[1].DC = cvt.crd.dcblue;
-                $scope.laser_ctl[1].k = cvt.crd.kblue1/maxLaserGain*100;
+                $scope.laser_ctl[1].k = cvt.crd.kblue1 / maxLaserGain * 100;
                 $scope.laser_ctl[1].enabled = cvt.crd.eblue1;
 
                 $scope.laser_ctl[2].rate = cvt.crd.fred;
                 $scope.laser_ctl[2].DC = cvt.crd.dcred;
-                $scope.laser_ctl[2].k = cvt.crd.kred/maxLaserGain*100;
+                $scope.laser_ctl[2].k = cvt.crd.kred / maxLaserGain * 100;
                 $scope.laser_ctl[2].enabled = cvt.crd.ered;
 
-                $scope.pmt = cvt.crd.kpmt.map(function(x){return x/maxPMTGain*100;});
+                $scope.pmt = cvt.crd.kpmt.map(function (x) {
+                    return x / maxPMTGain * 100;
+                });
 
                 $scope.purge.pos = cvt.purge.pos;
                 $scope.write_taus = cvt.crd.write_taus;

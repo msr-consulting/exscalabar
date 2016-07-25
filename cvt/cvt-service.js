@@ -166,6 +166,22 @@
              * Defines settings associated with the photoacoustic spectrometer.  These settings are associated with the speaker and the lasers.
              */
             cvt.crd = new Crd($http, net);
+            
+            /**
+             * @ngdoc method
+             * @name main.cvt#changeWvfmState
+             * @methodOf main.service:cvt
+             *
+             * @description
+             * Turn on and off the PAS and CRD waveform returns.  Use this to 
+             * make sure that we are not overloading the data stream.
+             */
+            cvt.changeWvfmState = function(crdWvfm, pasWvfm){
+                cvt.pas.send_wvfm(pasWvfm);
+                //cvt.crd.
+                
+                
+            }
 
             cvt.filter = {
                 cycle: {
@@ -193,16 +209,6 @@
             };
             
             cvt.tec = {};
-
-            // TODO: most of the update setpoint commands should be removed from the cvt if there is not direct interaction with the cvt service itself (i.e. we are not storing something in the cvt
-           // cvt.tec.updateSP = function (sp) {
-            //    $http.get(net.address() + 'General/DevSP?SP=' + sp + '&DevID=tetech');
-           // };
-
-            //cvt.tec.updateMult = function (m) {
-                ///xService/tetech/multipliers?mult={value}
-             //   $http.get(net.address() + 'tetech/multipliers?mult=' + m.toString());
-            //};
 
             /* TODO: Implement server side CVT communication. */
 

@@ -19,8 +19,8 @@
     cal_ctl.$inject = ['$scope', '$rootScope', 'ExCalibrationSvc', 'cvt'];
 
     function cal_ctl($scope, $rootScope, ExCalibrationSvc, cvt) {
-
-
+        
+        cvt.changeWvfmState(false, false);
         $scope.data = [];
         $scope.o3_valve = cvt.ozone.valve;
         $scope.updateO3Valve = function () {

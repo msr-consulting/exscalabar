@@ -19,6 +19,9 @@
      * Controller for the flow control and visualization page.
      */
     function VaisalaCtl($scope, cvt, ExVaisalaSvc) {
+        
+        
+        cvt.changeWvfmState(false, false);
 
         $scope.Devices = {};
 

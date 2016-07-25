@@ -6,9 +6,9 @@
 
             $scope.order = ["Pump", "O3Gen", "Denuder", "Laser", "TEC"];
 
-            //$scope.order = ["Denuder", "Laser", "O3Gen", "Pump", "TEC"];
-        //$scope.order = ["TEC", "Pump", "O3Gen", "Laser", "Denuder"];
             cvt.first_call = 1;
+        
+            cvt.changeWvfmState(false, false);
 
             $scope.toggle = function (id) {
                 // Flip the bit
