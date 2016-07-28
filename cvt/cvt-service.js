@@ -45,14 +45,14 @@
                 "mTEC": [],
                 "tec": {},
                 "ppt": [],
-                "cal":{
+                "cal": {
                     active: false,
                     o3_valve: false,
                     lamp: 0
                 },
-                "ozone":{
+                "ozone": {
                     valve: false,
-                    updateValve: function(val){
+                    updateValve: function (val) {
                         this.valve = val;
                         var cmd = val ? 1 : 0;
                         $http.get(net.address() + 'Calibration/ChangeO3Valve?State=' + cmd);
@@ -166,7 +166,7 @@
              * Defines settings associated with the photoacoustic spectrometer.  These settings are associated with the speaker and the lasers.
              */
             cvt.crd = new Crd($http, net);
-            
+
             /**
              * @ngdoc method
              * @name main.cvt#changeWvfmState
@@ -176,11 +176,11 @@
              * Turn on and off the PAS and CRD waveform returns.  Use this to 
              * make sure that we are not overloading the data stream.
              */
-            cvt.changeWvfmState = function(crdWvfm, pasWvfm){
+            cvt.changeWvfmState = function (crdWvfm, pasWvfm) {
                 cvt.pas.send_wvfm(pasWvfm);
                 //cvt.crd.
-                
-                
+
+
             }
 
             cvt.filter = {
@@ -207,7 +207,7 @@
                 }
 
             };
-            
+
             cvt.tec = {};
 
             /* TODO: Implement server side CVT communication. */
@@ -341,17 +341,17 @@
 
                         cvt.filter.position = response.data.general.filter_pos;
                         cvt.inlet = response.data.general.inlet;
-                        
+
                         cvt.ozone.valve = response.data.calibration.o3_valve;
 
                         cvt.purge.pos = response.data.general.purge;
-                        
+
                         cvt.cal.o3_valve = response.data.calibration.o3_valve;
 
                         var power = Number(response.data.general.power).toString(2);
 
                         while (power.length < 5) {
-                            power = "0"+ power;
+                            power = "0" + power;
 
                         }
 
@@ -483,7 +483,7 @@
 
         }
 
-        this.updateServerHeatingParams = function() {
+        this.updateServerHeatingParams = function () {
             this.http.get(this.net.address() + 'tetech/multipliers?mult=' + [this.htx, this.clx].toString());
         }
 
@@ -581,12 +581,14 @@
         this.setLaserRate = function (index, f) {
 
             var cmd = 'CRDS_CMD/fblue?Rate=' + f;
-            if (index) {
-                cmd = 'CRDS_CMD/fred?Rate=' + f;
-                this.fred = f;
-            } else {
-                this.fblue = f;
-            }
+            this.fblue = f;
+            http.get(net.address() + cmd);
+            //if (index) {
+            cmd = 'CRDS_CMD/fred?Rate=' + f;
+            this.fred = f;
+            //} else {
+            this.fblue = f;
+            //}
 
             http.get(net.address() + cmd);
 

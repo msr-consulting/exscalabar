@@ -22,7 +22,7 @@
                 Data.getData();
                 cvt.checkCvt();
                 //deviceCfg.checkCfg();
-            }, 1000);
+            }, 100);
 
             // Load checklist data at startup
             ExChecklistSvc.load();

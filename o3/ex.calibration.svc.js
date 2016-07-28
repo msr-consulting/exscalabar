@@ -36,8 +36,6 @@
             };
             tabService.ship_data = function (data) {
 
-
-
                 $http({
                     method: 'POST',
                     url: net.address() + 'Calibration/saveCalFile?file_name=' + "test_cal" + ".xml",
@@ -46,6 +44,19 @@
                         "Content-Type": 'application/x-www-form-urlencoded'
                     }
                 });
+            };
+            
+            tabService.lampVal = function(){
+                
+                $http({
+                    method: 'POST',
+                    url: net.address() + 'Calibration/saveCalFile?file_name=' + "test_cal" + ".xml",
+                    data: build_file(data),
+                    headers: {
+                        "Content-Type": 'application/x-www-form-urlencoded'
+                    }
+                });
+                
             };
 
 

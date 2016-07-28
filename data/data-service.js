@@ -82,8 +82,10 @@
                 promise = $http.get(net.address() + 'General/Data')
                     .then(function (response) {
 
-                        if (isEmpty(response.data)) {
-                            $rootScope.$broadcast('dataNotAvailable');
+                        if (response.status != 200) {
+                            if (response.status === 209){
+                                $rootScope.$broadcast('dataNotAvailable');
+                            }
                         }
                         else {
 
