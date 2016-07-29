@@ -91,8 +91,10 @@
 
                             // Handle filter infomration
                             dataObj.filter.state = response.data.Filter;
+                            
                             // Time remaining in cycle is the total time minus the elapsed time
                             var tremain = response.data.fcycle.tt - response.data.fcycle.te;
+                            
                             // Don't let this time fall below 0
                             dataObj.filter.tremain = tremain > 0 ? tremain : 0;
 

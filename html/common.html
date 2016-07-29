@@ -8,8 +8,7 @@
                     </cui-numeric>
                     <cui-numeric ng-model="filter.cycle.length" width="50" evnt-func="filter.updateCycle()">l (s)
                     </cui-numeric>
-                    <cui-button ival="filter.cycle.auto" ng-model="filter.cycle.auto" width="50"
-                                evnt-func="filter.updateAuto()">Auto
+                    <cui-button ival="filter.cycle.auto" ng-model="filter.cycle.auto" width="50" evnt-func="filter.updateAuto()">Auto
                     </cui-button>
                     <cui-numeric ng-model="tremain" width="50" type="int" readonly>t<sub>r</sub> (s)</cui-numeric>
                 </div>
@@ -26,6 +25,19 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div ng-controller="ExCommonCtl">
+            <div class="panel panel-default">
+                <div class="panel-heading">Impactor</div>
+                <div class="panel-body">
+                    <cui-numeric ng-model="impactor.diffV" width="50">P<sub>imp</sub>
+                    </cui-numeric>
+                    <cui-button ival="impactor.blocked">Blocked?</cui-button>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
