@@ -57,6 +57,10 @@
                     objectData = "max";
                     vm.options.ylabel = "Max (a.u.)";
                 }],
+                ['Extinction', function () {
+                    objectData = "ext";
+                    vm.options.ylabel = "<em>b<sub>ext</sub></em> (a.u.)";
+                }],
                 null, // Creates a divider
                 ['Clear Data', function () {
                     ExCrdSvc.clear_history();
