@@ -21,6 +21,9 @@
                 $scope.filter = cvt.filter.position;
                 $scope.cabin = cvt.inlet;
             });
+            $scope.$on('dataAvailable', function(){
+                $scope.interlock = Data.data.interlock;
+            })
 
             $scope.saveData = function () {
 
