@@ -1,6 +1,6 @@
 (function () {
     angular.module('main')
-        .controller('Sidebar', ['$scope', 'Data','cvt', function ($scope,Data, cvt) {
+        .controller('Sidebar', ['$scope', 'Data', 'cvt', function ($scope, Data, cvt) {
 
             $scope.save = 1;
             $scope.filter = cvt.filter.position;
@@ -11,19 +11,21 @@
             $scope.impBlocked = false;
 
             $scope.denuder_bypass = false;
-            $scope.interlock = false;
+            $scope.laserStatus = checkLaserStatus();
 
 
             // Initially time is not available
             $scope.time = "Not Connected";
-            
-            $scope.$on('cvtUpdated', function(){
+
+            $scope.$on('cvtUpdated', function () {
                 $scope.filter = cvt.filter.position;
                 $scope.cabin = cvt.inlet;
+                $scope.laserStatus = checkLaserStatus();
             });
-            $scope.$on('dataAvailable', function(){
-                $scope.interlock = Data.data.interlock;
-            })
+            $scope.$on('dataAvailable', function () {
+                $scope.laserStatus = checkLaserStatus();
+            });
+
 
             $scope.saveData = function () {
 
@@ -49,6 +51,22 @@
                 $scope.cabin = !$scope.cabin;
                 cvt.setCabinValve($scope.cabin);
             };
+
+            function checkLaserStatus() {
+                try {
+                    if ((cvt.crd.enable.indexOf(true) >= 0
+                        || cvt.pas.las.enabled.indexOf(true) >= 0)
+                        && Data.data.interlock) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                catch(e){// This will be thrown if any of those above are undefined
+                    return false;
+                }
+            }
 
         }]);
 })();
