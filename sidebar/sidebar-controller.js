@@ -24,6 +24,7 @@
             });
             $scope.$on('dataAvailable', function () {
                 $scope.laserStatus = checkLaserStatus();
+                $scope.pumpBlocked = Data.data.pBlocked;
             });
 
 

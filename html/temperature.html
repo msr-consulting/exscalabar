@@ -1,57 +1,62 @@
-
 <div class="row" ng-controller="ExMeerstetterCtl">
-    <div class="panel panel-default">
-        <div class="panel-heading">TEC Control</div>
-        <div class="panel-body">
-            <div class="table-responsive" style="padding-bottom: 0px">
-                <table class="table table-condensed table-input" style="color:white;margin-bottom: 0px">
-                    <thead>
-                    <tr>
-                        <th class="col-md-1">ID</th>
-                        <th class="col-md-2" >Setpoint
-                        </th>
-                        <th class="col-md-2">P
-                        </th>
-                        <th class="col-md-2">I
-                        </th>
-                        <th class="col-md-2">D
-                        </th>
-                        <th class="col-md-2">Temperature?</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="tec in tecs track by $index" ng-init="parentIndex = $index">
-                        <td>{{tec.label}}</td>
-                        <td>
-                            <input class="col-md-12" ng-model="tec.sp" ng-blur="updateSetpoint($index)" type="number" min ="0" max = "100">
-                        </td>
-
-                        <td ng-repeat="ctl in tec.pid track by $index">
-                            <input class="col-md-12" ng-model="tec.pid[$index]" ng-blur = "updatePID(parentIndex, $index)" type="number">
-                        </td>
-                        <td>
-                            <button class="btn btn-block btn-default btn-sm"
-                                    ng-switch="tec.ctl_temp" type="button" value="Temperature">
-                                <div ng-switch-when="1">
-                                    Temperature
-                                </div>
-                                <div ng-switch-when="0">
-                                    Power
-                                </div>
-                                <div ng-switch-default>
-                                    Temperature
-                                </div>
-                            </button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
+    <div class="row">
+        <div class="col-md-12">
+            <ex-meerstetter-plot></ex-meerstetter-plot>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">TEC Control</div>
+                <div class="panel-body">
+                    <div class="table-responsive" style="padding-bottom: 0px">
+                        <table class="table table-condensed table-input" style="color:white;margin-bottom: 0px">
+                            <thead>
+                            <tr>
+                                <th class="col-md-1">ID</th>
+                                <th class="col-md-2">Setpoint
+                                </th>
+                                <!-- <th class="col-md-2">P
+                                </th>
+                                <th class="col-md-2">I
+                                </th>
+                                <th class="col-md-2">D
+                                </th> -->
+                                <th class="col-md-2">Temperature?</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="tec in tecs track by $index" ng-init="parentIndex = $index">
+                                <td>{{tec.label}}</td>
+                                <td>
+                                    <input class="col-md-12" ng-model="tec.sp" ng-blur="updateSetpoint($index)"
+                                           type="number" min="0" max="100">
+                                </td>
 
-</div>
-<div class="row">
-    <ex-meerstetter-plot></ex-meerstetter-plot>
+                                <!--  <td ng-repeat="ctl in tec.pid track by $index">
+                                     <input class="col-md-12" ng-model="tec.pid[$index]" ng-blur = "updatePID(parentIndex, $index)" type="number">
+                                 </td> -->
+                                <td>
+                                    <button class="btn btn-block btn-default btn-sm"
+                                            ng-switch="tec.ctl_temp" type="button" value="Temperature">
+                                        <div ng-switch-when="1">
+                                            Temperature
+                                        </div>
+                                        <div ng-switch-when="0">
+                                            Power
+                                        </div>
+                                        <div ng-switch-default>
+                                            Temperature
+                                        </div>
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

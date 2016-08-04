@@ -32,23 +32,31 @@
                 <div class="panel-body">
                     <cui-button ival="purge.pos" ng-click="purge.setValve()">Flow Ctl</cui-button>
 
-                    <cui-numeric ng-model="purge.flow" width=10 evnt-func="purge.setFlow()">Q
-                    </cui-numeric>
+                    <!--<cui-numeric ng-model="purge.flow"
+                                 width=10
+                                 evnt-func="purge.setFlow()">Q
+                    </cui-numeric>-->
                 </div>
             </div>
             <cui-button ival="show_wvfm">
                 <div tooltip-placement="bottom" tooltip="Send waveform data.  Must have bandwidth to support this functionality."
-                     tooltip-trigger="mouseenter" tooltip-append-to-body="true" ng-click="update_wvfm_state()">Send Waveforms
+                     tooltip-trigger="mouseenter"
+                     tooltip-append-to-body="true"
+                     ng-click="update_wvfm_state()">Send Waveforms
                 </div>
             </cui-button>
             <cui-button ival="write_wvfm_data">
-                <div tooltip-placement="bottom" tooltip="Write CRD waveform data to file."
-                     tooltip-trigger="mouseenter" tooltip-append-to-body="true" ng-click="update_wvfm_state()">Write Waveforms
+                <div tooltip-placement="bottom"
+                     tooltip="Write CRD waveform data to file."
+                     tooltip-trigger="mouseenter"
+                     tooltip-append-to-body="true"
+                     ng-click="update_wvfm_state()">Write Waveforms
                 </div>
             </cui-button>
             <cui-button ival="write_taus">
                 <div tooltip-placement="bottom" tooltip="Write CRD tau data to file."
-                     tooltip-trigger="mouseenter" tooltip-append-to-body="true" ng-click="update_tau_write()">Write Taus
+                     tooltip-trigger="mouseenter" tooltip-append-to-body="true"
+                     ng-click="update_tau_write()">Write Taus
                 </div>
             </cui-button>
         </div>

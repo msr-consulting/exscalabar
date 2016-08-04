@@ -273,3 +273,11 @@ body > .container {
     left: 28%;
     font-size: 15px;
 }
+
+.alert {
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom:0px;
+    /*border: 1px solid transparent;*/
+    /*border-radius: 4px;*/
+}

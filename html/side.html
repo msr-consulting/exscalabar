@@ -10,35 +10,40 @@
             </li>
             <li>
                 <cui-button ival="denuder_bypass" ng-click="setDenuderBypass()">
-                    <div tooltip-placement="left" tooltip="Set path to denuder or bypass."
-                         tooltip-trigger="mouseenter" tooltip-append-to-body="true">Denuder Bypass
+                    <div tooltip-placement="left"
+                         tooltip="Set path to denuder or bypass."
+                         tooltip-trigger="mouseenter"
+                         tooltip-append-to-body="true">Denuder Bypass
                     </div>
                 </cui-button>
             </li>
             <li>
                 <cui-button ival="cabin" ng-click="setCabin()">
-                    <div tooltip-placement="left" tooltip="Toggle sample inlet"
-                         tooltip-trigger="mouseenter" tooltip-append-to-body="true">Inlet
+                    <div tooltip-placement="left"
+                         tooltip="Toggle sample inlet"
+                         tooltip-trigger="mouseenter"
+                         tooltip-append-to-body="true">Inlet
                     </div>
                 </cui-button>
             </li>
-            <li class ng-switch on="o3On">
+            <!-- <li class ng-switch on="o3On">
                 <div ng-switch-when=t rue class="alert alert-success">
                     Ozone Cal Active
                 </div>
-            </li>
-            <li class ng-show="pumpBlocked">
-                <!-- Show nothing when an ozone cal is not running -->
-                <div class="alert alert-danger">
+            </li> -->
+            <li class ng-switch on="pumpBlocked">
+                <div ng-switch-when="true" class="alert alert-danger">
                     Pump Blocked!
                 </div>
+                <div ng-switch-when="false" class="alert alert-info">
+                    Pump Clear
+                </div>
             </li>
-            <li class ng-show="impBlocked">
-                <!-- Show nothing when an ozone cal is not running -->
+            <!-- <li class ng-show="impBlocked">
                 <div class="alert alert-danger">
                     Impactor Blocked!
                 </div>
-            </li>
+            </li>-->
             <li class ng-switch on="laserStatus">
                 <div ng-switch-when="true" class="alert alert-danger">
                     Lasers On!

@@ -191,7 +191,7 @@
             for (var k = 0; k < celldata[0].PhotoDiode.Y.length; k++) {
                 var pd = [k*pdt];
                 for (var j = 0; j < celldata.length; j++) {
-                    pd.push(celldata[index].PhotoDiode.Y[k]);
+                    pd.push(celldata[j].PhotoDiode.Y[k]);
                 }
 
                 // Push the data in cell-wise

@@ -28,7 +28,11 @@
                         <div tooltip-placement="bottom" tooltip="Set system to cycle speaker automatically" tooltip-trigger="mouseenter" tooltip-append-to-body="true" ng-click="updateAuto()">Auto
                         </div>
                     </cui-button>
-                    <cui-button ival="speaker.connected" ng-click="connectFilterSpeaker()">Connect Filter Cycle</cui-button>
+                    <cui-button ival="speaker.connected" ng-click="connectFilterSpeaker()">
+                        <div tooltip-placement="bottom" tooltip="Connect speaker to filter cycle."
+                             tooltip-trigger="mouseenter"
+                             tooltip-append-to-body="true">Connect <br>Cycles</div>
+                    </cui-button>
 
                 </div>
             </div>
@@ -55,7 +59,10 @@
                         <thead>
                             <tr>
                                 <th class="col-md-1">Cell</th>
-                                <th class="col-md-2" tooltip-placement="bottom" tooltip="Set the laser settings on a 0-100% scale." tooltip-trigger="mouseenter" tooltip-append-to-body="true">Setting
+                                <th class="col-md-2" tooltip-placement="bottom"
+                                    tooltip="Set the laser settings on a 0-100% scale."
+                                    tooltip-trigger="mouseenter"
+                                    tooltip-append-to-body="true">Setting
                                 </th>
                                 <th class="col-md-2">f
                                     <sub>0</sub> (Hz)
@@ -122,7 +129,7 @@
 <div class="row">
     <ex-pas-temp-plot></ex-pas-temp-plot>
 </div>
-<div class="row" style="margin-top:10px;">
+<!-- <div class="row" style="margin-top:10px;">
     <div class="col-md-12">
         <div class="table-responsive" style="color:white" ng-controller="ExPasCtl">
             <table class="table" id="cal-table">
@@ -147,4 +154,4 @@
             </table>
         </div>
     </div>
-</div>
+</div> -->
