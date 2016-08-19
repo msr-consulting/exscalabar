@@ -155,8 +155,10 @@
                     flow.data[key].P = Data.data[key].P;
                     flow.data[key].T = Data.data[key].T;
                     flow.data[key].Q = Data.data[key].Q;
+                    flow.data[key].Q0 = Data.data[key].Q0;
                     flow.data[key].label = alicats[i].label;
-                    flow.data[key].Qsp = alicats[i].sp;
+                    flow.data[key].Qsp = Data.data[key].Qsp;
+                    //flow.data[key].Qsp = alicats[i].sp;
 
                 }
             }
