@@ -19,15 +19,16 @@
     cal_ctl.$inject = ['$scope', '$rootScope', 'ExCalibrationSvc', 'cvt'];
 
     function cal_ctl($scope, $rootScope, ExCalibrationSvc, cvt) {
-        
+
         cvt.changeWvfmState(false, false);
         $scope.data = [];
         $scope.o3_valve = cvt.ozone.valve;
         $scope.updateO3Valve = function () {
             $scope.o3_valve = !$scope.o3_valve;
             cvt.ozone.updateValve($scope.o3_valve);
-            
-        }
+
+        };
+        
         $scope.o3_output = 0;
 
         $scope.cal_active = false;
@@ -113,8 +114,8 @@
         for (var i = 0; i < $scope.ozone_vals.length; i++) {
             $scope.table_vals.push($scope.ozone_vals[i]);
         }
-        
-        $rootScope.$on('cvtUpdated', function(){
+
+        $rootScope.$on('cvtUpdated', function () {
             $scope.o3_valve = cvt.ozone.valve;
         });
 
@@ -147,6 +148,10 @@
                 "val": val
             });
 
+        };
+        
+        $scope.getCurrent=function(){
+            $scope.data = ExCalibrationSvc.get_o3_file();
         };
     };
 })();
