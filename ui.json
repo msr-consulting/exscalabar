@@ -3,11 +3,11 @@
   "version": "0.7.0",
   "pasplot": {
     "color": [
-      "blue",
-      "red",
+      "cyan",
+      "crimson",
       "green",
-       "crimson",
-       "cyan"
+       "red",
+       "blue"
     ],
     "strokeWidth": [
       2,
@@ -17,7 +17,9 @@
       2
     ],
     "pattern": [
-      null,
+        "DASHED_LINE",
+        "DASHED_LINE",
+        null,
       null,
       null
     ],
@@ -34,10 +36,10 @@
   "crdplot": {
     "color": [
       "blue",
-      "cyan",
+      "white",
       "lightblue",
-      "darkblue",
-      "red"
+      "red",
+      "cyan"
     ],
     "strokeWidth": [
       2,
@@ -47,17 +49,17 @@
     ],
     "pattern": [
       null,
-      null,
-      null,
       "DASHED_LINE",
+      "DASHED_LINE",
+      "LINE",
       "LINE"
     ],
     "names": [
       "Blue Dry",
-      "Blue Gas",
       "Blue High RH",
-      "Blue(l) Med RH",
-      "Red Dry"
+      "Blue Med RH",
+      "Red Dry",
+      "Blue Gas"
     ],
     "xGrid": true,
     "yGrid": true

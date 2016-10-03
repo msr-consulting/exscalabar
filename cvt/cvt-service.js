@@ -549,7 +549,7 @@
 
         this.update_tau_write = function (state) {
             this.write_taus = state;
-
+//http://192.168.101.214:8001/xService/CRDS_CMD/WriteTausFile?Write_Data={value}
             var val = state ? 1 : 0;
             var cmd = 'CRDS_CMD/WriteTausFile?Write_Data=' + val;
             http.get(net.address() + cmd);

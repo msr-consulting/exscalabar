@@ -28,8 +28,8 @@
             cvt.ozone.updateValve($scope.o3_valve);
 
         };
-        
-        $scope.o3_output = 0;
+
+        $scope.o3_output = cvt.cal.lamp;
 
         $scope.cal_active = false;
         $scope.runCal = function () {
@@ -87,7 +87,7 @@
             {
                 "id": "O3-Generator-Power",
                 "step": "O3 Generator",
-                "descr": "Boolean that sets the O3 generator state."
+                "descr": "Boolean that sets the O3 generator state"
                 },
             {
                 "id": "O2-Flow-Rate",
@@ -103,8 +103,13 @@
             {
                 "id": "O3-Dump-Rate",
                 "step": "QO3,dump",
-                "descr": "Ozone dump rate in lpm."
-                }];
+                "descr": "Ozone dump rate in lpm"
+                },
+            {
+                "id": "O3-Lamp-Rate",
+                "step": "O3 Lamp Rate",
+                "descr": "Ozone lamp rate (%)"
+            }];
 
 
         // Initial shallow copy of the base vals...
@@ -139,6 +144,9 @@
             case "O3-Level":
                 val = "1";
                 break;
+            case "O3-Lamp-Rate":
+                val = "0";
+                break;
             default:
                 val = "FALSE";
             }
@@ -149,8 +157,8 @@
             });
 
         };
-        
-        $scope.getCurrent=function(){
+
+        $scope.getCurrent = function () {
             $scope.data = ExCalibrationSvc.get_o3_file();
         };
     };
