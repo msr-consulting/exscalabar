@@ -23,19 +23,19 @@
         cvt.changeWvfmState(false, false);
         $scope.data = [];
         $scope.o3_valve = cvt.ozone.valve;
+        $scope.lamp_rate = ExCalibrationSvc.lamp_rate;
         $scope.updateO3Valve = function () {
             $scope.o3_valve = !$scope.o3_valve;
             cvt.ozone.updateValve($scope.o3_valve);
 
         };
 
-        $scope.o3_output = cvt.cal.lamp;
-
         $scope.cal_active = false;
         $scope.runCal = function () {
             $scope.cal_active = !$scope.cal_active;
         };
         $scope.updateLamp = function () {
+            ExCalibrationSvc.update_lamp_rate($scope.lamp_rate);
 
         };
 

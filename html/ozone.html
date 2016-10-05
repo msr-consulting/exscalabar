@@ -7,9 +7,9 @@
             <cui-button ival="o3_valve" ng-click="updateO3Valve()">
                 O3 Valve
             </cui-button>
-            <cui-numeric type="int" ng-model="o3_output" evnt-func="updateLamp()">
-                <div tooltip-placement="right" tooltip="Change lamp output. Scale is 0-100%" tooltip-trigger="mouseenter" tooltip-append-to-body="true">
-                    O3 Lamp
+            <cui-numeric type="int" ng-model="lamp_rate" evnt-func="updateLamp()">
+                <div tooltip-placement="right" tooltip="Change lamp output frequency in Hz" tooltip-trigger="mouseenter" tooltip-append-to-body="true">
+                    f<sub>O3</sub>
                 </div>
             </cui-numeric>
 

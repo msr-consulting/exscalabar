@@ -1,8 +1,12 @@
 (function () {
     angular.module('main')
-        .factory('ExCalibrationSvc', ['$http', 'net', function ($http, net) {
+        .factory('ExCalibrationSvc', ['$http', 'net', 'cvt', '$rootScope', 
+                                      function ($http, net, cvt, $rootScope) {
 
-            var tabService = {};
+            var tabService = {
+                lamp_rate: 0,
+                o3_valve: false
+            };
             var build_file = function (data) {
                 var xml = '<?xml version="1.0" encoding="utf-8"?>\r\n<OZONE>\r\n';
                 data.forEach(function (datum) {
@@ -10,11 +14,10 @@
                 });
 
                 xml += "</OZONE>";
-                console.log(xml);
-
 
                 return xml;
             };
+
             tabService.ship_data = function (data) {
 
                 $http({
@@ -25,19 +28,6 @@
                         "Content-Type": 'application/x-www-form-urlencoded'
                     }
                 });
-            };
-
-            tabService.lampVal = function () {
-
-                $http({
-                    method: 'POST',
-                    url: net.address() + 'Calibration/saveCalFile?file_name=' + "test_cal" + ".xml",
-                    data: build_file(data),
-                    headers: {
-                        "Content-Type": 'application/x-www-form-urlencoded'
-                    }
-                });
-
             };
 
             tabService.get_o3_file = function () {
@@ -61,7 +51,7 @@
                         x = xmlDoc.documentElement.childNodes;
                         console.log(x);
 
-                        for (i=0;i <x.length; i++) {
+                        for (i = 0; i < x.length; i++) {
                             val.push({
                                 "id": x[i].nodeName,
                                 "val": x[i].childNodes[0].nodeValue
@@ -76,6 +66,17 @@
 
                 return val;
             };
+            tabService.update_lamp_rate = function (val) {
+
+                $http.get(net.address + 'Calibration/O3LampFreq?Freq=' + val)
+            };
+                                          
+            $rootScope.$on('cvtUpdated', cvt_update);
+                                          
+            function cvt_update(){
+                tabService.lamp_rate = cvt.cal.lamp_rate;
+                tabService.o3_valve = cvt.cal.o3_valve;
+            }
 
 
             return tabService;
