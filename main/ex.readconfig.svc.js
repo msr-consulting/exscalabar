@@ -29,7 +29,9 @@
 
         // Get the UI config path
         var s = $location.$$absUrl;
-        var loc = s.search('#/');
+        // Check to see if index.html is appended - we don't want it
+        var iloc = s.search('index.html');
+        var loc = iloc >= 0 ? iloc : s.search('#/');
         s = s.slice(0, loc);
 
         // On the first load, for some reason the trailing backslash is not there; correct this
