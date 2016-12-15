@@ -18,10 +18,12 @@
 
     cal_ctl.$inject = ['$scope', '$rootScope', 'ExCalibrationSvc', 'cvt'];
 
+    var cal_saved = true;
+
     function cal_ctl($scope, $rootScope, ExCalibrationSvc, cvt) {
 
         cvt.changeWvfmState(false, false);
-        $scope.data = [];
+        $scope.data = ExCalibrationSvc.default;
         $scope.o3_valve = cvt.ozone.valve;
         $scope.lamp_rate = ExCalibrationSvc.lamp_rate;
         $scope.updateO3Valve = function () {
@@ -33,6 +35,16 @@
         $scope.cal_active = false;
         $scope.runCal = function () {
             $scope.cal_active = !$scope.cal_active;
+            if (!cal_saved){
+              var r = confirm("You are about to run a calibration from the server file. The current calibration on the client is unsaved.  Do you wish to save it first?")
+              console.log(r);
+              if (r){
+                $scope.save();
+              }
+              else{
+                $scope.getCurrent(); 
+              }
+            }
         };
         $scope.updateLamp = function () {
             ExCalibrationSvc.update_lamp_rate($scope.lamp_rate);
@@ -42,6 +54,7 @@
         $scope.save = function () {
 
             ExCalibrationSvc.ship_data($scope.data);
+            cal_saved = true;
 
         };
 
@@ -75,11 +88,6 @@
 
         $scope.ozone_vals = [
             {
-                "id": "O2-Valve",
-                "step": "O2 Valve",
-                "descr": "Boolean that sets the O2 valve position."
-                },
-            {
                 "id": "O3-Valve",
                 "step": "O3 Valve",
                 "descr": "Boolean that sets the O3 valve state."
@@ -92,11 +100,6 @@
             {
                 "id": "O2-Flow-Rate",
                 "step": "QO2",
-                "descr": "Numeric to set the oxygen flow rate"
-                },
-            {
-                "id": "O3-Level",
-                "step": "O3 Level",
                 "descr": "Numeric to set the oxygen flow rate"
                 },
 
@@ -134,7 +137,6 @@
             ID = row.id.toString();
             switch (ID) {
             case "Wait":
-            case "Speaker":
                 val = "20";
                 break;
             case "O2-Flow-Rate":
@@ -156,10 +158,18 @@
                 "val": val
             });
 
+cal_saved = false;
         };
 
         $scope.getCurrent = function () {
             $scope.data = ExCalibrationSvc.get_o3_file();
+
+            cal_saved = true;
         };
+
+        $scope.removeVal = function(i){
+          $scope.data.splice(i,1);
+          cal_saved = false;
+        }
     };
 })();

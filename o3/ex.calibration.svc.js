@@ -1,11 +1,12 @@
 (function () {
     angular.module('main')
-        .factory('ExCalibrationSvc', ['$http', 'net', 'cvt', '$rootScope', 
+        .factory('ExCalibrationSvc', ['$http', 'net', 'cvt', '$rootScope',
                                       function ($http, net, cvt, $rootScope) {
 
             var tabService = {
                 lamp_rate: 0,
-                o3_valve: false
+                o3_valve: false,
+                default: []
             };
             var build_file = function (data) {
                 var xml = '<?xml version="1.0" encoding="utf-8"?>\r\n<OZONE>\r\n';
@@ -64,19 +65,23 @@
                         console.log('get failed');
                     });
 
-                return val;
+                    tabService.default = val;
+                return tabService.default;
             };
+            tabService.default = tabService.get_o3_file();
             tabService.update_lamp_rate = function (val) {
 
                 $http.get(net.address + 'Calibration/O3LampFreq?Freq=' + val)
             };
-                                          
+
             $rootScope.$on('cvtUpdated', cvt_update);
-                                          
+
             function cvt_update(){
                 tabService.lamp_rate = cvt.cal.lamp_rate;
                 tabService.o3_valve = cvt.cal.o3_valve;
             }
+
+
 
 
             return tabService;

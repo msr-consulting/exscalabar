@@ -12,7 +12,7 @@
                                 <cui-numeric ng-model="ctl.d" width="45" evnt-func="updateHum($index)">D</cui-numeric>
                                 <cui-numeric ng-model="ctl.sp" width="45" evnt-func="updateHum($index)">RH<sub>sp</sub>
                                 </cui-numeric>
-                                <cui-button ival="ctl.en" ng-model="med.en" ng-click="setEnable($index)">Power
+                                <cui-button ival="ctl.en" ng-model="ctl.en" ng-click="setEnable($index)">Enable
                                 </cui-button>
                             </div>
                         </div>
@@ -23,7 +23,7 @@
         </div>
         <div class="col-md-9 col-lg-10">
             <div class="row">
-                <dy-graph options="optCtlOut" data="ctlrOutData"></dy-graph>
+                <dy-graph options="optCtlOut" data="ctlrOutData" ref="ctlref"></dy-graph>
             </div>
             <div class="row">
                 <dy-graph options="optRH" data="RH"></dy-graph>

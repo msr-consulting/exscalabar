@@ -1,6 +1,7 @@
 <div ng-controller="ExCalibrationCtl">
     <div class="row">
         <div class="col-md-2">
+
             <cui-button ival="cal_active" ng-click="runCal()">
                 Start Cal
             </cui-button>
@@ -58,7 +59,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="datum in data">
+                                        <tr ng-repeat="datum in data track by $index" ng-dblclick="removeVal($index)">
                                             <td>{{datum.id}}</td>
                                             <td contenteditable>
                                                 <input style="width:7em;color:darkgray;" ng-model="datum.val" />

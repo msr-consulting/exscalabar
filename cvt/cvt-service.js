@@ -120,8 +120,15 @@
                     //    'Humidity/hCtlParams?hID=' + f0.join(','));
                     // http://192.168.0.73:8001/xService/Humidity/hCtlParams?hID={value}&D={value}&I={value}&P={value}
                     //http://192.168.0.73:8001/xService/Humidity/Enable/:ID?Val={value}
-                };
+                    //console.log(net.address()+"Humidity/hRHsp?hID="+this.name+"&Val="+this.sp)
+                    enable=this.en ? 1 : 0;
+                    console.log(net.address()+"Humidity/hRHsp?hID="+this.hID+"&Val="+this.sp);
+                    console.log(net.address()+"Humidity/hEnable?hID="+this.hID+"&Val="+enable);
+                    $http.get(net.address()+"Humidity/hRHsp?hID="+this.hID+"&Val="+this.sp);
+                    $http.get(net.address()+"Humidity/hEnable?hID="+this.hID+"&Val="+enable);
+                }
                 this.name = name;
+                this.hID=(name=="Medium") ? "med" : "high";
             }
 
             function isEmpty(object) {
@@ -173,7 +180,7 @@
              * @methodOf main.service:cvt
              *
              * @description
-             * Turn on and off the PAS and CRD waveform returns.  Use this to 
+             * Turn on and off the PAS and CRD waveform returns.  Use this to
              * make sure that we are not overloading the data stream.
              */
             cvt.changeWvfmState = function (crdWvfm, pasWvfm) {
@@ -470,7 +477,7 @@
         tec.call(this, l, id, ctlr, sn, sp, addr, _http, _net)
 
 
-        // These are multiplication 
+        // These are multiplication
         this.htx = 0;
         this.clx = 1;
         this.updateHtx = function (val) {
@@ -489,7 +496,7 @@
         }
 
         //this.updateCtlParams = function(index, val){
-        //tec.call(this, index, val);   
+        //tec.call(this, index, val);
 
         //console.log("Updating TE Tech PID");
         //}
@@ -547,14 +554,22 @@
         var http = _http;
         var net = _net;
         this.write_taus = false;
+        this.write_wvfm = false;
 
         this.update_tau_write = function (state) {
             this.write_taus = state;
-//http://192.168.101.214:8001/xService/CRDS_CMD/WriteTausFile?Write_Data={value}
             var val = state ? 1 : 0;
             var cmd = 'CRDS_CMD/WriteTausFile?Write_Data=' + val;
             http.get(net.address() + cmd);
 
+        }
+
+        this.update_wvfm_write = function(state){
+            this.write_wvfm = state;
+            var vale = state ? 1:0;
+            ///xService/CRDS_CMD/Write_Ringdown_Data?Write?={value}
+            var cmd = 'CRDS_CMD/Write_Ringdown_Data?Write?=' + val;
+            http.get(net.address() + cmd);
         }
 
         this.net = net;

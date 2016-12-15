@@ -8,7 +8,7 @@
             var maxPMTGain = 10;
             var maxLaserGain = 5;
 
-            $scope.write_wvfm_data = false;
+            $scope.write_wvfm_data = cvt.crd.write_wvfm;
             $scope.write_taus = cvt.crd.write_taus;
 
             // Lasers have three inputs
@@ -38,6 +38,11 @@
                 $scope.show_wvfm = !$scope.show_wvfm;
 
             };
+
+            $scope.update_wvfm_write = function () {
+                $scope.write_wvfm_data = !$scope.write_wvfm_data;
+                cvt.crd.update_wvfm_write($scope.write_wvfm_data);
+            }
 
             $scope.update_tau_write = function () {
                 $scope.write_taus = !$scope.write_taus;
