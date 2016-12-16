@@ -51,6 +51,8 @@
                         m = '<span class="cui-msg-error">';
                     } else if (Data.msg[i].search('WARNING') > 0) {
                         m = '<span class="cui-msg-info">';
+                    } else if (Data.msg[i].search('[cal]') > 0) {
+                        m = '<span class="cui-msg-info">';
                     } else {
                         m = '<span class="cui-msg-info">';
                     }

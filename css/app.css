@@ -41,6 +41,10 @@ body {
     color: green;
 }
 
+.cui-cal-info {
+    color: aqua;
+}
+
 .badge-notify {
     background: red;
     position: relative;
