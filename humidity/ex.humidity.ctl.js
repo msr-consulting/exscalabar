@@ -47,9 +47,15 @@
 
     function updatePlot(){
        console.log('Update humidity plot');
-       $scope.RH.push([Data.tObj,Data.data.vMedRH.RH,Data.data.vHighRH.RH]);
-       //$scope.ctlrOutData.push([Data.tObj,Data.data.MedTEC.Iout,Data.data.HighTEC.Iout]);
+       $scope.RH_data.push([Data.tObj,Data.data.vMedRH.RH,Data.data.vHighRH.RH]);
+       if($scope.RH_data.length>300){$scope.RH_data.shift()};
+       $scope.RH=$scope.RH_data;
        console.log($scope);
+       $scope.ctlrOut_data.push([Data.tObj,Data.data.MedTEC.Iout,Data.data.HighTEC.Iout]);
+       if($scope.ctlrOut_data.length>300){$scope.ctlrOut_data.shift()};
+       $scope.ctlrOut=$scope.ctlrOut_data;
+       //$scope.ctlrOutData.push([Data.tObj,Data.data.MedTEC.Iout,Data.data.HighTEC.Iout]);
+
        //$scope.optCtlOut.valueRange=[null,null];
        //$scope.ctlref.updateOptions({axes:{y:{valueRange:[null,null]}}});
        //$scope.optCtlOut.axes.y.valueRange=[-5,5];
@@ -60,8 +66,8 @@
       cvt.humidifier[i].updateParams();
     };
 
-    $scope.ctlrOutData = [[new Date(),null,null]];
-    $scope.RH = [[new Date(),null,null]];
+    $scope.ctlrOut_data = [[new Date(),null,null]];
+    $scope.RH_data = [[new Date(),null,null]];
     $scope.optCtlOut = {
       ylabel: "Controller Output",
       labels: ["t", "med", "high"],

@@ -42,9 +42,10 @@
                 $scope.save();
               }
               else{
-                $scope.getCurrent(); 
+                $scope.getCurrent();
               }
             }
+            ExCalibrationSvc.runCalibration();
         };
         $scope.updateLamp = function () {
             ExCalibrationSvc.update_lamp_rate($scope.lamp_rate);

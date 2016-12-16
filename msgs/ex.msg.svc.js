@@ -47,12 +47,12 @@
             if (Data.msg.length > 0) {
                 var m = "<span>";
                 for (i = 0; i < Data.msg.length; i++) {
-                    if (Data.msg[i].search('ERROR') > 0) {
+                    if (Data.msg[i].indexOf('ERROR') > 0) {
                         m = '<span class="cui-msg-error">';
-                    } else if (Data.msg[i].search('WARNING') > 0) {
+                    } else if (Data.msg[i].indexOf('WARNING') > 0) {
                         m = '<span class="cui-msg-info">';
-                    } else if (Data.msg[i].search('[cal]') > 0) {
-                        m = '<span class="cui-msg-info">';
+                    } else if (Data.msg[i].indexOf('[cal]') > 0) {
+                        m = '<span class="cui-cal-info">';
                     } else {
                         m = '<span class="cui-msg-info">';
                     }
