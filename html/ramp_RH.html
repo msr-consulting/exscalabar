@@ -1,0 +1,60 @@
+<html>
+<body>
+<p>
+    <form>
+        RH1:<input type="number" id="RH1" value=50 />
+        RH2:<input type="number" id="RH2" value=80 />
+        <p><input type="button" id="start" value="START" onclick="startramp();"/></p>
+        <p>Interval(ms):<input type="number" id="speed" value=10000 /></p>
+         
+    </form>
+    
+</p>
+RH:
+<p id="RH"></p>
+ dRH:
+  <p id="dRH"></p>
+
+  <script lang="javascript">
+    var i = document.createElement("img");
+    var running=false;
+    var ramper;
+      function startramp(){
+         clearTimeout(ramper);
+         if(running){
+             document.getElementById("start").value="START";
+             rh=document.getElementById("RH").innerHTML;
+             document.getElementById('RH1').value=rh;
+            running=false;
+         }else{
+            document.getElementById("start").value="STOP";
+            var RH1=Number(document.getElementById('RH1').value);
+            var RH2=Number(document.getElementById('RH2').value);
+            var dRH=Math.sign(RH2-RH1);
+            ramp(Number(document.getElementById('RH1').value),dRH);
+         }
+        
+      }
+function ramp(RH,dRH){
+    running=true;
+    document.getElementById("dRH").innerHTML = dRH;
+    document.getElementById("RH").innerHTML = RH;
+    i.src = "http://192.168.101.214:8001/xService/Humidity/hRHsp?hID=high&Val="+RH;
+    var RH1=Number(document.getElementById('RH1').value);
+    var RH2=Number(document.getElementById('RH2').value);
+    var sp=Number(document.getElementById('speed').value);
+    var RHx=RH+dRH;
+    if((RHx>=Math.min(RH1,RH2)) && (RHx<=Math.max(RH1,RH2))){
+        ramper=setTimeout(ramp, sp,px,dp);
+    }else{
+        running=false;
+        document.getElementById("start").value="START";
+        document.getElementById('RH1').value=RH2;
+        document.getElementById('RH2').value=RH1;
+    }
+}
+    
+  
+       </script>
+</body>
+</html>

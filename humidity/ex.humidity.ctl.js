@@ -53,11 +53,11 @@
        console.log($scope);
        $scope.ctlrOut_data.push([Data.tObj,Data.data.MedTEC.Iout,Data.data.HighTEC.Iout]);
        if($scope.ctlrOut_data.length>300){$scope.ctlrOut_data.shift()};
-       $scope.ctlrOut=$scope.ctlrOut_data;
+       //$scope.ctlrOut=$scope.ctlrOut_data;
        //$scope.ctlrOutData.push([Data.tObj,Data.data.MedTEC.Iout,Data.data.HighTEC.Iout]);
 
        //$scope.optCtlOut.valueRange=[null,null];
-       //$scope.ctlref.updateOptions({axes:{y:{valueRange:[null,null]}}});
+       $scope.ctlref.updateOptions({'file':$scope.ctlrOut_data});
        //$scope.optCtlOut.axes.y.valueRange=[-5,5];
        //$scope.optCtlOut.axes.y.valueRange=[null,null];
     }
@@ -66,8 +66,10 @@
       cvt.humidifier[i].updateParams();
     };
 
-    $scope.ctlrOut_data = [[new Date(),null,null]];
-    $scope.RH_data = [[new Date(),null,null]];
+    $scope.ctlrOut_data = [];
+    $scope.ctlrOut = [[new Date(),0,0]];
+    $scope.RH = [[new Date(),0,0]];
+    $scope.RH_data = [];
     $scope.optCtlOut = {
       ylabel: "Controller Output",
       labels: ["t", "med", "high"],

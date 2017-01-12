@@ -7,8 +7,8 @@
      * @description
      * Defines the controller the encompases the navigation meny at the top of the page.
      */
-    angular.module('main').controller('navctlr', ['$scope', 'navservice',
-        function ($scope, navservice) {
+    angular.module('main').controller('navctlr', ['$scope', 'navservice', 'cvt',
+        function ($scope, navservice, cvt) {
 
             /**
              * @ngdoc property
@@ -17,7 +17,12 @@
              * @description
              * Boolean representing the current state of the save button element.
              */
-            $scope.save = true;
+            $scope.save = cvt.save;
+            
+            $scope.$on('cvtUpdated', function () {
+               $scope.save = cvt.save;
+             })
+
 
             /**
              * @ngdoc method

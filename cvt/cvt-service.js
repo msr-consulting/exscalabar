@@ -352,6 +352,9 @@
                         cvt.ozone.valve = response.data.calibration.o3_valve;
 
                         cvt.purge.pos = response.data.general.purge;
+                        
+                        cvt.save = response.data.general.save;
+                        
 
                         cvt.cal.o3_valve = response.data.calibration.o3_valve;
                         cvt.cal.lamp_rate = response.data.calibration.lamp_rate;

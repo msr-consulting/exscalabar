@@ -1,0 +1,60 @@
+<html>
+<body>
+<p>
+    <form>
+        P1:<input type="number" id="P1" value=1000 />
+        P2:<input type="number" id="P2" value=300 />
+        <p><input type="button" id="start" value="START" onclick="startramp();"/></p>
+        <p>Interval(ms):<input type="number" id="speed" value=1600 /></p>
+         
+    </form>
+    
+</p>
+Pressure:
+<p id="press"></p>
+ dp:
+  <p id="dpress"></p>
+
+  <script lang="javascript">
+    var i = document.createElement("img");
+    var running=false;
+    var ramper;
+      function startramp(){
+         clearTimeout(ramper);
+         if(running){
+             document.getElementById("start").value="START";
+             p=document.getElementById("press").innerHTML;
+             document.getElementById('P1').value=p;
+            running=false;
+         }else{
+            document.getElementById("start").value="STOP";
+            var p1=Number(document.getElementById('P1').value);
+            var p2=Number(document.getElementById('P2').value);
+            var dp=Math.sign(p2-p1);
+            ramp(Number(document.getElementById('P1').value),dp);
+         }
+        
+      }
+function ramp(p,dp){
+    running=true;
+    document.getElementById("dpress").innerHTML = dp;
+    document.getElementById("press").innerHTML = p;
+    i.src = "http://192.168.101.214:8001/xService/General/DevSP?SP="+p+"&DevID=prCntl";
+    var p1=Number(document.getElementById('P1').value);
+    var p2=Number(document.getElementById('P2').value);
+    var sp=Number(document.getElementById('speed').value);
+    var px=p+dp;
+    if((px>=Math.min(p1,p2)) && (px<=Math.max(p1,p2))){
+        ramper=setTimeout(ramp, sp,px,dp);
+    }else{
+        running=false;
+        document.getElementById("start").value="START";
+        document.getElementById('P1').value=p2;
+        document.getElementById('P2').value=p1;
+    }
+}
+    
+  
+       </script>
+</body>
+</html>
