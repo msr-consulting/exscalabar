@@ -47,11 +47,11 @@
 
     function updatePlot(){
        console.log('Update humidity plot');
-       $scope.RH_data.push([Data.tObj,Data.data.vMedRH.RH,Data.data.vHighRH.RH]);
+       $scope.RH_data.push([Data.tObj,Data.data.vHighRH.RH,Data.data.vMedRH.RH]);
        if($scope.RH_data.length>300){$scope.RH_data.shift()};
        $scope.RH=$scope.RH_data;
        console.log($scope);
-       $scope.ctlrOut_data.push([Data.tObj,Data.data.MedTEC.Iout,Data.data.HighTEC.Iout]);
+       $scope.ctlrOut_data.push([Data.tObj,Data.data.HighTEC.Iout,Data.data.MedTEC.Iout]);
        if($scope.ctlrOut_data.length>300){$scope.ctlrOut_data.shift()};
        //$scope.ctlrOut=$scope.ctlrOut_data;
        //$scope.ctlrOutData.push([Data.tObj,Data.data.MedTEC.Iout,Data.data.HighTEC.Iout]);
@@ -72,13 +72,13 @@
     $scope.RH_data = [];
     $scope.optCtlOut = {
       ylabel: "Controller Output",
-      labels: ["t", "med", "high"],
+      labels: ["t", "high", "med"],
       legend: "always",
       valueRange:[null,null]
     };
     $scope.optRH = {
       ylabel: "RH (%)",
-      labels: ["t", "med", "high"],
+      labels: ["t", "high", "med"],
       legend: "always",
       valueRange:[null,null]
     };

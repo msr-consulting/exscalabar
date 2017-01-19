@@ -20,6 +20,7 @@
             var cvt = {
                 "save": true,
                 "filter_pos": true,
+                "denuder_bypass": true,
                 "first_call": 1,
                 "fctl": [],
                 "power": {
@@ -152,8 +153,8 @@
              * @description
              * Defines the parameters for humidifier control.
              */
-            cvt.humidifier = [new Humidifier(0.75, 1, 0, 20, false, "Medium"),
-                new Humidifier(0.75, 1, 0, 30, false, "High")];
+            cvt.humidifier = [new Humidifier(0.75, 1, 0, 20, false, "High"),
+                new Humidifier(0.75, 1, 0, 30, false, "Medium")];
 
             /**
              * @ngdoc property
@@ -302,17 +303,17 @@
 
                         var h = response.data.humidifier;
 
-                        cvt.humidifier[0].p = h.med.p;
-                        cvt.humidifier[0].i = h.med.i;
-                        cvt.humidifier[0].d = h.med.d;
-                        cvt.humidifier[0].en = h.med.ctl;
-                        cvt.humidifier[0].sp = h.med.rhsp;
+                        cvt.humidifier[0].p = h.high.p;
+                        cvt.humidifier[0].i = h.high.i;
+                        cvt.humidifier[0].d = h.high.d;
+                        cvt.humidifier[0].en = h.high.ctl;
+                        cvt.humidifier[0].sp = h.high.rhsp;
 
-                        cvt.humidifier[1].p = h.high.p;
-                        cvt.humidifier[1].i = h.high.i;
-                        cvt.humidifier[1].d = h.high.d;
-                        cvt.humidifier[1].en = h.high.ctl;
-                        cvt.humidifier[1].sp = h.high.rhsp;
+                        cvt.humidifier[1].p = h.med.p;
+                        cvt.humidifier[1].i = h.med.i;
+                        cvt.humidifier[1].d = h.med.d;
+                        cvt.humidifier[1].en = h.med.ctl;
+                        cvt.humidifier[1].sp = h.med.rhsp;
 
                         /* Update the CRD controls */
                         cvt.crd.fred = crd.red.f;
@@ -348,6 +349,7 @@
 
                         cvt.filter.position = response.data.general.filter_pos;
                         cvt.inlet = response.data.general.inlet;
+                        cvt.denuder_bypass=response.data.general.denuder_pos;
 
                         cvt.ozone.valve = response.data.calibration.o3_valve;
 

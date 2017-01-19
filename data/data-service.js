@@ -83,7 +83,7 @@
                     .then(function (response) {
 
                         if (response.status != 200) {
-                            if (response.status === 209){
+                            if (response.status !== 204){
                                 $rootScope.$broadcast('dataNotAvailable');
                             }
                         }

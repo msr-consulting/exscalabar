@@ -10,7 +10,7 @@
             $scope.pumpBlocked = false;
             $scope.impBlocked = false;
 
-            $scope.denuder_bypass = false;
+            $scope.denuder_bypass = cvt.denuder_bypass;
             $scope.laserStatus = checkLaserStatus();
 
 
@@ -19,6 +19,7 @@
 
             $scope.$on('cvtUpdated', function () {
                 $scope.filter = cvt.filter.position;
+                $scope.denuder_bypass=cvt.denuder_bypass;
                 $scope.cabin = cvt.inlet;
                 $scope.laserStatus = checkLaserStatus();
             });

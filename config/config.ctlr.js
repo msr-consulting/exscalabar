@@ -8,15 +8,28 @@
             cvt.changeWvfmState(false, false);
 
             $scope.connected = false;
+            $scope.notconnected = false;
+            $scope.rebooting = false;
+            $scope.reboottime = 0;
+            $scope.flasher=null;
 
             $scope.filter_speaker = cvt.pas.spk.connected;
 
 
             $scope.$on('dataNotAvailable', function () {
-                $scope.connected = false;
+ 
+                  $scope.connected = false;
+                  $scope.notconnected = true;
+                
             });
-            $scope.$on("dataAvailable", function () {
-                $scope.connected = true;
+            
+            $scope.$on("dataAvailable", function () {  
+                    $scope.connected = true;
+                    $scope.notconnected = false;
+                    if((new Date()-$scope.reboottime)>10000){
+                       clearInterval($scope.flasher);
+                       $scope.rebooting=false;
+                    }
             });
             $scope.$on('cvtUpdated', function () {
                 $scope.filter.pos = cvt.filter.position;
@@ -29,9 +42,39 @@
 
 
             $scope.stop = function () {
-                $http.get(net.address() + 'General/Stop');
+                 if($scope.connected){
+                    $http.get(net.address() + 'General/Stop');
+                    $scope.connected=false;
+                }
             };
 
+            $scope.start = function () {
+                if(($scope.notconnected)){
+                     $http.get(net.address() + 'General/Start').then(
+                         function(){
+                             $scope.notconnected=false;
+                         }
+                     )
+               }
+            };
+
+             $scope.flashreboot = function (){
+                $scope.rebooting=!($scope.rebooting);
+            }
+
+           $scope.reboot = function () {
+                var d=new Date();
+                if((d-$scope.reboottime)>10000){
+                   $http.get(net.address() + 'General/Reboot').then(
+                       function () {
+                          $scope.connected=false;
+                          $scope.notconnected=false;
+                          $scope.reboottime=d;
+                          $scope.flasher=setInterval($scope.flashreboot,300);
+                       });
+                }
+            };
+            
             $scope.network = {
                 "ip": net.ip,
                 "port": net.port
