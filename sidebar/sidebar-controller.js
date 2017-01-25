@@ -56,9 +56,9 @@
 
             function checkLaserStatus() {
                 try {
-                    if ((cvt.crd.enable.indexOf(true) >= 0
-                        || cvt.pas.las.enabled.indexOf(true) >= 0)
-                        && Data.data.interlock) {
+                    if (((cvt.crd.enable.indexOf(true) >= 0 ) ||
+                        (cvt.pas.las.enabled.indexOf(true) >= 0)) &&
+                        Data.data.interlock) {
                         return true;
                     }
                     else {

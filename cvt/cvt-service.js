@@ -97,7 +97,7 @@
 
                 $http.get(net.address() + 'General/Save?save=' + s.toString());
 
-            }
+            };
 
             /**
              * @ngdoc object
@@ -127,7 +127,7 @@
                     console.log(net.address()+"Humidity/hEnable?hID="+this.hID+"&Val="+enable);
                     $http.get(net.address()+"Humidity/hRHsp?hID="+this.hID+"&Val="+this.sp);
                     $http.get(net.address()+"Humidity/hEnable?hID="+this.hID+"&Val="+enable);
-                }
+                };
                 this.name = name;
                 this.hID=(name=="Medium") ? "med" : "high";
             }
@@ -189,7 +189,7 @@
                 //cvt.crd.
 
 
-            }
+            };
 
             cvt.filter = {
                 cycle: {
@@ -268,9 +268,9 @@
                                 break;
                             case "mTEC":
                                 if (cvt.mTEC.length > 0 && !findDevID(cvt.mTEC, d)) {
-                                    cvt.mTEC.push(new mtec(dd.label, d, dd.controller, dd.sn, dd.setpoint, dd.address, $http, net));
+                                    cvt.mTEC.push(new mtec(dd.label, d, dd.controller, dd.sn, dd.setpoint, dd.address, dd.active, $http, net));
                                 } else {
-                                    cvt.mTEC = [new mtec(dd.label, d, dd.controller, dd.sn, dd.setpoint, dd.address, $http, net)];
+                                    cvt.mTEC = [new mtec(dd.label, d, dd.controller, dd.sn, dd.setpoint, dd.address, dd.active, $http, net)];
                                 }
                                 break;
                             case "vaisala":
@@ -454,7 +454,7 @@
         this.updateSetpoint = function (val) {
             this.sp = val;
             this.http.get(this.net.address() + 'General/DevSP?SP=' + this.sp + '&DevID=' + this.id);
-        }
+        };
     }
 
     // The TEC both have PID controls, so create a prototype that
@@ -469,7 +469,7 @@
     tec.prototype = Object.create(device.prototype);
     tec.prototype.updateSP = function (sp) {
         this.sp = sp;
-    }
+    };
     tec.prototype.updateCtlParams = function (index, val) {
         this.pid[index] = val;
         $http.get(net.address() + 'General/tec_ctl_params?DevID=' + this.id + '&d=' + this.pid[2] + '&i=' + this.pid[1] + '&p=' + this.pid[0]);
@@ -479,7 +479,7 @@
     // TE Technology TEC is a one off and has two additional parameters
     // we want to expose - cooling and heating factors.
     function te_tec(l, id, ctlr, sn, sp, addr, _http, _net) {
-        tec.call(this, l, id, ctlr, sn, sp, addr, _http, _net)
+        tec.call(this, l, id, ctlr, sn, sp, addr, _http, _net);
 
 
         // These are multiplication
@@ -489,16 +489,16 @@
             this.htx = val;
             this.updateServerHeatingParams();
 
-        }
+        };
         this.updateClx = function (val) {
             this.clx = val;
             this.updateServerHeatingParams();
 
-        }
+        };
 
         this.updateServerHeatingParams = function () {
             this.http.get(this.net.address() + 'tetech/multipliers?mult=' + [this.htx, this.clx].toString());
-        }
+        };
 
         //this.updateCtlParams = function(index, val){
         //tec.call(this, index, val);
@@ -511,10 +511,10 @@
             try {
                 this.http.get(this.net.address() + 'General/DevSP?SP=' + sp + '&DevID=tetech');
             } catch (e) {
-                console.log("Attempt to set TE Tech setpoint failed.  Server unavailable.")
+                console.log("Attempt to set TE Tech setpoint failed.  Server unavailable.");
             }
 
-        }
+        };
     }
 
     te_tec.prototype = Object.create(tec.prototype);
@@ -522,25 +522,25 @@
     // The meerstetter TECs have a bunch of stuff that we may be interested
     // in.  One property is whether we are controlling on temperature or power.
 
-    function mtec(l, id, ctlr, sn, sp, addr, _http, _net) {
+    function mtec(l, id, ctlr, sn, sp, addr, active, _http, _net) {
         tec.call(this, l, id, ctlr, sn, sp, addr, _http, _net);
-        this.ctl_temp = 0;
+        this.static_on = active ? 1 : 0;
 
 
         this.updateCtlParams = function (index, val) {
             tec.call.updateCtlParams.call(this, index, val);
 
             console.log("Updating Meerstetter Tech PID with ID " + this.ID + ".");
-        }
+        };
 
         this.updateCtlVal = function () {
 
-            this.ctl_temp = !this.ctl_temp;
+            var c = !this.static_on  ? 1 : 0;
+            console.log(this.net.address() +'meerstetter/StaticOn?On='+c+'&DevID='+ this.id);
+            this.http.get(this.net.address() +'meerstetter/StaticOn?On='+c+'&DevID='+ this.id);
 
-            var c = val ? 1 : 0;
-
-            http.get(net.address() + 'meerstetter/mctl?val=' +
-                c + '&DevID=' + this.id);
+            //http.get(net.address() + 'meerstetter/mctl?val=' +
+            //    c + '&DevID=' + this.id);
 
             //http://192.168.101.214:8001/xService/meerstetter/mctl/:id?val={value}
 
@@ -567,7 +567,7 @@
             var cmd = 'CRDS_CMD/WriteTausFile?Write_Data=' + val;
             http.get(net.address() + cmd);
 
-        }
+        };
 
         this.update_wvfm_write = function(state){
             this.write_wvfm = state;
@@ -575,7 +575,7 @@
             ///xService/CRDS_CMD/Write_Ringdown_Data?Write?={value}
             var cmd = 'CRDS_CMD/Write_Ringdown_Data?Write?=' + val;
             http.get(net.address() + cmd);
-        }
+        };
 
         this.net = net;
         // Red laser frequency in Hz

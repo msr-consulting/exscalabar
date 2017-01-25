@@ -22,7 +22,7 @@
                                 </th>
                                 <th class="col-md-2">D
                                 </th> -->
-                                <th class="col-md-2">Temperature?</th>
+                                <th class="col-md-2">TEC output</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -30,23 +30,23 @@
                                 <td>{{tec.label}}</td>
                                 <td>
                                     <input class="col-md-12" ng-model="tec.sp" ng-blur="updateSetpoint($index)"
-                                           type="number" min="0" max="100">
+                                           type="number" min="0" max="40">
                                 </td>
 
                                 <!--  <td ng-repeat="ctl in tec.pid track by $index">
                                      <input class="col-md-12" ng-model="tec.pid[$index]" ng-blur = "updatePID(parentIndex, $index)" type="number">
                                  </td> -->
                                 <td>
-                                    <button class="btn btn-block btn-default btn-sm"
-                                            ng-switch="tec.ctl_temp" type="button" value="Temperature">
+                                    <button class="btn btn-block btn-default btn-sm" ng-click="updateCtl($index)"
+                                            ng-switch="tec.static_on" type="button" value="Off">
                                         <div ng-switch-when="1">
-                                            Temperature
+                                            On
                                         </div>
                                         <div ng-switch-when="0">
-                                            Power
+                                            Off
                                         </div>
                                         <div ng-switch-default>
-                                            Temperature
+                                            Off
                                         </div>
                                     </button>
                                 </td>
