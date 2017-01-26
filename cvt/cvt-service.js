@@ -117,16 +117,10 @@
 
                 };
                 this.updateParams = function (h) {
-                    //http.get(net.address() +
-                    //    'Humidity/hCtlParams?hID=' + f0.join(','));
-                    // http://192.168.0.73:8001/xService/Humidity/hCtlParams?hID={value}&D={value}&I={value}&P={value}
-                    //http://192.168.0.73:8001/xService/Humidity/Enable/:ID?Val={value}
-                    //console.log(net.address()+"Humidity/hRHsp?hID="+this.name+"&Val="+this.sp)
                     enable=this.en ? 1 : 0;
-                    console.log(net.address()+"Humidity/hRHsp?hID="+this.hID+"&Val="+this.sp);
-                    console.log(net.address()+"Humidity/hEnable?hID="+this.hID+"&Val="+enable);
                     $http.get(net.address()+"Humidity/hRHsp?hID="+this.hID+"&Val="+this.sp);
                     $http.get(net.address()+"Humidity/hEnable?hID="+this.hID+"&Val="+enable);
+                    $http.get(net.address()+"Humidity/hCtlParams?hID="+this.hID+"&D="+this.d);
                 };
                 this.name = name;
                 this.hID=(name=="Medium") ? "med" : "high";

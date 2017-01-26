@@ -47,9 +47,16 @@
 
     function updatePlot(){
        console.log('Update humidity plot');
-       $scope.RH_data.push([Data.tObj,Data.data.vHighRH.RH,Data.data.vMedRH.RH]);
+       var high=Data.data.humhigh;
+       var med=Data.data.hummed;
+       var thisRH=[Data.tObj,high.RH,high.RHsp,high.Eff,med.RH,med.RHsp,med.Eff];
+       var thisTemp=[Data.tObj,high.Td,high.TdReq,high.Tsp,high.Tobj,med.Td,med.TdReq,med.Tsp,med.Tobj];
+       $scope.RH_data.push(thisRH);
        if($scope.RH_data.length>300){$scope.RH_data.shift()};
        $scope.RH=$scope.RH_data;
+       $scope.T_data.push(thisTemp);
+       if($scope.T_data.length>300){$scope.T_data.shift()};
+       $scope.Temps=$scope.T_data;
        console.log($scope);
        $scope.ctlrOut_data.push([Data.tObj,Data.data.HighTEC.Iout,Data.data.MedTEC.Iout]);
        if($scope.ctlrOut_data.length>300){$scope.ctlrOut_data.shift()};
@@ -68,8 +75,10 @@
 
     $scope.ctlrOut_data = [];
     $scope.ctlrOut = [[new Date(),0,0]];
-    $scope.RH = [[new Date(),0,0]];
+    $scope.RH = [[new Date(),0,0,0,0,0,0]];
     $scope.RH_data = [];
+    $scope.Temps = [[new Date(),0,0,0,0,0,0,0,0]];
+    $scope.T_data = [];
     $scope.optCtlOut = {
       ylabel: "Controller Output",
       labels: ["t", "high", "med"],
@@ -78,7 +87,13 @@
     };
     $scope.optRH = {
       ylabel: "RH (%)",
-      labels: ["t", "high", "med"],
+      labels: ["t", "high.RH","high.RHsp","high.Eff","med.RH","med.RHsp","med.Eff"],
+      legend: "always",
+      valueRange:[null,null]
+    };
+    $scope.optTemp = {
+      ylabel: "Temp (C)",
+      labels: ["t", "high.Td","high.TdReq","high.Tsp","high.Tobj","med.Td","med.TdReq","med.Tsp","med.Tobj"],
       legend: "always",
       valueRange:[null,null]
     };

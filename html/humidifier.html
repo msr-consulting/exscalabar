@@ -7,8 +7,6 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">{{ctl.name}}</div>
                             <div class="panel-body">
-                                <cui-numeric ng-model="ctl.p" width="45" evnt-func="updateHum($index)">P</cui-numeric>
-                                <cui-numeric ng-model="ctl.i" width="45" evnt-func="updateHum($index)">I</cui-numeric>
                                 <cui-numeric ng-model="ctl.d" width="45" evnt-func="updateHum($index)">D</cui-numeric>
                                 <cui-numeric ng-model="ctl.sp" width="45" evnt-func="updateHum($index)">RH<sub>sp</sub>
                                 </cui-numeric>
@@ -23,10 +21,13 @@
         </div>
         <div class="col-md-9 col-lg-10">
             <div class="row">
-                <dy-graph options="optCtlOut" data="ctlrOut" ref="ctlref"></dy-graph>
+                <dy-graph options="optRH" data="RH" ref="RHref"></dy-graph>
             </div>
             <div class="row">
-                <dy-graph options="optRH" data="RH" ref="RHref"></dy-graph>
+                <dy-graph options="optTemp" data="Temps" ref="Tempref"></dy-graph>
+            </div>
+            <div class="row">
+                <dy-graph options="optCtlOut" data="ctlrOut" ref="ctlref"></dy-graph>
             </div>
         </div>
     </div>
