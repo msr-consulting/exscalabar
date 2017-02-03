@@ -46,7 +46,7 @@
                 "date": {}
             };
 
-
+            var lastTime=0;
             /**
              * @ngdoc property
              * @name main.service:Data#maxLength
@@ -79,7 +79,7 @@
                     return;
                 }
                 busy = true;
-                promise = $http.get(net.address() + 'General/Data')
+                promise = $http.get(net.address() + 'General/getData?Last='+lastTime)
                     .then(function (response) {
 
                         if (response.status != 200) {
@@ -88,7 +88,7 @@
                             }
                         }
                         else {
-
+                            lastTime=response.data.Time;
                             // Handle filter infomration
                             dataObj.filter.state = response.data.Filter;
                             

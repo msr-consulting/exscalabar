@@ -21,14 +21,20 @@
         </div>
         <div class="col-md-9 col-lg-10">
             <div class="row">
+                <context-menu menu-options ="RHcm">
                 <dy-graph options="optRH" data="RH" ref="RHref"></dy-graph>
+                </context-menu>
             </div>
             <div class="row">
-                <dy-graph options="optTemp" data="Temps" ref="Tempref"></dy-graph>
-            </div>
+                 <context-menu menu-options ="Tempcm">
+               <dy-graph options="optTemp" data="Temps" ref="Tempref"></dy-graph>
+                 </context-menu>
+           </div>
             <div class="row">
-                <dy-graph options="optCtlOut" data="ctlrOut" ref="ctlref"></dy-graph>
-            </div>
+                 <context-menu menu-options ="Ctlcm">
+               <dy-graph options="optCtlOut" data="ctlrOut" ref="ctlref"></dy-graph>
+                 </context-menu>
+           </div>
         </div>
     </div>
 </div>

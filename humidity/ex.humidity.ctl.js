@@ -60,11 +60,11 @@
        console.log($scope);
        $scope.ctlrOut_data.push([Data.tObj,Data.data.HighTEC.Iout,Data.data.MedTEC.Iout]);
        if($scope.ctlrOut_data.length>300){$scope.ctlrOut_data.shift()};
-       //$scope.ctlrOut=$scope.ctlrOut_data;
+       $scope.ctlrOut=$scope.ctlrOut_data;
        //$scope.ctlrOutData.push([Data.tObj,Data.data.MedTEC.Iout,Data.data.HighTEC.Iout]);
 
        //$scope.optCtlOut.valueRange=[null,null];
-       $scope.ctlref.updateOptions({'file':$scope.ctlrOut_data});
+       //$scope.ctlref.updateOptions({'file':$scope.ctlrOut_data});
        //$scope.optCtlOut.axes.y.valueRange=[-5,5];
        //$scope.optCtlOut.axes.y.valueRange=[null,null];
     }
@@ -72,8 +72,7 @@
       var i = arguments[0];
       cvt.humidifier[i].updateParams();
     };
-
-    $scope.ctlrOut_data = [];
+    $scope.ctlrOut_data=[];
     $scope.ctlrOut = [[new Date(),0,0]];
     $scope.RH = [[new Date(),0,0,0,0,0,0]];
     $scope.RH_data = [];
@@ -97,7 +96,9 @@
       legend: "always",
       valueRange:[null,null]
     };
-
+    $scope.RHcm=[['Clear Data',function(){$scope.RH_data=[];}]];
+    $scope.Tempcm=[['Clear Data',function(){$scope.T_data=[];}]];
+    $scope.Ctlcm=[['Clear Data',function(){$scope.ctlrOut_data=[];}]];
   }
 ]);
 })();
