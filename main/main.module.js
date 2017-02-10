@@ -17,5 +17,5 @@
         'cirrus.ui.ibutton', 'cirrus.ui.inumeric',
         'cirrus.ui.string',
         'ngSanitize', 'ui.bootstrap.dropdownToggle',
-        'angular-svg-round-progressbar', 'scrollable-table']);
+        'angular-svg-round-progressbar']); //, 'scrollable-table']);
 })();
