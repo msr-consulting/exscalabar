@@ -36,7 +36,7 @@
         $scope.runCal = function () {
             $scope.cal_active = !$scope.cal_active;
             if (!cal_saved){
-              var r = confirm("You are about to run a calibration from the server file. The current calibration on the client is unsaved.  Do you wish to save it first?")
+              var r = confirm("You are about to run a calibration from the server file. The current calibration on the client is unsaved.  Do you wish to save it first?");
               console.log(r);
               if (r){
                 $scope.save();
@@ -85,7 +85,13 @@
                 "id": "Speaker",
                 "step": "Speaker",
                 "descr": "Boolean that sets the speaker state."
-                }];
+                },
+            {
+                "id": "P-Ctl",
+                "step": "Pressure Control",
+                "descr": "Set the pressure control vale."
+            }
+        ];
 
         $scope.ozone_vals = [
             {
@@ -144,6 +150,9 @@
             case "O3-Dump-Rate":
                 val = "100";
                 break;
+            case "P-Ctl":
+                val = "1000";
+                break;
             case "O3-Level":
                 val = "1";
                 break;
@@ -171,6 +180,6 @@ cal_saved = false;
         $scope.removeVal = function(i){
           $scope.data.splice(i,1);
           cal_saved = false;
-        }
-    };
+        };
+    }
 })();
