@@ -1,8 +1,9 @@
 (function () {
-    angular.module('main').controller('ExCrdCtl', ['$scope', 'cvt', 'ExCrdSvc',
-        function ($scope, cvt, ExCrdSvc) {
+    angular.module('main').controller('ExCrdCtl', ['$scope', 'cvt', 'ExCrdSvc','Data',
+        function ($scope, cvt, ExCrdSvc,Data) {
 
             cvt.changeWvfmState(true, false);
+            Data.wvfmSet('CRDS');
             cvt.firstcall = 1;
 
             var maxPMTGain = 10;

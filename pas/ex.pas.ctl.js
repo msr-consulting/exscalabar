@@ -1,13 +1,12 @@
 (function () {
     angular.module('main').controller('ExPasCtl', pas_ctl);
 
-    pas_ctl.$inject = ['$scope', 'cvt', 'ExPasSvc', 'ExReadCfgSvc'];
+    pas_ctl.$inject = ['$scope', 'cvt', 'ExPasSvc', 'ExReadCfgSvc', 'Data'];
 
 
-    function pas_ctl($scope, cvt, ExPasSvc, ExReadCfgSvc) {
+    function pas_ctl($scope, cvt, ExPasSvc, ExReadCfgSvc, Data) {
         
-        cvt.changeWvfmState(false, true);
-
+        //cvt.changeWvfmState(false, true);
         /**
          * @ngdoc controller
          * @name main.controller:ExPasCtl
@@ -24,8 +23,14 @@
 
         var cl = ExReadCfgSvc.pas.color.length;
         var pl = ExReadCfgSvc.pas.pattern.length;
+        console.log()
+        $scope.show_wvfm = cvt.pas.send_wvfm_state;
 
-        $scope.show_wvfm = cvt.pas.send_wvfm;
+        if($scope.show_wvfm){
+            Data.wvfmSet('PAS');
+        }else{
+            Data.wvfmSet();
+        }
 
         
         /**
@@ -40,12 +45,16 @@
          */
         $scope.update_wvfm_state = function(){
             $scope.show_wvfm = !$scope.show_wvfm;
-            
-            cvt.pas.send_wvfm($scope.show_wvfm);
+            cvt.pas.send_wvfm_state=$scope.show_wvfm;
+         if($scope.show_wvfm){
+           Data.wvfmSet('PAS');
+        }else{
+            Data.wvfmSet();
+        }
 
         };
         
-        $scope.write_wvfm = cvt.pas.write_wvfm;        
+        $scope.write_wvfm = cvt.pas.write_wvfm_state;        
          
         /**
          * @ngdoc method
