@@ -8,7 +8,7 @@
 
             cvt.first_call = 1;
         
-            cvt.changeWvfmState(false, false);
+            
 
             $scope.toggle = function (id) {
                 // Flip the bit

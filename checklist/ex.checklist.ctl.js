@@ -17,7 +17,7 @@
      */
     function checklist_ctl($scope, ExChecklistSvc) {
         
-        cvt.changeWvfmState(false, false);
+        
 
         $scope.ListObj = ExChecklistSvc;
 

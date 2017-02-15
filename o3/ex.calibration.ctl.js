@@ -22,7 +22,7 @@
 
     function cal_ctl($scope, $rootScope, ExCalibrationSvc, cvt) {
 
-        cvt.changeWvfmState(false, false);
+       
         $scope.data = ExCalibrationSvc.default;
         $scope.o3_valve = cvt.ozone.valve;
         $scope.lamp_rate = ExCalibrationSvc.lamp_rate;

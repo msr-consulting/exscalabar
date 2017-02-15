@@ -13,7 +13,7 @@
          * Controller for TE Tech control functionality.
          */
         
-        cvt.changeWvfmState(false, false);
+        
 
         $scope.ctl = cvt.tec.pid;
         $scope.Tsp = cvt.tec.sp; //cvt.te_tec.sp;

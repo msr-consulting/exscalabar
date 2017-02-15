@@ -554,6 +554,7 @@
         var net = _net;
         this.write_taus = false;
         this.write_wvfm = false;
+        this.show_wvfm = true;
 
         this.update_tau_write = function (state) {
             this.write_taus = state;
