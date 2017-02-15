@@ -702,8 +702,10 @@
             var data = wvfm ? 1 : 0;
 
             this.write_wvfm_state = wvfm;
-            console.log('New value for waveform retrieval is ' + data);
+            console.log('New value for waveform writing is ' + data);
             http.get(net.address() +
+                'PAS_CMD/WVFM_to_File?Write_Data=' + data);
+            console.log(net.address() +
                 'PAS_CMD/WVFM_to_File?Write_Data=' + data);
 
         };
