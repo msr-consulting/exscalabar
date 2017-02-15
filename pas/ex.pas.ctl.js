@@ -13,6 +13,11 @@
          * @description
          * Controller for PAS functionality.
          */
+               $scope.$on('$locationChangeStart', function (event, next, current) {
+                    console.log(current);
+                    Data.wvfmSet();
+                });
+ 
 
         $scope.data = ExPasSvc.data;
 
@@ -23,7 +28,7 @@
 
         var cl = ExReadCfgSvc.pas.color.length;
         var pl = ExReadCfgSvc.pas.pattern.length;
-        console.log()
+        
         $scope.show_wvfm = cvt.pas.send_wvfm_state;
 
         if($scope.show_wvfm){
@@ -46,11 +51,11 @@
         $scope.update_wvfm_state = function(){
             $scope.show_wvfm = !$scope.show_wvfm;
             cvt.pas.send_wvfm_state=$scope.show_wvfm;
-         if($scope.show_wvfm){
-           Data.wvfmSet('PAS');
-        }else{
-            Data.wvfmSet();
-        }
+            if($scope.show_wvfm){
+                Data.wvfmSet('PAS');
+            }else{
+                Data.wvfmSet();
+            }
 
         };
         
