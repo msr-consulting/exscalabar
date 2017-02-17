@@ -565,7 +565,7 @@
 
         this.update_wvfm_write = function(state){
             this.write_wvfm = state;
-            var vale = state ? 1:0;
+            var val = state ? 1:0;
             ///xService/CRDS_CMD/Write_Ringdown_Data?Write?={value}
             var cmd = 'CRDS_CMD/Write_Ringdown_Data?Write?=' + val;
             http.get(net.address() + cmd);
