@@ -72,9 +72,9 @@
                 "descr": "Boolean that sets the filter state."
                 },
             {
-                "id": "Cabin",
-                "step": "Cabin",
-                "descr": "Boolean that sets the cabin valve state."
+                "id": "Inlet",
+                "step": "Inlet",
+                "descr": "Boolean that sets the inlet valve state."
                 },
             {
                 "id": "Denuder",
