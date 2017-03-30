@@ -20,7 +20,7 @@
              */
             $scope.msgs = ExMsgSvc.msgs;
         
-            cvt.changeWvfmState(false, false);
+            
         
             $scope.$on('msgAvailable', function () {
 

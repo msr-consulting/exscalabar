@@ -17,7 +17,7 @@
     cvt.first_call = 1;
 
 
-    cvt.changeWvfmState(false, false);
+    //cvt.changeWvfmState(false, false);
 
     /**
     * @ngdoc property

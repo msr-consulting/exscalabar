@@ -6,7 +6,7 @@
 
     function meerstetter_ctl($scope, cvt) {
         
-        cvt.changeWvfmState(false, false);
+        
 
         $scope.tecs = cvt.mTEC;
 

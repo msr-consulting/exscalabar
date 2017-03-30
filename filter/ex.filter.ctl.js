@@ -11,7 +11,7 @@
             
             
         
-            cvt.changeWvfmState(false, false);
+            
 
             cvt.first_call = 1;
             

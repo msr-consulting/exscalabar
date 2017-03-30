@@ -70,7 +70,22 @@
                 "state": true,
                 "tremain": 0
             };
-
+            
+            dataObj.wvfmReq='';
+            
+            dataObj.wvfmSet=function(opt){
+                switch(opt){
+                    case 'PAS':
+                        this.wvfmReq='&PASwvfm=1';
+                        break;
+                    case 'CRDS':
+                        this.wvfmReq='&CRDS=1';
+                        break;
+                    default:
+                        this.wvfmReq='';
+                }
+            }
+            
             var busy = false;
 
             dataObj.getData = function () {
@@ -79,16 +94,19 @@
                     return;
                 }
                 busy = true;
-                promise = $http.get(net.address() + 'General/getData?Last='+lastTime)
+                
+                promise = $http.get(net.address() + 'General/Data?Last='+lastTime+this.wvfmReq)
                     .then(function (response) {
 
                         if (response.status != 200) {
                             if (response.status !== 204){
+                                lastTime=0;
                                 $rootScope.$broadcast('dataNotAvailable');
                             }
                         }
                         else {
-                            lastTime=response.data.Time;
+                            if(response.data.Time){
+                                lastTime=response.data.Time;
                             // Handle filter infomration
                             dataObj.filter.state = response.data.Filter;
                             
@@ -137,8 +155,13 @@
                             dataObj.data = response.data;
 
                             $rootScope.$broadcast('dataAvailable');
-                        }
+                             }else{
+                                lastTime=0;
+                                $rootScope.$broadcast('dataNotAvailable');
+                            }
+                       }
                     }, function (response) {
+                        lastTime=0;
                         $rootScope.$broadcast('dataNotAvailable');
                     }).finally(function () {
                         busy = false;

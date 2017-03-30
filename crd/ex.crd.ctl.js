@@ -1,8 +1,22 @@
 (function () {
-    angular.module('main').controller('ExCrdCtl', ['$scope', 'cvt', 'ExCrdSvc',
-        function ($scope, cvt, ExCrdSvc) {
-
-            cvt.changeWvfmState(true, false);
+    angular.module('main').controller('ExCrdCtl', ['$scope', 'cvt', 'ExCrdSvc','Data',
+        function ($scope, cvt, ExCrdSvc,Data) {
+               $scope.$on('$locationChangeStart', function (event, next, current) {
+                    console.log(current);
+                    Data.wvfmSet();
+                });
+ 
+            $scope.$on("destroy",function(){
+                console.log("leaving page!!");
+                Data.wvfmSet();
+            })
+            //cvt.changeWvfmState(true, false);
+            $scope.show_wvfm=cvt.crd.show_wvfm;
+            if($scope.show_wvfm){
+                Data.wvfmSet('CRDS');
+            }else{
+                Data.wvfmSet();
+            }
             cvt.firstcall = 1;
 
             var maxPMTGain = 10;
@@ -32,10 +46,15 @@
 
             };
 
-            $scope.show_wvfm = true;
 
             $scope.update_wvfm_state = function () {
                 $scope.show_wvfm = !$scope.show_wvfm;
+                cvt.crd.show_wvfm=$scope.show_wvfm;
+                if($scope.show_wvfm){
+                    Data.wvfmSet('CRDS');
+                }else{
+                    Data.wvfmSet();
+                }
 
             };
 

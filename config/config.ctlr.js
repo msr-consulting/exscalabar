@@ -5,8 +5,7 @@
             cvt.first_call = 1;
             
         
-            cvt.changeWvfmState(false, false);
-
+            
             $scope.connected = false;
             $scope.notconnected = false;
             $scope.rebooting = false;
