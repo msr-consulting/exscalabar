@@ -554,6 +554,7 @@
         var net = _net;
         this.write_taus = false;
         this.write_wvfm = false;
+        this.show_wvfm = true;
 
         this.update_tau_write = function (state) {
             this.write_taus = state;
@@ -565,7 +566,7 @@
 
         this.update_wvfm_write = function(state){
             this.write_wvfm = state;
-            var val = state ? 1:0;
+            var vale = state ? 1:0;
             ///xService/CRDS_CMD/Write_Ringdown_Data?Write?={value}
             var cmd = 'CRDS_CMD/Write_Ringdown_Data?Write?=' + val;
             http.get(net.address() + cmd);
@@ -701,8 +702,10 @@
             var data = wvfm ? 1 : 0;
 
             this.write_wvfm_state = wvfm;
-            console.log('New value for waveform retrieval is ' + data);
+            console.log('New value for waveform writing is ' + data);
             http.get(net.address() +
+                'PAS_CMD/WVFM_to_File?Write_Data=' + data);
+            console.log(net.address() +
                 'PAS_CMD/WVFM_to_File?Write_Data=' + data);
 
         };
