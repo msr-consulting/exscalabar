@@ -83,7 +83,9 @@ var watch_list = ["main/main.module.js",
     "meerstetter/ex.meerstetter.svc.js",
     "meerstetter/ex.meerstetter.ctl.js",
     "meerstetter/ex.meerstetterplot.dir.js",
-    "common/ex.common.ctl.js"
+    "common/ex.common.ctl.js",
+    "device/ex.devstatus.svc.js",
+    "device/ex.devstatus.ctl.js"
 ];
 
 
@@ -144,7 +146,7 @@ var docList = [
 gulp.task('lint', function () {
     return gulp.src(watch_list)
         .pipe(jshint())
-        .pipe(jshint.reporter('default'));
+        .pipe(jshint.reporter('default'))
 });
 
 // Concatenate & Minify JS
@@ -152,9 +154,9 @@ gulp.task('scripts', function () {
     return gulp.src(watch_list)
         .pipe(concat('exscalabar.js'))
         .pipe(gulp.dest(js_dist))
-        .pipe(rename('exscalabar.min.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest(js_dist));
+        .pipe(rename('exscalabar.min.js'));
+        //.pipe(uglify())
+        //.pipe(gulp.dest(js_dist));
 });
 
 gulp.task('ext_assets', function () {
@@ -251,6 +253,6 @@ gulp.task('bump-patch', function () {
 
 // Default Task
 gulp.task('default', ['lint', 'scripts', 'ext_assets', 'int_assets', 'styles', 'ngdocs', 'connect', 'connect2docs', 'open', 'watch']);
-
+gulp.task('no-lint', ['scripts', 'ext_assets', 'int_assets', 'styles', 'ngdocs', 'connect', 'connect2docs', 'open', 'watch']);
 gulp.task('no-browse', ['lint', 'scripts', 'styles', 'ngdocs', 'watch', 'connect2docs']);
 // TODO: add different builds for distribution and development...

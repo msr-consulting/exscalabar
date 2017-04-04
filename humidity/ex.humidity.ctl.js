@@ -41,7 +41,7 @@
     $scope.$on('cvtUpdated', function () {
       $scope.h = cvt.humidifier;
 
-    })
+    });
 
     $scope.$on('dataAvailable', updatePlot);
 
@@ -52,14 +52,13 @@
        var thisRH=[Data.tObj,high.RH,high.RHsp,high.Eff,med.RH,med.RHsp,med.Eff];
        var thisTemp=[Data.tObj,high.Td,high.TdReq,high.Tsp,high.Tobj,med.Td,med.TdReq,med.Tsp,med.Tobj];
        $scope.RH_data.push(thisRH);
-       if($scope.RH_data.length>300){$scope.RH_data.shift()};
+       if($scope.RH_data.length>300){$scope.RH_data.shift();}
        $scope.RH=$scope.RH_data;
        $scope.T_data.push(thisTemp);
-       if($scope.T_data.length>300){$scope.T_data.shift()};
+       if($scope.T_data.length>300){$scope.T_data.shift();}
        $scope.Temps=$scope.T_data;
-       console.log($scope);
        $scope.ctlrOut_data.push([Data.tObj,Data.data.HighTEC.Iout,Data.data.MedTEC.Iout]);
-       if($scope.ctlrOut_data.length>300){$scope.ctlrOut_data.shift()};
+       if($scope.ctlrOut_data.length>300){$scope.ctlrOut_data.shift();}
        $scope.ctlrOut=$scope.ctlrOut_data;
        //$scope.ctlrOutData.push([Data.tObj,Data.data.MedTEC.Iout,Data.data.HighTEC.Iout]);
 

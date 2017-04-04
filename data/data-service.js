@@ -70,9 +70,9 @@
                 "state": true,
                 "tremain": 0
             };
-            
+
             dataObj.wvfmReq='';
-            
+
             dataObj.wvfmSet=function(opt){
                 switch(opt){
                     case 'PAS':
@@ -84,8 +84,8 @@
                     default:
                         this.wvfmReq='';
                 }
-            }
-            
+            };
+
             var busy = false;
 
             dataObj.getData = function () {
@@ -94,7 +94,7 @@
                     return;
                 }
                 busy = true;
-                
+
                 promise = $http.get(net.address() + 'General/Data?Last='+lastTime+this.wvfmReq)
                     .then(function (response) {
 
@@ -109,10 +109,10 @@
                                 lastTime=response.data.Time;
                             // Handle filter infomration
                             dataObj.filter.state = response.data.Filter;
-                            
+
                             // Time remaining in cycle is the total time minus the elapsed time
                             var tremain = response.data.fcycle.tt - response.data.fcycle.te;
-                            
+
                             // Don't let this time fall below 0
                             dataObj.filter.tremain = tremain > 0 ? tremain : 0;
 
@@ -124,7 +124,7 @@
                                     dataObj[ppts[i]] = response.data[ppts[i]];
                                 }
                             }
-                            
+
                             // Object creation for devices
                             for (var i = 0; i < vaisalas.length; i++) {
                                 if (vaisalas[i] in response.data) {

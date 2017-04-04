@@ -18,10 +18,10 @@
              * Boolean representing the current state of the save button element.
              */
             $scope.save = cvt.save;
-            
+
             $scope.$on('cvtUpdated', function () {
                $scope.save = cvt.save;
-             })
+             });
 
 
             /**

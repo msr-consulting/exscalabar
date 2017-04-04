@@ -12,8 +12,8 @@
          * @description
          * Controller for TE Tech control functionality.
          */
-        
-        
+
+
 
         $scope.ctl = cvt.tec.pid;
         $scope.Tsp = cvt.tec.sp; //cvt.te_tec.sp;
@@ -42,10 +42,10 @@
 
         $scope.setHtx = function(){
             cvt.tec.updateHtx($scope.ch_mult.htx);
-        }
+        };
         $scope.setClx = function(){
             cvt.tec.updateClx($scope.ch_mult.clx);
-        }
+        };
         $scope.set_mult = function () {
 
             cvt.tec.updateMult([$scope.ch_mult.htx, $scope.ch_mult.clx]);

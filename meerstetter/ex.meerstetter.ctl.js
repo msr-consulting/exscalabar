@@ -5,8 +5,8 @@
 
 
     function meerstetter_ctl($scope, cvt) {
-        
-        
+
+
 
         $scope.tecs = cvt.mTEC;
 
@@ -18,11 +18,11 @@
 
         $scope.updateCtl = function (i) {
             $scope.tecs[i].updateCtlVal();
-        }
-        
+        };
+
         $scope.updateSetpoint  =function(i){
             cvt.mTEC[i].updateSetpoint($scope.tecs[i].sp);
-        }
+        };
 
         cvt.first_call = 1;
         $scope.$on('cvtUpdated', function () {

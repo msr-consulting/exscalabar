@@ -83,10 +83,39 @@
         <div class="col-md-2">
             <cui-button ival="connected" ng-click="stop();">Stop
             </cui-button>
-            <cui-button ival ="notconnected" ng-click="start();" >Start
+            <cui-button ival="notconnected" ng-click="start();">Start
             </cui-button>
-            <cui-button ival="rebooting" ng-click="reboot();" >Reboot
+            <cui-button ival="rebooting" ng-click="reboot();">Reboot
             </cui-button>
+        </div>
+    </div>
+</div>
+<div ng-controller="ExDevStatusCtl">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive" style="padding-bottom:0px;">
+                <table class="table " id="xml-table" style="color:white">
+                    <thead>
+                        <tr>
+                            <th>Device Type</th>
+                            <th>ID</th>
+                            <th>Active?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <span ng-repeat="key in keys track by $index">
+                      <span ng-repeat="val in values">
+                        <tr ng-repeat="ival in val">
+                          <td>{{ival}}</td>
+                          <!--<td>{{key}}</td>
+                          <td>{{ival.name}}</td>
+                          <td>{{ival.status}}</td>-->
+                        </tr>
+                      </span>
+                    </span>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

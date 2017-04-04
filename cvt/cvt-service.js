@@ -32,7 +32,6 @@
                 },
                 "purge": {
                     setSw: function (val) {
-                        //http://192.168.0.73:8001/xService/General/PurgeSwitch?val={value}
                         this.pos = val;
 
                         var cmd = val ? 1 : 0;
@@ -61,18 +60,6 @@
                 }
             };
 
-
-
-            /* ****************** FOR TESTING ***********************/
-            /* cvt.mTEC = [new mtec("Test1", "mTEC01", true, "00", 15, "01"),
-                 new mtec("Test2", "mTEC01", true, "01", 132, "02"),
-                 new mtec("Test3", "mTEC01", true, "02", 15, "03")];
-             cvt.mTEC[0].ctl_temp = 1;
-
-             cvt.mTEC[0].pid = [12, 0.3, 4];*/
-
-            /* ****************** END TESTING ***********************/
-
             cvt.setCabinValve = function (pos) {
                 var x = pos ? 1 : 0;
                 $http.get(net.address() + 'General/Cabin?val=' + x);
@@ -94,7 +81,6 @@
             cvt.setSaveData = function (val) {
 
                 var s = val ? 1 : 0;
-
                 $http.get(net.address() + 'General/Save?save=' + s.toString());
 
             };
@@ -348,9 +334,9 @@
                         cvt.ozone.valve = response.data.calibration.o3_valve;
 
                         cvt.purge.pos = response.data.general.purge;
-                        
+
                         cvt.save = response.data.general.save;
-                        
+
 
                         cvt.cal.o3_valve = response.data.calibration.o3_valve;
                         cvt.cal.lamp_rate = response.data.calibration.lamp_rate;
@@ -494,12 +480,6 @@
             this.http.get(this.net.address() + 'tetech/multipliers?mult=' + [this.htx, this.clx].toString());
         };
 
-        //this.updateCtlParams = function(index, val){
-        //tec.call(this, index, val);
-
-        //console.log("Updating TE Tech PID");
-        //}
-
         this.updateSP = function (sp) {
             tec.prototype.updateSP.call(this, sp);
             try {
@@ -532,11 +512,6 @@
             var c = !this.static_on  ? 1 : 0;
             console.log(this.net.address() +'meerstetter/StaticOn?On='+c+'&DevID='+ this.id);
             this.http.get(this.net.address() +'meerstetter/StaticOn?On='+c+'&DevID='+ this.id);
-
-            //http.get(net.address() + 'meerstetter/mctl?val=' +
-            //    c + '&DevID=' + this.id);
-
-            //http://192.168.101.214:8001/xService/meerstetter/mctl/:id?val={value}
 
         };
     }

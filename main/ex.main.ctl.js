@@ -1,6 +1,6 @@
 (function () {
-    angular.module('main').controller('ExMainCtl', ['Data', '$scope', '$rootScope','$interval', 'cvt', 'ExReadCfgSvc','ExChecklistSvc',
-        function (Data, $scope, $rootScope, $interval, cvt, ExReadCfgSvc, ExChecklistSvc) {
+    angular.module('main').controller('ExMainCtl', ['Data', '$scope', '$rootScope','$interval', 'cvt', 'ExReadCfgSvc','ExChecklistSvc','ExDevStatusSvc',
+        function (Data, $scope, $rootScope, $interval, cvt, ExReadCfgSvc, ExChecklistSvc, ExDevStatusSvc) {
             /**
              * @ngdoc controller
              * @name main.controller:MainCtlr
@@ -18,10 +18,18 @@
             /* Call the data service at regular intervals; this will force a regular update of the
              * data object.
              */
+             var i = 0;
             $interval(function () {
                 Data.getData();
                 cvt.checkCvt();
+                if (!ExDevStatusSvc.ini_complete)
+                {ExDevStatusSvc.get_ini();}
                 //deviceCfg.checkCfg();
+                if (i >10){
+                  i = 0;
+                  ExDevStatusSvc.listenForComm();
+                }
+                else {i +=1;}
             }, 100);
 
             // Load checklist data at startup

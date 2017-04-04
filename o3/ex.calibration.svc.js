@@ -54,13 +54,13 @@
       else{
 
         $http.get(net.address() + 'Calibration/StartCal?type=' + cal_type);
-        console.log(net.address() + 'Calibration/StartCal?type=' + cal_type)
+        console.log(net.address() + 'Calibration/StartCal?type=' + cal_type);
       }
-      console.log('Running calibration...')
-    }
+      console.log('Running calibration...');
+    };
     tabService.set_lamp_rate = function(val){
-         $http.get(net.address() + 'Calibration/O3LampFreq?Freq=' + val)
-    }
+         $http.get(net.address() + 'Calibration/O3LampFreq?Freq=' + val);
+    };
 
     tabService.get_o3_file = function () {
       var data = '';
@@ -102,7 +102,7 @@
       tabService.default = tabService.get_o3_file();
       tabService.update_lamp_rate = function (val) {
 
-        $http.get(net.address() + 'Calibration/O3LampFreq?Freq=' + val)
+        $http.get(net.address() + 'Calibration/O3LampFreq?Freq=' + val);
       };
 
       $rootScope.$on('cvtUpdated', cvt_update);

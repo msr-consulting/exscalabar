@@ -5,11 +5,11 @@
                     console.log(current);
                     Data.wvfmSet();
                 });
- 
+
             $scope.$on("destroy",function(){
                 console.log("leaving page!!");
                 Data.wvfmSet();
-            })
+            });
             //cvt.changeWvfmState(true, false);
             $scope.show_wvfm=cvt.crd.show_wvfm;
             if($scope.show_wvfm){
@@ -35,8 +35,8 @@
             };
 
             /* Wrap the CVT function so that we force the CVT to update
-             * when the view changes.  
-             * argument[0] === index of laser 
+             * when the view changes.
+             * argument[0] === index of laser
              * argument[1] === rate.
              */
             $scope.setRate = function () {
@@ -61,12 +61,12 @@
             $scope.update_wvfm_write = function () {
                 $scope.write_wvfm_data = !$scope.write_wvfm_data;
                 cvt.crd.update_wvfm_write($scope.write_wvfm_data);
-            }
+            };
 
             $scope.update_tau_write = function () {
                 $scope.write_taus = !$scope.write_taus;
                 cvt.crd.update_tau_write($scope.write_taus);
-            }
+            };
 
             $scope.setEn = function () {
                 var index = arguments[0];

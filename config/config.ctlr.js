@@ -3,9 +3,9 @@
         .controller('mrConfigCtlr', ['$scope', '$http', 'Data', 'net', 'cvt', function ($scope, $http, Data, net, cvt) {
 
             cvt.first_call = 1;
-            
-        
-            
+
+
+
             $scope.connected = false;
             $scope.notconnected = false;
             $scope.rebooting = false;
@@ -16,13 +16,13 @@
 
 
             $scope.$on('dataNotAvailable', function () {
- 
+
                   $scope.connected = false;
                   $scope.notconnected = true;
-                
+
             });
-            
-            $scope.$on("dataAvailable", function () {  
+
+            $scope.$on("dataAvailable", function () {
                     $scope.connected = true;
                     $scope.notconnected = false;
                     if((new Date()-$scope.reboottime)>10000){
@@ -35,7 +35,7 @@
                 $scope.filter.len = cvt.filter.cycle.length;
                 $scope.filter.per = cvt.filter.cycle.period;
                 $scope.filter.auto = cvt.filter.cycle.auto;
-                $scope.filter_speaker = cvt.pas.spk.connected
+                $scope.filter_speaker = cvt.pas.spk.connected;
                 //$scope.cabin = cvt.inlet;
             });
 
@@ -53,13 +53,13 @@
                          function(){
                              $scope.notconnected=false;
                          }
-                     )
+                     );
                }
             };
 
              $scope.flashreboot = function (){
                 $scope.rebooting=!($scope.rebooting);
-            }
+            };
 
            $scope.reboot = function () {
                 var d=new Date();
@@ -73,7 +73,7 @@
                        });
                 }
             };
-            
+
             $scope.network = {
                 "ip": net.ip,
                 "port": net.port
@@ -85,12 +85,12 @@
             $scope.changePort = function () {
                 net.setPort($scope.network.port);
             };
-            
+
             $scope.connectFilterSpeaker = function(){
                 $scope.filter_speaker = !$scope.filter_speaker;
                 cvt.pas.spk.connectToFilter($scope.filter_speaker);
-                
-            }
+
+            };
 
             $scope.filter = {
                 pos: true,
@@ -111,7 +111,7 @@
                                 length: this.len,
                                 auto: this.auto};
                     cvt.filter.updateCycle(cycle);
-                    
+
                 }
             };
 
