@@ -8,9 +8,6 @@
                     <cui-string ng-model="network.port" evnt-func="changePort()">Port</cui-string>
                 </div>
             </div>
-            <div class="led-red"></div>
-            <div class="led-green-ex"></div>
-            <div class="led-yellow"></div>
         </div>
         <!-- <div class="col-md-2">
             <div class="panel panel-default">
@@ -92,27 +89,24 @@
 </div>
 <div ng-controller="ExDevStatusCtl">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="table-responsive" style="padding-bottom:0px;">
-                <table class="table " id="xml-table" style="color:white">
+                <table class="table table-borderless" id="xml-table" style="color:white">
                     <thead>
                         <tr>
                             <th>Device Type</th>
                             <th>ID</th>
+                            <th>Label</th>
                             <th>Active?</th>
                         </tr>
                     </thead>
-                    <tbody>
-                    <span ng-repeat="key in keys track by $index">
-                      <span ng-repeat="val in values">
-                        <tr ng-repeat="ival in val">
-                          <td>{{ival}}</td>
-                          <!--<td>{{key}}</td>
-                          <td>{{ival.name}}</td>
-                          <td>{{ival.status}}</td>-->
+                    <tbody ng-repeat="key in keys track by $index">
+                        <tr ng-repeat="val in values[$index] track by $index">
+                          <td>{{$index ===0?val.cname:""}}</td>
+                          <td>{{val.name}}</td>
+                          <td>{{val.label}}</td>
+                          <td><div ng-class="val.status?'led-green-ex':'led-red'"></div></td>
                         </tr>
-                      </span>
-                    </span>
                     </tbody>
                 </table>
             </div>

@@ -6,10 +6,11 @@
 
     function dev_status_svc($http, net, $rootScope, cvt) {
 
-        function Device(name, status) {
+        function Device(name, cname, status, label) {
             this.name = name;
+            this.cname = cname;
             this.status = status;
-
+            this.label = label;
         }
 
         var devMap = new Map();
@@ -25,9 +26,9 @@
             for (var key of ExDevStatusSvc.statusMap.keys()) {
               var value = ExDevStatusSvc.statusMap.get(key);
                 for (var dev in cvt[key]) {
-                    console.log(value.find(function(v, index, array) {
+                    value.find(function(v, index, array) {
                         if (v.name === cvt[key][dev].id) {
-                          var device_ = new Device(v.name, true);
+                          var device_ = new Device(v.name, v.cname, true, cvt[key][dev].label);
 
                           array[index] = device_;
                           ExDevStatusSvc.statusMap.set(key, array);
@@ -36,7 +37,7 @@
                             return false;
                         }
 
-                    }));
+                    });
 
                 }
             }
@@ -95,6 +96,7 @@
                         var names = splitLine[1].split(",");
                         current_device = current_device.replace('[', '');
                         current_device = current_device.replace(']', '');
+                        var cname = current_device;
                         current_device = current_device.toLowerCase();
                         if (current_device == 'meerstetter') {
                             current_device = 'mTEC';
@@ -103,9 +105,9 @@
                         var devObjArray = [];
                         for (var name in names) {
                             if (isEmpty(devObjArray)) {
-                                devObjArray = [new Device(names[name], false)];
+                                devObjArray = [new Device(names[name], cname, false, 'no-op')];
                             } else {
-                                devObjArray.push(new Device(names[name], false));
+                                devObjArray.push(new Device(names[name], cname, false, 'no-op'));
                             }
 
                         }

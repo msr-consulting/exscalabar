@@ -278,7 +278,7 @@
                             default:
                                 console.log("Unexpected device found...");
                             }
-                            $rootScope.$broadcast('deviceListRefresh');
+                              $rootScope.$broadcast('deviceListRefresh');
                         }
 
                         var h = response.data.humidifier;

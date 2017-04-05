@@ -288,16 +288,16 @@ body > .container {
 
 .led-red {
   margin: 0 auto;
-  width: 24px;
-  height: 24px;
+  width: 15px;
+  height: 15px;
   background-color: #F00;
   border-radius: 50%;
-  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px, rgba(255, 0, 0, 0.5) 0 2px 12px;
+  /*box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px, rgba(255, 0, 0, 0.5) 0 2px 12px;
   -webkit-animation: blinkRed 0.5s infinite;
   -moz-animation: blinkRed 0.5s infinite;
   -ms-animation: blinkRed 0.5s infinite;
   -o-animation: blinkRed 0.5s infinite;
-  animation: blinkRed 0.5s infinite;
+  animation: blinkRed 0.5s infinite;*/
 }
 
 .led-yellow {
@@ -317,8 +317,8 @@ body > .container {
 
 .led-green {
   margin: 0 auto;
-  width: 24px;
-  height: 24px;
+  width: 15px;
+  height: 15px;
   background-color: #ABFF00;
   border-radius: 50%;
   /*box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, #89FF00 0 2px 12px;
@@ -336,4 +336,11 @@ body > .container {
     border-width: medium;
     border-color: black;
     box-shadow: : rgba(0,0,0,0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, #89FF00 0 2px 12px;
+}
+
+.table-borderless > tbody > tr > td,
+.table-borderless > tbody > tr > th,
+.table-borderless > tfoot > tr > td,
+.table-borderless > tfoot > tr > th {
+    border: none;
 }
