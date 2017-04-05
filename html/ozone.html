@@ -1,7 +1,6 @@
 <div ng-controller="ExCalibrationCtl">
     <div class="row">
         <div class="col-md-2">
-
             <cui-button ival="cal_active" ng-click="runCal()">
                 Start Cal
             </cui-button>
@@ -13,6 +12,10 @@
                     f<sub>O3</sub>
                 </div>
             </cui-numeric>
+            <select class="form-control" ng-model="cal_type" ng_change="cal_type_selection()">
+              <option value="ozone">Ozone</option>
+              <option value="pressure">Pressure</option>
+            </select>
 
         </div>
         <div class="col-md-10">
@@ -33,7 +36,7 @@
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="val in table_vals" ng-dblclick="clickRow(val)">
-                                            <th scope="row" id="{{val.id}}">{{<val class="st"></val>ep}}</th>
+                                            <th scope="row" id="{{val.id}}">{{val.step}}</th>
                                             <td>{{val.descr}}</td>
                                         </tr>
                                     </tbody>
@@ -61,7 +64,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="datum in data track by $index" >
+                                        <tr ng-repeat="datum in data track by $index">
                                             <td ng-dblclick="removeVal($index)">{{datum.id}}</td>
                                             <td contenteditable>
                                                 <input style="width:7em;color:darkgray;" ng-model="datum.val" />
