@@ -105,9 +105,9 @@
                         var devObjArray = [];
                         for (var name in names) {
                             if (isEmpty(devObjArray)) {
-                                devObjArray = [new Device(names[name], cname, false, 'no-op')];
+                                devObjArray = [new Device(names[name].trim(), cname, false, 'no-op')];
                             } else {
-                                devObjArray.push(new Device(names[name], cname, false, 'no-op'));
+                                devObjArray.push(new Device(names[name].trim(), cname, false, 'no-op'));
                             }
 
                         }
