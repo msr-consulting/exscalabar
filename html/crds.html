@@ -1,14 +1,19 @@
 <div ng-controller="ExCrdCtl">
     <div class="row">
         <div class="col-md-3 col-lg-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Laser Control</div>
+                <div class="panel-body">
+                    <cui-numeric ng-model="rate" width="45" dtype="int" evnt-func="setRate(rate)">f (Hz)
+                    </cui-numeric>
+                    <cui-numeric ng-model="dc" width="45">DC (%)</cui-numeric>
+                </div>
+            </div>
+
             <div ng-repeat="ctl in laser_ctl track by $index">
                 <div class="panel panel-default">
                     <div class="panel-heading">{{ctl.id}}</div>
                     <div class="panel-body">
-                        <cui-numeric ng-model="ctl.rate" width="45" dtype="int" evnt-func="setRate($index, ctl.rate)">f
-                            (Hz)
-                        </cui-numeric>
-                        <cui-numeric ng-model="ctl.DC" width="45">DC (%)</cui-numeric>
                         <cui-numeric width="45" ng-model="ctl.k" evnt-func="setLaserGain()" data-toggle="tooltip" data-placement="right" title="Laser gain in %.">k</cui-numeric>
                         <cui-button ival="ctl.en" ng-model="ctl.en" ng-click="setEn($index)">Power</cui-button>
                     </div>
@@ -39,24 +44,15 @@
                 </div>
             </div>
             <cui-button ival="show_wvfm">
-                <div tooltip-placement="bottom" tooltip="Send waveform data.  Must have bandwidth to support this functionality."
-                     tooltip-trigger="mouseenter"
-                     tooltip-append-to-body="true"
-                     ng-click="update_wvfm_state()">Send Waveforms
+                <div tooltip-placement="bottom" tooltip="Send waveform data.  Must have bandwidth to support this functionality." tooltip-trigger="mouseenter" tooltip-append-to-body="true" ng-click="update_wvfm_state()">Send Waveforms
                 </div>
             </cui-button>
             <cui-button ival="write_wvfm_data">
-                <div tooltip-placement="bottom"
-                     tooltip="Write CRD waveform data to file."
-                     tooltip-trigger="mouseenter"
-                     tooltip-append-to-body="true"
-                     ng-click="update_wvfm_write()">Write Waveforms
+                <div tooltip-placement="bottom" tooltip="Write CRD waveform data to file." tooltip-trigger="mouseenter" tooltip-append-to-body="true" ng-click="update_wvfm_write()">Write Waveforms
                 </div>
             </cui-button>
             <cui-button ival="write_taus">
-                <div tooltip-placement="bottom" tooltip="Write CRD tau data to file."
-                     tooltip-trigger="mouseenter" tooltip-append-to-body="true"
-                     ng-click="update_tau_write()">Write Taus
+                <div tooltip-placement="bottom" tooltip="Write CRD tau data to file." tooltip-trigger="mouseenter" tooltip-append-to-body="true" ng-click="update_tau_write()">Write Taus
                 </div>
             </cui-button>
         </div>

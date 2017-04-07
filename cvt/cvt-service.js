@@ -569,7 +569,7 @@
         // Red enable state
         this.ered = true;
 
-        this.setLaserRate = function (index, f) {
+        this.setLaserRate = function (f) {
 
             var cmd = 'CRDS_CMD/fblue?Rate=' + f;
             this.fblue = f;

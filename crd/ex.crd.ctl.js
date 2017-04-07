@@ -26,13 +26,16 @@
             $scope.write_taus = cvt.crd.write_taus;
 
             // Lasers have three inputs
-            var laserInput = function (_rate, _DC, _k, enabled, ID) {
-                this.rate = _rate;
-                this.DC = _DC;
+            var laserInput = function (_k, enabled, ID) {
                 this.k = _k;
                 this.en = enabled;
                 this.id = ID;
             };
+
+            // TODO: fix this so it is not color specific.  For now, it doesn't matter
+            // as at the cvt-service the function just uses one value...
+            $scope.rate = cvt.crd.fblue;
+            $scope.dc = cvt.crd.dcblue;
 
             /* Wrap the CVT function so that we force the CVT to update
              * when the view changes.
@@ -40,9 +43,8 @@
              * argument[1] === rate.
              */
             $scope.setRate = function () {
-                var index = arguments[0];
-                var rate = arguments[1];
-                cvt.crd.setLaserRate(index, rate);
+                var rate = arguments[0];
+                cvt.crd.setLaserRate(rate);
 
             };
 
@@ -81,9 +83,9 @@
              * second to red.
              */
             $scope.laser_ctl = [
-                new laserInput(cvt.crd.fblue, cvt.crd.dcblue, cvt.crd.kblue0 / maxLaserGain * 100, cvt.crd.eblue0, "Blue Lower"),
-                new laserInput(cvt.crd.fblue, cvt.crd.dcblue, cvt.crd.kblue1 / maxLaserGain * 100, cvt.crd.eblue1, "Blue Upper"),
-                new laserInput(cvt.crd.fred, cvt.crd.dcred, cvt.crd.kred / maxLaserGain * 100, cvt.crd.ered, "Red Laser")
+                new laserInput( cvt.crd.kblue0 / maxLaserGain * 100, cvt.crd.eblue0, "Blue Lower"),
+                new laserInput(cvt.crd.kblue1 / maxLaserGain * 100, cvt.crd.eblue1, "Blue Upper"),
+                new laserInput(cvt.crd.kred / maxLaserGain * 100, cvt.crd.ered, "Red Laser")
             ];
 
             $scope.pmt = cvt.crd.kpmt.map(function (x) {
