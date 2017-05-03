@@ -298,8 +298,8 @@
                         /* Update the CRD controls */
                         cvt.crd.fred = crd.red.f;
                         cvt.crd.fblue = crd.blue.f;
-                        cvt.crd.dcred = crd.red.dc;
-                        cvt.crd.dcblue = crd.blue.dc;
+                        cvt.crd.dcred = crd.red.dc*100;
+                        cvt.crd.dcblue = crd.blue.dc*100;
                         cvt.crd.kpmt = crd.kpmt;
                         cvt.crd.kblue0 = crd.klaser[1];
                         cvt.crd.kblue1 = crd.klaser[2];
@@ -568,6 +568,19 @@
         this.eblue1 = true;
         // Red enable state
         this.ered = true;
+
+        this.setLaserDC = function(dc){
+
+          dc = dc/100;
+
+          var cmd = 'CRDS_CMD/ChangeDC?blue=0&dc=' + dc;
+          http.get(net.address() + cmd);
+
+          var cmd = 'CRDS_CMD/ChangeDC?blue=1&dc=' + dc;
+          http.get(net.address() + cmd);
+
+
+        }
 
         this.setLaserRate = function (f) {
 

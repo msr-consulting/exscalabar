@@ -10,8 +10,9 @@
                 console.log("leaving page!!");
                 Data.wvfmSet();
             });
-            //cvt.changeWvfmState(true, false);
+
             $scope.show_wvfm=cvt.crd.show_wvfm;
+
             if($scope.show_wvfm){
                 Data.wvfmSet('CRDS');
             }else{
@@ -48,6 +49,20 @@
 
             };
 
+            $scope.$on('cvtUpdated', handleCVTUpdate);
+
+            function handleCVTUpdate(){
+
+                          // TODO: fix this so it is not color specific.  For now, it doesn't matter
+                          // as at the cvt-service the function just uses one value...
+                          $scope.rate = cvt.crd.fblue;
+                          $scope.dc = cvt.crd.dcblue;
+
+            }
+
+            $scope.setDC = function(){
+              cvt.crd.setLaserDC(arguments[0]);
+            }
 
             $scope.update_wvfm_state = function () {
                 $scope.show_wvfm = !$scope.show_wvfm;
