@@ -40,9 +40,9 @@
             build_table($scope.cal_type);
         }
 
-        $scope.cal_active = false;
+        $scope.cal_active = ExCalibrationSvc.cal_state;
         $scope.runCal = function() {
-            $scope.cal_active = !$scope.cal_active;
+            //$scope.cal_active = !$scope.cal_active;
             if (!cal_saved) {
                 var r = confirm("You are about to run a calibration from the server file. The current calibration on the client is unsaved.  Do you wish to save it first?");
                 console.log(r);

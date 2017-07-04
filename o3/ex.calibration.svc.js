@@ -6,7 +6,8 @@
     var tabService = {
       lamp_rate: 0,
       o3_valve: false,
-      default: []
+      default: [],
+        cal_state: cvt.cal.active
     };
     var build_file = function (data) {
       var xml = '<?xml version="1.0" encoding="utf-8"?>\r\n<OZONE>\r\n';
@@ -41,6 +42,7 @@
 
       cal_type = 'o3';
       start = true;
+        if (!tabService.cal_state){
       if (arguments.length !== 0){
 
         cal_type = arguments[0];
@@ -54,9 +56,13 @@
       else{
 
         $http.get(net.address() + 'Calibration/StartCal?type=' + cal_type);
-        console.log(net.address() + 'Calibration/StartCal?type=' + cal_type);
+        //console.log(net.address() + 'Calibration/StartCal?type=' + cal_type);
       }
-      console.log('Running calibration...');
+        }
+        else{
+            $http.get(net.address() + 'Calibration/StopCalibration');
+        }
+      //console.log('Running calibration...');
     };
     tabService.set_lamp_rate = function(val){
          $http.get(net.address() + 'Calibration/O3LampFreq?Freq=' + val);
@@ -111,9 +117,12 @@
         tabService.lamp_rate = cvt.cal.lamp_rate;
         tabService.o3_valve = cvt.cal.o3_valve;
       }
-
-
-
+      
+      $rootScope.$on('cvtUpdated', update_svc);
+      
+      function update_svc(){
+          tabService.cal_state = cvt.cal.active;
+      }
 
       return tabService;
     }]);

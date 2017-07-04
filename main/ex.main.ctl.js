@@ -23,11 +23,12 @@
                 Data.getData();
                 cvt.checkCvt();
                 if (!ExDevStatusSvc.ini_complete)
-                {ExDevStatusSvc.get_ini();}
-                //deviceCfg.checkCfg();
-                if (i >10){
-                  i = 0;
-                  ExDevStatusSvc.listenForComm();
+                {
+                    ExDevStatusSvc.get_ini();}
+                    //deviceCfg.checkCfg();
+                    if (i >10){
+                        i = 0;
+                        ExDevStatusSvc.listenForComm();
                 }
                 else {i +=1;}
             }, 100);
