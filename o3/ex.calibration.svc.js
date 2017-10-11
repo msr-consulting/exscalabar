@@ -107,7 +107,10 @@
       };
       tabService.default = tabService.get_o3_file();
       tabService.update_lamp_rate = function (val) {
-
+        maxfreq=850;
+         val=val<=maxfreq ? val : maxfreq;
+         console.log(val);
+          tabService.lamp_rate=val;
         $http.get(net.address() + 'Calibration/O3LampFreq?Freq=' + val);
       };
 
