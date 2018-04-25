@@ -180,16 +180,14 @@
                 for (var key in ExMeerstetterSvc.data){
                     l.push(ExMeerstetterSvc.data[key].label);
                 }
-
-                if (l !== vm.options.labels) {
+                if (l.toString() != vm.ref.getLabels().toString()) {
                     /* If the labels have changed (usually the first time the data
                      * service is called), then copy the new labels into the options.
                      *
                      * Remove the time label...
                      */
                     vm.ref.updateOptions({labels: l.slice()});
-
-                    var lab = vm.options.labels.slice(1);
+                    var lab = vm.ref.getLabels().slice(1);
 
                     var cl = CfgObj.color.length;
                     var pl = CfgObj.pattern.length;

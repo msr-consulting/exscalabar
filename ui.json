@@ -86,10 +86,14 @@
   },
   "mtec": {
     "color": [
+      "blue",
+      "green",
       "red",
       "blue",
-      "green"
-    ],
+      "red",
+      "orange",
+      "white"
+   ],
     "strokeWidth": [
       2
     ],
@@ -99,7 +103,8 @@
       null,
       "DASHED_LINE",
       "DASHED_LINE",
-      "DASHED_LINE"
+      null,
+      null
     ],
     "xGrid": true,
     "yGrid": true
