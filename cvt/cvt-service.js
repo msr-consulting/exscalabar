@@ -615,10 +615,9 @@
 
         this.setLaserGain = function (val) {
 
-            this.kred = val[2];
-            this.kblue0 = val[0];
-            this.kblue1 = val[1];
-            http.get(net.address() + 'CRDS_CMD/LaserGain?B1=' + val[1] + '&B0=' + val[0] + '&R=' + val[2]);
+            this.kred = val[1];
+            this.kblue = val[0];
+            http.get(net.address() + 'CRDS_CMD/LaserGain?B=' + val[0] + '&R=' + val[1]);
         };
     }
 
