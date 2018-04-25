@@ -38,8 +38,7 @@
       "blue",
       "white",
       "lightblue",
-      "red",
-      "cyan"
+      "red"
     ],
     "strokeWidth": [
       2,
@@ -51,15 +50,13 @@
       null,
       "DASHED_LINE",
       "DASHED_LINE",
-      "LINE",
       "LINE"
     ],
     "names": [
       "Blue Dry",
       "Blue High RH",
       "Blue Med RH",
-      "Red Dry",
-      "Blue Gas"
+      "Red Dry"
     ],
     "xGrid": true,
     "yGrid": true

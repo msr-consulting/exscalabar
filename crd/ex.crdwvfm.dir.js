@@ -107,7 +107,7 @@
             }
 
             // Some default data so that you can see the actual graph
-            vm.data = [[0, NaN, NaN, NaN, NaN, NaN]];
+            vm.data = [[0, NaN, NaN, NaN, NaN]];
 
             vm.options.xlabel = "t";
 
