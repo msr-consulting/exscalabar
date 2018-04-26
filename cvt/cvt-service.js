@@ -301,8 +301,7 @@
                         cvt.crd.dcred = crd.red.dc*100;
                         cvt.crd.dcblue = crd.blue.dc*100;
                         cvt.crd.kpmt = crd.kpmt;
-                        cvt.crd.kblue0 = crd.klaser[1];
-                        cvt.crd.kblue1 = crd.klaser[2];
+                        cvt.crd.kblue = crd.klaser[1];
                         cvt.crd.kred = crd.klaser[0];
 
                         /* Update PAS laser controls */
