@@ -35,9 +35,9 @@
   },
   "crdplot": {
     "color": [
-      "blue",
-      "white",
       "lightblue",
+      "white",
+      "blue",
       "red"
     ],
     "strokeWidth": [
@@ -53,9 +53,9 @@
       "LINE"
     ],
     "names": [
-      "Blue Dry",
-      "Blue High RH",
       "Blue Med RH",
+      "Blue High RH",
+      "Blue Dry",
       "Red Dry"
     ],
     "xGrid": true,
