@@ -507,11 +507,24 @@
             console.log("Updating Meerstetter Tech PID with ID " + this.ID + ".");
         };
 
-        this.updateCtlVal = function () {
+        this.updateCtlVal = function (mtecs) {
 
             var c = !this.static_on  ? 1 : 0;
+            this.static_on=c;
             console.log(this.net.address() +'meerstetter/StaticOn?On='+c+'&DevID='+ this.id);
             this.http.get(this.net.address() +'meerstetter/StaticOn?On='+c+'&DevID='+ this.id);
+            if(this.id.includes("TEC")){               
+                console.log(mtecs);
+                var pump=0;
+                for (var m in mtecs){
+                    if(mtecs[m].id.includes("TEC")){
+                        pump=pump || mtecs[m].static_on;
+                    }
+                }
+                console.log("PUMP ON = "+pump);
+                this.http.get(this.net.address() +'Humidity/Pump?On='+pump);
+                console.log(this.net.address() +'Humidity/Pump?On='+pump);
+            }
 
         };
     }

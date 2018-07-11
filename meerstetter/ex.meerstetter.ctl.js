@@ -17,7 +17,7 @@
         };
 
         $scope.updateCtl = function (i) {
-            $scope.tecs[i].updateCtlVal();
+            $scope.tecs[i].updateCtlVal($scope.tecs);
         };
 
         $scope.updateSetpoint  =function(i){
