@@ -576,9 +576,9 @@
         // PMT gains
         this.kpmt = [0, 0, 0, 0];
         // Blue enable state
-        this.eblue = true;
+        this.eblue = false;
         // Red enable state
-        this.ered = true;
+        this.ered = false;
 
         this.setLaserDC = function(dc){
 

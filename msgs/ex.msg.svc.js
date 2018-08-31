@@ -56,7 +56,7 @@
                     } else {
                         m = '<span class="cui-msg-info">';
                     }
-                    msg.msgs += m + Data.msg[i] + "</span><br>";
+                    msg.msgs = m + Data.msg[i] + "</span><br>" + msg.msgs;
                 }
                 for (i = 0; i < Data.msg.length; i++) {
                     if (Data.msg[i].search('ERROR') > 0) {

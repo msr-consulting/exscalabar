@@ -46,7 +46,8 @@
     $scope.$on('dataAvailable', updatePlot);
 
     function updatePlot(){
-       console.log('Update humidity plot');
+        console.log(JSON.stringify($scope.optRH));
+        console.log($scope.optRH);
        var high=Data.data.humhigh;
        var med=Data.data.hummed;
        var thisRH=[Data.tObj,high.RH,high.RHsp,high.Eff,med.RH,med.RHsp,med.Eff];
@@ -80,20 +81,25 @@
     $scope.optCtlOut = {
       ylabel: "Controller Output",
       labels: ["t", "high", "med"],
-      legend: "always",
-      valueRange:[null,null]
+      colors:["red","blue"],
+      legend: "always"
     };
     $scope.optRH = {
       ylabel: "RH (%)",
       labels: ["t", "high.RH","high.RHsp","high.Eff","med.RH","med.RHsp","med.Eff"],
-      legend: "always",
-      valueRange:[null,null]
+      colors:["red","pink","orange","blue","lightblue","green"],
+      visibility:[true,true,false,true,true,false],
+      strokeWidth:2,
+      strokePattern:null,
+      legend: "always"
     };
+    console.log(JSON.stringify($scope.optRH));
+    console.log($scope.optRH);
     $scope.optTemp = {
       ylabel: "Temp (C)",
       labels: ["t", "high.Td","high.TdReq","high.Tsp","high.Tobj","med.Td","med.TdReq","med.Tsp","med.Tobj"],
-      legend: "always",
-      valueRange:[null,null]
+      colors:["red","pink","orange","yellow","blue","lightblue","green","purple"],
+      legend: "always"
     };
     $scope.RHcm=[['Clear Data',function(){$scope.RH_data=[];}]];
     $scope.Tempcm=[['Clear Data',function(){$scope.T_data=[];}]];
