@@ -22,8 +22,8 @@
 
             var vm = this;
 
-            /* Plot tau by default... */
-            var objectData = 'tau';
+            /* Plot extinction by default... */
+            var objectData = 'ext';
 
             /**
              * @ngdoc property
@@ -110,7 +110,7 @@
             var CfgObj = ExReadCfgSvc.crd;
             var labels = ["t"].concat(CfgObj.names);
             vm.options = {
-                ylabel: "<em>&tau;</em> (&mu;s)",
+                ylabel: "<em>b<sub>ext</sub></em> (a.u.)",
                 labels: labels,
                 legend: 'always',
                 axes: {
