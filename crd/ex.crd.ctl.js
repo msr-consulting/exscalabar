@@ -62,7 +62,7 @@
 
             $scope.setDC = function(){
               cvt.crd.setLaserDC(arguments[0]);
-            }
+            };
 
             $scope.update_wvfm_state = function () {
                 $scope.show_wvfm = !$scope.show_wvfm;

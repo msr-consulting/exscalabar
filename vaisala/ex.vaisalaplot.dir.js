@@ -37,10 +37,10 @@
 
 
             var vm = this;
-
+            console.log(JSON.stringify(vm));
             var data_set = "RH";
 
-            vm.ref = {};
+            //vm.ref = {};
 
             /**
              * @ngdoc property
@@ -125,6 +125,7 @@
              * data service as well as the selection chosen in the context meny.
              */
             var CfgObj = ExReadCfgSvc.vaisala;
+            console.log(CfgObj);
             vm.options = {
                 ylabel: '<em>RH</em> (%)',
                 labels: ['t', 'Vaisala0'],
@@ -143,10 +144,11 @@
                     }
                 },
                 series: {},
+                strokePattern:null,
                 labelsUTC: true
             };
 
-
+            console.log(JSON.stringify(vm.options));
             if (vm.title !== undefined) {
                 vm.options.title = vm.title;
             }
@@ -165,7 +167,7 @@
             vm.data = [[0, NaN]];
 
             $rootScope.$on('VaisalaDataAvailable', updatePlot);
-
+             console.log(JSON.stringify(vm));
             /**
              * @ngdoc method
              * @name main.controller:FlowPlotCtl#updatePlot
@@ -183,24 +185,27 @@
 
                     l.push(ExVaisalaSvc.data[key].label);
                 }
+                
 
-                if (l !== vm.options.labels) {
+                if (l.toString() != vm.ref.getLabels().toString()) {
+                
+                //if (l !== vm.options.labels) {
                     /* If the labels have changed (usually the first time the data
                      * service is called), then copy the new labels into the options.
                      *
                      * Remove the time label...
                      */
                     vm.ref.updateOptions({labels: l.slice()});
-                    //vm.options.labels = l.slice();
-
-                    var lab = vm.options.labels.slice(1);
-
+                    //var options={series:{}};
+                    
+                    var lab = vm.ref.getLabels().slice(1); //ExVaisalaSvc.IDs; //vm.options.labels.slice(1);
                     var cl = CfgObj.color.length;
                     var pl = CfgObj.pattern.length;
                     var swl = CfgObj.strokeWidth.length;
-
+                    
                     for (var j = 0; j < lab.length; j++) {
                         var p = CfgObj.pattern[j % pl] === null ? null : Dygraph[CfgObj.pattern[j % pl]];
+                        //vm.ref.colorsMap_[lab[j]] = CfgObj.color[j % cl];
                         vm.options.series[lab[j]] = {
                             color: CfgObj.color[j % cl],
                             strokeWidth: CfgObj.strokeWidth[j % swl],
@@ -209,6 +214,8 @@
                         };
 
                     }
+                    
+                    
                 }
 
                 vm.data = ExVaisalaSvc[data_set];

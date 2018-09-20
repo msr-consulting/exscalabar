@@ -61,8 +61,7 @@
                     }],
                     ['Clear Data', function () {
                         ExVaisalaSvc.clear_data();
-                    }]
-                ,
+                    }],
                 
                     ['Autoscale 1x', function () {
                         vm.options.axes.y.valueRange = vm.ref.yAxisRange();
@@ -91,9 +90,10 @@
              * data service as well as the selection chosen in the context meny.
              */
             var CfgObj = ExReadCfgSvc.pas;
+            var labels = ["t"].concat(CfgObj.names);
             vm.options = {
                 ylabel: 'Temperature (&deg;C)',
-                labels: ['t', 'Cell 1', 'Cell 2', 'Cell 3', 'Cell 4', 'Cell 5'],
+                labels: labels,
                 legend: 'always',
                 axes: {
                     y: {
@@ -112,7 +112,22 @@
                 labelsUTC: true
             };
 
+            var cl = CfgObj.color.length;
+            var pl = CfgObj.pattern.length;
+            var swl = CfgObj.strokeWidth.length;
 
+            for (var j = 0; j < CfgObj.names.length; j++) {
+                var p = CfgObj.pattern[j % pl] === null ? null : Dygraph[CfgObj.pattern[j % pl]];
+                vm.options.series[CfgObj.names[j]] = {
+                    color: CfgObj.color[j % cl],
+                    strokeWidth: CfgObj.strokeWidth[j % swl],
+                    strokePattern: p,
+                    drawPoints: true
+                };
+
+            }
+
+ 
             // If the user provides a title in the directive call, add the title.
             if (vm.title !== undefined) {
                 vm.options.title = vm.title;
@@ -143,6 +158,8 @@
              *
              */
             function updatePlot() {
+                
+
                 vm.data = ExPasSvc.temp;
             }
         }

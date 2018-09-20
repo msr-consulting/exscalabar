@@ -32,12 +32,11 @@
                 "htx": cvt.tec.htx,
                 "clx": cvt.tec.clx
             };
-            console.log('Update TE Tech CVT.');
+
         }
 
         $scope.set_pid = function (index) {
             cvt.te_tec.updateCtlParams(index, $scope.ctl[index]);
-            console.log('New PID control set.');
         };
 
         $scope.setHtx = function(){
@@ -49,7 +48,6 @@
         $scope.set_mult = function () {
 
             cvt.tec.updateMult([$scope.ch_mult.htx, $scope.ch_mult.clx]);
-            console.log('Set multipliers.');
         };
 
         $scope.update_sp = function () {

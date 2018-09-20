@@ -38,7 +38,7 @@
         $scope.cal_type_selection = function() {
             console.log($scope.cal_type);
             build_table($scope.cal_type);
-        }
+        };
 
         $scope.cal_active = ExCalibrationSvc.cal_state;
         $scope.runCal = function() {

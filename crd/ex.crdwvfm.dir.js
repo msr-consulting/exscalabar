@@ -113,7 +113,7 @@
 
             $rootScope.$on('crdDataAvaliable',
                 function () {
-                    vm.data = ExCrdSvc.avg_rd
+                    vm.data = ExCrdSvc.avg_rd;
                 });
 
         };

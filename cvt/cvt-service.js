@@ -331,7 +331,7 @@
                         cvt.denuder_bypass=response.data.general.denuder_pos;
 
                         cvt.ozone.valve = response.data.calibration.o3_valve;
-                        cvt.cal.active = response.data.calibration.cal_state != 0;
+                        cvt.cal.active = response.data.calibration.cal_state !== 0;
 
                         cvt.purge.pos = response.data.general.purge;
 
@@ -588,7 +588,7 @@
           http.get(net.address() + cmd);
 
 
-        }
+        };
 
         this.setLaserRate = function (f) {
 

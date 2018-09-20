@@ -48,9 +48,9 @@
     ],
     "pattern": [
       null,
-      "DASHED_LINE",
-      "DASHED_LINE",
-      "LINE"
+      null,
+      null,
+      null
     ],
     "names": [
       "Blue High RH",
@@ -63,9 +63,18 @@
   },
   "flowplot": {
     "color": [
+      "purple",
+      "cyan",
+      "blue",
+      "red",
+      "green",
       "red",
       "blue",
-      "green"
+      "black",
+      "pink",
+      "white",
+      "yellow",
+      "magenta"
     ],
     "strokeWidth": [
       2
@@ -74,7 +83,8 @@
       null,
       null,
       null,
-      "DASHED_LINE",
+      null,
+      null,
       "DASHED_LINE",
       "DASHED_LINE"
     ],
@@ -108,9 +118,11 @@
   },
   "ppt": {
     "color": [
+        "purple",
+        "white",
       "red",
-      "blue",
-      "green"
+      "green",
+      "blue"
     ],
     "strokeWidth": [
       2
@@ -119,18 +131,23 @@
       null,
       null,
       null,
-      "DASHED_LINE",
-      "DASHED_LINE",
-      "DASHED_LINE"
+      null,
+      null
     ],
     "xGrid": true,
     "yGrid": true
   },
   "vaisala": {
     "color": [
+        "cyan",
+        "purple",
+        "blue",
       "red",
+        "green",
+        "red",
       "blue",
-      "green"
+      "white",
+        "yellow"
     ],
     "strokeWidth": [
       2
@@ -139,7 +156,8 @@
       null,
       null,
       null,
-      "DASHED_LINE",
+      null,
+      null,
       "DASHED_LINE",
       "DASHED_LINE"
     ],

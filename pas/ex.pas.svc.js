@@ -169,28 +169,28 @@
             var df = celldata[0].MicFreq.dt;
             var dt = celldata[0].MicTime.dt;
             var pdt = celldata[0].PhotoDiode.dt;
-            
-            for (var k = 0; k < celldata[0].MicFreq.Y.length; k++) {
+            var k,j;
+            for (k = 0; k < celldata[0].MicFreq.Y.length; k++) {
                 var micf = [k*df];
-                for (var j = 0; j < celldata.length; j++) {
+                for (j = 0; j < celldata.length; j++) {
                     micf.push(celldata[j].MicFreq.Y[k]);
                 }
 
                 // Push the data in cell-wise
                 PasData.wvfm.micf.push(micf);
             }
-            for (var k = 0; k < celldata[0].MicTime.Y.length; k++) {
+            for (k = 0; k < celldata[0].MicTime.Y.length; k++) {
                 var mict = [k*dt];
-                for (var j = 0; j < celldata.length; j++) {
+                for (j = 0; j < celldata.length; j++) {
                     mict.push(celldata[j].MicTime.Y[k]);
                 }
 
                 // Push the data in cell-wise
                 PasData.wvfm.mict.push(mict);
             }
-            for (var k = 0; k < celldata[0].PhotoDiode.Y.length; k++) {
+            for (k = 0; k < celldata[0].PhotoDiode.Y.length; k++) {
                 var pd = [k*pdt];
-                for (var j = 0; j < celldata.length; j++) {
+                for (j = 0; j < celldata.length; j++) {
                     pd.push(celldata[j].PhotoDiode.Y[k]);
                 }
 

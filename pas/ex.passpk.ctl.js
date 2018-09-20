@@ -25,7 +25,7 @@
                 $scope.speaker.connected = !$scope.speaker.connected;
                 cvt.pas.spk.connectToFilter($scope.speaker.connected);
 
-            }
+            };
 
             /** Set the speaker position and update the CVT. */
             $scope.setPos = function () {

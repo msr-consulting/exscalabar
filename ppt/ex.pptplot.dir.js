@@ -84,6 +84,7 @@
                         }
                     }
                 },
+                series:{},
                 labelsUTC: true
             };
 
@@ -96,13 +97,29 @@
             $rootScope.$on('PptDataAvailable', update_data);
 
             function update_data() {
-
+        
                 var l = ['t'].concat(ExPptSvc.labels);
-
-                if (l !== vm.options.labels) {
+                if (l.toString() != vm.ref.getLabels().toString()) {
                     // If the labels have changed (usually the first time the data
                     // service is called), then copy the new labels into the options
                     vm.ref.updateOptions({labels: l.slice()});
+                    
+                    var lab = vm.ref.getLabels().slice(1);
+
+                    var cl = CfgObj.color.length;
+                    var pl = CfgObj.pattern.length;
+                    var swl = CfgObj.strokeWidth.length;
+                    
+                    for (var j = 0; j < lab.length; j++) {
+                        var p = CfgObj.pattern[j % pl] === null ? null : Dygraph[CfgObj.pattern[j % pl]];
+                        vm.options.series[lab[j]] = {
+                            color: CfgObj.color[j % cl],
+                            strokeWidth: CfgObj.strokeWidth[j % swl],
+                            strokePattern: p,
+                            drawPoints: true
+                        };
+
+                    }
                 }
 
                 vm.data = ExPptSvc[data_set];

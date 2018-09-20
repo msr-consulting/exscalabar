@@ -46,8 +46,7 @@
     $scope.$on('dataAvailable', updatePlot);
 
     function updatePlot(){
-        console.log(JSON.stringify($scope.optRH));
-        console.log($scope.optRH);
+
        var high=Data.data.humhigh;
        var med=Data.data.hummed;
        var thisRH=[Data.tObj,high.RH,high.RHsp,high.Eff,med.RH,med.RHsp,med.Eff];
@@ -90,11 +89,9 @@
       colors:["red","pink","orange","blue","lightblue","green"],
       visibility:[true,true,false,true,true,false],
       strokeWidth:2,
-      strokePattern:null,
+      strokePattern:[null,null,null,null,null,null],
       legend: "always"
     };
-    console.log(JSON.stringify($scope.optRH));
-    console.log($scope.optRH);
     $scope.optTemp = {
       ylabel: "Temp (C)",
       labels: ["t", "high.Td","high.TdReq","high.Tsp","high.Tobj","med.Td","med.TdReq","med.Tsp","med.Tobj"],

@@ -22,11 +22,7 @@
         };
 
         ExDevStatusSvc.listenForComm = function() {
-
-            for (var key of ExDevStatusSvc.statusMap.keys()) {
-              var value = ExDevStatusSvc.statusMap.get(key);
-                for (var dev in cvt[key]) {
-                    value.find(function(v, index, array) {
+            function vf(v, index, array) {
                         if (v.name === cvt[key][dev].id) {
                           var device_ = new Device(v.name, v.cname, true, cvt[key][dev].label);
 
@@ -37,7 +33,11 @@
                             return false;
                         }
 
-                    });
+                    }
+            for (var key of ExDevStatusSvc.statusMap.keys()) {
+              var value = ExDevStatusSvc.statusMap.get(key);
+                for (var dev in cvt[key]) {
+                    value.find(vf);
 
                 }
             }

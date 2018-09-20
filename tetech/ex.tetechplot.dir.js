@@ -139,7 +139,7 @@
                 labelsUTC: true
             };
 
-
+            
             if (vm.title !== undefined) {
                 vm.options.title = vm.title;
             }
@@ -186,13 +186,12 @@
                      * Remove the time label...
                      */
                     vm.ref.updateOptions({labels: l.slice()});
-
+                    vm.options.labels=l.slice();
                     var lab = vm.options.labels.slice(1);
 
                     var cl = CfgObj.color.length;
                     var pl = CfgObj.pattern.length;
                     var swl = CfgObj.strokeWidth.length;
-
                     for (var j = 0; j < lab.length; j++) {
                         var p = CfgObj.pattern[j % pl] === null ? null : Dygraph[CfgObj.pattern[j % pl]];
                         vm.options.series[lab[j]] = {
@@ -203,6 +202,7 @@
                         };
 
                     }
+                
                 }
 
                 vm.data = ExTetechSvc[data_set];

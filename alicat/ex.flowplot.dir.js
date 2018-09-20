@@ -183,13 +183,14 @@
              *
              */
             function updatePlot() {
+                
                 var l = ['t'];
                 for (var key in ExFlowSvc.data){
                     l.push(ExFlowSvc.data[key].label);
                 }
                 //var l = ['t'].concat(ExFlowSvc.label);
-
-                if (l !== vm.options.labels) {
+               
+                if (l.toString() != vm.ref.getLabels().toString()) {
                     /* If the labels have changed (usually the first time the data
                      * service is called), then copy the new labels into the options.
                      *
@@ -198,7 +199,7 @@
                     vm.ref.updateOptions({labels: l.slice()});
                     //vm.options.labels = l.slice();
 
-                    var lab = vm.options.labels.slice(1);
+                    var lab = vm.ref.getLabels().slice(1);
 
                     var cl = CfgObj.color.length;
                     var pl = CfgObj.pattern.length;
@@ -218,7 +219,8 @@
 
                 vm.data = ExFlowSvc[data_set];
             }
-        };
+            
+          };
 
         FlowPlotCtl.$inject = ['$rootScope', 'ExFlowSvc', 'ExReadCfgSvc'];
 
