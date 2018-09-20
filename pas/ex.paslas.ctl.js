@@ -1,7 +1,8 @@
 (function () {
-    angular.module('main').controller('ExPasLasCtl', ['$scope', 'cvt', 'Data',
-        function ($scope, cvt, Data) {
-
+    angular.module('main').controller('ExPasLasCtl', ['$scope', 'cvt', 'Data','ExReadCfgSvc',
+        function ($scope, cvt, Data, ExReadCfgSvc) {
+            
+            var CfgObj = ExReadCfgSvc.pas;
             $scope.lasCtl = [];
             
             // Defines the maximum voltage for the PAS lasers...
@@ -12,7 +13,10 @@
              * the value of f0 will be overrun IMMEDIATELY.
              */
             for (var i = 0; i < cvt.pas.las.vr.length; i++) {
-                $scope.lasCtl.push(new lasSet(cvt.pas.las.vr[i]/maxRange*100,
+                $scope.lasCtl.push(
+                    new lasSet(CfgObj.names[i],
+                    CfgObj.color[i % CfgObj.color.length],
+                    cvt.pas.las.vr[i]/maxRange*100,
                     cvt.pas.las.f0[i],
                     cvt.pas.las.modulation[i],
                     cvt.pas.las.enable[i]));
@@ -23,6 +27,8 @@
                 // Update the laser controls if something has set them on the
                 // server-side.
                 for (var i = 0; i < cvt.pas.las.vr.length; i++) {
+                    
+                    //$scope.lasCtl[i]=CfgObj.names[i];
 
                     $scope.lasCtl[i].Vnorm = cvt.pas.las.vr[i]/maxRange*100;
                     
@@ -89,7 +95,9 @@
      * * f0 = modulation frequency in Hz
      * * modulation = boolean representing sine (false) or square (true)
      */
-    function lasSet(vr, f0, mod, en) {
+    function lasSet(name, colour, vr, f0, mod, en) {
+        this.name = name;
+        this.colour = colour;
         this.Vnorm = vr;
         this.f0 = f0;
         this.modulation = mod;

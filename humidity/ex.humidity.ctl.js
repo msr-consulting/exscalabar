@@ -46,7 +46,7 @@
     $scope.$on('dataAvailable', updatePlot);
 
     function updatePlot(){
-
+       console.log("RH update",JSON.stringify($scope.optRH));
        var high=Data.data.humhigh;
        var med=Data.data.hummed;
        var thisRH=[Data.tObj,high.RH,high.RHsp,high.Eff,med.RH,med.RHsp,med.Eff];
@@ -81,6 +81,9 @@
       ylabel: "Controller Output",
       labels: ["t", "high", "med"],
       colors:["red","blue"],
+      series:{"high":{strokePattern:null},
+              "med":{strokePattern:null}},
+      strokeWidth:2,
       legend: "always"
     };
     $scope.optRH = {
@@ -89,14 +92,29 @@
       colors:["red","pink","orange","blue","lightblue","green"],
       visibility:[true,true,false,true,true,false],
       strokeWidth:2,
-      strokePattern:[null,null,null,null,null,null],
+      series:{"high.RH":{strokePattern:null},
+              "high.RHsp":{strokePattern:null},
+              "high.Eff":{strokePattern:null},
+              "med.RH":{strokePattern:null},
+              "med.RHsp":{strokePattern:null},
+              "med.Eff":{strokePattern:null}},
       legend: "always"
     };
+      console.log("RH start",JSON.stringify($scope.optRH));
     $scope.optTemp = {
       ylabel: "Temp (C)",
       labels: ["t", "high.Td","high.TdReq","high.Tsp","high.Tobj","med.Td","med.TdReq","med.Tsp","med.Tobj"],
-      colors:["red","pink","orange","yellow","blue","lightblue","green","purple"],
-      legend: "always"
+      colors:["red","orange","pink","yellow","blue","green","lightblue","purple"],
+      legend: "always",
+      strokeWidth:2,
+      series:{"high.Td":{strokePattern:null},
+              "high.TdReq":{strokePattern:null},
+              "high.Tsp":{strokePattern:null},
+              "high.Tobj":{strokePattern:null},
+              "med.Td":{strokePattern:null},
+              "med.TdReq":{strokePattern:null},
+              "med.Tsp":{strokePattern:null},
+              "med.Tobj":{strokePattern:null}},
     };
     $scope.RHcm=[['Clear Data',function(){$scope.RH_data=[];}]];
     $scope.Tempcm=[['Clear Data',function(){$scope.T_data=[];}]];
