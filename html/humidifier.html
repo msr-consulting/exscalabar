@@ -12,6 +12,20 @@
                                 </cui-numeric>
                                 <cui-button ival="ctl.en" ng-model="ctl.en" ng-click="setEnable($index)">Enable
                                 </cui-button>
+                                
+                                <button class="btn btn-block btn-default btn-sm" ng-click="updateCtl($index)"
+                                            ng-switch="tec[$index].static_on" type="button" value="Off">
+                                        <div ng-switch-when="1">
+                                            On
+                                        </div>
+                                        <div ng-switch-when="0">
+                                            Off
+                                        </div>
+                                        <div ng-switch-default>
+                                            Off
+                                        </div>
+                                    </button>
+                                
                             </div>
                         </div>
                     </div>

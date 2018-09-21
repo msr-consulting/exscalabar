@@ -190,7 +190,7 @@
                 var dt=flow.P[index-1][0]-flow.P[ix][0];
                 alicats.forEach(function(elem,i){    
                     var leak=flow.P[index-1][i+1]-flow.P[ix][i+1];
-                    console.log(leak,60000.0*leak/dt,flow.data[elem.id].leak);
+                    //console.log(leak,60000.0*leak/dt,flow.data[elem.id].leak);
                     flow.data[elem.id].leak=flow.data[elem.id].leak*(1-alpha)+alpha*60000.0*leak/dt;
                 });
             }

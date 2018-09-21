@@ -31,7 +31,19 @@
 
 
     $scope.h = cvt.humidifier;
-
+    $scope.tec=[];
+      
+    function Humidifier_TECS(){
+       for(var m in cvt.mTEC){
+         if(cvt.mTEC[m].id=="HighTEC"){
+              $scope.tec[0]=cvt.mTEC[m];
+         }
+         if(cvt.mTEC[m].id=="MedTEC"){
+              $scope.tec[1]=cvt.mTEC[m];
+         }
+      }
+    }
+    Humidifier_TECS();      
     $scope.setEnable = function (i) {
       $scope.h[i].en = !$scope.h[i].en;
       $scope.updateHum(i);
@@ -40,13 +52,19 @@
 
     $scope.$on('cvtUpdated', function () {
       $scope.h = cvt.humidifier;
-
+      
+      Humidifier_TECS();
     });
+      
+    $scope.updateCtl = function (i) {
+      $scope.tec[i].updateCtlVal(cvt.mTEC);
+
+    };
+
 
     $scope.$on('dataAvailable', updatePlot);
 
     function updatePlot(){
-       console.log("RH update",JSON.stringify($scope.optRH));
        var high=Data.data.humhigh;
        var med=Data.data.hummed;
        var thisRH=[Data.tObj,high.RH,high.RHsp,high.Eff,med.RH,med.RHsp,med.Eff];
@@ -100,7 +118,7 @@
               "med.Eff":{strokePattern:null}},
       legend: "always"
     };
-      console.log("RH start",JSON.stringify($scope.optRH));
+     
     $scope.optTemp = {
       ylabel: "Temp (C)",
       labels: ["t", "high.Td","high.TdReq","high.Tsp","high.Tobj","med.Td","med.TdReq","med.Tsp","med.Tobj"],
