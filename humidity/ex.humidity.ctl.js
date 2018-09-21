@@ -32,18 +32,24 @@
 
     $scope.h = cvt.humidifier;
     $scope.tec=[];
-      
+    $scope.pump=0;
     function Humidifier_TECS(){
+       var pump=0; 
        for(var m in cvt.mTEC){
+          
          if(cvt.mTEC[m].id=="HighTEC"){
               $scope.tec[0]=cvt.mTEC[m];
+              pump=pump||$scope.tec[0].static_on;
          }
          if(cvt.mTEC[m].id=="MedTEC"){
               $scope.tec[1]=cvt.mTEC[m];
+              pump=pump||$scope.tec[1].static_on
          }
       }
+        $scope.pump=pump;
     }
-    Humidifier_TECS();      
+    Humidifier_TECS();   
+    
     $scope.setEnable = function (i) {
       $scope.h[i].en = !$scope.h[i].en;
       $scope.updateHum(i);
@@ -54,11 +60,11 @@
       $scope.h = cvt.humidifier;
       
       Humidifier_TECS();
+      
     });
       
     $scope.updateCtl = function (i) {
       $scope.tec[i].updateCtlVal(cvt.mTEC);
-
     };
 
 
