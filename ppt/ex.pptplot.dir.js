@@ -34,7 +34,7 @@
             vm.cm = [
                 ['P', function () {
                     data_set = "P";
-                    vm.options.ylabel = '<em>P</em> (mb)';
+                    vm.options.ylabel = '<em>P</em> (hPa)';
                     vm.options.axes.y.valueRange = [null, null];
                 }
                 ],
@@ -42,6 +42,13 @@
                     function () {
                         data_set = "T";
                         vm.options.ylabel = '<em>T</em> (&deg;C)';
+                        vm.options.axes.y.valueRange = [null, null];
+                    }
+                ],
+                ['leak',
+                    function () {
+                        data_set = "leak";
+                        vm.options.ylabel = '<em>leak</em> (hPa/min)';
                         vm.options.axes.y.valueRange = [null, null];
                     }
                 ],
@@ -121,8 +128,9 @@
 
                     }
                 }
-
+                
                 vm.data = ExPptSvc[data_set];
+                
 
             }
         }

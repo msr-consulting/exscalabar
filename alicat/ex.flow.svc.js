@@ -61,7 +61,7 @@
 
         var maxi = 300;
         var leaki = 60; // 60 seconds of flow for leaks ?
-        var alpha = 0.003;  // smoothing factor ..
+        var alpha = 0.1;  // smoothing factor ..
 
         var shift = false;
         var index = 0;
@@ -185,14 +185,17 @@
             shift = index >= maxi;
 
             if(index>=2){
-                //var ix = (index<leaki) ? 0 : index-leaki-1;
-                var ix= index-2;
+                var ix = (index<leaki) ? 0 : index-leaki-1;
+                //var ix= index-2;
                 var dt=flow.P[index-1][0]-flow.P[ix][0];
-                alicats.forEach(function(elem,i){    
-                    var leak=flow.P[index-1][i+1]-flow.P[ix][i+1];
-                    //console.log(leak,60000.0*leak/dt,flow.data[elem.id].leak);
-                    flow.data[elem.id].leak=flow.data[elem.id].leak*(1-alpha)+alpha*60000.0*leak/dt;
-                });
+                if(dt>0){
+                    alicats.forEach(function(elem,i){    
+                        var leak=flow.P[index-1][i+1]-flow.P[ix][i+1];
+                        //console.log(leak,60000.0*leak/dt,flow.data[elem.id].leak);
+                        //flow.data[elem.id].leak=60000.0*leak/dt;
+                        flow.data[elem.id].leak=flow.data[elem.id].leak*(1-alpha)+alpha*60000.0*leak/dt;
+                    });
+                }
             }
             
             /**

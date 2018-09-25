@@ -43,7 +43,7 @@
          }
          if(cvt.mTEC[m].id=="MedTEC"){
               $scope.tec[1]=cvt.mTEC[m];
-              pump=pump||$scope.tec[1].static_on
+              pump=pump||$scope.tec[1].static_on;
          }
       }
         $scope.pump=pump;
