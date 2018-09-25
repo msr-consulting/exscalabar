@@ -210,7 +210,7 @@
                             color: CfgObj.color[j % cl],
                             strokeWidth: CfgObj.strokeWidth[j % swl],
                             strokePattern: p,
-                            drawPoints: true
+                            drawPoints: false
                         };
 
                     }
