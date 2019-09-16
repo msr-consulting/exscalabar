@@ -8,7 +8,8 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">{{ctl.name}}</div>
                             <div class="panel-body">
-                                <cui-numeric ng-model="ctl.d" width="45" evnt-func="updateHum($index)">D</cui-numeric>
+                                <cui-numeric ng-model="ctl.dt" width="45" evnt-func="updateHum($index)">dt</cui-numeric>
+                                <cui-numeric ng-model="ctl.smooth" width="45" evnt-func="updateHum($index)">smooth</cui-numeric>
                                 <cui-numeric ng-model="ctl.sp" width="45" evnt-func="updateHum($index)">RH<sub>sp</sub>
                                 </cui-numeric>
                                 <cui-button ival="ctl.en" ng-model="ctl.en" ng-click="setEnable($index)">Enable

@@ -92,10 +92,11 @@
              * @description
              * Object defining the methods and properties for modifying humidifier behavior.
              */
-            function Humidifier(p, i, d, sp, en, name) {
-                this.p = p;
-                this.i = i;
-                this.d = d;
+            function Humidifier(heff, leff, dt, smooth, sp, en, name) {
+                this.heff = heff;
+                this.leff = leff;
+                this.dt = dt;
+                this.smooth = smooth;
                 this.sp = sp;
                 this.en = en;
                 this.updateEn = function () {
@@ -106,7 +107,8 @@
                     enable=this.en ? 1 : 0;
                     $http.get(net.address()+"Humidity/hRHsp?hID="+this.hID+"&Val="+this.sp);
                     $http.get(net.address()+"Humidity/hEnable?hID="+this.hID+"&Val="+enable);
-                    $http.get(net.address()+"Humidity/hCtlParams?hID="+this.hID+"&D="+this.d);
+                    //$http.get(net.address()+"Humidity/hCtlParams?hID="+this.hID+"&heff="+this.heff+"&leff="+this.leff+"&dt="+this.dt+"&smooth="+this.smooth);
+                    $http.get(net.address()+"Humidity/hCtlParams?hID="+this.hID+"&dt="+this.dt+"&smooth="+this.smooth);
                 };
                 this.name = name;
                 this.hID=(name=="Medium") ? "med" : "high";
@@ -133,8 +135,8 @@
              * @description
              * Defines the parameters for humidifier control.
              */
-            cvt.humidifier = [new Humidifier(0.75, 1, 0, 20, false, "High"),
-                new Humidifier(0.75, 1, 0, 30, false, "Medium")];
+            cvt.humidifier = [new Humidifier(100, 90, 60, 10, 90, false, "High"),
+                new Humidifier(100, 90, 60, 10, 70, false, "Medium")];
 
             /**
              * @ngdoc property
@@ -283,15 +285,17 @@
 
                         var h = response.data.humidifier;
 
-                        cvt.humidifier[0].p = h.high.p;
-                        cvt.humidifier[0].i = h.high.i;
-                        cvt.humidifier[0].d = h.high.d;
+                        cvt.humidifier[0].heff = h.high.heff;
+                        cvt.humidifier[0].leff = h.high.leff;
+                        cvt.humidifier[0].dt = h.high.dt;
+                        cvt.humidifier[0].smooth = h.high.smooth;
                         cvt.humidifier[0].en = h.high.ctl;
                         cvt.humidifier[0].sp = h.high.rhsp;
 
-                        cvt.humidifier[1].p = h.med.p;
-                        cvt.humidifier[1].i = h.med.i;
-                        cvt.humidifier[1].d = h.med.d;
+                        cvt.humidifier[1].heff = h.med.heff;
+                        cvt.humidifier[1].leff = h.med.leff;
+                        cvt.humidifier[1].dt = h.med.dt;
+                        cvt.humidifier[1].smooth = h.med.smooth;
                         cvt.humidifier[1].en = h.med.ctl;
                         cvt.humidifier[1].sp = h.med.rhsp;
 
